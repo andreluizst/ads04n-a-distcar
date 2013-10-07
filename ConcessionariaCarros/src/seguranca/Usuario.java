@@ -1,9 +1,12 @@
 package seguranca;
 
 import java.util.List;
+
 import javax.persistence.*;
 
-import comum.ObjetoGeral;
+import classesBasicas.ObjetoGeral;
+
+
 
 @Entity
 @PrimaryKeyJoinColumn(name="codigo")

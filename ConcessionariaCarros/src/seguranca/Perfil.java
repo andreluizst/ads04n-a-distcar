@@ -1,6 +1,7 @@
 package seguranca;
 
-import comum.EntidadeBasica;
+import classesBasicas.EntidadeBasica;
+
 import javax.persistence.Entity;
 
 @Entity
