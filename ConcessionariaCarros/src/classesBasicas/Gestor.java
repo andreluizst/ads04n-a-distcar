@@ -6,7 +6,7 @@ import javax.persistence.*;
 public class Gestor extends Funcionario {
 
 	// Diretor, Superintendente, Gerente, Coordenador ,etc..
-	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
 	@JoinColumn(name="codTipoGerencia", insertable=true, updatable=true)
 	private TipoGerencia tipoGerencia;
 

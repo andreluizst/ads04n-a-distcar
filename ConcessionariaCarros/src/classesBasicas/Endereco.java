@@ -5,7 +5,7 @@ import javax.persistence.*;
 @Embeddable
 public class Endereco {
 	
-	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
 	@JoinColumn(name="codTipoLogradouro", insertable=true, updatable=true)
 	private TipoLogradouro tipoLogradouro;
 	

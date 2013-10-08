@@ -5,7 +5,7 @@ import javax.persistence.*;
 @Entity
 public class Fabricante extends ObjetoGeral {
 	
-	@OneToOne(fetch=FetchType.EAGER, cascade = CascadeType.ALL)
+	@OneToOne(fetch=FetchType.EAGER, cascade = CascadeType.PERSIST)
 	@JoinColumn(name="codPJ", insertable=true, updatable=true)
 	private PessoaJuridica pj;
 	

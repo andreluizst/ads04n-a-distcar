@@ -20,6 +20,8 @@ public class PessoaFisica extends Pessoa {
 	@Temporal(TemporalType.DATE)
 	private Date dataNascimento;
 	
+	
+	
 	public PessoaFisica() {
 		super();
 		// TODO Auto-generated constructor stub
@@ -32,6 +34,8 @@ public class PessoaFisica extends Pessoa {
 		this.orgaoExpedidor = orgaoExpedidor;
 	}
 
+	
+	
 	public String getCpf() {
 		return cpf;
 	}

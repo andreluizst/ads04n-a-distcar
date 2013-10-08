@@ -11,7 +11,7 @@ import seguranca.Usuario;
 @PrimaryKeyJoinColumn(name="codigo")
 public class Funcionario extends PessoaFisica {
 	
-	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
 	@JoinColumn(name="codFuncao", insertable=true, updatable=true)
 	private Funcao funcao;
 	
@@ -24,15 +24,15 @@ public class Funcionario extends PessoaFisica {
 	@Temporal(TemporalType.DATE)
 	private Date dataDemissao;
 	
-	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
 	@JoinColumn(name="codDepartamento", insertable=true, updatable=true)
 	private Departamento departamento;
 	
-	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
 	@JoinColumn(name="codUsuario", insertable=true, updatable=true)
 	private Usuario usuario;
 	
-	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
 	@JoinColumn(name="codEescolaridade", insertable=true, updatable=true)
 	private Escolaridade escolaridade;
 

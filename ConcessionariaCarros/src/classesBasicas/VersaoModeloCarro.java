@@ -7,7 +7,7 @@ import javax.persistence.*;
 @Entity
 public class VersaoModeloCarro extends ObjetoGeral {
 	
-	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
 	@JoinColumn(name="codModelo", insertable=true, updatable=true, nullable=false)
 	private ModeloCarro modelo;
 	

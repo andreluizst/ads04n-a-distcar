@@ -17,6 +17,7 @@ public class PessoaJuridica extends Pessoa {
 	private Date dataAbertura;
 	
 	
+	
 	public PessoaJuridica() {
 		super();
 		// TODO Auto-generated constructor stub
@@ -29,6 +30,7 @@ public class PessoaJuridica extends Pessoa {
 		this.inscricaoEstatdual = inscricaoEstatdual;
 		this.dataAbertura = dataAbertura;
 	}
+
 
 	
 	public String getCnpj() {
