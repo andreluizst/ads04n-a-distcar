@@ -35,7 +35,7 @@ public class Teste {
 		
 		VersaoModeloCarro versaoModeloCarro = new VersaoModeloCarro();
 		versaoModeloCarro.setSituacao(Situacao.ATIVO );
-		versaoModeloCarro.setDescricaoVersaoModeloCarro("1.0 LTZ");
+		//versaoModeloCarro.setDescricaoVersaoModeloCarro("1.0 LTZ");
 
 		ItemSerieCarro is = new ItemSerieCarro();
 		is.setDescricao("Arcondicionado");
