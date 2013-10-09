@@ -2,7 +2,6 @@ package dao;
 
 import classesBasicas.Funcao;
 
-
 public class FuncaoDAO implements IFuncaoDAO {
 	
 	
