@@ -1,5 +1,7 @@
 package classesBasicas;
 
+import java.util.Calendar;
+
 import javax.persistence.*;
 
 @Entity
@@ -33,6 +35,16 @@ public class Centro extends ObjetoGeral {
 		this.tipoCentro = tipoCentro;
 	}
 	
+	public Centro(PessoaJuridica dadosPJ, String alias, Integer capacidadeArmazenamento, 
+			TipoCentro tipoCentro, Calendar dataUltimaAtualizacao, Situacao situacao) {
+		super(dataUltimaAtualizacao, situacao);
+		this.dadosPJ = dadosPJ;
+		dadosPJ.setDataUltimaAtualizacao(dataUltimaAtualizacao);
+		dadosPJ.setSituacao(situacao);
+		this.alias = alias;
+		this.capacidadeArmazenamento = capacidadeArmazenamento;
+		this.tipoCentro = tipoCentro;
+	}
 	
 	
 	public PessoaJuridica getDadosPJ() {

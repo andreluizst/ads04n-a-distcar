@@ -68,6 +68,22 @@ public class Fabricante /*extends ObjetoGeral*/ {
 	public void setLoteMinimo(Integer loteMinimo) {
 		this.loteMinimo = loteMinimo;
 	}
+
+	public Integer getCodigo() {
+		return codigo;
+	}
+
+	public void setCodigo(Integer codigo) {
+		this.codigo = codigo;
+	}
+
+	public MarcaCarro getMarcaCarro() {
+		return marcaCarro;
+	}
+
+	public void setMarcaCarro(MarcaCarro marcaCarro) {
+		this.marcaCarro = marcaCarro;
+	}
 	
 	
 	
