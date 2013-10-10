@@ -1,9 +1,16 @@
 package classesBasicas;
 
+//import java.util.Calendar;
+
 import javax.persistence.*;
 
 @Entity
-public class Fabricante extends ObjetoGeral {
+public class Fabricante /*extends ObjetoGeral*/ {
+	
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Integer codigo;
+	
 	
 	@OneToOne(fetch=FetchType.EAGER, cascade = CascadeType.PERSIST)
 	@JoinColumn(name="codPJ", insertable=true, updatable=true)
@@ -17,18 +24,35 @@ public class Fabricante extends ObjetoGeral {
 	private Integer loteMinimo;
 	
 	
+	
+	// ***** CONSTRUTORES ******
+	
 	public Fabricante() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
+	/*
+	public Fabricante(Calendar dataUltimaAtualizacao, Situacao situacao) {
+		super(dataUltimaAtualizacao, situacao);
+		// TODO Auto-generated constructor stub
+	}
+
+	public Fabricante(Integer codigo, Calendar dataUltimaAtualizacao,
+			Situacao situacao) {
+		super(codigo, dataUltimaAtualizacao, situacao);
+		// TODO Auto-generated constructor stub
+	}	*/
 	
-	public Fabricante(PessoaJuridica pj, Integer loteMinimo) {
+	public Fabricante(PessoaJuridica pj, MarcaCarro marcaCarro,
+			Integer loteMinimo) {
 		super();
 		this.pj = pj;
+		this.marcaCarro = marcaCarro;
 		this.loteMinimo = loteMinimo;
 	}
 	
 	
+	// --- GETs e SEts
 	public PessoaJuridica getPj() {
 		return pj;
 	}

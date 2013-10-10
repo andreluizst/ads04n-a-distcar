@@ -50,23 +50,23 @@ public class TesteCarlos {
 		
 		ModeloCarro modelo = new ModeloCarro();
 		modelo.setAnoModelo(2014);
-		modelo.setDescricaoModelocarro("Celta");
+		//modelo.setDescricaoModelocarro("Celta");
 		List<AcessorioCarro> acessorio= new ArrayList<AcessorioCarro>();
 		acessorio.add(0, ac);
 		acessorio.add(1,ac1 );
-		modelo.setAcessorioCarros(acessorio);
+		//modelo.setAcessorioCarros(acessorio);
 		List<ItemSerieCarro> itemSerie= new ArrayList<ItemSerieCarro>();
 		itemSerie.add(0, is);
 		itemSerie.add(1, is1);
-		modelo.setItemSerieCarros(itemSerie);
+		//modelo.setItemSerieCarros(itemSerie);
 		
 		Carro carro = new Carro();
 		carro.setAnoFabricacao(2014);
 		carro.setChassi("121dawew323");
 		carro.setCor("azul");
 		carro.setValorCarro(30000.00);
-		carro.setMarca(marcaCarro);
-		carro.setModeloCarro(modelo);
+		//carro.setMarca(marcaCarro);
+		//carro.setModeloCarro(modelo);
 		carro.setVersaoModeloCarro(versaoModeloCarro);
 		em.persist(carro);
 		et.commit();

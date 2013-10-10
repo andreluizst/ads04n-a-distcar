@@ -15,6 +15,7 @@ public class TesteAndre {
 		EntityTransaction et = em.getTransaction();
 		try{
 			et.begin();
+			//**** persistindo PF
 			PessoaFisica pf = new PessoaFisica("Maria Lima", "22233344455", "111222333", "SSPPE");
 			pf.setEndereco(new Endereco(new TipoLogradouro("Rua"), "Rua 8", "s/n", "teste1",
 										new Cidade("Recife", new UnidadeFederativa("Pernambuco", "PE"))));
@@ -30,11 +31,28 @@ public class TesteAndre {
 			pj.setSituacao(Situacao.ATIVO);
 			em.persist(pj);
 			
+			// *** persistindo Funcao
 			Funcao funcao1 = new Funcao("Atendente", 820.50);
 			funcao1.setDataUltimaAtualizacao(Calendar.getInstance());
 			funcao1.setSituacao(Situacao.ATIVO);
 			em.persist(funcao1);
 			em.persist(new Funcao("Telefonista", 850.33));
+			
+			//**** persistindo Fabricante e Marca
+			MarcaCarro marca1 = new MarcaCarro();
+			marca1.setDescricaoMarca("BMW");
+			em.persist(marca1);
+			
+			MarcaCarro marcaCarro = new MarcaCarro();
+			marcaCarro.setDescricaoMarca("Chevrolet");
+			Fabricante fabricante = new Fabricante(
+							new PessoaJuridica("General Motors", "00222444000101", "44444444", Calendar.getInstance().getTime(), 
+								new Endereco(new TipoLogradouro("Rod"), "Carros Novos km 21", "1000", "endereço GM",
+									new Cidade("Belém", new UnidadeFederativa("Pará", "PA"))
+								)
+							),
+							marcaCarro, 10);
+			em.persist(fabricante);
 			
 			et.commit();
 		}catch(Exception ex){

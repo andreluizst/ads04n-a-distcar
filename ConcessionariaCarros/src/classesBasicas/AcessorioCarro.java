@@ -1,6 +1,9 @@
 package classesBasicas;
 
+import classesBasicas.EntidadeBasica;
+
 import javax.persistence.Entity;
+
 
 @Entity
 public class AcessorioCarro extends EntidadeBasica{
@@ -15,9 +18,11 @@ public class AcessorioCarro extends EntidadeBasica{
 		this.valorAcessorioCarro = valorAcessorioCarro;
 	}
 
-	public AcessorioCarro() {
-		super();
+	@Override
+	public String toString() {
+		return "AcessorioCarro [Descrição=" + getDescricao()
+				+ ", valorAcessorioCarro=" + valorAcessorioCarro + "]";
 	}
-	
+
 	
 }
