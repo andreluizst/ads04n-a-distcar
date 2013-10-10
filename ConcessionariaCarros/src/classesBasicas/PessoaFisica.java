@@ -27,14 +27,13 @@ public class PessoaFisica extends Pessoa {
 		// TODO Auto-generated constructor stub
 	}
 
-	public PessoaFisica(String cpf, String rg, String orgaoExpedidor) {
+	public PessoaFisica(String nome, String cpf, String rg, String orgaoExpedidor) {
 		super();
+		super.setNome(nome);
 		this.cpf = cpf;
 		this.rg = rg;
 		this.orgaoExpedidor = orgaoExpedidor;
 	}
-
-	
 	
 	public String getCpf() {
 		return cpf;

@@ -22,6 +22,25 @@ public class Endereco {
 	@JoinColumn(name="codCidade", insertable=true, updatable=true)
 	private Cidade cidade;
 	
+	
+	
+	public Endereco() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+	
+	public Endereco(TipoLogradouro tipoLogradouro, String logradouro,
+			String numero, String bairro, Cidade cidade) {
+		super();
+		this.tipoLogradouro = tipoLogradouro;
+		this.logradouro = logradouro;
+		this.numero = numero;
+		this.bairro = bairro;
+		this.cidade = cidade;
+	}
+
+
+
 	public TipoLogradouro getTipoLogradouro() {
 		return tipoLogradouro;
 	}

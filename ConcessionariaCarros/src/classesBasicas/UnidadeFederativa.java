@@ -1,7 +1,5 @@
 package classesBasicas;
 
-//import comum.ObjetoGeral;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 
@@ -13,6 +11,22 @@ public class UnidadeFederativa extends ObjetoGeral {
 	
 	@Column(length=2, nullable=false)
 	private String sigla;
+	
+	
+	
+	public UnidadeFederativa() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+	
+	
+	public UnidadeFederativa(String nome, String sigla) {
+		super();
+		this.nome = nome;
+		this.sigla = sigla;
+	}
+	
+	
 	
 	public String getNome() {
 		return nome;

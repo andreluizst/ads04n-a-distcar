@@ -23,9 +23,10 @@ public class PessoaJuridica extends Pessoa {
 		// TODO Auto-generated constructor stub
 	}
 	
-	public PessoaJuridica(String cnpj, String inscricaoEstatdual,
+	public PessoaJuridica(String nome, String cnpj, String inscricaoEstatdual,
 			Date dataAbertura) {
 		super();
+		super.setNome(nome);
 		this.cnpj = cnpj;
 		this.inscricaoEstatdual = inscricaoEstatdual;
 		this.dataAbertura = dataAbertura;

@@ -9,6 +9,11 @@ public class Fabricante extends ObjetoGeral {
 	@JoinColumn(name="codPJ", insertable=true, updatable=true)
 	private PessoaJuridica pj;
 	
+	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+	@JoinColumn(name="codMarca", insertable=true, updatable=true)
+	private MarcaCarro marcaCarro;
+	
+	
 	private Integer loteMinimo;
 	
 	

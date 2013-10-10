@@ -27,6 +27,10 @@ public class Departamento extends ObjetoGeral {
 	@JoinColumn(name="codGestor", insertable=true, updatable=true)
 	private Gestor gestor;
 	
+	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+	@JoinColumn(name="codCentro", insertable=true, updatable=true, nullable=false)
+	private Centro centro;
+	
 	public String getNome() {
 		return nome;
 	}

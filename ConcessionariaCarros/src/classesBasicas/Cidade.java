@@ -12,6 +12,21 @@ public class Cidade extends ObjetoGeral {
 	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
 	@JoinColumn(name="coduf", insertable=true, updatable=true)
 	private UnidadeFederativa unidadeFederativa;
+	
+	
+	
+	public Cidade() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+	
+	public Cidade(String nome, UnidadeFederativa unidadeFederativa) {
+		super();
+		this.nome = nome;
+		this.unidadeFederativa = unidadeFederativa;
+	}
+
+
 
 	public UnidadeFederativa getUnidadeFederativa() {
 		return unidadeFederativa;

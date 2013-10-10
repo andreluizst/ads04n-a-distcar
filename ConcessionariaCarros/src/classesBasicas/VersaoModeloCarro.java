@@ -1,7 +1,5 @@
 package classesBasicas;
 
-import java.util.List;
-
 import javax.persistence.*;
 
 @Entity
@@ -14,10 +12,10 @@ public class VersaoModeloCarro extends ObjetoGeral {
 	private String descricaoVersModCarro;
 	
 	// verificar melhor forma de relacionar os itens de série
-	private List<ItemSerieCarro> listaItensSeriesCarro;
+	//private List<ItemSerieCarro> listaItensSeriesCarro;
 	
 	// verificar melhor forma de relacionar os acessórios
-	private List<AcessorioCarro> listaAcessorioCarro;
+	//private List<AcessorioCarro> listaAcessorioCarro;
 	
 	
 	
@@ -27,14 +25,12 @@ public class VersaoModeloCarro extends ObjetoGeral {
 	}
 	
 	
-	public VersaoModeloCarro(ModeloCarro modelo, String descricaoVersModCarro,
-			List<ItemSerieCarro> listaItensSeriesCarro,
-			List<AcessorioCarro> listaAcessorioCarro) {
+	public VersaoModeloCarro(ModeloCarro modelo, String descricaoVersModCarro) {
 		super();
 		this.modelo = modelo;
 		this.descricaoVersModCarro = descricaoVersModCarro;
-		this.listaItensSeriesCarro = listaItensSeriesCarro;
-		this.listaAcessorioCarro = listaAcessorioCarro;
+		//this.listaItensSeriesCarro = listaItensSeriesCarro;
+		//this.listaAcessorioCarro = listaAcessorioCarro;
 	}
 	
 	
@@ -47,21 +43,7 @@ public class VersaoModeloCarro extends ObjetoGeral {
 		this.descricaoVersModCarro = descricaoVersModCarro;
 	}
 	
-	public List<ItemSerieCarro> getListaItensSeriesCarro() {
-		return listaItensSeriesCarro;
-	}
-	
-	public void setListaItensSeriesCarro(List<ItemSerieCarro> listaItensSeriesCarro) {
-		this.listaItensSeriesCarro = listaItensSeriesCarro;
-	}
-	
-	public List<AcessorioCarro> getListaAcessorioCarro() {
-		return listaAcessorioCarro;
-	}
-	
-	public void setListaAcessorioCarro(List<AcessorioCarro> listaAcessorioCarro) {
-		this.listaAcessorioCarro = listaAcessorioCarro;
-	}
+
 	
 	
 	
