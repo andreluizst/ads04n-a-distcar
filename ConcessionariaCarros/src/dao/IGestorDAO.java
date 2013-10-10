@@ -1,13 +1,11 @@
 package dao;
 
-import classesBasicas.Gestor;
 
-public interface IGestorDAO {
 
-	void inserirGestor(Gestor Gestor);
+public interface IGestorDAO<Entidade> extends IDAOGenerico<Entidade> {
 
+	/*void inserirGestor(Gestor Gestor);
 	Gestor pesquisarCodigoGestor(Integer codigo);
-
-	void removerGestor(Integer codigo);
+	void removerGestor(Integer codigo);*/
 
 }

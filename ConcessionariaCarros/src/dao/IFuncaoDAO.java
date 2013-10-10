@@ -1,13 +1,10 @@
 package dao;
 
-import classesBasicas.Funcao;
 
-public interface IFuncaoDAO {
+public interface IFuncaoDAO<Entidade> extends IDAOGenerico<Entidade> {
 
-	void inserirFuncao(Funcao funcao);
-
+	/*void inserirFuncao(Funcao funcao);
 	Funcao pesquisarCodigoFuncao(Integer codigo);
-
-	void removerFuncao(Integer codigo);
+	void removerFuncao(Integer codigo);*/
 
 }

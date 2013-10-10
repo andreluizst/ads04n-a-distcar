@@ -8,13 +8,13 @@ import dao.IFuncaoDAO;
 import erro.NegocioExceptionFuncao;
 
 public class ControladorFuncao {
-	private IFuncaoDAO funcaoDAO;
+	private IFuncaoDAO<Funcao> funcaoDAO;
 	
 	public ControladorFuncao() {
 		// TODO Auto-generated constructor stub
 			super();
 		
-		this.setFuncaoDAO( new FuncaoDAO());
+		this.setFuncaoDAO( new FuncaoDAO<Funcao>());
 		}
 
 	public void inserirFuncao (Funcao funcao) throws NegocioExceptionFuncao {
@@ -27,7 +27,7 @@ public class ControladorFuncao {
 					throw new NegocioExceptionFuncao("Campos inválidos");
 				}
 				
-		funcaoDAO.inserirFuncao(funcao);
+		funcaoDAO.inserir(funcao);
 	}
 	
 	public void alterarFuncao(Funcao funcao) throws NegocioExceptionFuncao {
@@ -39,23 +39,23 @@ public class ControladorFuncao {
 					throw new NegocioExceptionFuncao("Campos inválidos");
 				}
 				
-		Funcao f = funcaoDAO.pesquisarCodigoFuncao(funcao.getCodigo());
+		Funcao f = funcaoDAO.consultarPorId(funcao.getCodigo());
 		if(f==null){
 			throw new NegocioExceptionFuncao("Funcao não cadastrada");
 		}
 		
-		funcaoDAO.inserirFuncao(f);
+		funcaoDAO.inserir(f);
 			
 	}
 	
 	
 	public void removerFuncao(Funcao funcao) throws NegocioExceptionFuncao {
 		// TODO Auto-generated method stub
-		Funcao f = funcaoDAO.pesquisarCodigoFuncao(funcao.getCodigo());
+		Funcao f = funcaoDAO.consultarPorId(funcao.getCodigo());
 		if(f==null){
 			throw new NegocioExceptionFuncao("Departamento não encontrado!");
 		}
-		funcaoDAO.removerFuncao(f.getCodigo());
+		funcaoDAO.remover(f);
 	}
 
 	public List<Funcao> pesquisarFuncao(Funcao funcao) throws NegocioExceptionFuncao {
@@ -64,11 +64,11 @@ public class ControladorFuncao {
 	}
 	
 	
-	public IFuncaoDAO getFuncaoDAO() {
+	public IFuncaoDAO<Funcao> getFuncaoDAO() {
 		return funcaoDAO;
 	}
 
-	public void setFuncaoDAO(IFuncaoDAO funcaoDAO) {
+	public void setFuncaoDAO(IFuncaoDAO<Funcao> funcaoDAO) {
 		this.funcaoDAO = funcaoDAO;
 	}
 

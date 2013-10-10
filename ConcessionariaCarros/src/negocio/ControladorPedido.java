@@ -10,13 +10,13 @@ import erro.NegocioExceptionPedido;
 
 public class ControladorPedido {
 	
-private IPedidoDAO pedidoDAO;
+private IPedidoDAO<Pedido> pedidoDAO;
 	
 public ControladorPedido() {
 
 	super();
 		
-	this.pedidoDAO = new PedidoDAO();	
+	this.pedidoDAO = new PedidoDAO<Pedido>();	
 	}
 
 public void inserirPedido(Pedido pedido) throws NegocioExceptionPedido {
@@ -29,7 +29,7 @@ public void inserirPedido(Pedido pedido) throws NegocioExceptionPedido {
 				throw new NegocioExceptionPedido("Campos inválidos");
 			}
 			
-	pedidoDAO.inserirPedido(pedido);
+	pedidoDAO.inserir(pedido);
 }
 
 public void alterarPedido(Pedido pedido) throws NegocioExceptionPedido {
@@ -42,22 +42,22 @@ public void alterarPedido(Pedido pedido) throws NegocioExceptionPedido {
 				throw new NegocioExceptionPedido("Campos inválidos");
 			}
 			
-	Pedido p = pedidoDAO.pesquisarNumeroPedido(pedido.getCodigo());
+	Pedido p = pedidoDAO.consultarPorId(pedido.getCodigo());
 	if(p==null){
 		throw new NegocioExceptionPedido("Pedido não cadastrado");
 	}
 	
-	pedidoDAO.inserirPedido(p);
+	pedidoDAO.inserir(p);
 
 }
 
 public void removerPedido(Pedido pedido) throws NegocioExceptionPedido {
 	// TODO Auto-generated method stub
-	Pedido p = pedidoDAO.pesquisarNumeroPedido(pedido.getCodigo());
+	Pedido p = pedidoDAO.consultarPorId(pedido.getCodigo());
 	if(p==null){
 		throw new NegocioExceptionPedido("Pedido não encontrado!");
 	}
-	pedidoDAO.removerPedido(p.getCodigo());
+	pedidoDAO.remover(p);
 }
 
 public List<Pedido> pesquisarPedido(Pedido pedido) throws NegocioExceptionPedido {

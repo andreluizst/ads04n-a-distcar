@@ -7,13 +7,13 @@ import dao.IFuncionarioDAO;
 import erro.NegocioExceptionFuncionario;
 
 public class ControladorFuncionario {
-	private IFuncionarioDAO funcionarioDAO;
+	private IFuncionarioDAO<Funcionario> funcionarioDAO;
 	
 	public ControladorFuncionario() {
 		// TODO Auto-generated constructor stub
 			super();
 		
-		this.setFuncionarioDAO ( new FuncionarioDAO());
+		this.setFuncionarioDAO ( new FuncionarioDAO<Funcionario>());
 		}
 	
 	public void inserirFuncionario (Funcionario funcionario) throws NegocioExceptionFuncionario {
@@ -26,7 +26,7 @@ public class ControladorFuncionario {
 					throw new NegocioExceptionFuncionario ("Campos inválidos");
 				}
 				
-		funcionarioDAO.inserirFuncionario(funcionario);
+		funcionarioDAO.inserir(funcionario);
 	}
 	
 	public void alterarFuncionario(Funcionario funcionario) throws NegocioExceptionFuncionario {
@@ -38,21 +38,21 @@ public class ControladorFuncionario {
 					throw new NegocioExceptionFuncionario("Campos inválidos");
 				}
 				
-		Funcionario func = funcionarioDAO.pesquisarCodigoFuncionario(funcionario.getCodigo());
+		Funcionario func = funcionarioDAO.consultarPorId(funcionario.getCodigo());
 		if(func==null){
 			throw new NegocioExceptionFuncionario("Funcionário não cadastrado");
 		}
 		
-		funcionarioDAO.inserirFuncionario(func);
+		funcionarioDAO.inserir(func);
 		}
 	
 	public void removerFuncionario(Funcionario funcionario) throws NegocioExceptionFuncionario {
 		// TODO Auto-generated method stub
-		Funcionario func = funcionarioDAO.pesquisarCodigoFuncionario(funcionario.getCodigo());
+		Funcionario func = funcionarioDAO.consultarPorId(funcionario.getCodigo());
 		if(func==null){
 			throw new NegocioExceptionFuncionario("Funcionario não encontrado!");
 		}
-		funcionarioDAO.removerFuncionario(func.getCodigo());
+		funcionarioDAO.remover(func);
 	}
 
 	public List<Funcionario> pesquisarFuncionario(Funcionario funcionario) throws NegocioExceptionFuncionario {
@@ -60,11 +60,11 @@ public class ControladorFuncionario {
 		return null;
 	}
 
-	public IFuncionarioDAO getFuncionarioDAO() {
+	public IFuncionarioDAO<Funcionario> getFuncionarioDAO() {
 		return funcionarioDAO;
 	}
 
-	public void setFuncionarioDAO(IFuncionarioDAO funcionarioDAO) {
+	public void setFuncionarioDAO(IFuncionarioDAO<Funcionario> funcionarioDAO) {
 		this.funcionarioDAO = funcionarioDAO;
 	}
 

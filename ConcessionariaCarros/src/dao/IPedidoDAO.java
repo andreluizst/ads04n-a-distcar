@@ -1,13 +1,7 @@
 package dao;
 
-import classesBasicas.Pedido;
 
-public interface IPedidoDAO {
-	//public IPedidoDAO() {
-	public void inserirPedido(Pedido pedido);
+public interface IPedidoDAO<Entidade> extends IDAOGenerico<Entidade> {
 
-	public void removerPedido(Integer codigo);
-
-	public Pedido pesquisarNumeroPedido(Integer codigo);
 	
 }

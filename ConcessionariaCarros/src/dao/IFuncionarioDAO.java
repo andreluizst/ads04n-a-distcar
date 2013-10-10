@@ -1,14 +1,10 @@
 package dao;
 
-import classesBasicas.Funcionario;
+public interface IFuncionarioDAO<Entidade> extends IDAOGenerico<Entidade> {
 
-public interface IFuncionarioDAO {
-
-	 void inserirFuncionario(Funcionario funcionario);
-
+	 /*void inserirFuncionario(Funcionario funcionario);
 	Funcionario pesquisarCodigoFuncionario(Integer codigo);
-
-	void removerFuncionario(Integer codigo);
+	void removerFuncionario(Integer codigo);*/
 
 }
 

@@ -8,13 +8,13 @@ import dao.IDepartamentoDAO;
 import erro.NegocioExceptionDepartamento;
 
 public class ControladorDepartamento {
-	private IDepartamentoDAO departamentoDAO;
+	private IDepartamentoDAO<Departamento> departamentoDAO;
 
 	public ControladorDepartamento() {
 		// TODO Auto-generated constructor stub
 		super();
 		
-		this.setDepartamentoDAO(new DepartamentoDAO());	
+		this.setDepartamentoDAO(new DepartamentoDAO<Departamento>());	
 		}
 
 	public void inserirDepartamento(Departamento departamento) throws NegocioExceptionDepartamento {
@@ -29,7 +29,7 @@ public class ControladorDepartamento {
 					throw new NegocioExceptionDepartamento("Campos inválidos");
 				}
 				
-		departamentoDAO.inserirDepartamento(departamento);
+		departamentoDAO.inserir(departamento);
 	}
 	
 	public void alterarDepartamento(Departamento departamento) throws NegocioExceptionDepartamento {
@@ -50,7 +50,7 @@ public class ControladorDepartamento {
 			throw new NegocioExceptionDepartamento("Departamento não cadastrado");
 		}
 		
-		departamentoDAO.inserirDepartamento(d);
+		departamentoDAO.inserir(d);
 	}
 	
 	public void removerDepartamento(Departamento departamento) throws NegocioExceptionDepartamento {
@@ -59,7 +59,7 @@ public class ControladorDepartamento {
 		if(d==null){
 			throw new NegocioExceptionDepartamento("Departamento não encontrado!");
 		}
-		departamentoDAO.removerDepartamento(d.getCodigo());
+		departamentoDAO.remover(d);
 	}
 
 	public List<Departamento> pesquisarDepartamento(Departamento departamento) throws NegocioExceptionDepartamento {
@@ -67,11 +67,11 @@ public class ControladorDepartamento {
 		return null;
 	}
 	
-	public IDepartamentoDAO getDepartamentoDAO() {
+	public IDepartamentoDAO<Departamento> getDepartamentoDAO() {
 		return departamentoDAO;
 	}
 
-	public void setDepartamentoDAO(IDepartamentoDAO departamentoDAO) {
+	public void setDepartamentoDAO(IDepartamentoDAO<Departamento> departamentoDAO) {
 		this.departamentoDAO = departamentoDAO;
 	}
 	
