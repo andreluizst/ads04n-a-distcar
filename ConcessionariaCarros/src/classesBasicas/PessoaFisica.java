@@ -21,6 +21,7 @@ public class PessoaFisica extends Pessoa {
 	private Date dataNascimento;
 	
 	
+	// *** CONSTRUTORES ***
 	
 	public PessoaFisica() {
 		super();
@@ -34,6 +35,10 @@ public class PessoaFisica extends Pessoa {
 		this.rg = rg;
 		this.orgaoExpedidor = orgaoExpedidor;
 	}
+	
+	
+	
+	// --- GETs e SETs ---
 	
 	public String getCpf() {
 		return cpf;

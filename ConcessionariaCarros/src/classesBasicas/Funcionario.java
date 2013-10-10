@@ -10,7 +10,7 @@ import seguranca.Usuario;
 @Entity
 @PrimaryKeyJoinColumn(name="codigo")
 public class Funcionario extends PessoaFisica {
-	
+	// +++ ATRIBUTOS ++++
 	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
 	@JoinColumn(name="codFuncao", insertable=true, updatable=true)
 	private Funcao funcao;
@@ -37,6 +37,7 @@ public class Funcionario extends PessoaFisica {
 	private Escolaridade escolaridade;
 
 	
+	//**** CONSTRUTORES ****
 	public Funcionario(){
 		
 	}
@@ -55,7 +56,7 @@ public class Funcionario extends PessoaFisica {
 	}
 
 
-
+	// --- GETs e SETs
 	public Funcao getFuncao() {
 		return funcao;
 	}

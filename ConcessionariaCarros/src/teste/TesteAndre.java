@@ -7,14 +7,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.swing.JOptionPane;
 
-import classesBasicas.Cidade;
-import classesBasicas.Pessoa;
-import classesBasicas.PessoaFisica;
-import classesBasicas.Endereco;
-import classesBasicas.PessoaJuridica;
-import classesBasicas.Situacao;
-import classesBasicas.TipoLogradouro;
-import classesBasicas.UnidadeFederativa;
+import classesBasicas.*;
 
 public class TesteAndre {
 	public static void execute(EntityManagerFactory emf){
@@ -36,6 +29,12 @@ public class TesteAndre {
 			pj.setDataUltimaAtualizacao(Calendar.getInstance());
 			pj.setSituacao(Situacao.ATIVO);
 			em.persist(pj);
+			
+			Funcao funcao1 = new Funcao("Atendente", 820.50);
+			funcao1.setDataUltimaAtualizacao(Calendar.getInstance());
+			funcao1.setSituacao(Situacao.ATIVO);
+			em.persist(funcao1);
+			em.persist(new Funcao("Telefonista", 850.33));
 			
 			et.commit();
 		}catch(Exception ex){
