@@ -12,6 +12,7 @@ public class Teste {
 		EntityManagerFactory emf = Persistence.createEntityManagerFactory("DistCar");
 		//TesteCarlos.execute(emf);
 		TesteAndre.execute(emf);
+		//TesteJose.execute(emf);
 		emf.close();
 	}
 
