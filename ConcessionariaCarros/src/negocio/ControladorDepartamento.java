@@ -1,9 +1,8 @@
 package negocio;
 
 import java.util.List;
-
 import classesBasicas.Departamento;
-import dao.DepartamentoDAO;
+import dao.DAODepartamento;
 import dao.IDepartamentoDAO;
 import erro.NegocioExceptionDepartamento;
 
@@ -14,7 +13,7 @@ public class ControladorDepartamento {
 		// TODO Auto-generated constructor stub
 		super();
 		
-		this.setDepartamentoDAO(new DepartamentoDAO<Departamento>());	
+		this.setDepartamentoDAO(new DAODepartamento<Departamento>());	
 		}
 
 	public void inserirDepartamento(Departamento departamento) throws NegocioExceptionDepartamento {

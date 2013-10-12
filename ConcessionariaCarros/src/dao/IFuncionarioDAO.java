@@ -1,10 +1,12 @@
 package dao;
 
-public interface IFuncionarioDAO<Entidade> extends IDAOGenerico<Entidade> {
+import java.util.List;
 
-	 /*void inserirFuncionario(Funcionario funcionario);
-	Funcionario pesquisarCodigoFuncionario(Integer codigo);
-	void removerFuncionario(Integer codigo);*/
+
+
+public interface IFuncionarioDAO<Entidade, Funcionario> extends IDAOGenerico<Entidade> {
+
+		public List<Funcionario> pesquisarFuncionario(Funcionario f);
 
 }
 

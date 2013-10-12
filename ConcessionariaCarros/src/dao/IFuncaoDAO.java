@@ -1,10 +1,11 @@
 package dao;
 
+import java.util.List;
+import classesBasicas.Funcao;
+
 
 public interface IFuncaoDAO<Entidade> extends IDAOGenerico<Entidade> {
 
-	/*void inserirFuncao(Funcao funcao);
-	Funcao pesquisarCodigoFuncao(Integer codigo);
-	void removerFuncao(Integer codigo);*/
-
+	public List<Funcao> pesquisarFuncao(Funcao f);
+	
 }

@@ -1,5 +1,7 @@
 package erro;
 
+
+@SuppressWarnings("serial")
 public class NegocioExceptionDepartamento extends Exception {
 
 	public NegocioExceptionDepartamento(String string) {

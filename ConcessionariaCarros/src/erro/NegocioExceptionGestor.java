@@ -1,5 +1,6 @@
 package erro;
 
+@SuppressWarnings("serial")
 public class NegocioExceptionGestor extends Exception {
 
 	public NegocioExceptionGestor(String string) {

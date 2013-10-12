@@ -1,5 +1,6 @@
 package erro;
 
+@SuppressWarnings("serial")
 public class NegocioExceptionNotaFiscal extends Exception {
 	
 	public NegocioExceptionNotaFiscal (String string) {

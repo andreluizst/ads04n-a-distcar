@@ -9,7 +9,9 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
 import javax.persistence.TypedQuery;
-import javax.persistence.criteria.CriteriaBuilder;
+//import javax.persistence.criteria.CriteriaBuilder;
+
+
 
 /**
  * PSC
@@ -39,7 +41,7 @@ public abstract class DAOGenerico<Entidade> implements IDAOGenerico<Entidade>{
 	 *            a ser realizado o merge
 	 * @return objeto que foi executado o merge
 	 */
-	public final void alterar(Entidade objeto) {
+	public void alterar(Entidade objeto) {
 		EntityTransaction tx = getEntityManager().getTransaction();
 		try {
 			tx.begin();
@@ -61,7 +63,7 @@ public abstract class DAOGenerico<Entidade> implements IDAOGenerico<Entidade>{
 	 * 
 	 * @param objeto a ser salvo
 	 */
-	public final void inserir(Entidade objeto) {
+	public void inserir(Entidade objeto) {
 		EntityTransaction tx = getEntityManager().getTransaction();		
 		try {
 			tx.begin();
@@ -108,7 +110,7 @@ public abstract class DAOGenerico<Entidade> implements IDAOGenerico<Entidade>{
 	 * @param objeto
 	 *            a ser removido
 	 */
-	public final void remover(Entidade objeto) {
+	public void remover(Entidade objeto) {
 		EntityTransaction tx = getEntityManager().getTransaction();
 		try {
 			tx.begin();
@@ -181,5 +183,5 @@ public abstract class DAOGenerico<Entidade> implements IDAOGenerico<Entidade>{
 		return entityManager;
 	}
 
-		
+			
 }
