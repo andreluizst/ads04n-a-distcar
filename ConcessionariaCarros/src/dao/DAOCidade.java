@@ -6,7 +6,7 @@ import javax.persistence.TypedQuery;
 
 import classesBasicas.Cidade;
 
-public class DAOCidade<Entidade> extends DAOGenerico<Entidade> implements IDAOCidade<Entidade>{
+public class DAOCidade extends DAOGenerico<Cidade> implements IDAOCidade{
 
 	@Override
 	public List<Cidade> pesquisarCidade(Cidade cidade) {

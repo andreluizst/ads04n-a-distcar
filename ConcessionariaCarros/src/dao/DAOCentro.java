@@ -6,7 +6,7 @@ import javax.persistence.TypedQuery;
 
 import classesBasicas.Centro;
 
-public class DAOCentro<Entidade> extends DAOGenerico<Entidade> implements IDAOCentro<Entidade>{
+public class DAOCentro extends DAOGenerico<Centro> implements IDAOCentro{
 
 	@Override
 	public List<Centro> pesquisarCentro(Centro centro) {

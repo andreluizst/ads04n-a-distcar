@@ -3,8 +3,8 @@ package dao;
 import java.util.List;
 import classesBasicas.NotaFiscal;
 
-public class DAONotaFiscal<Entidade> extends DAOGenerico<Entidade> implements
-		INotaFiscalDAO<Entidade> {
+public class DAONotaFiscal extends DAOGenerico<NotaFiscal> implements
+		INotaFiscalDAO {
 
 	public DAONotaFiscal() {
 		// TODO Auto-generated constructor stub

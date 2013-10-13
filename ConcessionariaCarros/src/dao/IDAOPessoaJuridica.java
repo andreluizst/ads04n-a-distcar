@@ -4,6 +4,6 @@ import java.util.List;
 
 import classesBasicas.PessoaJuridica;
 
-public interface IDAOPessoaJuridica<Entidade> extends IDAOGenerico<Entidade> {
+public interface IDAOPessoaJuridica extends IDAOGenerico<PessoaJuridica> {
 	public List<PessoaJuridica> pesquisarPJ(PessoaJuridica pj);
 }

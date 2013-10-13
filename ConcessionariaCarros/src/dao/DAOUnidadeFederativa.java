@@ -6,7 +6,7 @@ import javax.persistence.TypedQuery;
 
 import classesBasicas.UnidadeFederativa;
 
-public class DAOUnidadeFederativa<Entidade> extends DAOGenerico<Entidade> implements IDAOUnidadeFederativa<Entidade>{
+public class DAOUnidadeFederativa extends DAOGenerico<UnidadeFederativa> implements IDAOUnidadeFederativa{
 
 	@Override
 	public List<UnidadeFederativa> pesquisarUF(UnidadeFederativa uf) {

@@ -3,8 +3,8 @@ package dao;
 import java.util.List;
 import classesBasicas.Funcionario;
 
-public abstract class DAOFuncionario<Entidade> extends DAOGenerico <Entidade> implements
-		IFuncionarioDAO<Entidade, Funcionario> {
+public abstract class DAOFuncionario extends DAOGenerico<Funcionario> implements
+		IFuncionarioDAO {
 
 	public DAOFuncionario() {
 		// TODO Auto-generated constructor stub

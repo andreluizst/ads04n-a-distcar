@@ -5,7 +5,7 @@ import java.util.List;
 import classesBasicas.Departamento;
 
 
-public interface IDepartamentoDAO<Entidade> extends IDAOGenerico<Entidade> {
+public interface IDepartamentoDAO extends IDAOGenerico<Departamento> {
 
 		public List<Departamento> pesquisarNomeDepartamento(Departamento nome);
 	

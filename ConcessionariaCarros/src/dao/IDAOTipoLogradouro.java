@@ -1,5 +1,7 @@
 package dao;
 
-public interface IDAOTipoLogradouro<Entidade> extends IDAOGenerico<Entidade> {
+import classesBasicas.TipoLogradouro;
+
+public interface IDAOTipoLogradouro extends IDAOGenerico<TipoLogradouro> {
 
 }

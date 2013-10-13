@@ -6,7 +6,7 @@ import javax.persistence.TypedQuery;
 
 import classesBasicas.Fabricante;
 
-public class DAOFabricante<Entidade> extends DAOGenerico<Entidade> implements IDAOFabricante<Entidade>{
+public class DAOFabricante extends DAOGenerico<Fabricante> implements IDAOFabricante{
 
 	@Override
 	public List<Fabricante> pesquisarFabricante(Fabricante f) {

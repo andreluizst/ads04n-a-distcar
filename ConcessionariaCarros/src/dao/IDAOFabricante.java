@@ -4,6 +4,6 @@ import java.util.List;
 
 import classesBasicas.Fabricante;
 
-public interface IDAOFabricante<Entidade> extends IDAOGenerico<Entidade> {
+public interface IDAOFabricante extends IDAOGenerico<Fabricante> {
 	public List<Fabricante> pesquisarFabricante(Fabricante f);
 }

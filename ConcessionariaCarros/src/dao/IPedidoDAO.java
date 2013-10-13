@@ -4,7 +4,7 @@ import java.util.List;
 import classesBasicas.Pedido;
 
 
-public interface IPedidoDAO<Entidade> extends IDAOGenerico<Entidade> {
+public interface IPedidoDAO extends IDAOGenerico<Pedido> {
 
 	public List<Pedido> pesquisarPedido(Pedido p);
 	

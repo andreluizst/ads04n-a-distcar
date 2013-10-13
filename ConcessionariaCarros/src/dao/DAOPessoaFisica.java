@@ -6,7 +6,7 @@ import javax.persistence.TypedQuery;
 
 import classesBasicas.PessoaFisica;
 
-public class DAOPessoaFisica<Entidade> extends DAOGenerico<Entidade> implements IDAOPessoaFisica<Entidade>{
+public class DAOPessoaFisica extends DAOGenerico<PessoaFisica> implements IDAOPessoaFisica{
 
 	@Override
 	public List<PessoaFisica> pesquisarPF(PessoaFisica pf) {

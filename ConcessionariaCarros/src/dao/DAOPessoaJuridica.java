@@ -4,7 +4,7 @@ import java.util.List;
 import javax.persistence.TypedQuery;
 import classesBasicas.PessoaJuridica;
 
-public class DAOPessoaJuridica<Entidade> extends DAOGenerico<Entidade> implements IDAOPessoaJuridica<Entidade>{
+public class DAOPessoaJuridica extends DAOGenerico<PessoaJuridica> implements IDAOPessoaJuridica {
 
 	@Override
 	public List<PessoaJuridica> pesquisarPJ(PessoaJuridica pj) {

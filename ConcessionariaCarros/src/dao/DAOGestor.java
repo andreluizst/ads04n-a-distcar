@@ -4,7 +4,7 @@ import java.util.List;
 
 import classesBasicas.Gestor;
 
-public class DAOGestor<Entidade> extends DAOGenerico<Entidade> implements IGestorDAO<Entidade> {
+public class DAOGestor extends DAOGenerico<Gestor> implements IGestorDAO {
 
 	public DAOGestor() {
 		// TODO Auto-generated constructor stub
@@ -15,5 +15,7 @@ public class DAOGestor<Entidade> extends DAOGenerico<Entidade> implements IGesto
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	
 
 }

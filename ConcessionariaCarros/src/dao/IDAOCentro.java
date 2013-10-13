@@ -4,6 +4,6 @@ import java.util.List;
 
 import classesBasicas.Centro;
 
-public interface IDAOCentro<Entidade> extends IDAOGenerico<Entidade> {
+public interface IDAOCentro extends IDAOGenerico<Centro> {
 	public List<Centro> pesquisarCentro(Centro centro);
 }

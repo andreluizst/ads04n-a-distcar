@@ -4,7 +4,7 @@ import java.util.List;
 
 import classesBasicas.NotaFiscal;
 
-public interface INotaFiscalDAO<Entidade> extends IDAOGenerico<Entidade> {
+public interface INotaFiscalDAO extends IDAOGenerico<NotaFiscal> {
 
 		public List<NotaFiscal> pesquisarNotaFiscal(NotaFiscal nf);
 
