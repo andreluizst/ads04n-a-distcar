@@ -68,5 +68,9 @@ public class ControladorFuncao {
 	public void setFuncaoDAO(IDAOFuncao funcaoDAO) {
 		this.funcaoDAO = funcaoDAO;
 	}
+	
+	public List<Funcao> listarFuncoes() throws NegocioExceptionFuncao{
+		return funcaoDAO.consultarTodos();
+	}
 
 }

@@ -24,5 +24,13 @@
   			</fieldset>
   		</h:form>
  	</f:view>
+ 	<br></br>
+ 	<h:dataTable value="#{funcaoBean.listarFuncoes}" var = "funcao">
+ 		<h:column><h:outputText title="Código" value="#{funcao.codigo}"/></h:column>
+ 		<h:column><h:outputText title="Descrição" value="#{funcao.descricao}"/></h:column>
+ 		<h:column><h:outputText title="Salário" value="#{funcao.salario}"/></h:column>
+ 		<h:column><h:outputText title="Última Atualização" value="#{funcao.dataUltimaAtualizacao}"/></h:column>
+ 		<h:column><h:outputText title="Situação" value="#{funcao.situacao}"/></h:column>
+ 	</h:dataTable>
 </body>
 </html>

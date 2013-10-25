@@ -1,0 +1,8 @@
+Ontem, dia 24/10/2013, em sala de aula Francisco pediu para criar uma tela (XHTML) para cadastramento de 
+uma classe básica simples no projeto. A inclusão de função está OK.
+
+Hoje, dia 25/10/2013, Francisco ensinará como listar os objetos recuperados do BD.
+
+Recife, 25/10/2013.
+- André -> Pessoal, não é necessáiro criar um controlador por DAO. Acretito ser melhor ter controladores por
+ funcionalidades afins ou por módulo. 

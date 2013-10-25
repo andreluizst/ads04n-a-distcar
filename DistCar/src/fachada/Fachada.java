@@ -1,5 +1,7 @@
 package fachada;
 
+import java.util.List;
+
 import negocio.ControladorFuncao;
 import classesBasicas.Funcao;
 
@@ -22,6 +24,12 @@ public class Fachada implements IFachada {
 		// TODO Auto-generated method stub
 		//ctrlFuncao
 		ctrlFuncao.inserirFuncao(funcao);
+	}
+
+	@Override
+	public List<Funcao> listarFuncoes() throws Exception {
+		// TODO Auto-generated method stub
+		return ctrlFuncao.listarFuncoes();
 	}
 
 }

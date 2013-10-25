@@ -1,6 +1,7 @@
 package gui.managedBeans;
 
 import java.util.Calendar;
+import java.util.List;
 
 import javax.faces.bean.ManagedBean;
 
@@ -44,5 +45,17 @@ public class FuncaoBean {
 			mensagem = ex.getMessage();
 		}
 		return mensagem;
+	}
+	
+	public List<Funcao> listar(){
+		List<Funcao> lista = null;
+		try{
+			lista = Fachada.obterInstancia().listarFuncoes();
+			mensagem = "Funções listadas com sucesso!";
+			return lista;
+		}catch(Exception ex){
+			mensagem = ex.getMessage();
+		}
+		return lista;
 	}
 }
