@@ -3,7 +3,7 @@ package dao;
 import java.util.List;
 import classesBasicas.Funcionario;
 
-public abstract class DAOFuncionario extends DAOGenerico<Funcionario> implements
+public class DAOFuncionario extends DAOGenerico<Funcionario> implements
 		IFuncionarioDAO {
 
 	public DAOFuncionario() {

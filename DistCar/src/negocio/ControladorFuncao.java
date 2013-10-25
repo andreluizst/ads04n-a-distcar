@@ -3,26 +3,24 @@ package negocio;
 import java.util.List;
 
 import classesBasicas.Funcao;
-import dao.FuncaoDAO;
-import dao.IFuncaoDAO;
+import dao.DAOFuncao;
+import dao.IDAOFuncao;
 import erro.NegocioExceptionFuncao;
 
 public class ControladorFuncao {
-	private IFuncaoDAO<Funcao> funcaoDAO;
+	private IDAOFuncao funcaoDAO;
 	
 	public ControladorFuncao() {
 		// TODO Auto-generated constructor stub
-			super();
-		
-		this.setFuncaoDAO( new FuncaoDAO<Funcao>());
-		}
+		super();
+		funcaoDAO = new DAOFuncao();
+	}
 
 	public void inserirFuncao (Funcao funcao) throws NegocioExceptionFuncao {
 		// TODO Auto-generated method stub
-		if(	funcao.getCodigo()==null||funcao.getCodigo().equals("")||
-				funcao.getDescricao()==null||funcao.getDescricao().equals("")||
-						funcao.getSituacao()==null||funcao.getSituacao().equals("")||
-							funcao.getDataUltimaAtualizacao()==null||funcao.getDataUltimaAtualizacao().equals(""))
+		if(funcao.getDescricao()==null||funcao.getDescricao().equals("")||
+						funcao.getSituacao()==null ||
+							funcao.getDataUltimaAtualizacao()==null)
 				{
 					throw new NegocioExceptionFuncao("Campos inválidos");
 				}
@@ -45,7 +43,6 @@ public class ControladorFuncao {
 		}
 		
 		funcaoDAO.inserir(f);
-			
 	}
 	
 	
@@ -64,11 +61,11 @@ public class ControladorFuncao {
 	}
 	
 	
-	public IFuncaoDAO<Funcao> getFuncaoDAO() {
+	public IDAOFuncao getFuncaoDAO() {
 		return funcaoDAO;
 	}
 
-	public void setFuncaoDAO(IFuncaoDAO<Funcao> funcaoDAO) {
+	public void setFuncaoDAO(IDAOFuncao funcaoDAO) {
 		this.funcaoDAO = funcaoDAO;
 	}
 

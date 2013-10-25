@@ -4,18 +4,18 @@ import java.util.List;
 
 import classesBasicas.NotaFiscal;
 import dao.INotaFiscalDAO;
-import dao.NotaFiscalDAO;
+import dao.DAONotaFiscal;
 import erro.NegocioExceptionNotaFiscal;
 
 
 public class ControladorNotaFiscal {
 	
-	private INotaFiscalDAO<NotaFiscal> notaFiscalDAO;
+	private INotaFiscalDAO notaFiscalDAO;
 	
 	public ControladorNotaFiscal() {
 		super();
 		
-		this.notaFiscalDAO = new NotaFiscalDAO<NotaFiscal>();	
+		this.notaFiscalDAO = new DAONotaFiscal();	
 		}
 	
 	public void inserirNotaFiscal(NotaFiscal notaFiscal) throws NegocioExceptionNotaFiscal {
@@ -40,22 +40,22 @@ public class ControladorNotaFiscal {
 				{
 					throw new NegocioExceptionNotaFiscal("Campos inválidos");
 				}
-		NotaFiscal nf = notaFiscalDAO.pesquisarNumeroNotaFiscal(notaFiscal.getNumeroNotaFiscal());
+		/*NotaFiscal nf = notaFiscalDAO.pesquisarNumeroNotaFiscal(notaFiscal.getNumeroNotaFiscal());
 		
 		if(nf==null){
 			throw new NegocioExceptionNotaFiscal("Nota Fiscal não cadastrada");
 		}
 		
-		notaFiscalDAO.inserir(nf);
+		notaFiscalDAO.inserir(nf);*/
 	}
 	
 	public void removerNotaFiscal(NotaFiscal notaFiscal) throws NegocioExceptionNotaFiscal {
 		// TODO Auto-generated method stub
-		NotaFiscal nf = notaFiscalDAO.pesquisarNumeroNotaFiscal(notaFiscal.getNumeroNotaFiscal());
+		/*NotaFiscal nf = notaFiscalDAO.pesquisarNumeroNotaFiscal(notaFiscal.getNumeroNotaFiscal());
 		if(nf==null){
 			throw new NegocioExceptionNotaFiscal("Nota Fiscal não cadastrada");
 		}
-		notaFiscalDAO.remover(nf);
+		notaFiscalDAO.remover(nf);*/
 	}
 	
 	public List<NotaFiscal> pesquisarNotaFiscal(NotaFiscal notaFiscal) throws NegocioExceptionNotaFiscal {

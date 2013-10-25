@@ -12,6 +12,7 @@ public class TesteJose {
 	public static void execute(EntityManagerFactory emf){
 		EntityManager em = emf.createEntityManager();
 		EntityTransaction et = em.getTransaction();
+		/*
 		try{
 			et.begin();
 			//**** persistindo PF ***
@@ -35,6 +36,6 @@ public class TesteJose {
 			JOptionPane.showMessageDialog(null, ex.getMessage());
 		}finally{
 			em.close();
-		}
+		}*/
 	}
 }

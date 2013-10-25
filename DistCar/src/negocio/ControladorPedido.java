@@ -4,19 +4,19 @@ package negocio;
 import java.util.List;
 import classesBasicas.Pedido;
 import dao.IPedidoDAO;
-import dao.PedidoDAO;
+import dao.DAOPedido;
 import erro.NegocioExceptionPedido;
 
 
 public class ControladorPedido {
 	
-private IPedidoDAO<Pedido> pedidoDAO;
+private IPedidoDAO pedidoDAO;
 	
 public ControladorPedido() {
 
 	super();
 		
-	this.pedidoDAO = new PedidoDAO<Pedido>();	
+	this.pedidoDAO = new DAOPedido();	
 	}
 
 public void inserirPedido(Pedido pedido) throws NegocioExceptionPedido {

@@ -2,18 +2,18 @@ package negocio;
 
 import java.util.List;
 import classesBasicas.Funcionario;
-import dao.FuncionarioDAO;
+import dao.DAOFuncionario;
 import dao.IFuncionarioDAO;
 import erro.NegocioExceptionFuncionario;
 
 public class ControladorFuncionario {
-	private IFuncionarioDAO<Funcionario> funcionarioDAO;
+	private IFuncionarioDAO funcionarioDAO;
 	
 	public ControladorFuncionario() {
 		// TODO Auto-generated constructor stub
 			super();
-		
-		this.setFuncionarioDAO ( new FuncionarioDAO<Funcionario>());
+		this.funcionarioDAO = new DAOFuncionario();
+		//this.setFuncionarioDAO ( new DAOFuncionario());
 		}
 	
 	public void inserirFuncionario (Funcionario funcionario) throws NegocioExceptionFuncionario {
@@ -60,11 +60,11 @@ public class ControladorFuncionario {
 		return null;
 	}
 
-	public IFuncionarioDAO<Funcionario> getFuncionarioDAO() {
+	public IFuncionarioDAO getFuncionarioDAO() {
 		return funcionarioDAO;
 	}
 
-	public void setFuncionarioDAO(IFuncionarioDAO<Funcionario> funcionarioDAO) {
+	public void setFuncionarioDAO(IFuncionarioDAO funcionarioDAO) {
 		this.funcionarioDAO = funcionarioDAO;
 	}
 
