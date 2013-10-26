@@ -4,10 +4,11 @@
 	xmlns="http://www.w3.org/1999/xhtml" 
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
 >
 
-<head><title>Função</title> </head>
-<body>
+<h:head><title>Função</title> </h:head>
+<h:body>
 	<f:view>
   		<h:form>
   			<fieldset>
@@ -25,12 +26,12 @@
   		</h:form>
  	</f:view>
  	<br></br>
- 	<h:dataTable value="#{funcaoBean.listarFuncoes}" var = "funcao">
+ 	<h:dataTable value="#{funcaoBean.funcoes}" var = "funcao">
  		<h:column><h:outputText title="Código" value="#{funcao.codigo}"/></h:column>
  		<h:column><h:outputText title="Descrição" value="#{funcao.descricao}"/></h:column>
  		<h:column><h:outputText title="Salário" value="#{funcao.salario}"/></h:column>
  		<h:column><h:outputText title="Última Atualização" value="#{funcao.dataUltimaAtualizacao}"/></h:column>
  		<h:column><h:outputText title="Situação" value="#{funcao.situacao}"/></h:column>
  	</h:dataTable>
-</body>
+</h:body>
 </html>

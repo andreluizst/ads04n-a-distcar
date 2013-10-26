@@ -6,3 +6,12 @@ Hoje, dia 25/10/2013, Francisco ensinará como listar os objetos recuperados do B
 Recife, 25/10/2013.
 - André -> Pessoal, não é necessáiro criar um controlador por DAO. Acretito ser melhor ter controladores por
  funcionalidades afins ou por módulo. 
+ 
+AGENDADO - Skype domingo, dia 27 às 14:00
+André
+	andre.luiz.st@hotmail.com
+	andre.luiz.silvat@gmail.com
+Felipe Carlos
+	fellipecarllos@msn.com
+	fellipecarllos@gmail.com
+José Francisco

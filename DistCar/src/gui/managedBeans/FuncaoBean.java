@@ -14,6 +14,7 @@ import fachada.Fachada;
 public class FuncaoBean {
 	private Funcao funcao;
 	private String mensagem;
+	private List<Funcao> lista;
 	
 	public FuncaoBean(){
 		funcao = new Funcao();
@@ -39,6 +40,7 @@ public class FuncaoBean {
 			funcao.setDataUltimaAtualizacao(Calendar.getInstance());
 			funcao.setSituacao(Situacao.ATIVO);
 			Fachada.obterInstancia().salvarFuncao(funcao);
+			listar();
 			mensagem = "Função salva com sucesso!";
 			funcao = new Funcao();
 		}catch(Exception ex){
@@ -48,7 +50,6 @@ public class FuncaoBean {
 	}
 	
 	public List<Funcao> listar(){
-		List<Funcao> lista = null;
 		try{
 			lista = Fachada.obterInstancia().listarFuncoes();
 			mensagem = "Funções listadas com sucesso!";
@@ -56,6 +57,10 @@ public class FuncaoBean {
 		}catch(Exception ex){
 			mensagem = ex.getMessage();
 		}
+		return lista;
+	}
+	
+	public List<Funcao> getFuncoes(){
 		return lista;
 	}
 }
