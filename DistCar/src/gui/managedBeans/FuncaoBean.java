@@ -1,9 +1,11 @@
 package gui.managedBeans;
 
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
+import javax.faces.event.ActionEvent;
 
 import classesBasicas.Funcao;
 import classesBasicas.Situacao;
@@ -15,6 +17,7 @@ public class FuncaoBean {
 	private Funcao funcao;
 	private String mensagem;
 	private List<Funcao> lista;
+	private Date data;
 	
 	public FuncaoBean(){
 		funcao = new Funcao();
@@ -22,6 +25,15 @@ public class FuncaoBean {
 		//funcao.getSalario();
 		//funcao.getSituacao();
 		listar();
+		data = Calendar.getInstance().getTime();
+	}
+
+	public Date getData() {
+		return data;
+	}
+
+	public void setData(Date data) {
+		this.data = data;
 	}
 
 	public Funcao getFuncao() {
@@ -36,6 +48,14 @@ public class FuncaoBean {
 		return mensagem;
 	}
 	
+	public void novo(ActionEvent actionEvent){
+		funcao = new Funcao();
+	}
+	
+	public void salvarAjax(ActionEvent actionEvent){
+		salvar();
+	}
+	
 	public String salvar(){
 		try{
 			funcao.setDataUltimaAtualizacao(Calendar.getInstance());
@@ -48,6 +68,10 @@ public class FuncaoBean {
 			mensagem = ex.getMessage();
 		}
 		return mensagem;
+	}
+	
+	public void listarAjax(ActionEvent actionEvent){
+		lista = listar();
 	}
 	
 	public List<Funcao> listar(){
