@@ -21,6 +21,7 @@ public class FuncaoBean {
 		//funcao.getDescricao()
 		//funcao.getSalario();
 		//funcao.getSituacao();
+		listar();
 	}
 
 	public Funcao getFuncao() {
