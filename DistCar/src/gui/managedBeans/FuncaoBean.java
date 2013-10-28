@@ -21,6 +21,7 @@ public class FuncaoBean {
 	
 	public FuncaoBean(){
 		funcao = new Funcao();
+		funcao.setDescricao("Digite descrição aqui");
 		//funcao.getDescricao()
 		//funcao.getSalario();
 		//funcao.getSituacao();

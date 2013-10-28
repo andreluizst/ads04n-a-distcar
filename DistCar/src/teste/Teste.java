@@ -10,8 +10,8 @@ public class Teste {
 		// TODO Auto-generated method stub
 
 		EntityManagerFactory emf = Persistence.createEntityManagerFactory("DistCar");
-		TesteCarlos.execute(emf);
-		//TesteAndre.execute(emf);
+		//TesteCarlos.execute(emf);
+		TesteAndre.execute(emf);
 		//TesteJose.execute(emf);
 		emf.close();
 	}

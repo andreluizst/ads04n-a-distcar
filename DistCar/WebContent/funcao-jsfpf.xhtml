@@ -25,11 +25,11 @@
     		<p:commandButton id="errorButton" value="Error" actionListener="#{messagesController.addError}"/>  
     		<p:commandButton id="fatalButton" value="Fatal" actionListener="#{messagesController.addFatal}"/>  
 		</h:form>
-  		<h:form>
+  		<h:form id="frmFuncao">
   			<p:panel id="panelFuncao" header="DistCar - Função">
   				<h:panelGrid columns="3" cellpadding="5">
   					<h:outputLabel for="descricao" value="Descrição: *"/>
-  					<h:inputText id="descricao" value="#{funcaoBean.funcao.descricao}" required="true" lable="Descrição_lable"/>
+  					<h:inputText id="descricao" value="#{funcaoBean.funcao.descricao}" required="false" lable="Descrição"/>
   					<p:message for="descricao"/>
   					
   					<h:outputLabel for="salario" value="Salário: "></h:outputLabel>
@@ -41,16 +41,19 @@
 
 				<p:commandButton update="panelFuncao" value="Novo" actionListener="#{funcaoBean.novo}"/>
   				<p:commandButton update="panelFuncao" value="Salvar" actionListener="#{funcaoBean.salvarAjax}"/>
+  				<p:commandButton id="btnAlterar" value="Alterar" update=":frmFuncao:panelFuncao" /> 
 				
   			</p:panel>
-
+		<!-- 
   		</h:form>
   		
   		<h:form id="fmrLista" prependId="false">
-  			<p:commandButton update="tbFuncoes" value="Listar" actionListener="#{funcaoBean.listarAjax}"/>
+  		-->
+  			<p:commandButton update=":frmFuncao" value="Listar" actionListener="#{funcaoBean.listarAjax}"/>
   			<p:dataTable id="tbFuncoes" var="funcao" value="#{funcaoBean.funcoes}" paginator="true" rows="5"
   						paginatorTemplate="{CurrentPageReport} {PreviousPageLink} {PageLinks}
-  						{NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rowsPerPageTamplate="5,10,15">
+  						{NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rowsPerPageTemplate="5,10,15"
+  						selection="#{funcaoBean.funcao}" selectionMode="single" rowKey="#{funcao}">
   				<f:facet name="header">Lista de Funções</f:facet>
   				<p:column>
   					<f:facet name="header"><h:outputText value="Código"/> </f:facet>
@@ -61,8 +64,8 @@
   					<h:outputText value="#{funcao.descricao}"/>
   				</p:column>
   				<p:column>
-  					<f:facet name="header"><h:outputText dir="RTL" value="Salário"/> </f:facet>
-  					<h:outputText dir="RTL" value="#{funcao.salario}"/>
+  					<f:facet name="header"><h:outputText value="Salário"/> </f:facet>
+  					<h:outputText dir="rtl" value="#{funcao.salario}"/>
   				</p:column>
   				<p:column>
   					<f:facet name="header"><h:outputText value="Situação"/> </f:facet>
@@ -74,6 +77,11 @@
   						<f:convertDateTime pattern="dd/MM/yyyy"/>
   					</h:outputText>
   				</p:column>
+  				
+  				<f:facet name="footer">  
+            		<p:commandButton id="btnAlterar2" value="Alterar"   
+                    		update=":frmFuncao:panelFuncao" />  
+        		</f:facet> 
   			</p:dataTable>
   		</h:form>
  	</f:view>
