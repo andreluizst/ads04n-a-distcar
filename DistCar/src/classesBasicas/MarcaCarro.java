@@ -8,7 +8,9 @@ public class MarcaCarro extends ObjetoGeral {
 	
 	@Column(unique=true)
 	private String descricaoMarca;
-
+	@ManyToOne
+	private Fabricante fabricante;
+	
 	public String getDescricaoMarca() {
 		return descricaoMarca;
 	}
