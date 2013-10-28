@@ -1,5 +1,5 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
-          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html 
 	xmlns="http://www.w3.org/1999/xhtml" 
 	xmlns:h="http://java.sun.com/jsf/html"
@@ -7,15 +7,17 @@
 	xmlns:p="http://primefaces.org/ui"
 >
 
-<h:head><title>FunÃ§Ã£o</title> </h:head>
+<h:head><title>Função</title> </h:head>
 <h:body>
 	<f:view>
+		
   		<h:form>
+  		  	 
   			<fieldset>
-  				<legend>Cadastrar funÃ§Ã£o</legend> <br/>
-  				DescriÃ§Ã£o: <h:inputText value="#{funcaoBean.funcao.descricao}"></h:inputText> <br/>
+  				<legend>Cadastrar função</legend> <br/>
+  				Descrição: <h:inputText value="#{funcaoBean.funcao.descricao}"></h:inputText> <br/>
   				<br></br>
-  				SalÃ¡rio: <h:inputText converterMessage="Digite um nÃºmero decimal no formato 999.00" value="#{funcaoBean.funcao.salario}"></h:inputText> <br/>
+  				Salário: <h:inputText converterMessage="Digite um número decimal no formato 999.00" value="#{funcaoBean.funcao.salario}"></h:inputText> <br/>
   				<br></br>
   				<h:commandButton value="Salvar" action="#{funcaoBean.salvar}"></h:commandButton>
   				<br></br>
@@ -23,17 +25,19 @@
   				<h:messages></h:messages>
   				<b><i>#{funcaoBean.mensagem}</i></b>
   			</fieldset>
+  			
   		</h:form>
  	</f:view>
  	<br></br>
- 	<h:dataTable value="#{funcaoBean.funcoes}" var = "funcao">
- 		<h:column><h:outputText title="CÃ³digo" value="#{funcao.codigo}"/></h:column>
- 		<h:column><h:outputText title="DescriÃ§Ã£o" value="#{funcao.descricao}"/></h:column>
- 		<h:column><h:outputText title="SalÃ¡rio" value="#{funcao.salario}"/></h:column>
+ 	<h:dataTable value="#{funcaoBean.funcoes}" var = "funcao" >
+ 		<h:column><h:outputText title="Código" value="#{funcao.codigo}"/></h:column>
+ 		<h:column><h:outputText title="Descrição" value="#{funcao.descricao}"/></h:column>
+ 		<h:column><h:outputText title="Salário" value="#{funcao.salario}"/></h:column>
  		<!-- 
- 		<h:column><h:outputText title="Ãšltima AtualizaÃ§Ã£o" value="#{funcao.dataUltimaAtualizacao}"/></h:column>
+ 		<h:column><h:outputText title="Última Atualização" value="#{funcao.dataUltimaAtualizacao}"/></h:column>
  		-->
- 		<h:column><h:outputText title="SituaÃ§Ã£o" value="#{funcao.situacao}"/></h:column>
+ 		<h:column><p:calendar value="#{funcao.dataUltimaAtualizacao.time}" /></h:column>
+ 		<h:column><h:outputText title="Situação" value="#{funcao.situacao}"/></h:column>
  	</h:dataTable>
 </h:body>
 </html>

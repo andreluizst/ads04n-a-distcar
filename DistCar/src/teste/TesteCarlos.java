@@ -30,19 +30,22 @@ public class TesteCarlos {
 		
 		VersaoModeloCarro versaoModeloCarro = new VersaoModeloCarro();
 		versaoModeloCarro.setSituacao(Situacao.ATIVO );
-		//versaoModeloCarro.setDescricaoVersaoModeloCarro("1.0 LTZ");
+		versaoModeloCarro.setDescricaoVersaoModeloCarro("1.0 LTZ");
 
 		ItemSerieCarro is = new ItemSerieCarro();
 		is.setDescricao("Arcondicionado");
 		is.setValorItemSerie(1500);
+		is.setVersaoModeloCarro(versaoModeloCarro);
 		
 		ItemSerieCarro is1 = new ItemSerieCarro();
 		is1.setDescricao("Direção Hidraulica");
 		is1.setValorItemSerie(1500);
+		is1.setVersaoModeloCarro(versaoModeloCarro);
 		
 		AcessorioCarro ac = new AcessorioCarro();
 		ac.setDescricao("Adesivo");
 		ac.setValorAcessorioCarro(200);
+
 		
 		AcessorioCarro ac1 = new AcessorioCarro();
 		ac1.setDescricao("Farol Mascara Negra");
@@ -50,7 +53,10 @@ public class TesteCarlos {
 		
 		ModeloCarro modelo = new ModeloCarro();
 		modelo.setAnoModelo(2014);
-		//modelo.setDescricaoModelocarro("Celta");
+		modelo.setDescricaoModeloCarro("Celta");
+		
+		
+		
 		List<AcessorioCarro> acessorio= new ArrayList<AcessorioCarro>();
 		acessorio.add(0, ac);
 		acessorio.add(1,ac1 );
@@ -59,6 +65,11 @@ public class TesteCarlos {
 		itemSerie.add(0, is);
 		itemSerie.add(1, is1);
 		//modelo.setItemSerieCarros(itemSerie);
+		
+		modelo.setMarcaCarro(marcaCarro);
+		versaoModeloCarro.setModeloCarro(modelo);
+		//versaoModeloCarro.setItemSerieCarros(itemSerie);
+		//versaoModeloCarro.setAcessorioCarros(acessorio);
 		
 		Carro carro = new Carro();
 		carro.setAnoFabricacao(2014);

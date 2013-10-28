@@ -11,6 +11,14 @@ public class ItemSerieCarro extends EntidadeBasica{
 	private double valorItemSerie;
 	@ManyToOne(cascade=CascadeType.PERSIST)
 	private VersaoModeloCarro versaoModeloCarro;
+	public VersaoModeloCarro getVersaoModeloCarro() {
+		return versaoModeloCarro;
+	}
+
+	public void setVersaoModeloCarro(VersaoModeloCarro versaoModeloCarro) {
+		this.versaoModeloCarro = versaoModeloCarro;
+	}
+
 	public double getValorItemSerie() {
 		return valorItemSerie;
 	}
