@@ -15,7 +15,7 @@ public class Fachada implements IFachada {
 	private ControladorFuncao ctrlFuncao;
 	private ControladorCarro controladorCarro;
 	
-	private Fachada(){
+	public Fachada(){
 		ctrlFuncao = new ControladorFuncao();
 		this.controladorCarro = new ControladorCarro();
 	}
@@ -25,18 +25,12 @@ public class Fachada implements IFachada {
 			instancia = new Fachada();
 		return instancia;
 	}
-	
-	//*****************************************************************
-	//************************  C R U D  ******************************
-	//*****************************************************************
+
 	@Override
 	public void salvarFuncao(Funcao funcao) throws Exception {
 		// TODO Auto-generated method stub
 		//ctrlFuncao
-		if (ctrlFuncao.funcaoExiste(funcao))
-			ctrlFuncao.alterarFuncao(funcao);
-		else
-			ctrlFuncao.inserirFuncao(funcao);
+		ctrlFuncao.inserirFuncao(funcao);
 	}
 
 	@Override
@@ -44,20 +38,9 @@ public class Fachada implements IFachada {
 		// TODO Auto-generated method stub
 		return ctrlFuncao.listarFuncoes();
 	}
+
+	//Carro - Felipe Carlos
 	
-	
-	@Override
-	public void excluirFuncao(Funcao funcao) throws Exception {
-		// TODO Auto-generated method stub
-		if (ctrlFuncao.funcaoExiste(funcao))
-			ctrlFuncao.removerFuncao(funcao);
-		else
-			throw new Exception("Exclusão inválida!");
-	}
-	
-	//*****************************************************************
-	//****************** Carro - Felipe Carlos ************************
-	//*****************************************************************
 	@Override
 	public void salvarCarro(Carro carro) throws Exception {
 		// TODO Auto-generated method stub
@@ -74,13 +57,33 @@ public class Fachada implements IFachada {
 	public void salvarVersaoModeloCarro(VersaoModeloCarro versaoModeloCarro)
 			throws Exception {
 		// TODO Auto-generated method stub
+		this.controladorCarro.inserir(versaoModeloCarro);
 		
 	}
 
 	@Override
 	public void salvarModeloCarro(ModeloCarro modeloCarro) throws Exception {
 		// TODO Auto-generated method stub
-		
+		this.controladorCarro.inserir(modeloCarro);
+	}
+
+	@Override
+	public List<VersaoModeloCarro> listarVersao() throws Exception {
+		return this.controladorCarro.consultarTodasVersao();
+	}
+	
+	public List<ModeloCarro> listarModelo() throws Exception {
+		return this.controladorCarro.consultarTodosModelos();
+	}
+
+	@Override
+	public VersaoModeloCarro pesquisarVersao(int codigo) {
+		return this.controladorCarro.pesquisarVersao(codigo);
+	}
+
+	@Override
+	public ModeloCarro pesquisarModeloCarro(int codigo) {
+		return this.controladorCarro.pesquisarModeloCarro(codigo);
 	}
 
 	
