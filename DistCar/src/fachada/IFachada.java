@@ -17,4 +17,7 @@ public interface IFachada {
 	public void salvarItemSerie(ItemSerieCarro itemSerieCarro)throws Exception;
 	public void salvarVersaoModeloCarro(VersaoModeloCarro versaoModeloCarro) throws Exception;
 	public void salvarModeloCarro(ModeloCarro modeloCarro) throws Exception;
+	public List<VersaoModeloCarro> listarVersao() throws Exception;
+	public VersaoModeloCarro pesquisarVersao(int codigo);
+	public ModeloCarro pesquisarModeloCarro(int codigo);
 }
