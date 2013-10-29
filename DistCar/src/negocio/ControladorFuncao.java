@@ -15,6 +15,17 @@ public class ControladorFuncao {
 		super();
 		funcaoDAO = new DAOFuncao();
 	}
+	
+	public boolean funcaoExiste(Funcao funcao){
+		Funcao obj = null;
+		if (funcao.getCodigo() == null)
+			return false;
+		obj = funcaoDAO.consultarPorId(funcao.getCodigo());
+		if (obj != null)
+			if (obj.getCodigo() == funcao.getCodigo())
+				return true;
+		return false;
+	}
 
 	public void inserirFuncao (Funcao funcao) throws NegocioExceptionFuncao {
 		// TODO Auto-generated method stub

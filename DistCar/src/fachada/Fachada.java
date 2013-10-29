@@ -30,7 +30,10 @@ public class Fachada implements IFachada {
 	public void salvarFuncao(Funcao funcao) throws Exception {
 		// TODO Auto-generated method stub
 		//ctrlFuncao
-		ctrlFuncao.inserirFuncao(funcao);
+		if (ctrlFuncao.funcaoExiste(funcao))
+			ctrlFuncao.alterarFuncao(funcao);
+		else
+			ctrlFuncao.inserirFuncao(funcao);
 	}
 
 	@Override
@@ -66,6 +69,5 @@ public class Fachada implements IFachada {
 		
 	}
 
-	
 	
 }

@@ -4,7 +4,9 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 
 import classesBasicas.Funcao;
@@ -54,13 +56,28 @@ public class FuncaoBean {
 	}
 	
 	public void salvarAjax(ActionEvent actionEvent){
-		salvar();
+		try{
+			funcao.setDataUltimaAtualizacao(Calendar.getInstance());
+			funcao.setSituacao(Situacao.ATIVO);
+			//if (funcao.getCodigo() != null)
+				//throw new Exception("funcao.codigo != null !!");
+			Fachada.obterInstancia().salvarFuncao(funcao);
+			//listar();
+			mensagem = "Função salva com sucesso!";
+			funcao = new Funcao();
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Informação", "Função salva com sucesso!"));
+		}catch(Exception ex){
+			mensagem = ex.getMessage();
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Salvar Error: ", ex.getMessage()));
+		}
 	}
 	
 	public String salvar(){
 		try{
 			funcao.setDataUltimaAtualizacao(Calendar.getInstance());
 			funcao.setSituacao(Situacao.ATIVO);
+			if (funcao.getCodigo() != null)
+				throw new Exception("funcao.codigo != null !!");
 			Fachada.obterInstancia().salvarFuncao(funcao);
 			listar();
 			mensagem = "Função salva com sucesso!";

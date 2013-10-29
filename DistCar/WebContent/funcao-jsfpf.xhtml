@@ -41,15 +41,19 @@
 
 				<p:commandButton update="panelFuncao" value="Novo" actionListener="#{funcaoBean.novo}"/>
   				<p:commandButton update="panelFuncao" value="Salvar" actionListener="#{funcaoBean.salvarAjax}"/>
-  				<p:commandButton id="btnAlterar" value="Alterar" update=":frmFuncao:panelFuncao" /> 
-				
+  				<p:commandButton id="btnAlterar" value="Alterar" update="panelFuncao" />
+  				<p:commandButton update=":frmLista" value="Listar" actionListener="#{funcaoBean.listarAjax}"/>
+  				<br></br>
+  				<h:outputLabel for="msg" value="Mensagem: "/> 
+				<h:outputText id="msg" value="#{funcaoBean.mensagem}"/>
   			</p:panel>
-		<!-- 
+		
   		</h:form>
   		
-  		<h:form id="fmrLista" prependId="false">
-  		-->
-  			<p:commandButton update=":frmFuncao" value="Listar" actionListener="#{funcaoBean.listarAjax}"/>
+  		<h:form id="frmLista" >
+  		
+  			<p:commandButton update=":frmLista" value="Listar" actionListener="#{funcaoBean.listarAjax}"/>
+  			
   			<p:dataTable id="tbFuncoes" var="funcao" value="#{funcaoBean.funcoes}" paginator="true" rows="5"
   						paginatorTemplate="{CurrentPageReport} {PreviousPageLink} {PageLinks}
   						{NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rowsPerPageTemplate="5,10,15"
