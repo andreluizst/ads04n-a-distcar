@@ -74,11 +74,13 @@ public class FuncaoBean {
 	
 	public void excluir(){
 		try{
+			//funcao = funcaoSelecionada;
 			fachada.excluirFuncao(funcaoSelecionada);
 			FacesContext.getCurrentInstance().addMessage(
-					null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro ao excluir: ", 
-							"Função " + funcao.getDescricao() + " excluida com sucesso!")
+					null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Informação: ", 
+							"Função " + funcaoSelecionada.getDescricao() + " excluida com sucesso!")
 					);
+			funcao = new Funcao();
 		}catch(Exception ex){
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro ao excluir: ", ex.getMessage()));
 		}
