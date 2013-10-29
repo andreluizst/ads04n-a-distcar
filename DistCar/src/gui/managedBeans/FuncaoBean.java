@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 //import gui.MessagesController;
 
+
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
@@ -18,6 +19,7 @@ import classesBasicas.Situacao;
 //import erro.NegocioExceptionFuncao;
 import fachada.Fachada;
 import fachada.IFachada;
+import gui.MsgPrimeFaces;
 
 @ManagedBean
 @ViewScoped
@@ -34,12 +36,7 @@ public class FuncaoBean {
 	
 	public FuncaoBean(){
 		fachada = Fachada.obterInstancia();
-		funcao = new Funcao();
-		funcao.setDescricao("Digite descrição aqui");
-		//funcao.getDescricao()
-		//funcao.getSalario();
-		//funcao.getSituacao();
-		//listar();
+		novaFuncao();
 		data = Calendar.getInstance().getTime();
 	}
 
@@ -68,21 +65,24 @@ public class FuncaoBean {
 			funcao = funcaoSelecionada;
 	}
 	
-	public void novo(){
+	public void novaFuncao(){
 		funcao = new Funcao();
+		funcao.setDescricao("Digite a descrição aqui");
 	}
 	
 	public void excluir(){
 		try{
 			//funcao = funcaoSelecionada;
 			fachada.excluirFuncao(funcaoSelecionada);
-			FacesContext.getCurrentInstance().addMessage(
+			/*FacesContext.getCurrentInstance().addMessage(
 					null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Informação: ", 
 							"Função " + funcaoSelecionada.getDescricao() + " excluida com sucesso!")
-					);
-			funcao = new Funcao();
+					);*/
+			MsgPrimeFaces.exibirMensagemInfomativa("Função " + funcaoSelecionada.getDescricao() + " excluida com sucesso!");
+			novaFuncao();
 		}catch(Exception ex){
-			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro ao excluir: ", ex.getMessage()));
+			//FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro ao excluir: ", ex.getMessage()));
+			MsgPrimeFaces.exibirMensagemDeErro(ex.getMessage());
 		}
 	}
 	
@@ -93,10 +93,12 @@ public class FuncaoBean {
 			if (funcao.getSituacao() == null)
 				funcao.setSituacao(Situacao.ATIVO);
 			Fachada.obterInstancia().salvarFuncao(funcao);
-			funcao = new Funcao();
-			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Informação", "Função salva com sucesso!"));
+			novaFuncao();
+			MsgPrimeFaces.exibirMensagemInfomativa("Função salva com sucesso!");
+			//FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Informação", "Função salva com sucesso!"));
 		}catch(Exception ex){
-			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Salvar Error: ", ex.getMessage()));
+			//FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Salvar Error: ", ex.getMessage()));
+			MsgPrimeFaces.exibirMensagemDeErro(ex.getMessage());
 		}
 	}
 	
