@@ -49,27 +49,25 @@ public static void main(String[] args) {
 		acessorioCarros.add(ac);
 		acessorioCarros.add(ac1);
 		
-		MarcaCarro marcaCarro = new MarcaCarro("Chevrolet");
+		MarcaCarro marcaCarro = new MarcaCarro();
 	
 		ModeloCarro modelo = new ModeloCarro();
 		modelo.setAnoModelo(2014);
 		modelo.setDescricaoModeloCarro("Celta");
-		modelo.setMarcaCarro(marcaCarro);
+	
 		
 		VersaoModeloCarro versaoModeloCarro = new VersaoModeloCarro();
 		versaoModeloCarro.setSituacao(Situacao.ATIVO );
 		versaoModeloCarro.setDescricaoVersaoModeloCarro("1.0 LTZ");
 		versaoModeloCarro.setModeloCarro(modelo);
 		versaoModeloCarro.setValorVersao(7.000);
-		versaoModeloCarro.setItemSerieCarros(itemSerieCarros);
-		versaoModeloCarro.setAcessorioCarros(acessorioCarros);
 		
 		Carro carro = new Carro();
 		carro.setAnoFabricacao(2014);
 		carro.setChassi("121dawew323");
 		carro.setCor("azul");
 		carro.setValorCarro(30000.00);
-		carro.setVersaoModeloCarro(versaoModeloCarro);
+		carro.setMarcaCarro(marcaCarro);
 		
 		IDAOCarro carroDAO = new DAOCarro();
 		carroDAO.inserir(carro);
