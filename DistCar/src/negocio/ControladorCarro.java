@@ -61,6 +61,14 @@ public class ControladorCarro {
 		modeloCarroDAO.remover(entidade);
 	}
 	
+	public ModeloCarro pesquisarModeloCarro(int codigo) {
+		return modeloCarroDAO.consultarPorId(codigo);
+	}
+	
+	public List<ModeloCarro> consultarTodosModelos() {
+		return modeloCarroDAO.consultarTodos();
+	}
+	
 	//Versao de carro
 	
 	public void inserir(VersaoModeloCarro entidade) {
@@ -73,6 +81,13 @@ public class ControladorCarro {
 		versaoModeloCarroDAO.remover(entidade);
 	}
 	
+	public List<VersaoModeloCarro> consultarTodasVersao() {
+		return versaoModeloCarroDAO.consultarTodos();
+	}
+	
+	public VersaoModeloCarro pesquisarVersao(int codigo){
+		return versaoModeloCarroDAO.consultarPorId(codigo);
+	}
 	//Item de Serie
 	
 	public void inserir(ItemSerieCarro entidade) {
