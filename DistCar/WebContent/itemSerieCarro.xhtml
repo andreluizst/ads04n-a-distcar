@@ -1,11 +1,38 @@
 <?xml version="1.0" encoding="ISO-8859-1" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:h="http://java.sun.com/jsf/html"
+	  xmlns:f="http://java.sun.com/jsf/core"
+	  xmlns:p="http://primefaces.org/ui">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
-<title>Insert title here</title>
+
+<title>Cadastrar_Itens_de_Série_de_Carro</title>
 </head>
 <body>
 
+	<f:view>
+	
+        <h:form>
+        
+            <fieldset>
+            
+               <legend>Item Série Carro</legend>
+               
+                Descricão: <h:inputText value="#{itemSerieBean.itemSerieCarro.descricao}" required="true" requiredMessage="Nome obrigatório"></h:inputText><h:messages></h:messages>
+					<br></br>
+						<h:selectOneMenu value="#{itemSerieBean.codigoModeloSelecionado}">
+   						Modelo:<f:selectItems value="#{itemSerieBean.selectItemsModelo}" var="vm" 
+    					itemLabel="#{vm.descricaoModeloCarro}" itemValue="#{vm.codigo}"/>
+						</h:selectOneMenu>
+					<br></br>
+  				Valor: <h:inputText converterMessage="Digite um número decimal no formato 999.00" value="#{itemSerieBean.itemSerieCarro.valorItemSerie}"></h:inputText> <br/>
+  					<br></br>
+          		<h:commandButton value="Salvar" action="#{itemSerieBean.salvar}"></h:commandButton>
+  					<br></br>               	
+              <b><i>#{itemSerieBeam.mensagem}</i></b>
+              
+           </fieldset>
+      </h:form>
+    </f:view>
 </body>
 </html>
