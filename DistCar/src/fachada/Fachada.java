@@ -86,5 +86,11 @@ public class Fachada implements IFachada {
 		return this.controladorCarro.pesquisarModeloCarro(codigo);
 	}
 
+	@Override
+	public void excluirFuncao(Funcao funcao) throws Exception {
+		// TODO Auto-generated method stub
+		
+	}
+
 	
 }
