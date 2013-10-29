@@ -10,13 +10,14 @@ public class ItemSerieCarro extends EntidadeBasica{
 
 	private double valorItemSerie;
 	@ManyToOne(cascade=CascadeType.PERSIST)
-	private VersaoModeloCarro versaoModeloCarro;
-	public VersaoModeloCarro getVersaoModeloCarro() {
-		return versaoModeloCarro;
+	private ModeloCarro modeloCarro;
+
+	public ModeloCarro getModeloCarro() {
+		return modeloCarro;
 	}
 
-	public void setVersaoModeloCarro(VersaoModeloCarro versaoModeloCarro) {
-		this.versaoModeloCarro = versaoModeloCarro;
+	public void setModeloCarro(ModeloCarro modeloCarro) {
+		this.modeloCarro = modeloCarro;
 	}
 
 	public double getValorItemSerie() {
@@ -38,10 +39,9 @@ public class ItemSerieCarro extends EntidadeBasica{
 
 	@Override
 	public String toString() {
-		return "ItemSerieCarro [Descricção=" + getDescricao()
-				+ ", valorItemSerie=" + valorItemSerie + "]";
+		return "ItemSerieCarro [valorItemSerie=" + valorItemSerie
+				+ ", modeloCarro=" + modeloCarro + "]";
 	}
 
-	
 	
 }

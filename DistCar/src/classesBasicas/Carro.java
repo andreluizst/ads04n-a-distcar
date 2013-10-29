@@ -8,6 +8,7 @@ import javax.persistence.InheritanceType;
 import javax.persistence.ManyToOne;
 
 
+
 @Entity
 @Inheritance(strategy=InheritanceType.SINGLE_TABLE)
 public class Carro extends ObjetoGeral {
@@ -19,7 +20,7 @@ public class Carro extends ObjetoGeral {
 	@Column(length=10, nullable=false)
 	private Integer anoFabricacao;
 	@ManyToOne(cascade=CascadeType.PERSIST)
-	private VersaoModeloCarro versaoModeloCarro;
+	private MarcaCarro marcaCarro;
 	//@ManyToOne
 	//@Cascade(CascadeType.PERSIST)
 	//private ModeloCarro modeloCarro;
@@ -45,11 +46,11 @@ public class Carro extends ObjetoGeral {
 	public void setAnoFabricacao(Integer anoFabricacao) {
 		this.anoFabricacao = anoFabricacao;
 	}
-	public VersaoModeloCarro getVersaoModeloCarro() {
-		return versaoModeloCarro;
+	public MarcaCarro getMarcaCarro() {
+		return marcaCarro;
 	}
-	public void setVersaoModeloCarro(VersaoModeloCarro versaoModeloCarro) {
-		this.versaoModeloCarro = versaoModeloCarro;
+	public void setMarcaCarro(MarcaCarro marcaCarro) {
+		this.marcaCarro = marcaCarro;
 	}
 	public Double getValorCarro() {
 		return valorCarro;
@@ -57,24 +58,17 @@ public class Carro extends ObjetoGeral {
 	public void setValorCarro(Double valorCarro) {
 		this.valorCarro = valorCarro;
 	}
+	public Carro() {
+		super();
+	}
 	public Carro(String chassi, String cor, Integer anoFabricacao,
-			VersaoModeloCarro versaoModeloCarro, Double valorCarro) {
+			MarcaCarro marcaCarro, Double valorCarro) {
 		super();
 		this.chassi = chassi;
 		this.cor = cor;
 		this.anoFabricacao = anoFabricacao;
-		this.versaoModeloCarro = versaoModeloCarro;
+		this.marcaCarro = marcaCarro;
 		this.valorCarro = valorCarro;
 	}
-	public Carro() {
-		super();
-	}
-	@Override
-	public String toString() {
-		return "Carro [chassi=" + chassi + ", cor=" + cor + ", anoFabricacao="
-				+ anoFabricacao + ", versaoModeloCarro=" + versaoModeloCarro
-				+ ", valorCarro=" + valorCarro + "]";
-	}
-	
-	
+		
 }

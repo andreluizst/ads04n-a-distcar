@@ -1,7 +1,6 @@
 package classesBasicas;
 
 
-import java.util.List;
 import javax.persistence.*;
 
 
@@ -13,10 +12,6 @@ public class VersaoModeloCarro extends ObjetoGeral {
 	private String descricaoVersaoModeloCarro;
 	@ManyToOne(cascade=CascadeType.PERSIST)
 	private ModeloCarro modeloCarro;
-	@OneToMany(cascade=CascadeType.PERSIST)
-	private List<ItemSerieCarro> itemSerieCarros;
-	@OneToMany(cascade=CascadeType.PERSIST)
-	private List<AcessorioCarro> acessorioCarros;
 	
 	public double getValorVersao() {
 		return valorVersao;
@@ -36,28 +31,14 @@ public class VersaoModeloCarro extends ObjetoGeral {
 	public void setModeloCarro(ModeloCarro modeloCarro) {
 		this.modeloCarro = modeloCarro;
 	}
-	public List<ItemSerieCarro> getItemSerieCarros() {
-		return itemSerieCarros;
-	}
-	public void setItemSerieCarros(List<ItemSerieCarro> itemSerieCarros) {
-		this.itemSerieCarros = itemSerieCarros;
-	}
-	public List<AcessorioCarro> getAcessorioCarros() {
-		return acessorioCarros;
-	}
-	public void setAcessorioCarros(List<AcessorioCarro> acessorioCarros) {
-		this.acessorioCarros = acessorioCarros;
-	}
+
 	public VersaoModeloCarro(double valorVersao,
-			String descricaoVersaoModeloCarro, ModeloCarro modeloCarro,
-			List<ItemSerieCarro> itemSerieCarros,
-			List<AcessorioCarro> acessorioCarros) {
+			String descricaoVersaoModeloCarro, ModeloCarro modeloCarro) {
 		super();
 		this.valorVersao = valorVersao;
 		this.descricaoVersaoModeloCarro = descricaoVersaoModeloCarro;
 		this.modeloCarro = modeloCarro;
-		this.itemSerieCarros = itemSerieCarros;
-		this.acessorioCarros = acessorioCarros;
+		
 	}
 	
 	public VersaoModeloCarro() {
@@ -67,12 +48,7 @@ public class VersaoModeloCarro extends ObjetoGeral {
 	public String toString() {
 		return "VersaoModeloCarro [valorVersao=" + valorVersao
 				+ ", descricaoVersaoModeloCarro=" + descricaoVersaoModeloCarro
-				+ ", modeloCarro=" + modeloCarro + ", itemSerieCarros="
-				+ itemSerieCarros + ", acessorioCarros=" + acessorioCarros
-				+ ", getItemSerieCarros()=" + getItemSerieCarros()
-				+ ", getAcessorioCarros()=" + getAcessorioCarros() + "]";
+				+ ", modeloCarro=" + modeloCarro + "]";
 	}
-	
-	
 	
 }
