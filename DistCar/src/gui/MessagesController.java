@@ -22,5 +22,25 @@ public class MessagesController {
   
     public void addFatal(ActionEvent actionEvent) {  
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL,"Sample fatal message", "Fatal Error in System"));  
-    }  
+    }
+    /*
+    public static void exibirMensagemDeErro(String mensagem){
+    	FacesContext.getCurrentInstance().addMessage(
+    			null, new FacesMessage(FacesMessage.SEVERITY_ERROR,"ERRO", mensagem));
+    }
+    
+    public static void exibirMensagemDeErro(String titulo, String mensagem){
+    	FacesContext.getCurrentInstance().addMessage(
+    			null, new FacesMessage(FacesMessage.SEVERITY_ERROR,titulo, mensagem));
+    }
+    
+    public static void exibirMensagemInfomativa(String mensagem){
+    	FacesContext.getCurrentInstance().addMessage(
+    			null, new FacesMessage(FacesMessage.SEVERITY_INFO,"Informação", mensagem));
+    }
+    
+    public static void exibirMensagemInfomativa(String titulo, String mensagem){
+    	FacesContext.getCurrentInstance().addMessage(
+    			null, new FacesMessage(FacesMessage.SEVERITY_INFO, titulo, mensagem));
+    }*/
 }

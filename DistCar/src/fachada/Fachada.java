@@ -25,7 +25,10 @@ public class Fachada implements IFachada {
 			instancia = new Fachada();
 		return instancia;
 	}
-
+	
+	//*****************************************************************
+	//************************  C R U D  ******************************
+	//*****************************************************************
 	@Override
 	public void salvarFuncao(Funcao funcao) throws Exception {
 		// TODO Auto-generated method stub
@@ -41,9 +44,20 @@ public class Fachada implements IFachada {
 		// TODO Auto-generated method stub
 		return ctrlFuncao.listarFuncoes();
 	}
-
-	//Carro - Felipe Carlos
 	
+	
+	@Override
+	public void excluirFuncao(Funcao funcao) throws Exception {
+		// TODO Auto-generated method stub
+		if (ctrlFuncao.funcaoExiste(funcao))
+			ctrlFuncao.removerFuncao(funcao);
+		else
+			throw new Exception("Exclusão inválida!");
+	}
+	
+	//*****************************************************************
+	//****************** Carro - Felipe Carlos ************************
+	//*****************************************************************
 	@Override
 	public void salvarCarro(Carro carro) throws Exception {
 		// TODO Auto-generated method stub

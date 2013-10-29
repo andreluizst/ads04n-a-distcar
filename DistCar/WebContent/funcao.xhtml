@@ -34,30 +34,39 @@
   					
   					<h:outputLabel for="salario" value="Salário: "></h:outputLabel>
   					<p:inputText id="salario" converterMessage="Digite um número decimal no formato 999.00" 
-  								value="#{funcaoBean.funcao.salario}" dir="RTL" lable="Salário"></p:inputText>
+  								value="#{funcaoBean.funcao.salario}" dir="rtl" lable="Salário"></p:inputText>
   					<p:message for="salario"></p:message>
+  					
+  					<h:outputLabel for="situacao" value="Situação: "/>
+  					<p:selectOneMenu id="situacao" value="#{funcaoBean.funcao.situacao}" >
+  						<f:selectItem itemLabel="Selecione uma opção" itemValue="" />
+  						<f:selectItems value="#{funcaoBean.situacoes}" />
+  					</p:selectOneMenu>
   					
   				</h:panelGrid>
 
-				<p:commandButton update="panelFuncao" value="Novo" actionListener="#{funcaoBean.novo}"/>
-  				<p:commandButton update="panelFuncao" value="Salvar" actionListener="#{funcaoBean.salvarAjax}"/>
-  				<p:commandButton id="btnAlterar" value="Alterar" update="panelFuncao" />
-  				<p:commandButton update=":frmLista" value="Listar" actionListener="#{funcaoBean.listarAjax}"/>
+				<p:commandButton value="Novo"    update="panelFuncao" actionListener="#{funcaoBean.novo}"/>
+   				<p:commandButton value="Alterar" update="panelFuncao" actionListener="#{funcaoBean.alterar}" />
+   				<p:commandButton value="Excluir" update="panelFuncao" actionListener="#{funcaoBean.excluir}" />
+  				<p:commandButton value="Salvar"  update="panelFuncao" actionListener="#{funcaoBean.salvarAjax}">
+  					<!-- <f:setPropertyActionListener target="#{funcaoBean.funcao}" value="#{funcao}"/> -->
+  				</p:commandButton>
+  				<p:commandButton value="Listar"  update="tbFuncoes" actionListener="#{funcaoBean.listarAjax}"/>
   				<br></br>
   				<h:outputLabel for="msg" value="Mensagem: "/> 
 				<h:outputText id="msg" value="#{funcaoBean.mensagem}"/>
   			</p:panel>
-		
+		<!-- 
   		</h:form>
   		
   		<h:form id="frmLista" >
-  		
-  			<p:commandButton update=":frmLista" value="Listar" actionListener="#{funcaoBean.listarAjax}"/>
+		-->  		
+  			<p:commandButton update="tbFuncoes" value="Listar" actionListener="#{funcaoBean.listarAjax}"/>
   			
   			<p:dataTable id="tbFuncoes" var="funcao" value="#{funcaoBean.funcoes}" paginator="true" rows="5"
   						paginatorTemplate="{CurrentPageReport} {PreviousPageLink} {PageLinks}
   						{NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rowsPerPageTemplate="5,10,15"
-  						selection="#{funcaoBean.funcao}" selectionMode="single" rowKey="#{funcao}">
+  						selection="#{funcaoBean.funcaoSelecionada}" selectionMode="single" rowKey="#{funcao}">
   				<f:facet name="header">Lista de Funções</f:facet>
   				<p:column>
   					<f:facet name="header"><h:outputText value="Código"/> </f:facet>
@@ -83,8 +92,10 @@
   				</p:column>
   				
   				<f:facet name="footer">  
-            		<p:commandButton id="btnAlterar2" value="Alterar"   
-                    		update=":frmFuncao:panelFuncao" />  
+  					Rodapé
+  					<!-- 
+            		<p:commandButton id="btnAlterar2" value="Alterar" update=":frmFuncao:panelFuncao" />
+            		-->  
         		</f:facet> 
   			</p:dataTable>
   		</h:form>
