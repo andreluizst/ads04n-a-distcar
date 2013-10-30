@@ -10,7 +10,7 @@ public class VersaoModeloCarro extends ObjetoGeral {
 	private double valorVersao;
 	@Column(unique=true)
 	private String descricaoVersaoModeloCarro;
-	@ManyToOne(cascade=CascadeType.PERSIST)
+	@ManyToOne
 	private ModeloCarro modeloCarro;
 	
 	public double getValorVersao() {

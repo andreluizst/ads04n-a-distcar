@@ -1,6 +1,6 @@
 package classesBasicas;
 
-import javax.persistence.CascadeType;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Inheritance;
@@ -19,7 +19,7 @@ public class Carro extends ObjetoGeral {
 	private String cor;
 	@Column(length=10, nullable=false)
 	private Integer anoFabricacao;
-	@ManyToOne(cascade=CascadeType.PERSIST)
+	@ManyToOne
 	private MarcaCarro marcaCarro;
 	//@ManyToOne
 	//@Cascade(CascadeType.PERSIST)

@@ -1,6 +1,6 @@
 package classesBasicas;
 
-import javax.persistence.CascadeType;
+
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 
@@ -9,7 +9,7 @@ import javax.persistence.ManyToOne;
 public class ItemSerieCarro extends EntidadeBasica{
 
 	private double valorItemSerie;
-	@ManyToOne(cascade=CascadeType.PERSIST)
+	@ManyToOne
 	private ModeloCarro modeloCarro;
 
 	public ModeloCarro getModeloCarro() {
