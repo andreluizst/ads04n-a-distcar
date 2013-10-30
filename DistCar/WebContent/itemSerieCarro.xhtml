@@ -1,38 +1,78 @@
 <?xml version="1.0" encoding="ISO-8859-1" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-	  xmlns:h="http://java.sun.com/jsf/html"
-	  xmlns:f="http://java.sun.com/jsf/core"
-	  xmlns:p="http://primefaces.org/ui">
-<head>
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
 
-<title>Cadastrar_Itens_de_Série_de_Carro</title>
-</head>
+	<title>Cadastrar_Itens_de_Série_de_Carro</title>
+</h:head>
 <body>
 
-	<f:view>
-	
-        <h:form>
-        
-            <fieldset>
-            
-               <legend>Item Série Carro</legend>
-               
-                Descricão: <h:inputText value="#{itemSerieBean.itemSerieCarro.descricao}" required="true" requiredMessage="Nome obrigatório"></h:inputText><h:messages></h:messages>
+	<h:form id="form">
+
+		<fieldset>
+			<p:panel id="panel" header="Cadastrar Item de Série"
+				style="margin-bottom:10px;">
+				<p:messages id="messages" />
+				<h:panelGrid columns="4">
+					
+					<h:outputLabel for="descricao" value="Descricão: *" />
+					<p:inputText id="descricao"
+						value="#{itemSerieBean.itemSerieCarro.descricao}" required="true" label="Descricão"
+						requiredMessage="Nome obrigatório: *"></p:inputText>
+					<h:messages></h:messages>
+					<h:outputText value="#{itemSerieBean.itemSerieCarro.descricao}" />  
+					
+					
+					<h:outputLabel for="valor" value="Valor: *" />
+					<p:inputText id="valor"
+						converterMessage="Digite um número decimal no formato 999.00"
+						value="#{itemSerieBean.itemSerieCarro.valorItemSerie}"></p:inputText>
+					<h:messages></h:messages>
+										
 					<br></br>
-						<h:selectOneMenu value="#{itemSerieBean.codigoModeloSelecionado}">
-   						Modelo:<f:selectItems value="#{itemSerieBean.selectItemsModelo}" var="vm" 
-    					itemLabel="#{vm.descricaoModeloCarro}" itemValue="#{vm.codigo}"/>
-						</h:selectOneMenu>
+					<h:outputLabel for="modelo" value="Modelo: *" />
+					<h:selectOneMenu id="modelo"
+						value="#{itemSerieBean.codigoModeloSelecionado}">
+						<f:selectItem itemLabel="Selecione" itemValue="" />
+						<f:selectItems value="#{itemSerieBean.selectItemsModelo}" var="vm"
+							itemLabel="#{vm.descricaoModeloCarro}" itemValue="#{vm.codigo}" />
+					</h:selectOneMenu>
+					<p:message for="modelo" />
 					<br></br>
-  				Valor: <h:inputText converterMessage="Digite um número decimal no formato 999.00" value="#{itemSerieBean.itemSerieCarro.valorItemSerie}"></h:inputText> <br/>
-  					<br></br>
-          		<h:commandButton value="Salvar" action="#{itemSerieBean.salvar}"></h:commandButton>
-  					<br></br>               	
-              <b><i>#{itemSerieBeam.mensagem}</i></b>
-              
-           </fieldset>
-      </h:form>
-    </f:view>
+					<p:commandButton value="Salvar" action="#{itemSerieBean.salvar}"></p:commandButton>
+					<b><i>#{itemSerieBeam.mensagem}</i></b>
+				</h:panelGrid>
+			</p:panel>
+
+		</fieldset>
+		
+	</h:form>
+
+	<br></br>
+	<h:dataTable value="#{itemSerieBen.selectItemsModelo}"
+		var="itemSerieCarro">
+		<h:column>
+			<h:outputText title="Código" value="#{selectItemsModelo.codigo}" />
+		</h:column>
+		<h:column>
+			<h:outputText title="Descrição"
+				value="#{selectItemsModelo.descricaoModeloCarro}" />
+		</h:column>
+		<h:column>
+			<h:outputText title="Salário" value="#{selectItemsModelo.salario}" />
+		</h:column>
+		<!-- 
+ 		<h:column><h:outputText title="Última Atualização" value="#{funcao.dataUltimaAtualizacao}"/></h:column>
+ 		-->
+		<h:column>
+			<p:calendar value="#{funcao.dataUltimaAtualizacao.time}" />
+		</h:column>
+		<h:column>
+			<h:outputText title="Situação" value="#{funcao.situacao}" />
+		</h:column>
+	</h:dataTable>
 </body>
 </html>
