@@ -72,14 +72,15 @@ public class FuncaoBean {
 	
 	public void excluir(){
 		try{
-			//funcao = funcaoSelecionada;
-			fachada.excluirFuncao(funcaoSelecionada);
+			funcao = funcaoSelecionada;
+			fachada.excluirFuncao(funcao);
 			/*FacesContext.getCurrentInstance().addMessage(
 					null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Informação: ", 
 							"Função " + funcaoSelecionada.getDescricao() + " excluida com sucesso!")
 					);*/
 			MsgPrimeFaces.exibirMensagemInfomativa("Função " + funcaoSelecionada.getDescricao() + " excluida com sucesso!");
 			novaFuncao();
+			listarAjax();
 		}catch(Exception ex){
 			//FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro ao excluir: ", ex.getMessage()));
 			MsgPrimeFaces.exibirMensagemDeErro(ex.getMessage());
@@ -118,7 +119,7 @@ public class FuncaoBean {
 		return null;
 	}
 	
-	public void listarAjax(ActionEvent actionEvent){
+	public void listarAjax(){
 		lista = listar();
 	}
 	

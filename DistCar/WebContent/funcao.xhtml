@@ -23,7 +23,8 @@
 			<p:commandButton id="infoButton" value="Info" actionListener="#{messagesController.addInfo}"/>  
     		<p:commandButton id="warnButton" value="Warn" actionListener="#{messagesController.addWarn}"/>  
     		<p:commandButton id="errorButton" value="Error" actionListener="#{messagesController.addError}"/>  
-    		<p:commandButton id="fatalButton" value="Fatal" actionListener="#{messagesController.addFatal}"/>  
+    		<p:commandButton id="fatalButton" value="Fatal" actionListener="#{messagesController.addFatal}"/>
+    		
 		</h:form>
   		<h:form id="frmFuncao">
   			<p:panel id="panelFuncao" header="DistCar - Função">
@@ -47,22 +48,22 @@
 
 				<p:commandButton value="Novo"    update="panelFuncao" actionListener="#{funcaoBean.novaFuncao}"/>
    				<p:commandButton value="Alterar" update="panelFuncao" actionListener="#{funcaoBean.alterar}" />
-   				<p:commandButton value="Excluir" update="panelFuncao" actionListener="#{funcaoBean.excluir}" />
+   				<p:commandButton value="Excluir" update="tbFuncoes" actionListener="#{funcaoBean.excluir}" />
   				<p:commandButton value="Salvar"  update="panelFuncao" actionListener="#{funcaoBean.salvarAjax}">
   					<!-- <f:setPropertyActionListener target="#{funcaoBean.funcao}" value="#{funcao}"/> -->
   				</p:commandButton>
   				<p:commandButton value="Listar"  update="tbFuncoes" actionListener="#{funcaoBean.listarAjax}"/>
+  				<!-- 
   				<br></br>
   				<h:outputLabel for="msg" value="Mensagem: "/> 
 				<h:outputText id="msg" value="#{funcaoBean.mensagem}"/>
+				-->
   			</p:panel>
 		<!-- 
   		</h:form>
   		
   		<h:form id="frmLista" >
 		-->  		
-  			<p:commandButton update="tbFuncoes" value="Listar" actionListener="#{funcaoBean.listarAjax}"/>
-  			
   			<p:dataTable id="tbFuncoes" var="funcao" value="#{funcaoBean.funcoes}" paginator="true" rows="5"
   						paginatorTemplate="{CurrentPageReport} {PreviousPageLink} {PageLinks}
   						{NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rowsPerPageTemplate="5,10,15"
