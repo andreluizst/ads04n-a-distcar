@@ -121,6 +121,8 @@ public class FuncaoBean {
 	
 	public void listarAjax(){
 		lista = listar();
+		FacesContext context = FacesContext.getCurrentInstance(); 
+		context.addMessage(null, new FacesMessage("Second Message", "Additional Info Here...")); 
 	}
 	
 	public List<Funcao> listar(){

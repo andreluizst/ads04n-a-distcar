@@ -8,7 +8,7 @@
 >
 
 <h:head><title>Função jsp pf</title> </h:head>
-<h:body>
+<body>
 	<f:view id="viewEntrada">
 		<p:ajaxStatus onstart="PF('statusDialog').show();" onsuccess="PF('statusDialog').hide();"/>  
               
@@ -20,13 +20,8 @@
 		<h:form id="frmMensagens">
 			<p:messages id="messages" showDetail="true" autoUpdate="true" closable="true"></p:messages>
 			<p:growl id="growl" showDetail="true" sticky="false" globalOnly="true" />
-			
-			<p:commandButton id="infoButton" value="Info" actionListener="#{messagesController.addInfo}"/>  
-    		<p:commandButton id="warnButton" value="Warn" actionListener="#{messagesController.addWarn}"/>  
-    		<p:commandButton id="errorButton" value="Error" actionListener="#{messagesController.addError}"/>  
-    		<p:commandButton id="fatalButton" value="Fatal" actionListener="#{messagesController.addFatal}"/>
-    		
 		</h:form>
+		
   		<h:form id="frmFuncao">
   			<p:confirmDialog global="true" showEffect="fade" hideEffect="explode">  
         		<p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check"/>  
@@ -65,52 +60,10 @@
   				<p:commandButton value="Listar"  update="tbFuncoes" actionListener="#{funcaoBean.listarAjax}"/>
   				
   				<p:commandButton value="Growl"  update=":frmMensagens:growl" actionListener="#{funcaoBean.listarAjax}"/>
-  				<!-- 
-  				<br></br>
-  				<h:outputLabel for="msg" value="Mensagem: "/> 
-				<h:outputText id="msg" value="#{funcaoBean.mensagem}"/>
-				-->
+
   			</p:panel>
-		<!-- 
-  		</h:form>
-  		
-  		<h:form id="frmLista" >
-		-->  		
-  			<p:dataTable id="tbFuncoes" var="funcao" value="#{funcaoBean.funcoes}" paginator="true" rows="5"
-  						paginatorTemplate="{CurrentPageReport} {PreviousPageLink} {PageLinks}
-  						{NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rowsPerPageTemplate="5,10,15"
-  						selection="#{funcaoBean.funcaoSelecionada}" selectionMode="single" rowKey="#{funcao}">
-  				<f:facet name="header">Lista de Funções</f:facet>
-  				<p:column>
-  					<f:facet name="header"><h:outputText value="Código"/> </f:facet>
-  					<h:outputText value="#{funcao.codigo}"/>
-  				</p:column>
-  				<p:column>
-  					<f:facet name="header"><h:outputText value="Descrição"/> </f:facet>
-  					<h:outputText value="#{funcao.descricao}"/>
-  				</p:column>
-  				<p:column>
-  					<f:facet name="header"><h:outputText value="Salário"/> </f:facet>
-  					<h:outputText dir="rtl" value="#{funcao.salario}"/>
-  				</p:column>
-  				<p:column>
-  					<f:facet name="header"><h:outputText value="Situação"/> </f:facet>
-  					<h:outputText value="#{funcao.situacao}"/>
-  				</p:column>
-  				<p:column>
-  					<f:facet name="header"><h:outputText value="Última atualização"/> </f:facet>
-  					<h:outputText value="#{funcao.dataUltimaAtualizacao.time}">
-  						<f:convertDateTime pattern="dd/MM/yyyy"/>
-  					</h:outputText>
-  				</p:column>
-  				
-  				<f:facet name="footer">  
-  					Rodapé
-        		</f:facet> 
-  			</p:dataTable>
     		
   		</h:form>
  	</f:view>
- 	
-</h:body>
+</body>
 </html>
