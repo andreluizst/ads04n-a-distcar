@@ -7,14 +7,14 @@ import javax.persistence.*;
 public class MarcaCarro extends ObjetoGeral {
 	
 	@Column(unique=true)
-	private String descricaoMarca;
+	private String descricao;
 	@ManyToOne
 	private Fabricante fabricante;
-	public String getDescricaoMarca() {
-		return descricaoMarca;
+	public String getDescricao() {
+		return descricao;
 	}
-	public void setDescricaoMarca(String descricaoMarca) {
-		this.descricaoMarca = descricaoMarca;
+	public void setDescricao(String descricao) {
+		this.descricao = descricao;
 	}
 	public Fabricante getFabricante() {
 		return fabricante;
@@ -25,10 +25,16 @@ public class MarcaCarro extends ObjetoGeral {
 	public MarcaCarro() {
 		super();
 	}
-	public MarcaCarro(String descricaoMarca, Fabricante fabricante) {
+	public MarcaCarro(String descricao, Fabricante fabricante) {
 		super();
-		this.descricaoMarca = descricaoMarca;
+		this.descricao = descricao;
 		this.fabricante = fabricante;
 	}
+	@Override
+	public String toString() {
+		return "MarcaCarro [descricao=" + descricao + ", fabricante="
+				+ fabricante + "]";
+	}
+	
 	
 }
