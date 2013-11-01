@@ -40,11 +40,11 @@ public class TesteAndre {
 			
 			//**** persistindo Fabricante e Marca ***
 			MarcaCarro marca1 = new MarcaCarro();
-			marca1.setDescricaoMarca("BMW");
+			marca1.setDescricao("BMW");
 			em.persist(marca1);
 			
 			MarcaCarro marcaCarro = new MarcaCarro();
-			marcaCarro.setDescricaoMarca("Honda");
+			marcaCarro.setDescricao("Honda");
 			Fabricante fabricante = new Fabricante(
 							new PessoaJuridica("Honda Co", "00222444000101", "44444444", Calendar.getInstance().getTime(), 
 								new Endereco(new TipoLogradouro("Rod"), "Carros Novos km 21", "1000", "endereço GM",
