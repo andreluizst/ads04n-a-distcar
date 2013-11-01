@@ -6,7 +6,7 @@ import classesBasicas.Carro;
 import classesBasicas.Funcao;
 import classesBasicas.ItemSerieCarro;
 import classesBasicas.ModeloCarro;
-import classesBasicas.VersaoModeloCarro;
+import classesBasicas.VersaoCarro;
 
 public interface IFachada {
 	public void salvarFuncao(Funcao funcao) throws Exception;
@@ -16,9 +16,10 @@ public interface IFachada {
 	
 	public void salvarCarro(Carro carro) throws Exception;
 	public void salvarItemSerie(ItemSerieCarro itemSerieCarro)throws Exception;
-	public void salvarVersaoModeloCarro(VersaoModeloCarro versaoModeloCarro) throws Exception;
+	public void salvarVersaoModeloCarro(VersaoCarro versaoCarro) throws Exception;
 	public void salvarModeloCarro(ModeloCarro modeloCarro) throws Exception;
-	public List<VersaoModeloCarro> listarVersao() throws Exception;
-	public VersaoModeloCarro pesquisarVersao(int codigo);
+	public List<VersaoCarro> listarVersao() throws Exception;
+	public VersaoCarro pesquisarVersao(int codigo);
 	public ModeloCarro pesquisarModeloCarro(int codigo);
+	public List<ItemSerieCarro> listarItem();
 }
