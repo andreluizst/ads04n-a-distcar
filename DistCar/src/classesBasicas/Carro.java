@@ -20,13 +20,13 @@ public class Carro extends ObjetoGeral {
 	@Column(length=10, nullable=false)
 	private Integer anoFabricacao;
 	@ManyToOne
-	private MarcaCarro marcaCarro;
+	private VersaoCarro versaoCarro;
 	//@ManyToOne
 	//@Cascade(CascadeType.PERSIST)
 	//private ModeloCarro modeloCarro;
 	//@ManyToOne
 	//@Cascade(CascadeType.PERSIST)
-	//private VersaoModeloCarro versaoModeloCarro;
+	//private VersaoCarro versaoModeloCarro;
 	private Double valorCarro;
 	public String getChassi() {
 		return chassi;
@@ -46,11 +46,11 @@ public class Carro extends ObjetoGeral {
 	public void setAnoFabricacao(Integer anoFabricacao) {
 		this.anoFabricacao = anoFabricacao;
 	}
-	public MarcaCarro getMarcaCarro() {
-		return marcaCarro;
+	public VersaoCarro getVersaoCarro() {
+		return versaoCarro;
 	}
-	public void setMarcaCarro(MarcaCarro marcaCarro) {
-		this.marcaCarro = marcaCarro;
+	public void setVersaoCarro(VersaoCarro versaoCarro) {
+		this.versaoCarro = versaoCarro;
 	}
 	public Double getValorCarro() {
 		return valorCarro;
@@ -62,13 +62,20 @@ public class Carro extends ObjetoGeral {
 		super();
 	}
 	public Carro(String chassi, String cor, Integer anoFabricacao,
-			MarcaCarro marcaCarro, Double valorCarro) {
+			VersaoCarro versaoCarro, Double valorCarro) {
 		super();
 		this.chassi = chassi;
 		this.cor = cor;
 		this.anoFabricacao = anoFabricacao;
-		this.marcaCarro = marcaCarro;
+		this.versaoCarro = versaoCarro;
 		this.valorCarro = valorCarro;
 	}
-		
+	@Override
+	public String toString() {
+		return "Carro [chassi=" + chassi + ", cor=" + cor + ", anoFabricacao="
+				+ anoFabricacao + ", versaoCarro=" + versaoCarro
+				+ ", valorCarro=" + valorCarro + "]";
+	}
+	
+	
 }
