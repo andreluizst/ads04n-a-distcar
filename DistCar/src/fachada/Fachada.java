@@ -8,7 +8,7 @@ import classesBasicas.Carro;
 import classesBasicas.Funcao;
 import classesBasicas.ItemSerieCarro;
 import classesBasicas.ModeloCarro;
-import classesBasicas.VersaoModeloCarro;
+import classesBasicas.VersaoCarro;
 
 public class Fachada implements IFachada {
 	private static Fachada instancia;
@@ -76,10 +76,10 @@ public class Fachada implements IFachada {
 	}
 
 	@Override
-	public void salvarVersaoModeloCarro(VersaoModeloCarro versaoModeloCarro)
+	public void salvarVersaoModeloCarro(VersaoCarro versaoCarro)
 			throws Exception {
 		// TODO Auto-generated method stub
-		this.controladorCarro.inserir(versaoModeloCarro);
+		this.controladorCarro.inserir(versaoCarro);
 		
 	}
 
@@ -90,7 +90,7 @@ public class Fachada implements IFachada {
 	}
 
 	@Override
-	public List<VersaoModeloCarro> listarVersao() throws Exception {
+	public List<VersaoCarro> listarVersao() throws Exception {
 		return this.controladorCarro.consultarTodasVersao();
 	}
 	
@@ -99,7 +99,7 @@ public class Fachada implements IFachada {
 	}
 
 	@Override
-	public VersaoModeloCarro pesquisarVersao(int codigo) {
+	public VersaoCarro pesquisarVersao(int codigo) {
 		return this.controladorCarro.pesquisarVersao(codigo);
 	}
 
@@ -108,7 +108,19 @@ public class Fachada implements IFachada {
 		return this.controladorCarro.pesquisarModeloCarro(codigo);
 	}
 
+	@Override
+	public List<ItemSerieCarro> listarItem() {
+		// TODO Auto-generated method stub
+		return this.controladorCarro.listarItem();
+	}
+	
+	@Override
+	public void excluirFuncao(Funcao funcao) throws Exception {
+		// TODO Auto-generated method stub
+		
+	}
 	
 
+	
 	
 }
