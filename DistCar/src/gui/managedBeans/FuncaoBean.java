@@ -124,6 +124,14 @@ public class FuncaoBean {
 		return null;
 	}
 	
+	public void consultar(){
+		try{
+			atualizarLista(fachada.consultarFuncao(funcaoDePesquisa));
+		}catch(Exception ex){
+			MsgPrimeFaces.exibirMensagemDeErro(ex.getMessage());
+		}
+	}
+	
 
 	private void atualizarLista(List<Funcao> lista) {
 		if (lista == null)

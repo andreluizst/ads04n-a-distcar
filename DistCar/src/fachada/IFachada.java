@@ -12,6 +12,7 @@ public interface IFachada {
 	public void salvarFuncao(Funcao funcao) throws Exception;
 	public List<Funcao> listarFuncoes() throws Exception;
 	public void excluirFuncao(Funcao funcao) throws Exception;
+	public List<Funcao> consultarFuncao(Funcao funcao) throws Exception;
 	
 	public void salvarCarro(Carro carro) throws Exception;
 	public void salvarItemSerie(ItemSerieCarro itemSerieCarro)throws Exception;

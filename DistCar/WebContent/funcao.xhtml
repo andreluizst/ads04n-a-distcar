@@ -25,8 +25,13 @@
     		</p:confirmDialog>
   		
   			<p:panel id="panelFuncao" header="DistCar - Função">
-  				<f:facet name="header"><a href="index.xhtml"> <p:graphicImage value="/resources/images/home-02.jpg" height="35px" width="35px" /> </a>
-  					<h:outputText value="DisctCar 1.0 - Função" styleClass="Titulo" />
+  				<f:facet name="header">
+  					<h:panelGrid columns="2">
+  						<p:commandLink action="index.xhtml">
+  							<p:graphicImage value="/resources/images/home-02.jpg" height="35px" width="35px" />
+  						</p:commandLink>
+  						<h:outputText value="DisctCar 1.0 - Função" />
+  					</h:panelGrid>
   				</f:facet>
   				<h:panelGrid columns="2" cellpadding="5">
   					<h:outputLabel for="descricao" value="Descrição: "/>
@@ -38,7 +43,7 @@
   					
   					<h:outputLabel for="situacao" value="Situação: "/>
   					<p:selectOneMenu id="situacao" value="#{funcaoBean.funcaoDePesquisa.situacao}" >
-  						<f:selectItem itemLabel="Selecione uma opção" itemValue="" />
+  						<f:selectItem itemLabel="Todas as situações" itemValue="" />
   						<f:selectItems value="#{funcaoBean.situacoes}" />
   					</p:selectOneMenu>
   					
@@ -52,7 +57,7 @@
    							icon="ui-icon-alert" />  
    				</p:commandButton>
 
-  				<p:commandButton value="Consultar"  update="tbFuncoes" actionListener="#{funcaoBean.listarAjax}"/>
+  				<p:commandButton value="Consultar"  update="tbFuncoes" actionListener="#{funcaoBean.consultar}"/>
   				
   				<p:commandButton value="Fechar"  update="tbFuncoes" actionListener="#{funcaoBean.fechar}"/>
   				<!-- 

@@ -51,6 +51,11 @@ public class Fachada implements IFachada {
 		return ctrlFuncao.listarFuncoes();
 	}
 	
+	@Override
+	public List<Funcao> consultarFuncao(Funcao funcao) throws Exception{
+		return ctrlFuncao.pesquisarFuncao(funcao);
+	}
+	
 	
 	//***********************************************************************************
 	//**************** F I M   C R U D    Organizacional ********************************

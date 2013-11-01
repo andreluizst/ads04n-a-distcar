@@ -74,7 +74,7 @@ public class ControladorFuncao {
 
 	public List<Funcao> pesquisarFuncao(Funcao funcao) throws NegocioExceptionFuncao {
 		// TODO Auto-generated method stub
-		return null;
+		return funcaoDAO.pesquisar(funcao);
 	}
 	
 	
