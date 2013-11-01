@@ -7,7 +7,7 @@ import javax.persistence.TypedQuery;
 import classesBasicas.AcessorioCarro;
 import classesBasicas.Carro;
 import classesBasicas.ModeloCarro;
-import classesBasicas.VersaoModeloCarro;
+import classesBasicas.VersaoCarro;
 
 
 public class DAOCarro extends DAOGenerico<Carro> implements IDAOCarro {
@@ -22,14 +22,14 @@ public class DAOCarro extends DAOGenerico<Carro> implements IDAOCarro {
 	@Override
 	public List<Carro> pesquisarCarroPorModelo(ModeloCarro modeloCarro) {
 		TypedQuery<Carro> query = entityManager.createQuery("from Carro c where c.versaoModeloCarro.modeloCarro.descricaoModeloCarro = :modeloCarro", Carro.class);
-		query.setParameter("modeloCarro", modeloCarro.getDescricaoModeloCarro());
+		query.setParameter("modeloCarro", modeloCarro.getDescricao());
 		return query.getResultList();
 	}
 
 	@Override
-	public List<Carro> pesquisarCarroPorVersaoCarro(VersaoModeloCarro versaoModeloCarro) {
+	public List<Carro> pesquisarCarroPorVersaoCarro(VersaoCarro versaoCarro) {
 		TypedQuery<Carro> query = entityManager.createQuery("from Carro c where c.versaoModeloCarro.descricaoVersaoModeloCarro = :versaoModeloCarro", Carro.class);
-		query.setParameter("versaoModeloCarro", versaoModeloCarro.getDescricaoVersaoModeloCarro());
+		query.setParameter("versaoModeloCarro", versaoCarro.getDescricao());
 		return query.getResultList();
 	}
 
