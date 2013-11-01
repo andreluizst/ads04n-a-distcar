@@ -8,63 +8,53 @@
 >
 
 <h:head><title>Função jsp pf</title> </h:head>
+<h:outputStylesheet name="styles-PSC.css" library="css"></h:outputStylesheet>
 <h:body>
 	<f:view id="viewEntrada">
-		<p:ajaxStatus onstart="PF('statusDialog').show();" onsuccess="PF('statusDialog').hide();"/>  
-              
-			<p:dialog modal="true" widgetVar="statusDialog" header="Status"   
-        				draggable="false" closable="false">  
-    		<p:graphicImage value="/design/ajaxloadingbar.gif" />  
-		</p:dialog>  
 		
 		<h:form id="frmMensagens">
 			<p:messages id="messages" showDetail="true" autoUpdate="true" closable="true"></p:messages>
 			<p:growl id="growl" showDetail="true" sticky="false" globalOnly="true" />
 			
-			<p:commandButton id="infoButton" value="Info" actionListener="#{messagesController.addInfo}"/>  
-    		<p:commandButton id="warnButton" value="Warn" actionListener="#{messagesController.addWarn}"/>  
-    		<p:commandButton id="errorButton" value="Error" actionListener="#{messagesController.addError}"/>  
-    		<p:commandButton id="fatalButton" value="Fatal" actionListener="#{messagesController.addFatal}"/>
-    		
 		</h:form>
+		
   		<h:form id="frmFuncao">
-  			<p:confirmDialog global="true" showEffect="fade" hideEffect="explode">  
+  			<p:confirmDialog id="dlgMsg" global="true" showEffect="fade" hideEffect="explode">  
         		<p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check"/>  
         		<p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close"/>       
     		</p:confirmDialog>
   		
   			<p:panel id="panelFuncao" header="DistCar - Função">
-  				<h:panelGrid columns="3" cellpadding="5">
-  					<h:outputLabel for="descricao" value="Descrição: *"/>
-  					<h:inputText id="descricao" value="#{funcaoBean.funcao.descricao}" required="false" lable="Descrição"/>
-  					<p:message for="descricao"/>
+  				<f:facet name="header"><a href="index.xhtml"> <p:graphicImage value="/resources/images/home-02.jpg" height="35px" width="35px" /> </a>
+  					<h:outputText value="DisctCar 1.0 - Função" styleClass="Titulo" />
+  				</f:facet>
+  				<h:panelGrid columns="2" cellpadding="5">
+  					<h:outputLabel for="descricao" value="Descrição: "/>
+  					<h:inputText id="descricao" value="#{funcaoBean.funcaoDePesquisa.descricao}" required="false" lable="Descrição"/>
   					
   					<h:outputLabel for="salario" value="Salário: "></h:outputLabel>
   					<p:inputText id="salario" converterMessage="Digite um número decimal no formato 999.00" 
-  								value="#{funcaoBean.funcao.salario}" dir="rtl" lable="Salário"></p:inputText>
-  					<p:message for="salario"></p:message>
+  								value="#{funcaoBean.funcaoDePesquisa.salario}" dir="rtl" lable="Salário"></p:inputText>
   					
   					<h:outputLabel for="situacao" value="Situação: "/>
-  					<p:selectOneMenu id="situacao" value="#{funcaoBean.funcao.situacao}" >
+  					<p:selectOneMenu id="situacao" value="#{funcaoBean.funcaoDePesquisa.situacao}" >
   						<f:selectItem itemLabel="Selecione uma opção" itemValue="" />
   						<f:selectItems value="#{funcaoBean.situacoes}" />
   					</p:selectOneMenu>
   					
   				</h:panelGrid>
 
-				<p:commandButton value="Novo"    update="panelFuncao" actionListener="#{funcaoBean.novaFuncao}"/>
-   				<p:commandButton value="Alterar" update="panelFuncao" actionListener="#{funcaoBean.alterar}" />
+				<p:commandButton value="Novo"    update="panelFuncao" action="#{funcaoBean.novo}"/>
+   				<p:commandButton value="Alterar" update="panelFuncao" action="#{funcaoBean.alterar}" />
    				<p:commandButton value="Excluir" update="tbFuncoes" actionListener="#{funcaoBean.excluir}">
    					<p:confirm header="Confirmação" 
-   							message="Comfirma a exclusão da função selecionada?"
+   							message="Confirma a exclusão da função selecionada?"
    							icon="ui-icon-alert" />  
    				</p:commandButton>
-  				<p:commandButton value="Salvar"  update="panelFuncao" actionListener="#{funcaoBean.salvarAjax}">
-  					<!-- <f:setPropertyActionListener target="#{funcaoBean.funcao}" value="#{funcao}"/> -->
-  				</p:commandButton>
-  				<p:commandButton value="Listar"  update="tbFuncoes" actionListener="#{funcaoBean.listarAjax}"/>
+
+  				<p:commandButton value="Consultar"  update="tbFuncoes" actionListener="#{funcaoBean.listarAjax}"/>
   				
-  				<p:commandButton value="Growl"  update=":frmMensagens:growl" actionListener="#{funcaoBean.listarAjax}"/>
+  				<p:commandButton value="Fechar"  update="tbFuncoes" actionListener="#{funcaoBean.fechar}"/>
   				<!-- 
   				<br></br>
   				<h:outputLabel for="msg" value="Mensagem: "/> 

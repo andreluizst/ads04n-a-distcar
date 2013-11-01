@@ -10,12 +10,6 @@
 <h:head><title>Função jsp pf</title> </h:head>
 <body>
 	<f:view id="viewEntrada">
-		<p:ajaxStatus onstart="PF('statusDialog').show();" onsuccess="PF('statusDialog').hide();"/>  
-              
-			<p:dialog modal="true" widgetVar="statusDialog" header="Status"   
-        				draggable="false" closable="false">  
-    		<p:graphicImage value="/design/ajaxloadingbar.gif" />  
-		</p:dialog>  
 		
 		<h:form id="frmMensagens">
 			<p:messages id="messages" showDetail="true" autoUpdate="true" closable="true"></p:messages>

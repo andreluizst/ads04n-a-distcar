@@ -104,9 +104,6 @@ public class FuncaoBean {
 	
 	public void salvarAjax(ActionEvent actionEvent){
 		try{
-			funcao.setDataUltimaAtualizacao(Calendar.getInstance());
-			if (funcao.getSituacao() == null)
-				funcao.setSituacao(Situacao.ATIVO);
 			Fachada.obterInstancia().salvarFuncao(funcao);
 			novaFuncao();
 			MsgPrimeFaces.exibirMensagemInfomativa("Função salva com sucesso!");
@@ -141,7 +138,7 @@ public class FuncaoBean {
 	
 	public List<Funcao> listar(){
 		try{
-			lista = null;
+			//lista = null;
 			atualizarLista(Fachada.obterInstancia().listarFuncoes());
 			return lista;
 		}catch(Exception ex){
