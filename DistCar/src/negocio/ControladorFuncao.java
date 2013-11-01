@@ -1,8 +1,10 @@
 package negocio;
 
+import java.util.Calendar;
 import java.util.List;
 
 import classesBasicas.Funcao;
+import classesBasicas.Situacao;
 import dao.DAOFuncao;
 import dao.IDAOFuncao;
 import erro.NegocioExceptionFuncao;
@@ -35,7 +37,11 @@ public class ControladorFuncao {
 				{
 					throw new NegocioExceptionFuncao("Campos inválidos");
 				}
-				
+		
+		funcao.setDataUltimaAtualizacao(Calendar.getInstance());
+		if (funcao.getSituacao() == null)
+			funcao.setSituacao(Situacao.ATIVO);
+		
 		funcaoDAO.inserir(funcao);
 	}
 	

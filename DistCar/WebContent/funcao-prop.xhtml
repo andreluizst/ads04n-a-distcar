@@ -23,11 +23,6 @@
 		</h:form>
 		
   		<h:form id="frmFuncao">
-  			<p:confirmDialog global="true" showEffect="fade" hideEffect="explode">  
-        		<p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check"/>  
-        		<p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close"/>       
-    		</p:confirmDialog>
-  		
   			<p:panel id="panelFuncao" header="DistCar - Função">
   				<h:panelGrid columns="3" cellpadding="5">
   					<h:outputLabel for="descricao" value="Descrição: *"/>
@@ -47,19 +42,9 @@
   					
   				</h:panelGrid>
 
-				<p:commandButton value="Novo"    update="panelFuncao" actionListener="#{funcaoBean.novaFuncao}"/>
-   				<p:commandButton value="Alterar" update="panelFuncao" actionListener="#{funcaoBean.alterar}" />
-   				<p:commandButton value="Excluir" update="tbFuncoes" actionListener="#{funcaoBean.excluir}">
-   					<p:confirm header="Confirmação" 
-   							message="Comfirma a exclusão da função selecionada?"
-   							icon="ui-icon-alert" />  
-   				</p:commandButton>
-  				<p:commandButton value="Salvar"  update="panelFuncao" actionListener="#{funcaoBean.salvarAjax}">
-  					<!-- <f:setPropertyActionListener target="#{funcaoBean.funcao}" value="#{funcao}"/> -->
-  				</p:commandButton>
-  				<p:commandButton value="Listar"  update="tbFuncoes" actionListener="#{funcaoBean.listarAjax}"/>
+  				<p:commandButton value="Salvar"  update=":frmMensagens:growl" action="#{funcaoBean.salvar}"/>
   				
-  				<p:commandButton value="Growl"  update=":frmMensagens:growl" actionListener="#{funcaoBean.listarAjax}"/>
+  				<p:commandButton value="Cancelar" immediate="true" action="funcao" />
 
   			</p:panel>
     		

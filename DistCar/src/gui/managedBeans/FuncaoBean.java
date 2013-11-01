@@ -1,9 +1,11 @@
 package gui.managedBeans;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 //import gui.MessagesController;
+
 
 
 import javax.faces.application.FacesMessage;
@@ -22,11 +24,12 @@ import fachada.IFachada;
 import gui.MsgPrimeFaces;
 
 @ManagedBean
-@ViewScoped
+@SessionScoped
 public class FuncaoBean {
 	private IFachada fachada;
 	
 	private Funcao funcao;
+	private Funcao funcaoDePesquisa;
 	private String mensagem;
 	private List<Funcao> lista;
 	private Date data;
@@ -37,8 +40,11 @@ public class FuncaoBean {
 	public FuncaoBean(){
 		fachada = Fachada.obterInstancia();
 		novaFuncao();
+		funcaoDePesquisa = new Funcao();
 		data = Calendar.getInstance().getTime();
 	}
+	
+	
 
 	public Date getData() {
 		return data;
@@ -60,12 +66,18 @@ public class FuncaoBean {
 		return mensagem;
 	}
 	
-	public void alterar(){
+	public String alterar(){
 		if (funcaoSelecionada != null)
 			funcao = funcaoSelecionada;
+		return "funcao-prop";
 	}
 	
-	public void novaFuncao(){
+	public String novo(){
+		novaFuncao();
+		return "funcao-prop";
+	}
+	
+	private void novaFuncao(){
 		funcao = new Funcao();
 		funcao.setDescricao("Digite a descrição aqui");
 	}
@@ -74,65 +86,65 @@ public class FuncaoBean {
 		try{
 			funcao = funcaoSelecionada;
 			fachada.excluirFuncao(funcao);
-			/*FacesContext.getCurrentInstance().addMessage(
-					null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Informação: ", 
-							"Função " + funcaoSelecionada.getDescricao() + " excluida com sucesso!")
-					);*/
 			MsgPrimeFaces.exibirMensagemInfomativa("Função " + funcaoSelecionada.getDescricao() + " excluida com sucesso!");
 			novaFuncao();
 			listarAjax();
 		}catch(Exception ex){
-			//FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro ao excluir: ", ex.getMessage()));
 			MsgPrimeFaces.exibirMensagemDeErro(ex.getMessage());
 		}
 	}
 	
+	
+	
+	public void fechar(ActionEvent actionevent){
+		lista.clear();
+	}
+	
+	
+	
 	public void salvarAjax(ActionEvent actionEvent){
 		try{
-			//if (funcao.getDataUltimaAtualizacao() == null)
 			funcao.setDataUltimaAtualizacao(Calendar.getInstance());
 			if (funcao.getSituacao() == null)
 				funcao.setSituacao(Situacao.ATIVO);
 			Fachada.obterInstancia().salvarFuncao(funcao);
 			novaFuncao();
 			MsgPrimeFaces.exibirMensagemInfomativa("Função salva com sucesso!");
-			//FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Informação", "Função salva com sucesso!"));
 		}catch(Exception ex){
-			//FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Salvar Error: ", ex.getMessage()));
 			MsgPrimeFaces.exibirMensagemDeErro(ex.getMessage());
 		}
 	}
 	
 	public String salvar(){
 		try{
-			funcao.setDataUltimaAtualizacao(Calendar.getInstance());
-			funcao.setSituacao(Situacao.ATIVO);
-			if (funcao.getCodigo() != null)
-				throw new Exception("funcao.codigo != null !!");
 			Fachada.obterInstancia().salvarFuncao(funcao);
-			listar();
-			mensagem = "Função salva com sucesso!";
-			funcao = new Funcao();
+			MsgPrimeFaces.exibirMensagemInfomativa("Função salva com sucesso!");
+			novaFuncao();
+			return "funcao";
 		}catch(Exception ex){
-			mensagem = ex.getMessage();
+			MsgPrimeFaces.exibirMensagemDeErro(ex.getMessage());
 		}
 		return null;
 	}
 	
+
+	private void atualizarLista(List<Funcao> lista) {
+		if (lista == null)
+			this.lista.clear();
+		else
+			this.lista = lista;
+	}
+
 	public void listarAjax(){
-		lista = listar();
-		FacesContext context = FacesContext.getCurrentInstance(); 
-		context.addMessage(null, new FacesMessage("Second Message", "Additional Info Here...")); 
+		atualizarLista(listar());
 	}
 	
 	public List<Funcao> listar(){
 		try{
 			lista = null;
-			lista = Fachada.obterInstancia().listarFuncoes();
-			mensagem = "Funções listadas com sucesso!";
+			atualizarLista(Fachada.obterInstancia().listarFuncoes());
 			return lista;
 		}catch(Exception ex){
-			mensagem = ex.getMessage();
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro ao listar: ", ex.getMessage()));
 		}
 		return lista;
@@ -164,5 +176,13 @@ public class FuncaoBean {
 
 	public void setSituacoes(Situacao[] situacoes) {
 		this.situacoes = situacoes;
+	}
+
+	public Funcao getFuncaoDePesquisa() {
+		return funcaoDePesquisa;
+	}
+
+	public void setFuncaoDePesquisa(Funcao funcaoDePesquisa) {
+		this.funcaoDePesquisa = funcaoDePesquisa;
 	}
 }
