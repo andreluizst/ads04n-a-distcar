@@ -14,7 +14,7 @@ import classesBasicas.ItemSerieCarro;
 import classesBasicas.MarcaCarro;
 import classesBasicas.ModeloCarro;
 import classesBasicas.Situacao;
-import classesBasicas.VersaoModeloCarro;
+import classesBasicas.VersaoCarro;
 import dao.DAOCarro;
 import dao.IDAOCarro;
 
@@ -39,11 +39,11 @@ public static void main(String[] args) {
 		
 		AcessorioCarro ac = new AcessorioCarro();
 		ac.setDescricao("Adesivo");
-		ac.setValorAcessorioCarro(200);
+		ac.setValor(200);
 		
 		AcessorioCarro ac1 = new AcessorioCarro();
 		ac1.setDescricao("Farol Mascara Negra");
-		ac1.setValorAcessorioCarro(150);
+		ac1.setValor(150);
 		
 		List<AcessorioCarro> acessorioCarros = new ArrayList<AcessorioCarro>();
 		acessorioCarros.add(ac);
@@ -52,22 +52,22 @@ public static void main(String[] args) {
 		MarcaCarro marcaCarro = new MarcaCarro();
 	
 		ModeloCarro modelo = new ModeloCarro();
-		modelo.setAnoModelo(2014);
-		modelo.setDescricaoModeloCarro("Celta");
+		modelo.setAno(2014);
+		modelo.setDescricao("Celta");
 	
 		
-		VersaoModeloCarro versaoModeloCarro = new VersaoModeloCarro();
-		versaoModeloCarro.setSituacao(Situacao.ATIVO );
-		versaoModeloCarro.setDescricaoVersaoModeloCarro("1.0 LTZ");
-		versaoModeloCarro.setModeloCarro(modelo);
-		versaoModeloCarro.setValorVersao(7.000);
+		VersaoCarro versaoCarro = new VersaoCarro();
+		versaoCarro.setSituacao(Situacao.ATIVO );
+		versaoCarro.setDescricao("1.0 LTZ");
+		versaoCarro.setModeloCarro(modelo);
+		versaoCarro.setValor(7.000);
 		
 		Carro carro = new Carro();
 		carro.setAnoFabricacao(2014);
 		carro.setChassi("121dawew323");
 		carro.setCor("azul");
 		carro.setValorCarro(30000.00);
-		carro.setMarcaCarro(marcaCarro);
+		
 		
 		IDAOCarro carroDAO = new DAOCarro();
 		carroDAO.inserir(carro);
