@@ -1,7 +1,7 @@
 package dao;
 
-import classesBasicas.VersaoModeloCarro;
+import classesBasicas.VersaoCarro;
 
-public class DAOVersaoModeloCarro extends DAOGenerico<VersaoModeloCarro> implements IDAOVersaoModeloCarro {
+public class DAOVersaoModeloCarro extends DAOGenerico<VersaoCarro> implements IDAOVersaoModeloCarro {
 
 }
