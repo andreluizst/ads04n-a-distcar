@@ -5,7 +5,7 @@ import java.util.List;
 import classesBasicas.Carro;
 import classesBasicas.ItemSerieCarro;
 import classesBasicas.ModeloCarro;
-import classesBasicas.VersaoModeloCarro;
+import classesBasicas.VersaoCarro;
 import dao.DAOCarro;
 import dao.DAOItemSerieCarro;
 import dao.DAOModeloCarro;
@@ -71,21 +71,21 @@ public class ControladorCarro {
 	
 	//Versao de carro
 	
-	public void inserir(VersaoModeloCarro entidade) {
+	public void inserir(VersaoCarro entidade) {
 		versaoModeloCarroDAO.inserir(entidade);
 	}
-	public void alterar(VersaoModeloCarro entidade) {
+	public void alterar(VersaoCarro entidade) {
 		versaoModeloCarroDAO.alterar(entidade);
 	}
-	public void remover(VersaoModeloCarro entidade) {
+	public void remover(VersaoCarro entidade) {
 		versaoModeloCarroDAO.remover(entidade);
 	}
 	
-	public List<VersaoModeloCarro> consultarTodasVersao() {
+	public List<VersaoCarro> consultarTodasVersao() {
 		return versaoModeloCarroDAO.consultarTodos();
 	}
 	
-	public VersaoModeloCarro pesquisarVersao(int codigo){
+	public VersaoCarro pesquisarVersao(int codigo){
 		return versaoModeloCarroDAO.consultarPorId(codigo);
 	}
 	//Item de Serie
@@ -101,6 +101,9 @@ public class ControladorCarro {
 		itemSerieCarroDAO.remover(entidade);
 	}
 	
+	public List<ItemSerieCarro> listarItem(){
+		return itemSerieCarroDAO.consultarTodos();
+	}
 	//Acessório Carro
 	
 
