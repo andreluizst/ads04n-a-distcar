@@ -1,7 +1,7 @@
 package dao;
 
-import classesBasicas.VersaoModeloCarro;
+import classesBasicas.VersaoCarro;
 
-public interface IDAOVersaoModeloCarro extends IDAOGenerico<VersaoModeloCarro> {
+public interface IDAOVersaoModeloCarro extends IDAOGenerico<VersaoCarro> {
 
 }
