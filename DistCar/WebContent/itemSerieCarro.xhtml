@@ -9,70 +9,108 @@
 	<title>Cadastrar_Itens_de_Série_de_Carro</title>
 </h:head>
 <body>
+<f:view >
+		<h:form id="form" prependId="false">
 
-	<h:form id="form">
+			<fieldset>
+				<p:panel id="panel" header="DistCar - Item Série"
+					style="margin-bottom:10px;">
 
-		<fieldset>
-			<p:panel id="panel" header="Cadastrar Item de Série"
-				style="margin-bottom:10px;">
-				<p:messages id="messages" />
-				<h:panelGrid columns="4">
-					
-					<h:outputLabel for="descricao" value="Descricão: *" />
-					<p:inputText id="descricao"
-						value="#{itemSerieBean.itemSerieCarro.descricao}" required="true" label="Descricão"
-						requiredMessage="Nome obrigatório: *"></p:inputText>
-					<h:messages></h:messages>
-					<h:outputText value="#{itemSerieBean.itemSerieCarro.descricao}" />  
-					
-					
-					<h:outputLabel for="valor" value="Valor: *" />
-					<p:inputText id="valor"
-						converterMessage="Digite um número decimal no formato 999.00"
-						value="#{itemSerieBean.itemSerieCarro.valorItemSerie}"></p:inputText>
-					<h:messages></h:messages>
-										
-					<br></br>
-					<h:outputLabel for="modelo" value="Modelo: *" />
-					<h:selectOneMenu id="modelo"
-						value="#{itemSerieBean.codigoModeloSelecionado}">
-						<f:selectItem itemLabel="Selecione" itemValue="" />
-						<f:selectItems value="#{itemSerieBean.selectItemsModelo}" var="vm"
-							itemLabel="#{vm.descricaoModeloCarro}" itemValue="#{vm.codigo}" />
-					</h:selectOneMenu>
-					<p:message for="modelo" />
-					<br></br>
-					<p:commandButton value="Salvar" action="#{itemSerieBean.salvar}"></p:commandButton>
-					<b><i>#{itemSerieBeam.mensagem}</i></b>
-				</h:panelGrid>
-			</p:panel>
+					<h:panelGrid columns="4">
 
-		</fieldset>
-		
-	</h:form>
+						<h:outputLabel for="descricao" value="Descricão: *" />
+						<p:inputText id="descricao"
+							value="#{itemSerieBean.itemSerieCarro.descricao}" required="true"
+							label="Descricão" requiredMessage="Nome obrigatório: *" />
+						<p:message for="descricao" />
 
-	<br></br>
-	<h:dataTable value="#{itemSerieBen.selectItemsModelo}"
-		var="itemSerieCarro">
-		<h:column>
-			<h:outputText title="Código" value="#{selectItemsModelo.codigo}" />
-		</h:column>
-		<h:column>
-			<h:outputText title="Descrição"
-				value="#{selectItemsModelo.descricaoModeloCarro}" />
-		</h:column>
-		<h:column>
-			<h:outputText title="Salário" value="#{selectItemsModelo.salario}" />
-		</h:column>
-		<!-- 
- 		<h:column><h:outputText title="Última Atualização" value="#{funcao.dataUltimaAtualizacao}"/></h:column>
- 		-->
-		<h:column>
-			<p:calendar value="#{funcao.dataUltimaAtualizacao.time}" />
-		</h:column>
-		<h:column>
-			<h:outputText title="Situação" value="#{funcao.situacao}" />
-		</h:column>
-	</h:dataTable>
+						<br></br>
+						<h:outputLabel for="valor" value="Valor: *" />
+						<p:inputText id="valor"
+							converterMessage="Digite um número decimal no formato 999.00"
+							value="#{itemSerieBean.itemSerieCarro.valorItemSerie}"
+							requerid="true" label="Valor" />
+						<p:message for="valor" />
+
+						<br></br>
+						<h:outputLabel for="modelo" value="Modelo: *" />
+						<h:selectOneMenu id="modelo"
+							value="#{itemSerieBean.codigoSelecionado}">
+							<f:selectItem noSelectionOption="true"
+								itemLabel="Selecione o Modelo" />
+							<f:selectItems value="#{itemSerieBean.modeloCarros}" var="vm"
+								itemLabel="#{vm.descricao} #{vm.ano}" itemValue="#{vm.codigo}" />
+						</h:selectOneMenu>
+						<p:message for="modelo" />
+						<br></br>
+						<b><i>#{itemSerieBean.mensagem}</i></b>
+						
+					</h:panelGrid>
+					<p:commandButton update="panel" value="Salvar"
+						actionListener="#{itemSerieBean.salvar}" />
+					<p:commandButton update="panel" value="Excluir"
+						actionListener="#{itemSerieBean.salvarAjax}" />
+					<p:commandButton  value="Listar"
+						actionListener="#{itemSerieBean.listarItens}" />
+				</p:panel>
+			</fieldset>
+			        </h:form>
+<h:form id="Tabela">
+			<p:dataTable id="tabelaItens" var="item"
+				value="#{itemSerieBean.listaItens}" paginator="true" rows="10"
+				paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+				rowsPerPageTemplate="5,10,15">
+				<f:facet name="header">
+            Itens de Séries
+        </f:facet>
+
+				<p:column width="3" style="text-align: center;">
+					<f:facet name="header">
+						<h:outputText value="Codigo" />
+					</f:facet>
+					<h:outputText value="#{item.codigo}" />
+				</p:column>
+
+				<p:column width="8" style="text-align: center;">
+					<f:facet name="header">
+						<h:outputText value="Descrição" />
+					</f:facet>
+					<h:outputText value="#{item.descricao}" />
+				</p:column>
+
+				<p:column width="8" style="text-align: center;">
+					<f:facet name="header">
+						<h:outputText value="Modelo" />
+					</f:facet>
+					<h:outputText value="#{item.modeloCarro.descricao} #{item.modeloCarro.ano}" />
+				</p:column>
+
+				<p:column width="5" style="text-align: center;">
+					<f:facet name="header">
+						<h:outputText value="Valor" />
+					</f:facet>
+					<h:outputText value="#{item.valorItemSerie}" />
+				</p:column>
+
+				<p:column width="5" style="text-align: center;">
+					<f:facet name="header">
+						<h:outputText value="Situação" />
+					</f:facet>
+					<h:outputText value="#{item.situacao}" />
+				</p:column>
+
+				<p:column width="5" style="text-align: center;">
+					<f:facet name="header">
+						<h:outputText value="Data da Atualização" />
+					</f:facet>
+					<h:outputText value="#{item.dataUltimaAtualizacao.time}">
+						<f:convertDateTime pattern="dd/MM/yyyy HH:MM"></f:convertDateTime>
+					</h:outputText>
+
+				</p:column>
+
+			</p:dataTable>
+		</h:form>
+		</f:view>
 </body>
 </html>
