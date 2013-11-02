@@ -6,7 +6,7 @@ import classesBasicas.Gestor;
 
 
 
-public interface IGestorDAO extends IDAOGenerico<Gestor> {
+public interface IDAOGestor extends IDAOGenerico<Gestor> {
 
 	/*void inserirGestor(Gestor Gestor);
 	Gestor pesquisarCodigoGestor(Integer codigo);

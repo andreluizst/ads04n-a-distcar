@@ -6,7 +6,7 @@ import classesBasicas.Funcionario;
 
 
 
-public interface IFuncionarioDAO extends IDAOGenerico<Funcionario> {
+public interface IDAOFuncionario extends IDAOGenerico<Funcionario> {
 
 		public List<Funcionario> pesquisarFuncionario(Funcionario f);
 

@@ -5,7 +5,7 @@ import java.util.List;
 import classesBasicas.Departamento;
 
 public class DAODepartamento extends DAOGenerico<Departamento> implements
-		IDepartamentoDAO {
+		IDAODepartamento {
 
 	@Override
 	public List<Departamento> pesquisarNomeDepartamento(String nome) {

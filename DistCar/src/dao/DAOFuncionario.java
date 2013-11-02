@@ -4,7 +4,7 @@ import java.util.List;
 import classesBasicas.Funcionario;
 
 public class DAOFuncionario extends DAOGenerico<Funcionario> implements
-		IFuncionarioDAO {
+		IDAOFuncionario {
 
 	public DAOFuncionario() {
 		// TODO Auto-generated constructor stub
