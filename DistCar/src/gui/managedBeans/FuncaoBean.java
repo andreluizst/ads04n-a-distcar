@@ -26,34 +26,39 @@ import gui.MsgPrimeFaces;
 @ManagedBean
 @SessionScoped
 public class FuncaoBean {
+	private static final String OP_NOVA = "  NOVA  ";
+	private static final String OP_ALTERAR = "Alterar";
+	
 	private IFachada fachada;
 	
 	private Funcao funcao;
 	private Funcao funcaoDePesquisa;
 	private String mensagem;
 	private List<Funcao> lista;
-	private Date data;
 	private Funcao funcaoSelecionada;
 	private Situacao situacaoSelecionada;
 	private Situacao[] situacoes = Situacao.values();
+	private boolean listaEstaVazia;
+	private String tituloOperacao;
 	
 	public FuncaoBean(){
 		fachada = Fachada.obterInstancia();
+		inicializar();
+	}
+	
+	private void inicializar(){
 		novaFuncao();
+		if (lista==null)
+			lista = new ArrayList<Funcao>();
+		else
+			lista.clear();
+		listaEstaVazia = true;
 		funcaoDePesquisa = new Funcao();
-		data = Calendar.getInstance().getTime();
+		funcaoSelecionada = null;
+		tituloOperacao = FuncaoBean.OP_NOVA;
 	}
+
 	
-	
-
-	public Date getData() {
-		return data;
-	}
-
-	public void setData(Date data) {
-		this.data = data;
-	}
-
 	public Funcao getFuncao() {
 		return funcao;
 	}
@@ -67,13 +72,17 @@ public class FuncaoBean {
 	}
 	
 	public String alterar(){
+		if (listaEstaVazia)
+			return null;
 		if (funcaoSelecionada != null)
 			funcao = funcaoSelecionada;
+		tituloOperacao = FuncaoBean.OP_ALTERAR;
 		return "funcao-prop";
 	}
 	
 	public String novo(){
 		novaFuncao();
+		tituloOperacao = FuncaoBean.OP_NOVA;
 		return "funcao-prop";
 	}
 	
@@ -83,6 +92,8 @@ public class FuncaoBean {
 	}
 	
 	public void excluir(){
+		if (listaEstaVazia)
+			return;
 		try{
 			funcao = funcaoSelecionada;
 			fachada.excluirFuncao(funcao);
@@ -98,6 +109,8 @@ public class FuncaoBean {
 	
 	public void fechar(ActionEvent actionevent){
 		lista.clear();
+		listaEstaVazia = true;
+		funcaoSelecionada = null;
 	}
 	
 	
@@ -138,6 +151,7 @@ public class FuncaoBean {
 			this.lista.clear();
 		else
 			this.lista = lista;
+		listaEstaVazia = this.lista.size()>0?false:true;
 	}
 
 	public void listarAjax(){
@@ -190,4 +204,36 @@ public class FuncaoBean {
 	public void setFuncaoDePesquisa(Funcao funcaoDePesquisa) {
 		this.funcaoDePesquisa = funcaoDePesquisa;
 	}
+
+
+
+	public boolean isListaEstaVazia() {
+		return listaEstaVazia;
+	}
+
+
+
+	public void setListaEstaVazia(boolean listaEstaVazia) {
+		this.listaEstaVazia = listaEstaVazia;
+	}
+	
+	public String carregarPagina(){
+		inicializar();
+		return "funcao";
+	}
+
+
+
+	public String getTituloOperacao() {
+		return tituloOperacao;
+	}
+
+
+
+	public void setTituloOperacao(String tituloOperacao) {
+		this.tituloOperacao = tituloOperacao;
+	}
+	
+	
+	
 }

@@ -31,17 +31,16 @@ public class ControladorFuncao {
 
 	public void inserirFuncao (Funcao funcao) throws NegocioExceptionFuncao {
 		// TODO Auto-generated method stub
-		if(funcao.getDescricao()==null||funcao.getDescricao().equals("")||
-						funcao.getSituacao()==null ||
-							funcao.getDataUltimaAtualizacao()==null)
-				{
-					throw new NegocioExceptionFuncao("Campos inválidos");
-				}
-		
 		funcao.setDataUltimaAtualizacao(Calendar.getInstance());
 		if (funcao.getSituacao() == null)
 			funcao.setSituacao(Situacao.ATIVO);
 		
+		if(funcao.getDescricao()==null||funcao.getDescricao().equals("")||
+						funcao.getSituacao()==null ||
+							funcao.getDataUltimaAtualizacao()==null)
+				{
+					throw new NegocioExceptionFuncao("inserirFuncao: Campos inválidos");
+				}
 		funcaoDAO.inserir(funcao);
 	}
 	

@@ -18,10 +18,10 @@
 		</h:form>
 		
   		<h:form id="frmFuncao">
-  			<p:panel id="panelFuncao" header="DistCar - Função">
+  			<p:panel id="panelFuncao" header="DistCar - #{funcaoBean.tituloOperacao} Função">
   				<h:panelGrid columns="3" cellpadding="5">
   					<h:outputLabel for="descricao" value="Descrição: *"/>
-  					<h:inputText id="descricao" value="#{funcaoBean.funcao.descricao}" required="false" lable="Descrição"/>
+  					<h:inputText id="descricao" value="#{funcaoBean.funcao.descricao}" required="true" lable="Descrição"/>
   					<p:message for="descricao"/>
   					
   					<h:outputLabel for="salario" value="Salário: "></h:outputLabel>
