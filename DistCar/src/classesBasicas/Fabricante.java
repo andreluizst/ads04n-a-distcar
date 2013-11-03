@@ -29,7 +29,7 @@ public class Fabricante /*extends ObjetoGeral*/ {
 	
 	public Fabricante() {
 		super();
-		// TODO Auto-generated constructor stub
+		pj = new PessoaJuridica();
 	}
 	/*
 	public Fabricante(Calendar dataUltimaAtualizacao, Situacao situacao) {

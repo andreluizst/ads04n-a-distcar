@@ -23,7 +23,7 @@ public class Centro extends ObjetoGeral {
 	
 	public Centro() {
 		super();
-		// TODO Auto-generated constructor stub
+		dadosPJ = new PessoaJuridica();
 	}
 
 	public Centro(PessoaJuridica dadosPJ, String alias,

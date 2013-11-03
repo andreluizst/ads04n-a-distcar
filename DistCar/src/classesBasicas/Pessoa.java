@@ -1,6 +1,8 @@
 package classesBasicas;
 
+import java.util.Calendar;
 import java.util.Collection;
+
 import javax.persistence.*;
 
 
@@ -20,6 +22,24 @@ public abstract class Pessoa  extends ObjetoGeral {
 	private Collection<String> telefones;
 	
 	private String email;
+	
+	
+	public Pessoa() {
+		super();
+		endereco = new Endereco();
+	}
+	
+	public Pessoa(Calendar dataUltimaAtualizacao, Situacao situacao) {
+		super(dataUltimaAtualizacao, situacao);
+		// TODO Auto-generated constructor stub
+	}
+	public Pessoa(Integer codigo, Calendar dataUltimaAtualizacao,
+			Situacao situacao) {
+		super(codigo, dataUltimaAtualizacao, situacao);
+		// TODO Auto-generated constructor stub
+	}
+	
+	
 	
 	public String getNome() {
 		return nome;

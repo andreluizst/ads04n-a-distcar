@@ -1,5 +1,7 @@
 package classesBasicas;
 
+import java.util.Calendar;
+
 import javax.persistence.*;
 
 
@@ -31,22 +33,54 @@ public class Departamento extends ObjetoGeral {
 	@JoinColumn(name="codCentro", insertable=true, updatable=true, nullable=false)
 	private Centro centro;
 	
+	
+	public Departamento() {
+		super();
+		centro = new Centro();
+	}
+	
+	public Departamento(String nome, Departamento departamentoSuperior,
+			Gestor gestor, Centro centro) {
+		super();
+		this.nome = nome;
+		this.departamentoSuperior = departamentoSuperior;
+		this.gestor = gestor;
+		this.centro = centro;
+	}
+
+	public Departamento(Calendar dataUltimaAtualizacao, Situacao situacao) {
+		super(dataUltimaAtualizacao, situacao);
+		// TODO Auto-generated constructor stub
+	}
+	
+	public Departamento(Integer codigo, Calendar dataUltimaAtualizacao,
+			Situacao situacao) {
+		super(codigo, dataUltimaAtualizacao, situacao);
+		// TODO Auto-generated constructor stub
+	}
+	
 	public String getNome() {
 		return nome;
 	}
+	
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
+	
 	public Departamento getDepartamentoSuperior() {
 		return departamentoSuperior;
 	}
+	
 	public void setDepartamentoSuperior(Departamento departamentoSuperior) {
 		this.departamentoSuperior = departamentoSuperior;
 	}
+	
 	public Gestor getGestor() {
 		return gestor;
 	}
+	
 	public void setGestor(Gestor gestor) {
 		this.gestor = gestor;
 	}
+	
 }

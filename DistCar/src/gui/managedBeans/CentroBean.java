@@ -7,21 +7,27 @@ import gui.MsgPrimeFaces;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
 import javax.faces.event.ActionEvent;
 
 import classesBasicas.Centro;
 import classesBasicas.Situacao;
 import classesBasicas.TipoCentro;
 
+@ManagedBean
+@SessionScoped
 public class CentroBean {
 	private static final String OP_NOVA = "  NOVA  ";
 	private static final String OP_ALTERAR = "Alterar";
+	private static final String OP_VISUALIZAR = "Propriedades do";
+	private static final String TXT_BTN_CANCELAR = "Cancelar";
+	private static final String TXT_BTN_FECHAR = "Fechar";
 	
 	private IFachada fachada;
 	
 	private Centro centro;
 	private Centro centroParaPesquisa;
-	private String mensagem;
 	private List<Centro> lista;
 	private Centro centroSelecionado;
 	private Situacao situacaoSelecionada;
@@ -30,6 +36,7 @@ public class CentroBean {
 	private String tituloOperacao;
 	private TipoCentro[] tiposCentro = TipoCentro.values();
 	private TipoCentro tipoCentroSelecionado;
+	private String textoBotaoFecharOuCancelar;
 	
 	public CentroBean(){
 		fachada = Fachada.obterInstancia();
@@ -45,7 +52,10 @@ public class CentroBean {
 		listaEstaVazia = true;
 		centroParaPesquisa = new Centro();
 		centroSelecionado = null;
-		tituloOperacao = CentroBean.OP_NOVA;
+		tituloOperacao = CentroBean.OP_VISUALIZAR;
+		textoBotaoFecharOuCancelar = CentroBean.TXT_BTN_FECHAR;
+		//centroParaPesquisa.getDadosPJ().getEndereco().getCidade()
+		//centroParaPesquisa.getDadosPJ()
 	}
 
 
@@ -55,12 +65,14 @@ public class CentroBean {
 		if (centroSelecionado != null)
 			centro = centroSelecionado;
 		tituloOperacao = CentroBean.OP_ALTERAR;
-		return "funcao-prop";
+		textoBotaoFecharOuCancelar = CentroBean.TXT_BTN_CANCELAR;
+		return "centro-prop";
 	}
 	
 	public String novo(){
 		novoCentro();
 		tituloOperacao = CentroBean.OP_NOVA;
+		textoBotaoFecharOuCancelar = CentroBean.TXT_BTN_CANCELAR;
 		return "centro-prop";
 	}
 	
@@ -92,20 +104,20 @@ public class CentroBean {
 	}
 	
 	
-	
+	/*
 	public void salvarAjax(ActionEvent actionEvent){
 		try{
-			Fachada.obterInstancia().salvarCentro(centro);
+			fachada.salvarCentro(centro);
 			novoCentro();
 			MsgPrimeFaces.exibirMensagemInfomativa("Centro salvo com sucesso!");
 		}catch(Exception ex){
 			MsgPrimeFaces.exibirMensagemDeErro(ex.getMessage());
 		}
-	}
+	}*/
 	
 	public String salvar(){
 		try{
-			Fachada.obterInstancia().salvarCentro(centro);
+			fachada.salvarCentro(centro);
 			MsgPrimeFaces.exibirMensagemInfomativa("Centro salvo com sucesso!");
 			novoCentro();
 			return "centro";
@@ -131,9 +143,26 @@ public class CentroBean {
 			this.lista = lista;
 		listaEstaVazia = this.lista.size()>0?false:true;
 	}
+	
+	public String carregarPagina(){
+		inicializar();
+		return "centro";
+	}
 
-	public List<Centro> getLista(){
-		return lista;
+	public Centro getCentro() {
+		return centro;
+	}
+
+	public void setCentro(Centro centro) {
+		this.centro = centro;
+	}
+
+	public Centro getCentroParaPesquisa() {
+		return centroParaPesquisa;
+	}
+
+	public void setCentroParaPesquisa(Centro centroParaPesquisa) {
+		this.centroParaPesquisa = centroParaPesquisa;
 	}
 
 	public Centro getCentroSelecionado() {
@@ -152,46 +181,40 @@ public class CentroBean {
 		this.situacaoSelecionada = situacaoSelecionada;
 	}
 
+	public TipoCentro getTipoCentroSelecionado() {
+		return tipoCentroSelecionado;
+	}
+
+	public void setTipoCentroSelecionado(TipoCentro tipoCentroSelecionado) {
+		this.tipoCentroSelecionado = tipoCentroSelecionado;
+	}
+
+	public List<Centro> getLista() {
+		return lista;
+	}
+
 	public Situacao[] getSituacoes() {
 		return situacoes;
-	}
-
-	public void setSituacoes(Situacao[] situacoes) {
-		this.situacoes = situacoes;
-	}
-
-	public Centro getCentroparaPesquisa() {
-		return centroParaPesquisa;
-	}
-
-	public void setCentroParaPesquisa(Centro centroParaPesquisa) {
-		this.centroParaPesquisa = centroParaPesquisa;
 	}
 
 	public boolean isListaEstaVazia() {
 		return listaEstaVazia;
 	}
 
-	public void setListaEstaVazia(boolean listaEstaVazia) {
-		this.listaEstaVazia = listaEstaVazia;
-	}
-	
-	public String carregarPagina(){
-		inicializar();
-		return "centro";
-	}
-
-
-
 	public String getTituloOperacao() {
 		return tituloOperacao;
 	}
 
-
-
-	public void setTituloOperacao(String tituloOperacao) {
-		this.tituloOperacao = tituloOperacao;
+	public TipoCentro[] getTiposCentro() {
+		return tiposCentro;
 	}
+
+	public String getTextoBotaoFecharOuCancelar() {
+		return textoBotaoFecharOuCancelar;
+	}
+
+
+	
 	
 		
 }

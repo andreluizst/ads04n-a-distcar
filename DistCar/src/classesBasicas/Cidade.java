@@ -17,7 +17,7 @@ public class Cidade extends ObjetoGeral {
 	
 	public Cidade() {
 		super();
-		// TODO Auto-generated constructor stub
+		unidadeFederativa = new UnidadeFederativa();
 	}
 	
 	public Cidade(String nome, UnidadeFederativa unidadeFederativa) {
@@ -42,5 +42,10 @@ public class Cidade extends ObjetoGeral {
 
 	public void setNome(String nome) {
 		this.nome = nome;
+	}
+	
+	@Override
+	public String toString(){
+		return getNome() +"/" + getUnidadeFederativa().getSigla();
 	}
 }
