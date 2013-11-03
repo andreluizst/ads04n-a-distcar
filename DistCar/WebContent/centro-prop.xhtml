@@ -58,13 +58,13 @@
   								itemLabel="#{tpLog.descricao}" itemValue="#{tpLog.codigo}" />
   					</p:selectOneMenu>
   					
-  					<h:outputLabel for="numero" value="Número: *"/>
-  					<p:inputText id="numero"  
-  								value="#{centroBean.centro.dadosPJ.endereco.numero}" required="true" lable="numero" />
-  								
   					<h:outputLabel for="logradouro" value="Logradouro: *"/>
   					<p:inputText id="logradouro"  
   								value="#{centroBean.centro.dadosPJ.endereco.logradouro}" required="true" lable="logradouro" />
+  					
+  					<h:outputLabel for="numero" value="Número: *"/>
+  					<p:inputText id="numero"  
+  								value="#{centroBean.centro.dadosPJ.endereco.numero}" required="true" lable="numero" />
   					
   					<h:outputLabel for="bairro" value="Bairro: *"/>
   					<p:inputText id="bairro"  

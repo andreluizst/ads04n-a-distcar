@@ -63,6 +63,53 @@ public class PessoaJuridica extends Pessoa {
 	public void setDataAbertura(Date dataAbertura) {
 		this.dataAbertura = dataAbertura;
 	}
+
+	@Override
+	public String toString() {
+		return "PessoaJuridica [cnpj=" + cnpj + ", inscricaoEstadual="
+				+ inscricaoEstadual + ", dataAbertura=" + dataAbertura + "]";
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = super.hashCode();
+		result = prime * result + ((cnpj == null) ? 0 : cnpj.hashCode());
+		result = prime * result
+				+ ((dataAbertura == null) ? 0 : dataAbertura.hashCode());
+		result = prime
+				* result
+				+ ((inscricaoEstadual == null) ? 0 : inscricaoEstadual
+						.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!super.equals(obj))
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		PessoaJuridica other = (PessoaJuridica) obj;
+		if (cnpj == null) {
+			if (other.cnpj != null)
+				return false;
+		} else if (!cnpj.equals(other.cnpj))
+			return false;
+		if (dataAbertura == null) {
+			if (other.dataAbertura != null)
+				return false;
+		} else if (!dataAbertura.equals(other.dataAbertura))
+			return false;
+		if (inscricaoEstadual == null) {
+			if (other.inscricaoEstadual != null)
+				return false;
+		} else if (!inscricaoEstadual.equals(other.inscricaoEstadual))
+			return false;
+		return true;
+	}
 	
 	
 	

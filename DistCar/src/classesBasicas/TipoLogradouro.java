@@ -19,4 +19,6 @@ public class TipoLogradouro extends EntidadeBasica {
 	public String toString(){
 		return getDescricao();
 	}
+	
+	
 }

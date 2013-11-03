@@ -78,6 +78,58 @@ public class Centro extends ObjetoGeral {
 	public void setTipoCentro(TipoCentro tipoCentro) {
 		this.tipoCentro = tipoCentro;
 	}
+
+	@Override
+	public String toString() {
+		return "Centro [dadosPJ=" + dadosPJ + ", alias=" + alias
+				+ ", capacidadeArmazenamento=" + capacidadeArmazenamento
+				+ ", tipoCentro=" + tipoCentro + "]";
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = super.hashCode();
+		result = prime * result + ((alias == null) ? 0 : alias.hashCode());
+		result = prime
+				* result
+				+ ((capacidadeArmazenamento == null) ? 0
+						: capacidadeArmazenamento.hashCode());
+		result = prime * result + ((dadosPJ == null) ? 0 : dadosPJ.hashCode());
+		result = prime * result
+				+ ((tipoCentro == null) ? 0 : tipoCentro.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!super.equals(obj))
+			return false;
+		if (!(obj instanceof Centro))
+			return false;
+		Centro other = (Centro) obj;
+		if (alias == null) {
+			if (other.alias != null)
+				return false;
+		} else if (!alias.equals(other.alias))
+			return false;
+		if (capacidadeArmazenamento == null) {
+			if (other.capacidadeArmazenamento != null)
+				return false;
+		} else if (!capacidadeArmazenamento
+				.equals(other.capacidadeArmazenamento))
+			return false;
+		if (dadosPJ == null) {
+			if (other.dadosPJ != null)
+				return false;
+		} else if (!dadosPJ.equals(other.dadosPJ))
+			return false;
+		if (tipoCentro != other.tipoCentro)
+			return false;
+		return true;
+	}
 	
 	
 	

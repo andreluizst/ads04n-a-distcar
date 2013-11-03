@@ -48,4 +48,40 @@ public class Cidade extends ObjetoGeral {
 	public String toString(){
 		return getNome() +"/" + getUnidadeFederativa().getSigla();
 	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = super.hashCode();
+		result = prime * result + ((nome == null) ? 0 : nome.hashCode());
+		result = prime
+				* result
+				+ ((unidadeFederativa == null) ? 0 : unidadeFederativa
+						.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!super.equals(obj))
+			return false;
+		if (!(obj instanceof Cidade))
+			return false;
+		Cidade other = (Cidade) obj;
+		if (nome == null) {
+			if (other.nome != null)
+				return false;
+		} else if (!nome.equals(other.nome))
+			return false;
+		if (unidadeFederativa == null) {
+			if (other.unidadeFederativa != null)
+				return false;
+		} else if (!unidadeFederativa.equals(other.unidadeFederativa))
+			return false;
+		return true;
+	}
+	
+	
 }

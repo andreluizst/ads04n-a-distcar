@@ -16,6 +16,7 @@ import classesBasicas.Departamento;
 import classesBasicas.Funcao;
 import classesBasicas.Funcionario;
 import classesBasicas.Gestor;
+import classesBasicas.PessoaJuridica;
 import classesBasicas.Situacao;
 import classesBasicas.TipoLogradouro;
 import classesBasicas.UnidadeFederativa;
@@ -103,12 +104,15 @@ public class ControladorOrganizacional {
 						funcao.getSituacao()==null ||
 							funcao.getDataUltimaAtualizacao()==null)
 				{
-					throw new NegocioExceptionFuncao("inserirFuncao: Campos inválidos");
+					throw new Exception("inserirFuncao: Campos inválidos");
 				}
 		daoFuncao.inserir(funcao);
 	}
 	
 	public void alterarFuncao(Funcao funcao) throws Exception {
+		funcao.setDataUltimaAtualizacao(Calendar.getInstance());
+		if (funcao.getSituacao() == null)
+			funcao.setSituacao(Situacao.ATIVO);
 		if(	funcao.getCodigo()==null||funcao.getCodigo().equals("")||
 				funcao.getDescricao()==null||funcao.getDescricao().equals("")||
 						funcao.getSituacao()==null||funcao.getSituacao().equals("")||
@@ -119,7 +123,7 @@ public class ControladorOrganizacional {
 				
 		Funcao f = daoFuncao.consultarPorId(funcao.getCodigo());
 		if(f==null){
-			throw new NegocioExceptionFuncao("Funcao não cadastrada");
+			throw new Exception("Funcao não cadastrada");
 		}
 		
 		daoFuncao.alterar(f);
@@ -327,6 +331,8 @@ public class ControladorOrganizacional {
 				cnpj = cnpj.replace("-", "").replace("/", "");
 				//System.out.println(cnpj);
 				centro.getDadosPJ().setCnpj(cnpj);
+				centro.getDadosPJ().setDataUltimaAtualizacao(centro.getDataUltimaAtualizacao());
+				centro.getDadosPJ().setSituacao(centro.getSituacao());
 			}
 			daoCentro.inserirSemTratamento(centro);
 			et.commit();
@@ -337,20 +343,40 @@ public class ControladorOrganizacional {
 	}
 	
 	public void alterarCentro(Centro centro) throws Exception{
-		String cnpj = centro.getDadosPJ().getCnpj().replace(".", "");
-		cnpj = cnpj.replace("-", "").replace("/", "");
-		centro.getDadosPJ().setCnpj(cnpj);
-		centro.setDataUltimaAtualizacao(Calendar.getInstance());
-		if (centro.getSituacao() == null)
-			centro.setSituacao(Situacao.ATIVO);
+		
+		System.out.println("Iniciando alterarCentro(Centro centro)..........");
+		System.out.println("Iniciando alterarCentro(Centro centro)..........");
+		System.out.println("Iniciando alterarCentro(Centro centro)..........");
+		System.out.println("Iniciando alterarCentro(Centro centro)..........");
+		
+		
+		String cnpj = centro.getDadosPJ().getCnpj();
+		cnpj = cnpj.replace(".", "").replace("-", "").replace("/", "");
+		
+		PessoaJuridica pj = daoPJ.pegarPJ(cnpj);
+		
+		System.out.println("PJ do banco: " + pj);
+		System.out.println("centro.getDadosPJ = " + centro.getDadosPJ());
+		
+		
 		EntityTransaction et = entityManager.getTransaction();
 		try{
 			et.begin();
+			centro.getDadosPJ().setCnpj(cnpj);
+			centro.setDataUltimaAtualizacao(Calendar.getInstance());
+			if (centro.getSituacao() == null)
+				centro.setSituacao(Situacao.ATIVO);
+			
+			if (!centro.getDadosPJ().equals(pj)){
+				System.out.println("Dados de PJ foram modificados!!");
+				centro.getDadosPJ().setDataUltimaAtualizacao(centro.getDataUltimaAtualizacao());
+				centro.getDadosPJ().setSituacao(centro.getSituacao());
+			}
 			daoCentro.alterarSemTratamento(centro);
 			et.commit();
 		}catch(Exception ex){
 			et.rollback();
-			throw ex;
+			throw new Exception(ex.getMessage());
 		}
 	}
 	
@@ -358,8 +384,9 @@ public class ControladorOrganizacional {
 		EntityTransaction et = entityManager.getTransaction();
 		try{
 			et.begin();
-			daoPJ.removerSemTratamento(centro.getDadosPJ());
 			daoCentro.removerSemTratamento(centro);
+			daoPJ.removerSemTratamento(centro.getDadosPJ());
+			
 			et.commit();
 		}catch(Exception ex){
 			et.rollback();

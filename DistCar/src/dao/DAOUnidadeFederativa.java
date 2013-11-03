@@ -35,4 +35,15 @@ public class DAOUnidadeFederativa extends DAOGenerico<UnidadeFederativa> impleme
 		return tqry.getResultList();
 	}
 
+	@Override
+	public UnidadeFederativa pegarUF(String nome, String sigla)
+			throws Exception {
+		// TODO Auto-generated method stub
+		String jpql = "from UnidadeFederativa u where u.nome like :nome and u.sigla like :sigla";
+		TypedQuery<UnidadeFederativa> tqry = entityManager.createQuery(jpql, UnidadeFederativa.class);
+		tqry.setParameter("nome", nome);
+		tqry.setParameter("sigla", sigla);
+		return tqry.getSingleResult();
+	}
+
 }

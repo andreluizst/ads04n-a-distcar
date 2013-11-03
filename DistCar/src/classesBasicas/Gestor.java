@@ -36,6 +36,39 @@ public class Gestor extends Funcionario {
 	public void setTipoGerencia(TipoGerencia tipoGerencia) {
 		this.tipoGerencia = tipoGerencia;
 	}
+
+	@Override
+	public String toString() {
+		return getNome() + ", " + getCpf() + " [" + tipoGerencia + "]";
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = super.hashCode();
+		result = prime * result
+				+ ((tipoGerencia == null) ? 0 : tipoGerencia.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!super.equals(obj))
+			return false;
+		if (!(obj instanceof Gestor))
+			return false;
+		Gestor other = (Gestor) obj;
+		if (tipoGerencia == null) {
+			if (other.tipoGerencia != null)
+				return false;
+		} else if (!tipoGerencia.equals(other.tipoGerencia))
+			return false;
+		return true;
+	}
+	
+	
 	
 	
 }
