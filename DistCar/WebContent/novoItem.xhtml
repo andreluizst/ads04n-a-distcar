@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html	 xmlns="http://www.w3.org/1999/xhtml"
+	 	 xmlns:h="http://java.sun.com/jsf/html"
+		xmlns:f="http://java.sun.com/jsf/core"
+		xmlns:p="http://primefaces.org/ui">
+<h:head>
+
+<title>Item Série Carro</title>
+</h:head>
+<h:body>
+<f:view id="View ">
+
+		<h:form id="form" >
+		
+		 <p:growl id="messages" showDetail="true"/> 
+
+			<p:panel id="panel" header="DistCar - Item Série"
+				style="margin-bottom:10px;">
+				
+				<f:facet name="header">
+					<h:panelGrid columns="2">
+						<p:commandLink action="index.xhtml">
+							<p:graphicImage value="/resources/images/home-02.jpg"
+								height="35px" width="35px" />
+						</p:commandLink>
+						<h:outputText value="DisctCar 1.0 - Item Série" />
+					</h:panelGrid>
+				</f:facet>
+
+				<h:panelGrid columns="3" cellpadding="5">
+
+					<h:outputLabel for="descricao" value="Descricão: *" />
+					<p:inputText id="descricao"
+						value="#{itemSerieBean.itemSerieCarro.descricao}" required="true"
+						label="Descricão" requiredMessage="Nome obrigatório: *" />
+					<p:message for="descricao" />
+
+					<h:outputLabel for="valor" value="Valor: *" />
+					<p:inputText id="valor" required="true"
+						converterMessage="Digite um número decimal no formato 999.00"
+						value="#{itemSerieBean.itemSerieCarro.valorItemSerie}"
+						requerid="false" label="Valor" />
+					<p:message for="valor" />
+
+
+					<h:outputLabel for="modelo" value="Modelo: * " />
+					<h:selectOneMenu id="modelo" required="true"
+						value="#{itemSerieBean.codigoSelecionado}">
+						<f:selectItem noSelectionOption="true"
+							itemLabel="Selecione o Modelo" />
+						<f:selectItems value="#{itemSerieBean.modeloCarros}" var="vm"
+							itemLabel="#{vm.descricao} #{vm.ano}" itemValue="#{vm.codigo}" />
+					</h:selectOneMenu>
+					<p:message for="modelo" />
+				</h:panelGrid>
+				<p:commandButton value="Salvar"  update="panel" action="#{itemSerieBean.salvar}" />
+   				<p:commandButton value="Cancelar" immediate="true" action="item" />
+</p:panel>
+ 			</h:form>
+ 			</f:view>
+</h:body>
+</html>
