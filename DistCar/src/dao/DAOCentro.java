@@ -2,6 +2,7 @@ package dao;
 
 import java.util.List;
 
+import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 
 import classesBasicas.Centro;
@@ -14,5 +15,17 @@ public class DAOCentro extends DAOGenerico<Centro> implements IDAOCentro{
 		tqry.setParameter("alias", "%" + centro.getAlias() + "%");
 		return tqry.getResultList();
 	}
+
+	public DAOCentro() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	public DAOCentro(EntityManager entityManager) {
+		super(entityManager);
+		// TODO Auto-generated constructor stub
+	}
+	
+	
 
 }

@@ -2,11 +2,24 @@ package dao;
 
 import java.util.List;
 
+import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 
 import classesBasicas.Cidade;
 
 public class DAOCidade extends DAOGenerico<Cidade> implements IDAOCidade{
+
+	
+	
+	public DAOCidade() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	public DAOCidade(EntityManager entityManager) {
+		super(entityManager);
+		// TODO Auto-generated constructor stub
+	}
 
 	@Override
 	public List<Cidade> pesquisarCidade(Cidade cidade) {

@@ -33,6 +33,16 @@
   							value="#{centroBean.centro.dadosPJ.cnpj}" required="true" lable="CNPJ">
   					</p:inputMask>
   					
+					<h:outputLabel for="tipoCentro" value="Tipo centro: *"/>
+  					<p:selectOneMenu id="tipoCentro" value="#{centroBean.centro.tipoCentro}" required="true">
+  						<f:selectItem noSelectionOption="true" itemLabel="Selecione uma situação" itemValue="" />
+  						<f:selectItems value="#{centroBean.tiposCentros}" />
+  					</p:selectOneMenu>
+  					
+  					<h:outputLabel for="capacidade" value="Capacidade: *"/>
+  					<p:inputText id="capacidade"  
+  								value="#{centroBean.centro.capacidadeArmazenamento}" required="true" lable="capacidade" />
+  					
   					<h:outputLabel for="data" value="Data da abertura: *"/>
   					<p:calendar id="data" value="#{centroBean.centro.dadosPJ.dataAbertura}"
   						effect="explode" pattern="dd/MM/yyyy" />
@@ -48,6 +58,10 @@
   								itemLabel="#{tpLog.descricao}" itemValue="#{tpLog.codigo}" />
   					</p:selectOneMenu>
   					
+  					<h:outputLabel for="numero" value="Número: *"/>
+  					<p:inputText id="numero"  
+  								value="#{centroBean.centro.dadosPJ.endereco.numero}" required="true" lable="numero" />
+  								
   					<h:outputLabel for="logradouro" value="Logradouro: *"/>
   					<p:inputText id="logradouro"  
   								value="#{centroBean.centro.dadosPJ.endereco.logradouro}" required="true" lable="logradouro" />

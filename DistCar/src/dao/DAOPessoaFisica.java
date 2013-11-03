@@ -2,11 +2,22 @@ package dao;
 
 import java.util.List;
 
+import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 
 import classesBasicas.PessoaFisica;
 
 public class DAOPessoaFisica extends DAOGenerico<PessoaFisica> implements IDAOPessoaFisica{
+	
+	public DAOPessoaFisica() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	public DAOPessoaFisica(EntityManager entityManager) {
+		super(entityManager);
+		// TODO Auto-generated constructor stub
+	}
 
 	@Override
 	public List<PessoaFisica> pesquisarPF(PessoaFisica pf) {

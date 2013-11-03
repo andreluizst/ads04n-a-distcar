@@ -6,6 +6,10 @@ import org.hibernate.criterion.Order;
 
 public interface IDAOGenerico<Entidade> {
 
+	public void inserirSemTratamento(Entidade entidade) throws Exception;
+	public void alterarSemTratamento(Entidade entidade) throws Exception;
+	public void removerSemTratamento(Entidade entidade) throws Exception;
+	
 	public void inserir(Entidade entidade);
 	
 	public void alterar(Entidade entidade);

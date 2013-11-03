@@ -1,7 +1,6 @@
 package dao;
 
 import java.lang.reflect.ParameterizedType;
-
 import java.util.Collection;
 import java.util.List;
 
@@ -39,6 +38,15 @@ public abstract class DAOGenerico<Entidade> implements IDAOGenerico<Entidade>{
 	    classePersistente = (Class<Entidade>) parameterizedType.getActualTypeArguments()[0];  
 	}
 	
+	@SuppressWarnings("unchecked")
+	public DAOGenerico(EntityManager entityManager){
+		//EntityManagerFactory emf = Persistence.createEntityManagerFactory(Parametros.UNIT_PERSISTENCE_NAME);
+		this.entityManager = entityManager;
+		
+		ParameterizedType parameterizedType = (ParameterizedType) getClass().getGenericSuperclass();  
+	    classePersistente = (Class<Entidade>) parameterizedType.getActualTypeArguments()[0];  
+	}
+	
 	/**
 	 * Executa o merge do objeto que se encontra em memória.
 	 * 
@@ -46,7 +54,7 @@ public abstract class DAOGenerico<Entidade> implements IDAOGenerico<Entidade>{
 	 *            a ser realizado o merge
 	 * @return objeto que foi executado o merge
 	 */
-	public final void alterar(Entidade objeto) {
+	public final void alterar(Entidade objeto)  {
 		EntityTransaction tx = getEntityManager().getTransaction();
 		try {
 			tx.begin();
@@ -61,6 +69,7 @@ public abstract class DAOGenerico<Entidade> implements IDAOGenerico<Entidade>{
 				tx.rollback();
 			}
 		}
+		
 	}
 
 	/**
@@ -82,6 +91,24 @@ public abstract class DAOGenerico<Entidade> implements IDAOGenerico<Entidade>{
 			}
 		}
 	}
+	
+	@Override
+	public final void inserirSemTratamento(Entidade objeto) throws Exception{
+		getEntityManager().persist(objeto);
+	}
+	
+	@Override
+	public final void alterarSemTratamento(Entidade objeto)  throws Exception{
+		objeto = getEntityManager().merge(objeto);
+	}
+	
+	@Override
+	public final void removerSemTratamento(Entidade objeto) throws Exception{
+		refresh(objeto);
+		getEntityManager().remove(objeto);		
+	}
+	
+	
 
 	/**
 	 * Salva o objeto atual na base de dados.
@@ -132,6 +159,8 @@ public abstract class DAOGenerico<Entidade> implements IDAOGenerico<Entidade>{
 				tx.rollback();
 			}
 		}
+		
+		
 	}
 
 	

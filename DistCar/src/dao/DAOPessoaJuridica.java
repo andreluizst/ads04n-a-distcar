@@ -1,10 +1,23 @@
 package dao;
 
 import java.util.List;
+
+import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
+
 import classesBasicas.PessoaJuridica;
 
 public class DAOPessoaJuridica extends DAOGenerico<PessoaJuridica> implements IDAOPessoaJuridica {
+	
+	public DAOPessoaJuridica() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	public DAOPessoaJuridica(EntityManager entityManager) {
+		super(entityManager);
+		// TODO Auto-generated constructor stub
+	}
 
 	@Override
 	public List<PessoaJuridica> pesquisarPJ(PessoaJuridica pj) {

@@ -5,7 +5,11 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityTransaction;
+import javax.persistence.Persistence;
+import javax.swing.JOptionPane;
 
+import util.Parametros;
 import classesBasicas.Centro;
 import classesBasicas.Cidade;
 import classesBasicas.Departamento;
@@ -37,6 +41,7 @@ import erro.NegocioExceptionDepartamento;
 import erro.NegocioExceptionFuncao;
 import erro.NegocioExceptionFuncionario;
 import erro.NegocioExceptionGestor;
+import gui.MsgPrimeFaces;
 
 public class ControladorOrganizacional {
 	private EntityManagerFactory emf;
@@ -52,6 +57,8 @@ public class ControladorOrganizacional {
 	private IDAOUnidadeFederativa daoUF;
 	
 	public ControladorOrganizacional(){
+		emf = Persistence.createEntityManagerFactory(Parametros.UNIT_PERSISTENCE_NAME);
+		entityManager = emf.createEntityManager();
 		inicializarDAO();
 	}
 	
@@ -62,20 +69,20 @@ public class ControladorOrganizacional {
 	}
 	
 	private void inicializarDAO(){
-		daoFuncao = new DAOFuncao();
+		daoFuncao = new DAOFuncao(entityManager);
 		daoFuncionario = new DAOFuncionario();
-		daoCentro = new DAOCentro();
-		daoDepto = new DAODepartamento();
-		daoGestor = new DAOGestor();
-		daoPJ = new DAOPessoaJuridica();
-		daoTipoLogradouro = new DAOTipoLogradouro();
-		daoCidade = new DAOCidade();
-		daoUF = new DAOUnidadeFederativa();
+		daoCentro = new DAOCentro(entityManager);
+		daoDepto = new DAODepartamento(entityManager);
+		daoGestor = new DAOGestor(entityManager);
+		daoPJ = new DAOPessoaJuridica(entityManager);
+		daoTipoLogradouro = new DAOTipoLogradouro(entityManager);
+		daoCidade = new DAOCidade(entityManager);
+		daoUF = new DAOUnidadeFederativa(entityManager);
 	}
 	
 	
 	//*****************************  F U N Ç Ã O  *****************************************
-	public boolean funcaoExiste(Funcao funcao){
+	public boolean funcaoExiste(Funcao funcao) throws Exception{
 		Funcao obj = null;
 		if (funcao.getCodigo() == null)
 			return false;
@@ -86,7 +93,7 @@ public class ControladorOrganizacional {
 		return false;
 	}
 
-	public void inserirFuncao (Funcao funcao) throws NegocioExceptionFuncao {
+	public void inserirFuncao (Funcao funcao) throws Exception {
 		// TODO Auto-generated method stub
 		funcao.setDataUltimaAtualizacao(Calendar.getInstance());
 		if (funcao.getSituacao() == null)
@@ -101,7 +108,7 @@ public class ControladorOrganizacional {
 		daoFuncao.inserir(funcao);
 	}
 	
-	public void alterarFuncao(Funcao funcao) throws NegocioExceptionFuncao {
+	public void alterarFuncao(Funcao funcao) throws Exception {
 		if(	funcao.getCodigo()==null||funcao.getCodigo().equals("")||
 				funcao.getDescricao()==null||funcao.getDescricao().equals("")||
 						funcao.getSituacao()==null||funcao.getSituacao().equals("")||
@@ -119,7 +126,7 @@ public class ControladorOrganizacional {
 	}
 	
 	
-	public void removerFuncao(Funcao funcao) throws NegocioExceptionFuncao {
+	public void removerFuncao(Funcao funcao) throws Exception {
 		// TODO Auto-generated method stub
 		Funcao f = daoFuncao.consultarPorId(funcao.getCodigo());
 		if(f==null){
@@ -128,18 +135,18 @@ public class ControladorOrganizacional {
 		daoFuncao.remover(f);
 	}
 
-	public List<Funcao> pesquisarFuncao(Funcao funcao) throws NegocioExceptionFuncao {
+	public List<Funcao> pesquisarFuncao(Funcao funcao) throws Exception{
 		// TODO Auto-generated method stub
 		return daoFuncao.pesquisar(funcao);
 	}
 	
-	public List<Funcao> listarFuncoes() throws NegocioExceptionFuncao{
+	public List<Funcao> listarFuncoes() throws Exception{
 		return daoFuncao.consultarTodos();
 	}
 	
 	
 	//*************************  D E P A R T A M E N T O  **************************************
-	public void inserirDepartamento(Departamento departamento) throws NegocioExceptionDepartamento {
+	public void inserirDepartamento(Departamento departamento) throws Exception{
 		// TODO Auto-generated method stub
 		if(		departamento.getCodigo()==null||departamento.getCodigo().equals("")||
 					departamento.getNome()==null||departamento.getNome().equals("")||
@@ -154,7 +161,7 @@ public class ControladorOrganizacional {
 		daoDepto.inserir(departamento);
 	}
 	
-	public void alterarDepartamento(Departamento departamento) throws NegocioExceptionDepartamento {
+	public void alterarDepartamento(Departamento departamento) throws Exception{
 		// TODO Auto-generated method stub
 		if(	departamento.getCodigo()==null||departamento.getCodigo().equals("")||
 				departamento.getNome()==null||departamento.getNome().equals("")||
@@ -176,7 +183,7 @@ public class ControladorOrganizacional {
 		*/
 	}
 	
-	public void removerDepartamento(Departamento departamento) throws NegocioExceptionDepartamento {
+	public void removerDepartamento(Departamento departamento) throws Exception{
 		// TODO Auto-generated method stub
 		List<Departamento> lista;
 		lista = daoDepto.pesquisarNomeDepartamento(departamento.getNome());
@@ -194,7 +201,7 @@ public class ControladorOrganizacional {
 	
 	
 	//*************************  F U N C I O N Á R I O  ******************************************
-	public void inserirFuncionario (Funcionario funcionario) throws NegocioExceptionFuncionario {
+	public void inserirFuncionario (Funcionario funcionario) throws Exception {
 		// TODO Auto-generated method stub
 		if(	funcionario.getCodigo()==null||funcionario.getCodigo().equals("")||
 				funcionario.getNome()==null||funcionario.getNome().equals("")||
@@ -207,7 +214,7 @@ public class ControladorOrganizacional {
 		daoFuncionario.inserir(funcionario);
 	}
 	
-	public void alterarFuncionario(Funcionario funcionario) throws NegocioExceptionFuncionario {
+	public void alterarFuncionario(Funcionario funcionario) throws Exception{
 		if(funcionario.getCodigo()==null||funcionario.getCodigo().equals("")||
 				funcionario.getNome()==null||funcionario.getNome().equals("")||
 						funcionario.getSituacao()==null||funcionario.getSituacao().equals("")||
@@ -224,7 +231,7 @@ public class ControladorOrganizacional {
 		daoFuncionario.alterar(func);
 		}
 	
-	public void removerFuncionario(Funcionario funcionario) throws NegocioExceptionFuncionario {
+	public void removerFuncionario(Funcionario funcionario) throws Exception{
 		// TODO Auto-generated method stub
 		Funcionario func = daoFuncionario.consultarPorId(funcionario.getCodigo());
 		if(func==null){
@@ -240,7 +247,7 @@ public class ControladorOrganizacional {
 	
 	
 	//*********************************  G E S T O R  *******************************************
-	public void inserirGestor (Gestor gestor) throws NegocioExceptionGestor {
+	public void inserirGestor (Gestor gestor) throws Exception {
 		// TODO Auto-generated method stub
 		if(	gestor.getCodigo()==null||gestor.getCodigo().equals("")||
 				gestor.getNome()==null||gestor.getNome().equals("")||
@@ -253,7 +260,7 @@ public class ControladorOrganizacional {
 		daoGestor.inserir(gestor);
 	}
 	
-	public void alterarGestor (Gestor gestor) throws NegocioExceptionGestor {
+	public void alterarGestor (Gestor gestor) throws Exception {
 		if(	gestor.getCodigo()==null||gestor.getCodigo().equals("")||
 				gestor.getNome()==null||gestor.getNome().equals("")||
 						gestor.getSituacao()==null||gestor.getSituacao().equals("")||
@@ -271,7 +278,7 @@ public class ControladorOrganizacional {
 	}
 
 
-	public void removerGestor(Gestor gestor) throws NegocioExceptionGestor {
+	public void removerGestor(Gestor gestor) throws Exception {
 		// TODO Auto-generated method stub
 		Gestor g = daoGestor.consultarPorId(gestor.getCodigo());
 		if(g==null){
@@ -280,13 +287,13 @@ public class ControladorOrganizacional {
 		daoGestor.remover(g);
 	}
 
-	public List<Gestor> pesquisarGestor(Gestor gestor) throws NegocioExceptionGestor {
+	public List<Gestor> pesquisarGestor(Gestor gestor) throws Exception{
 		// TODO Auto-generated method stub
 		return null;
 	}
 	
 	//*********************************  C E N T R O  *********************************************
-	public boolean centroExiste(Centro centro){
+	public boolean centroExiste(Centro centro) throws Exception{
 		Centro obj = null;
 		if (centro.getCodigo() == null)
 			return false;
@@ -298,15 +305,66 @@ public class ControladorOrganizacional {
 	}
 	
 	public void inserirCentro(Centro centro) throws Exception{
-		daoCentro.inserir(centro);
+		Cidade cid;
+		TipoLogradouro tpLog;
+		
+		centro.setDataUltimaAtualizacao(Calendar.getInstance());
+		if (centro.getSituacao() == null)
+			centro.setSituacao(Situacao.ATIVO);
+		
+		EntityTransaction et = entityManager.getTransaction();
+		try{
+			et.begin();
+			if (centro.getDadosPJ() != null){
+				if (centro.getDadosPJ().getEndereco().getCidade() != null){
+					cid = daoCidade.consultarPorId(centro.getDadosPJ().getEndereco().getCidade().getCodigo());
+					centro.getDadosPJ().getEndereco().setCidade(cid);
+					tpLog = daoTipoLogradouro.consultarPorId(centro.getDadosPJ().getEndereco().getTipoLogradouro().getCodigo());
+					centro.getDadosPJ().getEndereco().setTipoLogradouro(tpLog);
+				}
+				String cnpj = centro.getDadosPJ().getCnpj().replace(".", "");
+				//System.out.println(cnpj);
+				cnpj = cnpj.replace("-", "").replace("/", "");
+				//System.out.println(cnpj);
+				centro.getDadosPJ().setCnpj(cnpj);
+			}
+			daoCentro.inserirSemTratamento(centro);
+			et.commit();
+		}catch(Exception ex){
+			et.rollback();
+			throw ex;
+		}
 	}
 	
 	public void alterarCentro(Centro centro) throws Exception{
-		daoCentro.alterar(centro);
+		String cnpj = centro.getDadosPJ().getCnpj().replace(".", "");
+		cnpj = cnpj.replace("-", "").replace("/", "");
+		centro.getDadosPJ().setCnpj(cnpj);
+		centro.setDataUltimaAtualizacao(Calendar.getInstance());
+		if (centro.getSituacao() == null)
+			centro.setSituacao(Situacao.ATIVO);
+		EntityTransaction et = entityManager.getTransaction();
+		try{
+			et.begin();
+			daoCentro.alterarSemTratamento(centro);
+			et.commit();
+		}catch(Exception ex){
+			et.rollback();
+			throw ex;
+		}
 	}
 	
 	public void removerCentro(Centro centro) throws Exception{
-		daoCentro.remover(centro);
+		EntityTransaction et = entityManager.getTransaction();
+		try{
+			et.begin();
+			daoPJ.removerSemTratamento(centro.getDadosPJ());
+			daoCentro.removerSemTratamento(centro);
+			et.commit();
+		}catch(Exception ex){
+			et.rollback();
+			MsgPrimeFaces.exibirMensagemDeErro(ex.getMessage());
+		}
 	}
 	
 	public List<Centro> consultarCentro(Centro centro) throws Exception{

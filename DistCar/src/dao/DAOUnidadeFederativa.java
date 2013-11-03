@@ -2,12 +2,24 @@ package dao;
 
 import java.util.List;
 
+import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 
 import classesBasicas.UnidadeFederativa;
 
 public class DAOUnidadeFederativa extends DAOGenerico<UnidadeFederativa> implements IDAOUnidadeFederativa{
 
+	public DAOUnidadeFederativa() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	public DAOUnidadeFederativa(EntityManager entityManager) {
+		super(entityManager);
+		// TODO Auto-generated constructor stub
+	}
+
+	
 	@Override
 	public List<UnidadeFederativa> pesquisarUF(UnidadeFederativa uf) {
 		String jpql = "from UnidadeFederativa u where u.nome like :nome";

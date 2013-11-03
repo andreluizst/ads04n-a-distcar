@@ -37,7 +37,7 @@ public class CentroBean {
 	private Situacao[] situacoes = Situacao.values();
 	private boolean listaEstaVazia;
 	private String tituloOperacao;
-	private TipoCentro[] tiposCentro = TipoCentro.values();
+	private TipoCentro[] tiposCentros = TipoCentro.values();
 	private List<TipoLogradouro> tiposLogradouros; 
 	private List<Cidade> cidades;
 	private List<UnidadeFederativa> unidadesFederativas;
@@ -226,8 +226,8 @@ public class CentroBean {
 		return tituloOperacao;
 	}
 
-	public TipoCentro[] getTiposCentro() {
-		return tiposCentro;
+	public TipoCentro[] getTiposCentros() {
+		return tiposCentros;
 	}
 
 	public String getTextoBotaoFecharOuCancelar() {
