@@ -42,7 +42,7 @@
   					
   					<h:outputLabel for="cidade" value="Cidade: "/>
   					<p:inputText id="cidade"  
-  								value="#{centroBean.centroParaPesquisa.dadosPJ.endereco.cidade}" lable="Cidade" />
+  								value="#{centroBean.centroParaPesquisa.dadosPJ.endereco.cidade.nome}" lable="Cidade" />
   					
   					<h:outputLabel for="situacao" value="Situação: "/>
   					<p:selectOneMenu id="situacao" value="#{centroBean.centroParaPesquisa.situacao}" >
@@ -53,19 +53,21 @@
   				</h:panelGrid>
 				
 				<p:commandButton value="Novo"    update="panelCentro" action="#{centroBean.novo}"/>
-   				<p:commandButton value="Alterar" update="panelCentro" action="#{centroBean.alterar}" />
-   				<p:commandButton value="Excluir" update="tbCentros" actionListener="#{centroBean.excluir}">
+   				<p:commandButton disabled="#{centroBean.listaEstaVazia}" value="Alterar" update="panelCentro" action="#{centroBean.alterar}" />
+   				<p:commandButton disabled="#{centroBean.listaEstaVazia}" value="Excluir" update="tbCentros" actionListener="#{centroBean.excluir}">
    					<p:confirm header="Confirmação" 
    							message="Confirma a exclusão do centro selecionado?"
    							icon="ui-icon-alert" />  
    				</p:commandButton>
 
-  				<p:commandButton value="Consultar"  update="tbCentros" actionListener="#{centroBean.consultar}"/>
+  				<p:commandButton value="Consultar"  update="frmCentro" actionListener="#{centroBean.consultar}"/>
+  				<p:commandButton disabled="#{centroBean.listaEstaVazia}" value="Detalhes" update="panelCentro" action="#{centroBean.visualizar}" />
+  				<p:commandButton value="Limpar"  update="frmCentro" actionListener="#{centroBean.limpar}"/>
   				
  			</p:panel>
 
   			<p:dataTable id="tbCentros" var="centro" value="#{centroBean.lista}" paginator="true" rows="5"
-  						paginatorTemplate="{CurrentPageReport} {PreviousPageLink} {PageLinks}
+  						paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks}
   						{NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rowsPerPageTemplate="5,10,15"
   						selection="#{centroBean.centroSelecionado}" selectionMode="single" rowKey="#{centro}">
   				<f:facet name="header">Lista de Centros</f:facet>

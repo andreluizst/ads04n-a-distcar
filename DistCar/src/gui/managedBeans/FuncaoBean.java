@@ -1,18 +1,15 @@
 package gui.managedBeans;
 
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 //import gui.MessagesController;
 
 
 
+
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
 import javax.faces.bean.SessionScoped;
-import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 
@@ -113,6 +110,10 @@ public class FuncaoBean {
 		funcaoSelecionada = null;
 	}
 	
+	public void limpar(){
+		funcaoDePesquisa = new Funcao();
+		situacaoSelecionada = null;
+	}
 	
 	
 	public void salvarAjax(ActionEvent actionEvent){

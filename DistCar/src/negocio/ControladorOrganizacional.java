@@ -6,23 +6,33 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 
+import classesBasicas.Centro;
+import classesBasicas.Cidade;
 import classesBasicas.Departamento;
 import classesBasicas.Funcao;
 import classesBasicas.Funcionario;
 import classesBasicas.Gestor;
 import classesBasicas.Situacao;
+import classesBasicas.TipoLogradouro;
+import classesBasicas.UnidadeFederativa;
 import dao.DAOCentro;
+import dao.DAOCidade;
 import dao.DAODepartamento;
 import dao.DAOFuncao;
 import dao.DAOFuncionario;
 import dao.DAOGestor;
 import dao.DAOPessoaJuridica;
+import dao.DAOTipoLogradouro;
+import dao.DAOUnidadeFederativa;
 import dao.IDAOCentro;
+import dao.IDAOCidade;
 import dao.IDAODepartamento;
 import dao.IDAOFuncao;
 import dao.IDAOFuncionario;
 import dao.IDAOGestor;
 import dao.IDAOPessoaJuridica;
+import dao.IDAOTipoLogradouro;
+import dao.IDAOUnidadeFederativa;
 import erro.NegocioExceptionDepartamento;
 import erro.NegocioExceptionFuncao;
 import erro.NegocioExceptionFuncionario;
@@ -37,6 +47,9 @@ public class ControladorOrganizacional {
 	private IDAOGestor daoGestor;
 	private IDAODepartamento daoDepto;
 	private IDAOPessoaJuridica daoPJ;
+	private IDAOTipoLogradouro daoTipoLogradouro;
+	private IDAOCidade daoCidade;
+	private IDAOUnidadeFederativa daoUF;
 	
 	public ControladorOrganizacional(){
 		inicializarDAO();
@@ -55,6 +68,9 @@ public class ControladorOrganizacional {
 		daoDepto = new DAODepartamento();
 		daoGestor = new DAOGestor();
 		daoPJ = new DAOPessoaJuridica();
+		daoTipoLogradouro = new DAOTipoLogradouro();
+		daoCidade = new DAOCidade();
+		daoUF = new DAOUnidadeFederativa();
 	}
 	
 	
@@ -205,7 +221,7 @@ public class ControladorOrganizacional {
 			throw new NegocioExceptionFuncionario("Funcionário não cadastrado");
 		}
 		
-		daoFuncionario.inserir(func);
+		daoFuncionario.alterar(func);
 		}
 	
 	public void removerFuncionario(Funcionario funcionario) throws NegocioExceptionFuncionario {
@@ -251,7 +267,7 @@ public class ControladorOrganizacional {
 			throw new NegocioExceptionGestor("Gestor não cadastrado");
 		}
 		
-		daoGestor.inserir(g);
+		daoGestor.alterar(g);
 	}
 
 
@@ -269,4 +285,92 @@ public class ControladorOrganizacional {
 		return null;
 	}
 	
+	//*********************************  C E N T R O  *********************************************
+	public boolean centroExiste(Centro centro){
+		Centro obj = null;
+		if (centro.getCodigo() == null)
+			return false;
+		obj = daoCentro.consultarPorId(centro.getCodigo());
+		if (obj != null)
+			if (obj.getCodigo() == centro.getCodigo())
+				return true;
+		return false;
+	}
+	
+	public void inserirCentro(Centro centro) throws Exception{
+		daoCentro.inserir(centro);
+	}
+	
+	public void alterarCentro(Centro centro) throws Exception{
+		daoCentro.alterar(centro);
+	}
+	
+	public void removerCentro(Centro centro) throws Exception{
+		daoCentro.remover(centro);
+	}
+	
+	public List<Centro> consultarCentro(Centro centro) throws Exception{
+		return daoCentro.pesquisar(centro);
+	}
+	
+	public List<Centro> listarCentros() throws Exception{
+		return daoCentro.consultarTodos();
+	}
+	
+	//************************* T I P O S   L O G R A D O U R O S  *********************
+	public boolean tipoLogradouroExiste(TipoLogradouro tipoLogradouro) throws Exception{
+		TipoLogradouro obj = null;
+		if (tipoLogradouro.getCodigo() == null)
+			return false;
+		obj = daoTipoLogradouro.consultarPorId(tipoLogradouro.getCodigo());
+		if (obj != null)
+			if (obj.getCodigo() == tipoLogradouro.getCodigo())
+				return true;
+		return false;
+	}
+	
+	public void inserirTipoLogradouro(TipoLogradouro tipoLogradouro) throws Exception{
+		daoTipoLogradouro.inserir(tipoLogradouro);
+	}
+	
+	public void alterarTipoLogradouro(TipoLogradouro tipoLogradouro) throws Exception{
+		daoTipoLogradouro.alterar(tipoLogradouro);
+	}
+	
+	public List<TipoLogradouro> listarTiposLogradouros() throws Exception{
+		return daoTipoLogradouro.consultarTodos();
+	}
+	
+	//****************************  C I D A D E  *****************************************
+	public boolean cidadeExiste(Cidade cidade) throws Exception{
+		Cidade obj = null;
+		if (cidade.getCodigo() == null)
+			return false;
+		obj = daoCidade.consultarPorId(cidade.getCodigo());
+		if (obj != null)
+			if (obj.getCodigo() == cidade.getCodigo())
+				return true;
+		return false;
+	}
+	
+	public void inserirCidade(Cidade cidade) throws Exception{
+		List<Cidade> lista = daoCidade.pesquisar(cidade);
+		if (lista.size() > 0)
+			throw new Exception("A cidade " + cidade.getNome()
+					+ "/" +cidade.getUnidadeFederativa().getSigla() + ", já existe!");
+		daoCidade.inserir(cidade);
+	}
+	
+	public void alterarCidade(Cidade cidade) throws Exception{
+		daoCidade.alterar(cidade);
+	}
+	
+	public List<Cidade> listarCidades() throws Exception{
+		return daoCidade.consultarTodos();
+	}
+	
+	//*******************  U N I D A D E   F E D E R A T I V A  ****************************
+	public List<UnidadeFederativa> listarUFs() throws Exception{
+		return daoUF.consultarTodos();
+	}
 }

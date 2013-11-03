@@ -6,6 +6,7 @@ import negocio.ControladorCarro;
 import negocio.ControladorOrganizacional;
 import classesBasicas.Carro;
 import classesBasicas.Centro;
+import classesBasicas.Cidade;
 import classesBasicas.Departamento;
 import classesBasicas.Fabricante;
 import classesBasicas.Funcao;
@@ -15,6 +16,8 @@ import classesBasicas.ItemSerieCarro;
 import classesBasicas.ModeloCarro;
 import classesBasicas.Pessoa;
 import classesBasicas.TipoGerencia;
+import classesBasicas.TipoLogradouro;
+import classesBasicas.UnidadeFederativa;
 import classesBasicas.VersaoCarro;
 
 public class Fachada implements IFachada {
@@ -34,15 +37,17 @@ public class Fachada implements IFachada {
 	}
 	
 	//***********************************************************************************
-	//***********************  C R U D    Organizacional ********************************
+	//******************  C R U D    O R G A N I Z A C I O N A L ************************
 	//***********************************************************************************
 	
-	//******************** Função ******************************
+	//*****************************  F U N Ç Ã O  ***************************************
 	@Override
 	public void salvarFuncao(Funcao funcao) throws Exception {
 		// TODO Auto-generated method stub
-		//ctrlFuncao
-		ctrlOrg.inserirFuncao(funcao);
+		if (ctrlOrg.funcaoExiste(funcao))
+			ctrlOrg.alterarFuncao(funcao);
+		else
+			ctrlOrg.inserirFuncao(funcao);
 	}
 	
 	@Override
@@ -67,24 +72,26 @@ public class Fachada implements IFachada {
 	//**************************  C E N T R O  **********************************************
 	@Override
 	public void salvarCentro(Centro centro) throws Exception{
-		
+		if (ctrlOrg.centroExiste(centro))
+			ctrlOrg.alterarCentro(centro);
+		else
+			ctrlOrg.inserirCentro(centro);
 	}
 	
 	@Override
 	public void excluirCentro(Centro centro) throws Exception{
-		
+		if (ctrlOrg.centroExiste(centro))
+			ctrlOrg.removerCentro(centro);
 	}
 	
 	@Override
 	public List<Centro> consultarCentro(Centro centro) throws Exception{
-		//Falta implementar
-		return null;
+		return ctrlOrg.consultarCentro(centro);
 	}
 	
 	@Override
 	public List<Centro> listarCentros() throws Exception{
-		// Falta implementar
-		return null;
+		return ctrlOrg.listarCentros();
 	}
 	
 	//**************************  F U N C I O N Á R I O  ************************************
@@ -173,9 +180,43 @@ public class Fachada implements IFachada {
 		return null;
 	}
 	
+	//*********************  T I P O   L O G R A D O U R O  **********************************
+	@Override
+	public void salvarTipoLogradouro(TipoLogradouro tipoLogradouro) throws Exception{
+		if (ctrlOrg.tipoLogradouroExiste(tipoLogradouro))
+			ctrlOrg.alterarTipoLogradouro(tipoLogradouro);
+		else
+			ctrlOrg.inserirTipoLogradouro(tipoLogradouro);
+	}
+	
+	@Override
+	public List<TipoLogradouro> listarTiposLogradouros() throws Exception{
+		return ctrlOrg.listarTiposLogradouros();
+	}
+	
+	//****************************  C I D A D E  *****************************************
+	@Override
+	public void salvarCidade(Cidade cidade) throws Exception{
+		if (ctrlOrg.cidadeExiste(cidade))
+			ctrlOrg.alterarCidade(cidade);
+		else
+			ctrlOrg.inserirCidade(cidade);
+	}
+	
+	@Override
+	public List<Cidade> listarCidades() throws Exception{
+		return ctrlOrg.listarCidades();
+	}
+	
+	//*******************  U N I D A D E   F E D E R A T I V A  ****************************
+	@Override
+	public List<UnidadeFederativa> listarUFs() throws Exception{
+		return ctrlOrg.listarUFs();
+	}
+	
 	
 	//***********************************************************************************
-	//**************** F I M   C R U D    Organizacional ********************************
+	//********************* F I M   C R U D    Organizacional ***************************
 	//***********************************************************************************
 
 	//Carro - Felipe Carlos

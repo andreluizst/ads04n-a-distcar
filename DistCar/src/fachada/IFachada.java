@@ -50,6 +50,17 @@ public interface IFachada {
 	public List<TipoGerencia> listarTiposGerencia() throws Exception;
 	
 	
+	//******************  T I P O S   L O G R A D O U R O S  *********************************
+	public void salvarTipoLogradouro(TipoLogradouro tipoLogradouro) throws Exception;
+	public List<TipoLogradouro> listarTiposLogradouros() throws Exception;
+	
+	//***************************  C I D A D E  S  *******************************************
+	public void salvarCidade(Cidade cidade) throws Exception;
+	public List<Cidade> listarCidades() throws Exception;
+	
+	//*******************  U N I D A D E   F E D E R A T I V A  ****************************
+	public List<UnidadeFederativa> listarUFs() throws Exception;
+	
 	//***********************************************************************************
 	//*******************************  V E N D A S  *************************************
 	//***********************************************************************************

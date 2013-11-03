@@ -50,29 +50,20 @@
   				</h:panelGrid>
 				
 				<p:commandButton value="Novo"    update="panelFuncao" action="#{funcaoBean.novo}"/>
-   				<p:commandButton value="Alterar" update="panelFuncao" action="#{funcaoBean.alterar}" />
-   				<p:commandButton value="Excluir" update="tbFuncoes" actionListener="#{funcaoBean.excluir}">
+   				<p:commandButton disabled="#{funcaoBean.listaEstaVazia}" value="Alterar" update="panelFuncao" action="#{funcaoBean.alterar}" />
+   				<p:commandButton disabled="#{funcaoBean.listaEstaVazia}" value="Excluir" update="tbFuncoes" actionListener="#{funcaoBean.excluir}">
    					<p:confirm header="Confirmação" 
    							message="Confirma a exclusão da função selecionada?"
    							icon="ui-icon-alert" />  
    				</p:commandButton>
 
-  				<p:commandButton value="Consultar"  update="tbFuncoes" actionListener="#{funcaoBean.consultar}"/>
+  				<p:commandButton value="Consultar"  update="frmFuncao" actionListener="#{funcaoBean.consultar}"/>
+  				<p:commandButton value="Limpar"  update="frmFuncao" actionListener="#{funcaoBean.limpar}"/>
   				
-  				<p:commandButton value="Fechar"  update="tbFuncoes" actionListener="#{funcaoBean.fechar}"/>
-  				<!-- 
-  				<br></br>
-  				<h:outputLabel for="msg" value="Mensagem: "/> 
-				<h:outputText id="msg" value="#{funcaoBean.mensagem}"/>
-				-->
   			</p:panel>
-		<!-- 
-  		</h:form>
-  		
-  		<h:form id="frmLista" >
-		-->  		
+
   			<p:dataTable id="tbFuncoes" var="funcao" value="#{funcaoBean.funcoes}" paginator="true" rows="5"
-  						paginatorTemplate="{CurrentPageReport} {PreviousPageLink} {PageLinks}
+  						paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks}
   						{NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rowsPerPageTemplate="5,10,15"
   						selection="#{funcaoBean.funcaoSelecionada}" selectionMode="single" rowKey="#{funcao}">
   				<f:facet name="header">Lista de Funções</f:facet>

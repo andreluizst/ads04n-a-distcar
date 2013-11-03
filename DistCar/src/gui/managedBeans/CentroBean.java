@@ -12,15 +12,18 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.event.ActionEvent;
 
 import classesBasicas.Centro;
+import classesBasicas.Cidade;
 import classesBasicas.Situacao;
 import classesBasicas.TipoCentro;
+import classesBasicas.TipoLogradouro;
+import classesBasicas.UnidadeFederativa;
 
 @ManagedBean
 @SessionScoped
 public class CentroBean {
-	private static final String OP_NOVA = "  NOVA  ";
-	private static final String OP_ALTERAR = "Alterar";
-	private static final String OP_VISUALIZAR = "Propriedades do";
+	private static final String OP_NOVA = "NOVO Centro";
+	private static final String OP_ALTERAR = "Alterar Centro";
+	private static final String OP_VISUALIZAR = "Propriedades do Centro";
 	private static final String TXT_BTN_CANCELAR = "Cancelar";
 	private static final String TXT_BTN_FECHAR = "Fechar";
 	
@@ -35,8 +38,14 @@ public class CentroBean {
 	private boolean listaEstaVazia;
 	private String tituloOperacao;
 	private TipoCentro[] tiposCentro = TipoCentro.values();
+	private List<TipoLogradouro> tiposLogradouros; 
+	private List<Cidade> cidades;
+	private List<UnidadeFederativa> unidadesFederativas;
 	private TipoCentro tipoCentroSelecionado;
 	private String textoBotaoFecharOuCancelar;
+	private boolean somenteLeitura;
+	
+	
 	
 	public CentroBean(){
 		fachada = Fachada.obterInstancia();
@@ -54,8 +63,14 @@ public class CentroBean {
 		centroSelecionado = null;
 		tituloOperacao = CentroBean.OP_VISUALIZAR;
 		textoBotaoFecharOuCancelar = CentroBean.TXT_BTN_FECHAR;
-		//centroParaPesquisa.getDadosPJ().getEndereco().getCidade()
-		//centroParaPesquisa.getDadosPJ()
+		somenteLeitura = true;
+		try{
+			tiposLogradouros = fachada.listarTiposLogradouros();
+			cidades = fachada.listarCidades();
+			unidadesFederativas = fachada.listarUFs();
+		}catch(Exception ex){
+			MsgPrimeFaces.exibirMensagemDeErro(ex.getMessage());
+		}
 	}
 
 
@@ -66,6 +81,7 @@ public class CentroBean {
 			centro = centroSelecionado;
 		tituloOperacao = CentroBean.OP_ALTERAR;
 		textoBotaoFecharOuCancelar = CentroBean.TXT_BTN_CANCELAR;
+		somenteLeitura = false;
 		return "centro-prop";
 	}
 	
@@ -73,6 +89,7 @@ public class CentroBean {
 		novoCentro();
 		tituloOperacao = CentroBean.OP_NOVA;
 		textoBotaoFecharOuCancelar = CentroBean.TXT_BTN_CANCELAR;
+		somenteLeitura = false;
 		return "centro-prop";
 	}
 	
@@ -95,31 +112,19 @@ public class CentroBean {
 		}
 	}
 	
-	
-	
 	public void fechar(ActionEvent actionevent){
 		lista.clear();
 		listaEstaVazia = true;
 		centroSelecionado = null;
+		somenteLeitura = true;
 	}
-	
-	
-	/*
-	public void salvarAjax(ActionEvent actionEvent){
-		try{
-			fachada.salvarCentro(centro);
-			novoCentro();
-			MsgPrimeFaces.exibirMensagemInfomativa("Centro salvo com sucesso!");
-		}catch(Exception ex){
-			MsgPrimeFaces.exibirMensagemDeErro(ex.getMessage());
-		}
-	}*/
 	
 	public String salvar(){
 		try{
 			fachada.salvarCentro(centro);
 			MsgPrimeFaces.exibirMensagemInfomativa("Centro salvo com sucesso!");
 			novoCentro();
+			somenteLeitura = true;
 			return "centro";
 		}catch(Exception ex){
 			MsgPrimeFaces.exibirMensagemDeErro(ex.getMessage());
@@ -135,6 +140,17 @@ public class CentroBean {
 		}
 	}
 	
+	public String visualizar(){
+		if (listaEstaVazia)
+			return null;
+		if (centroSelecionado != null)
+			centro = centroSelecionado;
+		tituloOperacao = CentroBean.OP_VISUALIZAR;
+		textoBotaoFecharOuCancelar = CentroBean.TXT_BTN_FECHAR;
+		somenteLeitura = true;
+		return "centro-prop";
+	}
+	
 
 	private void atualizarLista(List<Centro> lista) {
 		if (lista == null)
@@ -142,6 +158,11 @@ public class CentroBean {
 		else
 			this.lista = lista;
 		listaEstaVazia = this.lista.size()>0?false:true;
+	}
+	
+	public void limpar(){
+		centroParaPesquisa = new Centro();
+		situacaoSelecionada = null;
 	}
 	
 	public String carregarPagina(){
@@ -212,9 +233,25 @@ public class CentroBean {
 	public String getTextoBotaoFecharOuCancelar() {
 		return textoBotaoFecharOuCancelar;
 	}
-
-
 	
+	public boolean isSomenteLeitura(){
+		return somenteLeitura;
+	}
+
+	public boolean isNenhumItemSelecionado(){
+		boolean desabilitado = true;
+		if ((!listaEstaVazia) && (centroSelecionado != null)){
+			desabilitado = false;
+		}
+		return desabilitado;
+	}
 	
+	public List<TipoLogradouro> getTiposLogradouros(){
+		return tiposLogradouros;
+	}
+	
+	public List<Cidade> getCidades(){
+		return cidades;
+	}
 		
 }

@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html 
+	xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+>
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+	<title>DistCar 1.0 - Centro</title>
+	<h:outputStylesheet name="styles-PSC.css" library="css"></h:outputStylesheet>
+</h:head>
+<h:body>
+	<f:view id="viewCentro-prop">
+		
+		<h:form id="frmMensagens">
+			<p:messages id="messages" showDetail="true" autoUpdate="true" closable="true"></p:messages>
+			<p:growl id="growl" showDetail="true" sticky="false" globalOnly="true" />
+		</h:form>
+		
+  		<h:form id="frmCentro">
+  			<p:panel id="panelFuncao" header="DistCar - #{centroBean.tituloOperacao}">
+  				<h:panelGrid columns="2" cellpadding="5">
+  					<h:outputLabel for="alias" value="Alias: *"/>
+  					<h:inputText id="alias" value="#{centroBean.centro.alias}"  required="true" lable="Alias"/>
+  					
+  					<h:outputLabel for="nome" value="Nome/Razão social: *"/>
+  					<h:inputText id="nome" value="#{centroBean.centro.dadosPJ.nome}" required="true" lable="Nome"/>
+  					
+  					<h:outputLabel for="cnpj" value="CNPJ: *"/>
+  					<p:inputMask id="cnpj" mask="99.999.999/9999-99" size="20" 
+  							value="#{centroBean.centro.dadosPJ.cnpj}" required="true" lable="CNPJ">
+  					</p:inputMask>
+  					
+  					<h:outputLabel for="data" value="Data da abertura: *"/>
+  					<p:calendar id="data" value="#{centroBean.centro.dadosPJ.dataAbertura}"
+  						effect="explode" pattern="dd/MM/yyyy" />
+  					
+  					<h:outputLabel for="inscEst" value="Inscrição estadual: *"/>
+  					<h:inputText id="inscEst" value="#{centroBean.centro.dadosPJ.inscricaoEstadual}" required="true" lable="Inscrição estadual"/>
+  					
+  					
+  					<h:outputLabel for="tipoLog" value="Tipo logradouro: *"/>
+  					<p:selectOneMenu id="tipoLog" value="#{centroBean.centro.dadosPJ.endereco.tipoLogradouro.codigo}" >
+  						<f:selectItem itemLabel="Selecione uma opção"  />
+  						<f:selectItems value="#{centroBean.tiposLogradouros}" var="tpLog" 
+  								itemLabel="#{tpLog.descricao}" itemValue="#{tpLog.codigo}" />
+  					</p:selectOneMenu>
+  					
+  					<h:outputLabel for="logradouro" value="Logradouro: *"/>
+  					<p:inputText id="logradouro"  
+  								value="#{centroBean.centro.dadosPJ.endereco.logradouro}" required="true" lable="logradouro" />
+  					
+  					<h:outputLabel for="bairro" value="Bairro: *"/>
+  					<p:inputText id="bairro"  
+  								value="#{centroBean.centro.dadosPJ.endereco.bairro}" required="true" lable="Bairro" />
+  								
+  					<h:outputLabel for="cbxCidade" value="Cidade: *"/>
+  					<p:selectOneMenu id="cbxCidade" value="#{centroBean.centro.dadosPJ.endereco.cidade.codigo}" required="true">
+  						<f:selectItem noSelectionOption="true" itemLabel="Selecione uma cidade" itemValue="" />
+  						<f:selectItems value="#{centroBean.cidades}" var="cid" 
+  								itemLabel="#{cid}" itemValue="#{cid.codigo}" />
+  					</p:selectOneMenu>
+  					
+  					<h:outputLabel for="email" value="E-mail: "/>
+  					<p:inputText id="email"  
+  								value="#{centroBean.centro.dadosPJ.email}" required="false" lable="E-mail" />
+  					
+  					<h:outputLabel for="situacao" value="Situação: *"/>
+  					<p:selectOneMenu id="situacao" value="#{centroBean.centro.situacao}" required="true">
+  						<f:selectItem noSelectionOption="true" itemLabel="Selecione uma situação" itemValue="" />
+  						<f:selectItems value="#{centroBean.situacoes}" />
+  					</p:selectOneMenu>
+  					
+  				</h:panelGrid>
+
+  				<p:commandButton value="Salvar" rendered="#{!centroBean.somenteLeitura}" 
+  						disabled="#{centroBean.somenteLeitura}" 
+  						update=":frmMensagens:growl" action="#{centroBean.salvar}"/>
+  				
+  				<p:commandButton value="#{centroBean.textoBotaoFecharOuCancelar}" 
+  								immediate="true" action="centro" />
+
+  			</p:panel>
+    		
+  		</h:form>
+ 	</f:view>
+</h:body>
+</html>

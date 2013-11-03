@@ -14,7 +14,7 @@ public class DAOPessoaJuridica extends DAOGenerico<PessoaJuridica> implements ID
 			nome = "%" + pj.getNome() + "%";
 		if (pj.getCnpj() != null)
 			jpql+= " and p.cnpj like :cnpj";
-		if (pj.getInscricaoEstatdual() != null)
+		if (pj.getInscricaoEstadual() != null)
 			jpql+= " and p.inscricaoEstadual like :inscEst";
 		if (pj.getEndereco().getCidade() != null){
 			jpql+= " and p.endereco.cidade.codigo = :cidade";
@@ -25,8 +25,8 @@ public class DAOPessoaJuridica extends DAOGenerico<PessoaJuridica> implements ID
 		tqry.setParameter("nome", nome);
 		if (pj.getCnpj() != null)
 			tqry.setParameter("cnpj", pj.getCnpj());
-		if (pj.getInscricaoEstatdual() != null)
-			tqry.setParameter("inscEst", pj.getInscricaoEstatdual());
+		if (pj.getInscricaoEstadual() != null)
+			tqry.setParameter("inscEst", pj.getInscricaoEstadual());
 		if (pj.getEndereco().getCidade() != null){
 			tqry.setParameter("cidade", pj.getEndereco().getCidade().getCodigo());
 			if (pj.getEndereco().getCidade().getUnidadeFederativa().getSigla() != null)

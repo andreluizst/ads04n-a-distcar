@@ -14,4 +14,9 @@ public class TipoLogradouro extends EntidadeBasica {
 		super();
 		super.setDescricao(descricao);
 	}
+	
+	@Override
+	public String toString(){
+		return getDescricao();
+	}
 }

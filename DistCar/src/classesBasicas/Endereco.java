@@ -26,7 +26,8 @@ public class Endereco {
 	
 	public Endereco() {
 		super();
-		// TODO Auto-generated constructor stub
+		tipoLogradouro = new TipoLogradouro();
+		cidade = new Cidade();
 	}
 	
 	public Endereco(TipoLogradouro tipoLogradouro, String logradouro,
@@ -74,7 +75,7 @@ public class Endereco {
 	
 	@Override
 	public String toString(){
-		return getTipoLogradouro() + " " + getLogradouro() + " " + getNumero() + " " + getBairro()
+		return getTipoLogradouro().getDescricao() + " " + getLogradouro() + " " + getNumero() + " " + getBairro()
 				+ " " + getCidade();
 	}
 	

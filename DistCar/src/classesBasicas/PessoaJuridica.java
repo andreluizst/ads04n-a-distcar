@@ -11,7 +11,7 @@ public class PessoaJuridica extends Pessoa {
 	private String cnpj;
 	
 	@Column(nullable=false)
-	private String inscricaoEstatdual;
+	private String inscricaoEstadual;
 	
 	@Temporal(TemporalType.DATE)
 	private Date dataAbertura;
@@ -23,18 +23,18 @@ public class PessoaJuridica extends Pessoa {
 		// TODO Auto-generated constructor stub
 	}
 	
-	public PessoaJuridica(String nome, String cnpj, String inscricaoEstatdual,
+	public PessoaJuridica(String nome, String cnpj, String inscricaoEstadual,
 			Date dataAbertura) {
-		this(nome, cnpj, inscricaoEstatdual, dataAbertura, null);
+		this(nome, cnpj, inscricaoEstadual, dataAbertura, null);
 	}
 	
-	public PessoaJuridica(String nome, String cnpj, String inscricaoEstatdual,
+	public PessoaJuridica(String nome, String cnpj, String inscricaoEstadual,
 			Date dataAbertura, Endereco endereco) {
 		super();
 		super.setNome(nome);
 		super.setEndereco(endereco);
 		this.cnpj = cnpj;
-		this.inscricaoEstatdual = inscricaoEstatdual;
+		this.inscricaoEstadual = inscricaoEstadual;
 		this.dataAbertura = dataAbertura;
 	}
 
@@ -48,12 +48,12 @@ public class PessoaJuridica extends Pessoa {
 		this.cnpj = cnpj;
 	}
 
-	public String getInscricaoEstatdual() {
-		return inscricaoEstatdual;
+	public String getInscricaoEstadual() {
+		return inscricaoEstadual;
 	}
 
-	public void setInscricaoEstatdual(String inscricaoEstatdual) {
-		this.inscricaoEstatdual = inscricaoEstatdual;
+	public void setInscricaoEstadual(String inscricaoEstatdual) {
+		this.inscricaoEstadual = inscricaoEstatdual;
 	}
 
 	public Date getDataAbertura() {
