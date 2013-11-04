@@ -8,20 +8,26 @@
 	<title>Cadastrar_Itens_de_Série_de_Carro</title>
 </h:head>
 <h:body>
-	<f:view id="View" >
+	<f:view id="View">
+	<h:form id="frmMensagens">
+			<p:messages id="messages" showDetail="true" autoUpdate="true" closable="true"></p:messages>
+			<p:growl id="growl" showDetail="true" sticky="false" globalOnly="true" />
+		</h:form>
+		<h:form id="form">
 
-		<h:form id="form" >
-		
-		 <p:growl id="messages" showDetail="true"/> 
+			<p:growl id="messages" showDetail="true" />
 
-			<p:confirmDialog id="dlgMsg" global="true" showEffect="fade" hideEffect="explode">  
-        		<p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check"/>  
-        		<p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close"/>       
-    		</p:confirmDialog>
+			<p:confirmDialog id="dlgMsg" global="true" showEffect="fade"
+				hideEffect="explode">
+				<p:commandButton value="Sim" type="button"
+					styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+				<p:commandButton value="Não" type="button"
+					styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+			</p:confirmDialog>
 
 			<p:panel id="panel" header="DistCar - Item Série"
 				style="margin-bottom:10px;">
-				
+
 				<f:facet name="header">
 					<h:panelGrid columns="2">
 						<p:commandLink action="index.xhtml">
@@ -31,7 +37,7 @@
 						<h:outputText value="DisctCar 1.0 - Item Série" />
 					</h:panelGrid>
 				</f:facet>
-
+				
 				<h:panelGrid columns="3" cellpadding="5">
 
 					<h:outputLabel for="descricao" value="Descricão: *" />
@@ -39,7 +45,7 @@
 						value="#{itemSerieBean.itemSerieCarro.descricao}" required="false"
 						label="Descricão" requiredMessage="Nome obrigatório: *" />
 					<p:message for="descricao" />
-
+						
 					<h:outputLabel for="valor" value="Valor: *" />
 					<p:inputText id="valor" required="false"
 						converterMessage="Digite um número decimal no formato 999.00"
@@ -47,69 +53,63 @@
 						requerid="false" label="Valor" />
 					<p:message for="valor" />
 
-
 					<h:outputLabel for="modelo" value="Modelo: * " />
 					<h:selectOneMenu id="modelo" required="false"
 						value="#{itemSerieBean.codigoSelecionado}">
 						<f:selectItem noSelectionOption="true"
-							itemLabel="Selecione o Modelo" />
+							itemLabel="Selecione o Modelo" itemValue=""/>
 						<f:selectItems value="#{itemSerieBean.modeloCarros}" var="vm"
 							itemLabel="#{vm.descricao} #{vm.ano}" itemValue="#{vm.codigo}" />
 					</h:selectOneMenu>
-					<p:message for="modelo" />
-				</h:panelGrid>
+					<p:message for="modelo" /> 
+					
+					<h:outputLabel for="situacao" value="Situação: "/>
+  					<p:selectOneMenu id="situacao" value="#{itemSerieBean.itemSerieCarro.situacao}" >
+  						<f:selectItem itemLabel="Selecione uma opção" itemValue="" />
+  						<f:selectItems value="#{funcaoBean.situacoes}" />
+  					</p:selectOneMenu>
+					<p:message for="situacao" />
+				</h:panelGrid> 
 				
 				
-				<p:commandButton value="Novo"    update="panel" action="#{itemSerieBean.novo}"/>
-   				<p:commandButton value="Alterar" update="panel" action="#{itemSerieBean.excluir}" />
-   				<p:commandButton value="Excluir" update="TBitem" action="#{itemSerieBean.excluir}" >
-   					<p:confirm header="Confirmação" 
-   							message="Confirma a exclusão da função selecionada?"
-   							icon="ui-icon-alert" />  
-   				</p:commandButton>
+			<p:commandButton value="Consultar" update="TBitem"
+					action="#{itemSerieBean.consultar}" />	
+				
+				
 
-  				<p:commandButton value="Consultar"  update="TBitem" action="#{itemSerieBean.consulta}"/>
-  				
-  				<p:commandButton value="Fechar"  update="panel" action="#{itemSerieBean.excluir}"/>
-</p:panel>
-			<p:dataTable editable="true"  id="TBitem"   var="item"
+				<p:commandButton value="Novo" update="TBitem"
+					action="#{itemSerieBean.novo}" />
+				<p:commandButton value="Alterar" update="panel"
+					action="#{itemSerieBean.alterar}"  />
+				<p:commandButton value="Excluir" update="TBitem"
+					action="#{itemSerieBean.excluir}" >
+					<p:confirm header="Confirmação"
+						message="Confirma a exclusão da função selecionada?"
+						icon="ui-icon-alert" />
+				</p:commandButton>
+
+			
+
+				<p:commandButton value="Fechar" update="panel"
+					action="#{itemSerieBean.excluir}" />
+			</p:panel>
+			<p:dataTable  id="TBitem" var="item"
 				value="#{itemSerieBean.listaItens}" paginator="true" rows="5"
 				paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
 				rowsPerPageTemplate="5,10,15"
-				selection="#{itemSerieBean.itemSelecionado}" selectionMode="single" 
+				selection="#{itemSerieBean.itemSelecionado}" selectionMode="single"
 				rowKey="#{item}">
 				<f:facet name="header">
            	 		Itens de Séries
         		</f:facet>
-					<p:ajax event="rowEdit" listener="#{itemSerieBean.onEdit}" />  
-        <p:ajax event="rowEditCancel" listener="#{itemSerieBean.onEdit}"  />  
-				<p:column headerText="Codigo" width="3" style="text-align: center;">
-				<p:cellEditor>  
-					<f:facet name="output">
-						<h:outputText value="#{item.codigo}" />
+
+				<p:column width="8" style="text-align: center;">
+					<f:facet name="header">
+						<h:outputText value="Codigo" />
 					</f:facet>
 					<h:outputText value="#{item.codigo}" />
-					<f:facet name="input">
-						<h:inputText value="#{item.codigo}"/>
-					</f:facet>
-					<p:inputText value="#{item.codigo}" />
-					  </p:cellEditor>
 				</p:column>
-
-<p:column headerText="Descricao" width="3" style="text-align: center;">
-				<p:cellEditor>  
-					<f:facet name="output">
-						<h:outputText value="#{item.descricao}" />
-					</f:facet>
-					<h:outputText value="#{item.descricao}" />
-					<f:facet name="input">
-						<h:inputText value="#{item.descricao}"/>
-					</f:facet>
-					<p:inputText value="#{item.descricao}"/>
-					  </p:cellEditor>
-				</p:column>
-
-			<!--	<p:column width="8" style="text-align: center;">
+				<p:column width="8" style="text-align: center;">
 					<f:facet name="header">
 						<h:outputText value="Descrição" />
 					</f:facet>
@@ -121,7 +121,7 @@
 						<h:outputText value="Modelo" />
 					</f:facet>
 					<h:outputText
-						value="#{item.modeloCarro.descricao} #{item.modeloCarro.ano}" />
+						value="#{item.modeloCarro.descricao} #{item.modeloCarro.ano}"  />
 				</p:column>
 
 				<p:column width="5" style="text-align: center;">
@@ -145,23 +145,9 @@
 					<h:outputText value="#{item.dataUltimaAtualizacao.time}">
 						<f:convertDateTime pattern="dd/MM/yyyy HH:MM"></f:convertDateTime>
 					</h:outputText>
-				</p:column> -->
-				
-  
-        <p:column  style="width:6%">  
-            
-            <p:rowEditor >
-            <p:commandLink   id="btnEditar" action="#{itemSerieBean.alterar(item)}" ajax="false"> 
-            <f:setPropertyActionListener value="#{pessoaBean.item}" target="#{item}" /> 
-                </p:commandLink>
-            </p:rowEditor >  
-             
-            
-   
-        </p:column>  
-        
+				</p:column> 
 			</p:dataTable>
-				
+
 		</h:form>
 	</f:view>
 </h:body>

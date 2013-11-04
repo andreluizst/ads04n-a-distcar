@@ -11,6 +11,11 @@
 <h:body>
 <f:view id="View ">
 
+<h:form id="frmMensagens">
+			<p:messages id="messages" showDetail="true" autoUpdate="true" closable="true"></p:messages>
+			<p:growl id="growl" showDetail="true" sticky="false" globalOnly="true" />
+		</h:form>
+
 		<h:form id="form" >
 		
 		 <p:growl id="messages" showDetail="true"/> 
@@ -48,14 +53,22 @@
 					<h:selectOneMenu id="modelo" required="true"
 						value="#{itemSerieBean.codigoSelecionado}">
 						<f:selectItem noSelectionOption="true"
-							itemLabel="Selecione o Modelo" />
+							itemLabel="Selecione o Modelo" itemValue=""/>
 						<f:selectItems value="#{itemSerieBean.modeloCarros}" var="vm"
 							itemLabel="#{vm.descricao} #{vm.ano}" itemValue="#{vm.codigo}" />
 					</h:selectOneMenu>
 					<p:message for="modelo" />
+					
+					<h:outputLabel for="situacao" value="Situação: "/>
+  					<p:selectOneMenu id="situacao" value="#{itemSerieBean.itemSerieCarro.situacao}" >
+  						<f:selectItem itemLabel="Selecione uma opção" itemValue="" />
+  						<f:selectItems value="#{itemSerieBean.situacoes}" />
+  					</p:selectOneMenu>
+  					
+					<p:message for="situacao" />
 				</h:panelGrid>
-				<p:commandButton value="Salvar"  update="panel" action="#{itemSerieBean.salvar}" />
-   				<p:commandButton value="Cancelar" immediate="true" action="item" />
+				<p:commandButton value="Salvar"  update=":frmMensagens:growl" action="#{itemSerieBean.salvar}" />
+   				<p:commandButton value="Cancelar"  immediate="true" action="item" process="@this" />
 </p:panel>
  			</h:form>
  			</f:view>
