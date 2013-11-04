@@ -40,6 +40,8 @@ public class Fachada implements IFachada {
 	//******************  C R U D    O R G A N I Z A C I O N A L ************************
 	//***********************************************************************************
 	
+	//¨*&¨*(&*((*&&(*&(&(*&*(&*(&(*&(*&(*&
+	
 	//*****************************  F U N Ç Ã O  ***************************************
 	@Override
 	public void salvarFuncao(Funcao funcao) throws Exception {
@@ -309,6 +311,30 @@ public class Fachada implements IFachada {
 
 	@Override
 	public List<Fabricante> listarFabricantes() throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ItemSerieCarro pesquisarItem(int codigo) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void removerItem(ItemSerieCarro itemSerieCarro) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void alterarItem(ItemSerieCarro itemSerieCarro) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public List<ItemSerieCarro> pesquisarItens(ItemSerieCarro itemSerieCarro) {
 		// TODO Auto-generated method stub
 		return null;
 	}
