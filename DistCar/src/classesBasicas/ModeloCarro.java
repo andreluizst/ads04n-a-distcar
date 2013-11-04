@@ -66,8 +66,10 @@ public class ModeloCarro extends ObjetoGeral {
 		return "ModeloCarro [descricao=" + descricao + ", ano=" + ano
 				+ ", marcaCarro=" + marcaCarro + ", itemSerieCarros="
 				+ itemSerieCarros + ", acessorioCarros=" + acessorioCarros
-				+ "]";
+				+ ", getCodigo()=" + getCodigo()
+				+ ", getDataUltimaAtualizacao()=" + getDataUltimaAtualizacao()
+				+ ", getSituacao()=" + getSituacao() + "]";
 	}
-	
+
 	
 }
