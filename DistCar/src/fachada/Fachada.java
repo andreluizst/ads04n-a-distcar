@@ -234,14 +234,6 @@ public class Fachada implements IFachada {
 	}
 
 	@Override
-	public void salvarVersaoModeloCarro(VersaoCarro versaoCarro)
-			throws Exception {
-		// TODO Auto-generated method stub
-		this.controladorCarro.inserir(versaoCarro);
-		
-	}
-
-	@Override
 	public void salvarModeloCarro(ModeloCarro modeloCarro) throws Exception {
 		// TODO Auto-generated method stub
 		this.controladorCarro.inserir(modeloCarro);
