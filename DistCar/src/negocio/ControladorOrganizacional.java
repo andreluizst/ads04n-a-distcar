@@ -7,7 +7,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
-import javax.swing.JOptionPane;
 
 import util.Parametros;
 import classesBasicas.Centro;
@@ -18,6 +17,7 @@ import classesBasicas.Funcionario;
 import classesBasicas.Gestor;
 import classesBasicas.PessoaJuridica;
 import classesBasicas.Situacao;
+import classesBasicas.TipoGerencia;
 import classesBasicas.TipoLogradouro;
 import classesBasicas.UnidadeFederativa;
 import dao.DAOCentro;
@@ -27,6 +27,7 @@ import dao.DAOFuncao;
 import dao.DAOFuncionario;
 import dao.DAOGestor;
 import dao.DAOPessoaJuridica;
+import dao.DAOTipoGerencia;
 import dao.DAOTipoLogradouro;
 import dao.DAOUnidadeFederativa;
 import dao.IDAOCentro;
@@ -36,6 +37,7 @@ import dao.IDAOFuncao;
 import dao.IDAOFuncionario;
 import dao.IDAOGestor;
 import dao.IDAOPessoaJuridica;
+import dao.IDAOTipoGerencia;
 import dao.IDAOTipoLogradouro;
 import dao.IDAOUnidadeFederativa;
 import erro.NegocioExceptionDepartamento;
@@ -51,6 +53,7 @@ public class ControladorOrganizacional {
 	private IDAOFuncionario daoFuncionario;
 	private IDAOCentro daoCentro;
 	private IDAOGestor daoGestor;
+	private IDAOTipoGerencia daoTipoGerencia;
 	private IDAODepartamento daoDepto;
 	private IDAOPessoaJuridica daoPJ;
 	private IDAOTipoLogradouro daoTipoLogradouro;
@@ -79,6 +82,7 @@ public class ControladorOrganizacional {
 		daoTipoLogradouro = new DAOTipoLogradouro(entityManager);
 		daoCidade = new DAOCidade(entityManager);
 		daoUF = new DAOUnidadeFederativa(entityManager);
+		daoTipoGerencia = new DAOTipoGerencia(entityManager);
 	}
 	
 	
@@ -150,6 +154,17 @@ public class ControladorOrganizacional {
 	
 	
 	//*************************  D E P A R T A M E N T O  **************************************
+	public boolean departamentoExiste(Departamento obj) throws Exception{
+		Departamento outroObj = null;
+		if (obj.getCodigo() == null)
+			return false;
+		outroObj = daoDepto.consultarPorId(obj.getCodigo());
+		if (outroObj != null)
+			if (outroObj.getCodigo() == obj.getCodigo())
+				return true;
+		return false;
+	}
+	
 	public void inserirDepartamento(Departamento departamento) throws Exception{
 		// TODO Auto-generated method stub
 		if(		departamento.getCodigo()==null||departamento.getCodigo().equals("")||
@@ -175,9 +190,10 @@ public class ControladorOrganizacional {
 								departamento.getDataUltimaAtualizacao()==null||departamento.getDataUltimaAtualizacao().equals(""))
 			{
 				throw new NegocioExceptionDepartamento("Campos inválidos");
-			}
+		}
 							
-	
+		daoDepto.alterar(departamento);
+		
 		/*Departamento d = daoDepto.pesquisarNomeDepartamento(departamento.getNome());
 		if(d==null){
 			throw new NegocioExceptionDepartamento("Departamento não cadastrado");
@@ -203,8 +219,23 @@ public class ControladorOrganizacional {
 		return null;
 	}
 	
+	public List<Departamento> listarDepartamentos(){
+		return daoDepto.consultarTodos();
+	}
+	
 	
 	//*************************  F U N C I O N Á R I O  ******************************************
+	public boolean funcionarioExiste(Funcionario obj) throws Exception{
+		Funcionario outroObj = null;
+		if (obj.getCodigo() == null)
+			return false;
+		outroObj = daoFuncionario.consultarPorId(obj.getCodigo());
+		if (outroObj != null)
+			if (outroObj.getCodigo() == obj.getCodigo())
+				return true;
+		return false;
+	}
+	
 	public void inserirFuncionario (Funcionario funcionario) throws Exception {
 		// TODO Auto-generated method stub
 		if(	funcionario.getCodigo()==null||funcionario.getCodigo().equals("")||
@@ -251,6 +282,17 @@ public class ControladorOrganizacional {
 	
 	
 	//*********************************  G E S T O R  *******************************************
+	public boolean gestorExiste(Gestor obj) throws Exception{
+		Gestor outroObj = null;
+		if (obj.getCodigo() == null)
+			return false;
+		outroObj = daoGestor.consultarPorId(obj.getCodigo());
+		if (outroObj != null)
+			if (outroObj.getCodigo() == obj.getCodigo())
+				return true;
+		return false;
+	}
+	
 	public void inserirGestor (Gestor gestor) throws Exception {
 		// TODO Auto-generated method stub
 		if(	gestor.getCodigo()==null||gestor.getCodigo().equals("")||
@@ -294,6 +336,10 @@ public class ControladorOrganizacional {
 	public List<Gestor> pesquisarGestor(Gestor gestor) throws Exception{
 		// TODO Auto-generated method stub
 		return null;
+	}
+	
+	public List<Gestor> listarGestores(){
+		return daoGestor.consultarTodos();
 	}
 	
 	//*********************************  C E N T R O  *********************************************
@@ -460,5 +506,37 @@ public class ControladorOrganizacional {
 	//*******************  U N I D A D E   F E D E R A T I V A  ****************************
 	public List<UnidadeFederativa> listarUFs() throws Exception{
 		return daoUF.consultarTodos();
+	}
+	
+	//************************  T I P O   G E R E N C I A  **********************************
+	public boolean tipoGerenciaExiste(TipoGerencia obj) throws Exception{
+		TipoGerencia outroObj = null;
+		if (obj.getCodigo() == null)
+			return false;
+		outroObj = daoTipoGerencia.consultarPorId(obj.getCodigo());
+		if (outroObj != null)
+			if (outroObj.getCodigo() == obj.getCodigo())
+				return true;
+		return false;
+	}
+	
+	public void inserirTipoGerencia(TipoGerencia tipoGerencia) throws Exception{
+		daoTipoGerencia.inserir(tipoGerencia);
+	}
+	
+	public void alterarTipoGerencia(TipoGerencia tipoGerencia) throws Exception{
+		daoTipoGerencia.alterar(tipoGerencia);
+	}
+	
+	public void removerTipoGerencia(TipoGerencia tipoGerencia) throws Exception{
+		daoTipoGerencia.remover(tipoGerencia);
+	}
+	
+	public List<TipoGerencia> consultarTipoGerencia(TipoGerencia tipoGerencia) throws Exception{
+		return daoTipoGerencia.pesquisar(tipoGerencia);
+	}
+	
+	public List<TipoGerencia> listarTiposGerencia() throws Exception{
+		return daoTipoGerencia.consultarTodos();
 	}
 }

@@ -40,8 +40,6 @@ public class Fachada implements IFachada {
 	//******************  C R U D    O R G A N I Z A C I O N A L ************************
 	//***********************************************************************************
 	
-	//¨*&¨*(&*((*&&(*&(&(*&*(&*(&(*&(*&(*&
-	
 	//*****************************  F U N Ç Ã O  ***************************************
 	@Override
 	public void salvarFuncao(Funcao funcao) throws Exception {
@@ -99,75 +97,82 @@ public class Fachada implements IFachada {
 	//**************************  F U N C I O N Á R I O  ************************************
 	@Override
 	public void salvarFuncionario(Funcionario funcionario) throws Exception{
-		
+		if (ctrlOrg.funcionarioExiste(funcionario))
+			ctrlOrg.alterarFuncionario(funcionario);
+		else
+			ctrlOrg.inserirFuncionario(funcionario);
 	}
 	
 	@Override
 	public void excluirFuncionario(Funcionario funcaionario) throws Exception{
-		
+		ctrlOrg.removerFuncionario(funcaionario);
 	}
 	
 	@Override
 	public List<Funcionario> consultarFuncionario(Funcionario funcaionario) throws Exception{
-		//Falta implementar
-		return null;
+		return ctrlOrg.pesquisarFuncionario(funcaionario);
 	}
 	
 	//**************************  D E P A R T A M E N T O  **********************************
 	@Override
 	public void salvarDepartamento(Departamento depto) throws Exception{
-		
+		if (ctrlOrg.departamentoExiste(depto))
+			ctrlOrg.alterarDepartamento(depto);
+		else
+			ctrlOrg.inserirDepartamento(depto);
 	}
 	
 	@Override
 	public void excluirDepartamento(Departamento depto) throws Exception{
-		
+		ctrlOrg.removerDepartamento(depto);
 	}
 	
 	@Override
 	public List<Departamento> consultarDepartamento(Departamento depto) throws Exception{
-		//Falta implementar
-		return null;
+		return ctrlOrg.pesquisarDepartamento(depto);
 	}
 	
 	@Override
 	public List<Departamento> listarDepartamentos() throws Exception{
-		//Falta implementar
-		return null;
+		return ctrlOrg.listarDepartamentos();
 	}
 	
 	//*******************************  G E S T O R  *****************************************
 	@Override
 	public void salvarGestor(Gestor gestor) throws Exception{
-		
+		if (ctrlOrg.gestorExiste(gestor))
+			ctrlOrg.alterarGestor(gestor);
+		else
+			ctrlOrg.inserirGestor(gestor);
 	}
 	
 	@Override
 	public void excluirGestor(Gestor gestor) throws Exception{
-		
+		ctrlOrg.removerGestor(gestor);
 	}
 	
 	@Override
 	public List<Gestor> consultarGestor(Gestor gestor) throws Exception{
-		//Falta implementar
-				return null;
+		return ctrlOrg.pesquisarGestor(gestor);
 	}
 	
 	@Override
 	public List<Gestor> listarGestores() throws Exception{
-		//Falta implementar
-		return null;
+		return ctrlOrg.listarGestores();
 	}
 	
 	//************************  T I P O   G E R E N C I A  **********************************
 	@Override
 	public void salvarTipoGerencia(TipoGerencia tipoGerencia) throws Exception{
-		
+		if (ctrlOrg.tipoGerenciaExiste(tipoGerencia))
+			ctrlOrg.alterarTipoGerencia(tipoGerencia);
+		else
+			ctrlOrg.inserirTipoGerencia(tipoGerencia);
 	}
 	
 	@Override
 	public void excluirGerencia(TipoGerencia tipoGerencia) throws Exception{
-		
+		ctrlOrg.removerTipoGerencia(tipoGerencia);
 	}
 	
 	@Override
@@ -178,8 +183,7 @@ public class Fachada implements IFachada {
 	
 	@Override
 	public List<TipoGerencia> listarTiposGerencia() throws Exception{
-		//Falta implementar
-		return null;
+		return ctrlOrg.listarTiposGerencia();
 	}
 	
 	//*********************  T I P O   L O G R A D O U R O  **********************************
