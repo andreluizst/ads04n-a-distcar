@@ -12,6 +12,7 @@ import util.Parametros;
 import classesBasicas.Centro;
 import classesBasicas.Cidade;
 import classesBasicas.Departamento;
+import classesBasicas.Escolaridade;
 import classesBasicas.Funcao;
 import classesBasicas.Funcionario;
 import classesBasicas.Gestor;
@@ -23,6 +24,7 @@ import classesBasicas.UnidadeFederativa;
 import dao.DAOCentro;
 import dao.DAOCidade;
 import dao.DAODepartamento;
+import dao.DAOEscolaridade;
 import dao.DAOFuncao;
 import dao.DAOFuncionario;
 import dao.DAOGestor;
@@ -33,6 +35,7 @@ import dao.DAOUnidadeFederativa;
 import dao.IDAOCentro;
 import dao.IDAOCidade;
 import dao.IDAODepartamento;
+import dao.IDAOEscolaridade;
 import dao.IDAOFuncao;
 import dao.IDAOFuncionario;
 import dao.IDAOGestor;
@@ -59,6 +62,7 @@ public class ControladorOrganizacional {
 	private IDAOTipoLogradouro daoTipoLogradouro;
 	private IDAOCidade daoCidade;
 	private IDAOUnidadeFederativa daoUF;
+	private IDAOEscolaridade daoEscolaridade;
 	
 	public ControladorOrganizacional(){
 		emf = Persistence.createEntityManagerFactory(Parametros.UNIT_PERSISTENCE_NAME);
@@ -74,7 +78,8 @@ public class ControladorOrganizacional {
 	
 	private void inicializarDAO(){
 		daoFuncao = new DAOFuncao(entityManager);
-		daoFuncionario = new DAOFuncionario();
+		daoFuncionario = new DAOFuncionario(entityManager);
+		daoEscolaridade = new DAOEscolaridade(entityManager);
 		daoCentro = new DAOCentro(entityManager);
 		daoDepto = new DAODepartamento(entityManager);
 		daoGestor = new DAOGestor(entityManager);
@@ -166,55 +171,127 @@ public class ControladorOrganizacional {
 	}
 	
 	public void inserirDepartamento(Departamento departamento) throws Exception{
+		EntityManager em = emf.createEntityManager();
+		Departamento deptoSup;
+		Gestor gestor;
+		
 		departamento.setDataUltimaAtualizacao(Calendar.getInstance());
 		if (departamento.getSituacao() == null)
 			departamento.setSituacao(Situacao.ATIVO);
-		if(departamento.getNome()==null||departamento.getNome().equals("")||
-						departamento.getSituacao()==null||departamento.getSituacao().equals(""))
+		if(departamento.getNome()==null||departamento.getNome().equals(""))
 				{
 					throw new NegocioExceptionDepartamento("Inserir depto: Campos inválidos");
 				}
-				
-		daoDepto.inserir(departamento);
+		System.out.println("iniciando transação de insersão de departamento...........");
+		System.out.println("iniciando transação de insersão de departamento...........");
+		System.out.println("iniciando transação de insersão de departamento...........");
+		
+		daoDepto.setEntityManager(em);
+		daoCentro.setEntityManager(em);
+		daoGestor.setEntityManager(em);
+		EntityTransaction et = em.getTransaction();
+		try{
+			et.begin();
+			Centro centro = daoCentro.consultarPorId(departamento.getCentro().getCodigo());
+			departamento.setCentro(centro);
+			if (departamento.getGestor() != null){
+				if (departamento.getGestor().getCodigo() > 0){
+					gestor = daoGestor.consultarPorId(departamento.getGestor().getCodigo());
+					departamento.setGestor(gestor);
+				}
+			}
+			if (departamento.getDepartamentoSuperior() != null){
+				if (departamento.getDepartamentoSuperior().getCodigo() > 0){
+					deptoSup = daoDepto.consultarPorId(departamento.getDepartamentoSuperior().getCodigo());
+					departamento.setDepartamentoSuperior(deptoSup);
+				}
+			}
+			daoDepto.inserirSemTratamento(departamento);
+			et.commit();
+		}catch(Exception ex){
+			et.rollback();
+			throw new Exception(ex.getMessage());
+		}
+		em.close();
+		daoCentro.setEntityManager(entityManager);
+		daoDepto.setEntityManager(entityManager);
+		daoGestor.setEntityManager(entityManager);
 	}
 	
 	public void alterarDepartamento(Departamento departamento) throws Exception{
+		EntityManager em = emf.createEntityManager();
+		//Departamento deptoSup;
+		//Gestor gestor;
+		
 		departamento.setDataUltimaAtualizacao(Calendar.getInstance());
 		if (departamento.getSituacao() == null)
 			departamento.setSituacao(Situacao.ATIVO);
+		
 		if(	departamento.getCodigo()==null||departamento.getCodigo().equals("")||
-				departamento.getNome()==null||departamento.getNome().equals("")||
-						departamento.getDepartamentoSuperior()==null||departamento.getDepartamentoSuperior().equals("")||
-							departamento.getGestor()==null||departamento.getGestor().equals(""))
+				departamento.getNome()==null||departamento.getNome().equals(""))
 			{
 				throw new NegocioExceptionDepartamento("Alterar depto: Campos inválidos");
 		}
 							
-		daoDepto.alterar(departamento);
-		
-		/*Departamento d = daoDepto.pesquisarNomeDepartamento(departamento.getNome());
-		if(d==null){
-			throw new NegocioExceptionDepartamento("Departamento não cadastrado");
+		daoDepto.setEntityManager(em);
+		//daoCentro.setEntityManager(em);
+		//daoGestor.setEntityManager(em);
+		EntityTransaction et = em.getTransaction();
+		try{
+			et.begin();
+			/*Centro centro = daoCentro.consultarPorId(departamento.getCentro().getCodigo());
+			departamento.setCentro(centro);
+			if (departamento.getGestor() != null){
+				if (departamento.getGestor().getCodigo() > 0){
+					gestor = daoGestor.consultarPorId(departamento.getGestor().getCodigo());
+					departamento.setGestor(gestor);
+				}
+			}
+			if (departamento.getDepartamentoSuperior() != null){
+				if (departamento.getDepartamentoSuperior().getCodigo() > 0){
+					deptoSup = daoDepto.consultarPorId(departamento.getDepartamentoSuperior().getCodigo());
+					departamento.setDepartamentoSuperior(deptoSup);
+				}
+			}*/
+			daoDepto.alterarSemTratamento(departamento);
+			et.commit();
+		}catch(Exception ex){
+			et.rollback();
+			throw new Exception(ex.getMessage());
 		}
-		
-		daoDepto.inserir(d);
-		*/
+		em.close();
+		daoDepto.setEntityManager(entityManager);
+		//daoCentro.setEntityManager(entityManager);
+		//daoGestor.setEntityManager(entityManager);
 	}
 	
 	public void removerDepartamento(Departamento departamento) throws Exception{
-		// TODO Auto-generated method stub
 		List<Departamento> lista;
 		lista = daoDepto.pesquisarNomeDepartamento(departamento.getNome());
 		if(lista == null){
 			throw new NegocioExceptionDepartamento("Departamento não encontrado!");
 		}
-		else
-			daoDepto.remover(lista.get(0));
+		else{
+			Funcionario fun = new Funcionario();
+			fun.setDepartamento(departamento);
+			
+			List<Funcionario> funcionarios = pesquisarFuncionario(fun);
+			if (funcionarios.size() > 0)
+				throw new Exception("Não é possível excluir o departamento selecionado porque existe um ou mais funcionarios nesse departamento!");
+			EntityTransaction et = entityManager.getTransaction();
+			try{
+				et.begin();
+				daoDepto.removerSemTratamento(lista.get(0));
+				et.commit();
+			}catch(Exception ex){
+				et.rollback();
+				throw new Exception(ex.getMessage());
+			}
+		}
 	}
 
 	public List<Departamento> pesquisarDepartamento(Departamento departamento) throws NegocioExceptionDepartamento {
-		// TODO Auto-generated method stub
-		return null;
+		return daoDepto.pesquisar(departamento);
 	}
 	
 	public List<Departamento> listarDepartamentos(){
@@ -235,34 +312,93 @@ public class ControladorOrganizacional {
 	}
 	
 	public void inserirFuncionario (Funcionario funcionario) throws Exception {
-		// TODO Auto-generated method stub
-		if(	funcionario.getCodigo()==null||funcionario.getCodigo().equals("")||
-				funcionario.getNome()==null||funcionario.getNome().equals("")||
-						funcionario.getSituacao()==null||funcionario.getSituacao().equals("")||
-								funcionario.getDataUltimaAtualizacao()==null||funcionario.getDataUltimaAtualizacao().equals(""))
+		EntityManager em = emf.createEntityManager();
+		Departamento depto;
+		Escolaridade escolaridade;
+		Funcao funcao;
+		
+		funcionario.setDataUltimaAtualizacao(Calendar.getInstance());
+		if (funcionario.getSituacao() == null){
+			funcionario.setSituacao(Situacao.ATIVO);
+		}
+		if(	funcionario.getNome()==null||funcionario.getNome().equals(""))
 				{
 					throw new NegocioExceptionFuncionario ("Campos inválidos");
 				}
-				
-		daoFuncionario.inserir(funcionario);
+		daoDepto.setEntityManager(em);
+		//daoGestor.setEntityManager(em);
+		daoEscolaridade.setEntityManager(em);
+		daoFuncao.setEntityManager(em);
+		daoFuncionario.setEntityManager(entityManager);
+		EntityTransaction et = em.getTransaction();
+		try{
+			et.begin();
+			//Atributo obtido num comboBox na view da web. Só contém o código da entidade
+			if (funcionario.getDepartamento() != null){
+				if (funcionario.getDepartamento().getCodigo() > 0){
+					depto = daoDepto.consultarPorId(funcionario.getDepartamento().getCodigo());
+					funcionario.setDepartamento(depto);
+				}
+			}
+			//Atributo obtido num comboBox na view da web. Só contém o código da entidade
+			if (funcionario.getEscolaridade() != null){
+				if (funcionario.getEscolaridade().getCodigo() > 0){
+					escolaridade = daoEscolaridade.consultarPorId(funcionario.getEscolaridade().getCodigo());
+					funcionario.setEscolaridade(escolaridade);
+				}
+			}
+			//Atributo obtido num comboBox na view da web. Só contém o código da entidade
+			if (funcionario.getFuncao() != null){
+				if (funcionario.getFuncao().getCodigo() > 0){
+					funcao = daoFuncao.consultarPorId(funcionario.getFuncao().getCodigo());
+					funcionario.setFuncao(funcao);
+				}
+			}
+			daoFuncionario.inserirSemTratamento(funcionario);
+			et.commit();
+		}catch(Exception ex){
+			et.rollback();
+			throw ex;
+		}
+		em.close();
+		daoFuncionario.setEntityManager(entityManager);
+		daoEscolaridade.setEntityManager(entityManager);
+		daoDepto.setEntityManager(entityManager);
+		daoFuncao.setEntityManager(entityManager);
+		//daoGestor.setEntityManager(entityManager);
 	}
 	
 	public void alterarFuncionario(Funcionario funcionario) throws Exception{
+		EntityManager em = emf.createEntityManager();
+		
+		funcionario.setDataUltimaAtualizacao(Calendar.getInstance());
+		if (funcionario.getSituacao() == null){
+			funcionario.setSituacao(Situacao.ATIVO);
+		}
 		if(funcionario.getCodigo()==null||funcionario.getCodigo().equals("")||
 				funcionario.getNome()==null||funcionario.getNome().equals("")||
 						funcionario.getSituacao()==null||funcionario.getSituacao().equals("")||
-								funcionario.getDataUltimaAtualizacao()==null||funcionario.getDataUltimaAtualizacao().equals(""))
-				{
-					throw new NegocioExceptionFuncionario("Campos inválidos");
-				}
+								funcionario.getDataUltimaAtualizacao()==null||
+								funcionario.getDataUltimaAtualizacao().equals("")){
+			throw new NegocioExceptionFuncionario("Campos inválidos");
+		}
 				
 		Funcionario func = daoFuncionario.consultarPorId(funcionario.getCodigo());
 		if(func==null){
 			throw new NegocioExceptionFuncionario("Funcionário não cadastrado");
 		}
-		
-		daoFuncionario.alterar(func);
+		EntityTransaction et = em.getTransaction();
+		try{
+			et.begin();
+			
+			daoFuncionario.alterarSemTratamento(func);
+			
+			et.commit();
+		}catch(Exception ex){
+			et.rollback();
+			throw ex;
 		}
+	}
 	
 	public void removerFuncionario(Funcionario funcionario) throws Exception{
 		// TODO Auto-generated method stub
@@ -274,8 +410,7 @@ public class ControladorOrganizacional {
 	}
 
 	public List<Funcionario> pesquisarFuncionario(Funcionario funcionario) throws NegocioExceptionFuncionario {
-		// TODO Auto-generated method stub
-		return null;
+		return daoFuncionario.pesquisar(funcionario);
 	}
 	
 	

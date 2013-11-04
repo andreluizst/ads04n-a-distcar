@@ -2,6 +2,8 @@ package dao;
 
 import java.util.List;
 
+import javax.persistence.EntityManager;
+
 import org.hibernate.criterion.Order;
 
 public interface IDAOGenerico<Entidade> {
@@ -36,5 +38,15 @@ public interface IDAOGenerico<Entidade> {
 	public List<Entidade> pesquisar(Entidade exemplo, Order... ordenacoes);
 
 	public List<Entidade> pesquisar(Entidade exemplo);
+	
+	
+	/**
+	 * Utilizado para se injetar o Entity manager no DAO.
+	 * 
+	 * @param entityManager
+	 *            entity manager
+	 */
+	public void setEntityManager(EntityManager entityManager);
+	public EntityManager getEntityManager();
 
 }
