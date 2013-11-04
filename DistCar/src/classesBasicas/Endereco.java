@@ -18,6 +18,9 @@ public class Endereco {
 	@Column(length=80, nullable=false)
 	private String bairro;
 	
+	@Column(length=8, nullable=false)
+	private String cep;
+	
 	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
 	@JoinColumn(name="codCidade", insertable=true, updatable=true)
 	private Cidade cidade;
@@ -31,13 +34,14 @@ public class Endereco {
 	}
 	
 	public Endereco(TipoLogradouro tipoLogradouro, String logradouro,
-			String numero, String bairro, Cidade cidade) {
+			String numero, String bairro, Cidade cidade, String cep) {
 		super();
 		this.tipoLogradouro = tipoLogradouro;
 		this.logradouro = logradouro;
 		this.numero = numero;
 		this.bairro = bairro;
 		this.cidade = cidade;
+		this.cep = cep;
 	}
 
 
@@ -73,10 +77,19 @@ public class Endereco {
 		this.cidade = cidade;
 	}
 	
+	
+	public String getCep() {
+		return cep;
+	}
+
+	public void setCep(String cep) {
+		this.cep = cep;
+	}
+
 	@Override
 	public String toString(){
-		return getTipoLogradouro().getDescricao() + " " + getLogradouro() + " " + getNumero() + " " + getBairro()
-				+ " " + getCidade();
+		return getTipoLogradouro().getDescricao() + " - " + getLogradouro() + ", " + getNumero() + " - " + getBairro()
+				+ " - " + getCidade() + " - " + getCep();
 	}
 
 	@Override
@@ -84,6 +97,7 @@ public class Endereco {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((bairro == null) ? 0 : bairro.hashCode());
+		result = prime * result + ((cep == null) ? 0 : cep.hashCode());
 		result = prime * result + ((cidade == null) ? 0 : cidade.hashCode());
 		result = prime * result
 				+ ((logradouro == null) ? 0 : logradouro.hashCode());
@@ -99,13 +113,18 @@ public class Endereco {
 			return true;
 		if (obj == null)
 			return false;
-		if (getClass() != obj.getClass())
+		if (!(obj instanceof Endereco))
 			return false;
 		Endereco other = (Endereco) obj;
 		if (bairro == null) {
 			if (other.bairro != null)
 				return false;
 		} else if (!bairro.equals(other.bairro))
+			return false;
+		if (cep == null) {
+			if (other.cep != null)
+				return false;
+		} else if (!cep.equals(other.cep))
 			return false;
 		if (cidade == null) {
 			if (other.cidade != null)
@@ -129,7 +148,6 @@ public class Endereco {
 			return false;
 		return true;
 	}
-	
-	
+
 	
 }

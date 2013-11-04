@@ -77,6 +77,11 @@
   								itemLabel="#{cid}" itemValue="#{cid.codigo}" />
   					</p:selectOneMenu>
   					
+  					<h:outputLabel for="cep" value="CEP: *"/>
+  					<p:inputMask id="cep" mask="99999-999" size="12" 
+  							value="#{centroBean.centro.dadosPJ.endereco.cep}" required="true" lable="CEP">
+  					</p:inputMask>
+  					
   					<h:outputLabel for="email" value="E-mail: "/>
   					<p:inputText id="email"  
   								value="#{centroBean.centro.dadosPJ.email}" required="false" lable="E-mail" />

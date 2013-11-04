@@ -83,11 +83,17 @@ public class Departamento extends ObjetoGeral {
 		this.gestor = gestor;
 	}
 
+	public Centro getCentro() {
+		return centro;
+	}
+
+	public void setCentro(Centro centro) {
+		this.centro = centro;
+	}
+
 	@Override
 	public String toString() {
-		return "Departamento [nome=" + nome + ", departamentoSuperior="
-				+ departamentoSuperior + ", gestor=" + gestor + ", centro="
-				+ centro + "]";
+		return nome + " / " + centro;
 	}
 
 	@Override

@@ -17,12 +17,12 @@
             		<p:column>  
                 		<p:submenu label="Organizacional">  
                     		<p:menuitem value="Função" action="#{funcaoBean.carregarPagina}" />  
-	                	    <p:menuitem value="Funcionario" url="#" />
+	                	    <p:menuitem value="Funcionario" url="#{funcionarioBean.carregarPagina}" />
                 		    <p:menuitem value="Gestor" url="#" />
             		        <p:menuitem value="Tipo gerencia" url="#" />
-        		            <p:menuitem value="Centro/loja" action="#{centroBean.carregarPagina}" />
+        		            <p:menuitem value="Centro" action="#{centroBean.carregarPagina}" />
     		                <p:menuitem value="Tipo de centro" url="#" />
-		                    <p:menuitem value="Departamento" url="#" />
+		                    <p:menuitem value="Departamento" action="#{deptoBean.carregarPagina}" />
                 		</p:submenu>
                 		  
             	    	<p:submenu label="Vendas">

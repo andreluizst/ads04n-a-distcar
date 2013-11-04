@@ -48,7 +48,9 @@ public class TesteAndre {
 			//**** persistindo PF ***
 			PessoaFisica pf = new PessoaFisica("Maria Lima", "22233344455", "111222333", "SSPPE");
 			pf.setEndereco(new Endereco(new TipoLogradouro("Rua"), "Rua 8", "s/n", "teste1",
-										new Cidade("Recife", daoUF.pegarUF("Pernambuco", "PE")/*new UnidadeFederativa("Pernambuco", "PE")*/)));
+											new Cidade("Recife", daoUF.pegarUF("Pernambuco", "PE")),"51245000"
+										)
+								);
 			pf.setDataUltimaAtualizacao(Calendar.getInstance());
 			pf.setSituacao(Situacao.ATIVO);
 			em.persist(pf);
@@ -56,7 +58,9 @@ public class TesteAndre {
 			//***** persistindo PJ *****
 			PessoaJuridica pj = new PessoaJuridica("FIAT", "10111222000100", "111222333", Calendar.getInstance().getTime());
 			pj.setEndereco(new Endereco(new TipoLogradouro("Av"), "Carros Novos", "102", "endereço 2",
-										new Cidade("Olinda", daoUF.pegarUF("Pernambuco", "PE")/*new UnidadeFederativa("Rio Grande do Norte", "RN")*/)));
+											new Cidade("Olinda", daoUF.pegarUF("Pernambuco", "PE")), "50000650"
+										)
+								);
 			pj.setDataUltimaAtualizacao(Calendar.getInstance());
 			pj.setSituacao(Situacao.ATIVO);
 			em.persist(pj);
@@ -78,7 +82,7 @@ public class TesteAndre {
 			Fabricante fabricante = new Fabricante(
 							new PessoaJuridica("Honda Co", "00222444000101", "44444444", Calendar.getInstance().getTime(), 
 								new Endereco(new TipoLogradouro("Rod"), "Carros Novos km 21", "1000", "endereço GM",
-									new Cidade("Belém", daoUF.pegarUF("Pará", "PA")/*new UnidadeFederativa("Pará", "PA")*/)
+									new Cidade("Belém", daoUF.pegarUF("Pará", "PA")), "51030540"
 								)
 							),
 							marcaCarro, 10);
@@ -88,7 +92,7 @@ public class TesteAndre {
 			Centro centro = new Centro(
 						new PessoaJuridica("Carros Brasil", "44555666000101", "555555", Calendar.getInstance().getTime(), 
 							new Endereco(new TipoLogradouro("Praça"), "Vitrine Automotiva", "10", "Bairro matriz",
-								new Cidade("Salvador", daoUF.pegarUF("Bahia", "BA") /*new UnidadeFederativa("Bahia", "BA")*/)
+								new Cidade("Salvador", daoUF.pegarUF("Bahia", "BA")), "55060020"
 							)
 						), "Central distribuição", 100, TipoCentro.DISTRIBUIÇÃO, Calendar.getInstance(), Situacao.ATIVO
 					);
@@ -97,7 +101,7 @@ public class TesteAndre {
 			Centro centro2 = new Centro(
 					new PessoaJuridica("Carros Brasil", "44555666000222", "555555", Calendar.getInstance().getTime(), 
 						new Endereco(new TipoLogradouro("Praça teste"), "Logradouro teste", "20", "Bairro filial",
-							new Cidade("Campinas", daoUF.pegarUF("São Paulo", "SP") /*new UnidadeFederativa("São Paulo", "SP")*/)
+							new Cidade("Campinas", daoUF.pegarUF("São Paulo", "SP")), "54652000"
 						)
 					), "Filial 0002-22", 100, TipoCentro.LOJA, Calendar.getInstance(), Situacao.ATIVO
 				);

@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html 
+	xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+>
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+	<title>DistCar 1.0 - Funcionário</title>
+	<h:outputStylesheet name="styles-PSC.css" library="css"></h:outputStylesheet>
+</h:head>
+<h:body>
+	<f:view id="viewCentro-prop">
+		
+		<h:form id="frmMensagens">
+			<p:messages id="messages" showDetail="true" autoUpdate="true" closable="true"></p:messages>
+			<p:growl id="growl" showDetail="true" sticky="false" globalOnly="true" />
+		</h:form>
+		
+  		<h:form id="frmPrincipal">
+  			<p:panel id="panelFuncao" header="DistCar - #{funcionarioBean.tituloOperacao}">
+  				<h:panelGrid columns="2" cellpadding="5">
+  					<h:outputLabel for="nome" value="Nome: "/>
+  					<h:inputText id="nome" value="#{funcionarioBean.funcionario.nome}" required="true" lable="Nome" size="80" />
+  					
+  					<h:outputLabel for="cpf" value="CPF: *"/>
+  					<p:inputMask id="cpf" mask="99.999.999-99" size="20"
+  							value="#{funcionarioBean.funcionario.cpf}" required="true" lable="CPF">
+  					</p:inputMask>
+  					
+  					<h:outputLabel for="rg" value="RG: *"/>
+  					<h:inputText id="rg" value="#{funcionarioBean.funcionario.rg}" lable="RG" size="20"
+  							converterMessage="Digite apenas números no campo RG" required="true" />
+  							
+  					<h:outputLabel for="data" value="Data de nascimento: *"/>
+  					<p:calendar id="data" value="#{funcionarioBean.funcionario.dataNascimento}"
+  						effect="fade-In" pattern="dd/MM/yyyy" required="true" />
+  					
+					<h:outputLabel for="cbxDepto" value="Departamento: *"/>
+  					<p:selectOneMenu id="cpxDepto" value="#{funcionarioBean.funcionario.departamento.codigo}" required="true">
+  						<f:selectItem noSelectionOption="true" itemLabel="Selecione um departamento" itemValue="" />
+  						<f:selectItems value="#{funcionarioBean.departamentos}" var="depto" 
+  									itemLabel="#{depto.nome}" itemValue="#{depto.codigo}"/>
+  					</p:selectOneMenu>
+  					
+  					<h:outputLabel for="cbxFuncao" value="Função: *"/>
+  					<p:selectOneMenu id="cpxFuncao" value="#{funcionarioBean.funcionario.funcao.codigo}" required="true">
+  						<f:selectItem noSelectionOption="true" itemLabel="Selecione uma função" itemValue="" />
+  						<f:selectItems value="#{funcionarioBean.funcoes}" var="funcao" 
+  									itemLabel="#{funcao}" itemValue="#{funcao.codigo}"/>
+  					</p:selectOneMenu>
+  					
+  					<h:outputLabel for="tipoLog" value="Tipo logradouro: *"/>
+  					<p:selectOneMenu id="tipoLog" value="#{funcionarioBean.funcionario.endereco.tipoLogradouro.codigo}" >
+  						<f:selectItem itemLabel="Selecione uma opção"  />
+  						<f:selectItems value="#{funcionarioBean.tiposLogradouros}" var="tpLog" 
+  								itemLabel="#{tpLog.descricao}" itemValue="#{tpLog.codigo}" />
+  					</p:selectOneMenu>
+  					
+  					<h:outputLabel for="logradouro" value="Logradouro: *"/>
+  					<p:inputText id="logradouro"  
+  								value="#{funcionarioBean.funcionario.endereco.logradouro}" required="true" lable="logradouro" />
+  					
+  					<h:outputLabel for="numero" value="Número: *"/>
+  					<p:inputText id="numero"  
+  								value="#{funcionarioBean.funcionario.endereco.numero}" required="true" lable="numero" />
+  					
+  					<h:outputLabel for="bairro" value="Bairro: *"/>
+  					<p:inputText id="bairro"  
+  								value="#{funcionarioBean.funcionario.endereco.bairro}" required="true" lable="Bairro" />
+  								
+  					<h:outputLabel for="cbxCidade" value="Cidade: *"/>
+  					<p:selectOneMenu id="cbxCidade" value="#{funcionarioBean.funcionario.endereco.cidade.codigo}" required="true">
+  						<f:selectItem noSelectionOption="true" itemLabel="Selecione uma cidade" itemValue="" />
+  						<f:selectItems value="#{funcionarioBean.cidades}" var="cid" 
+  								itemLabel="#{cid}" itemValue="#{cid.codigo}" />
+  					</p:selectOneMenu>
+  					
+  					<h:outputLabel for="email" value="E-mail: "/>
+  					<p:inputText id="email"  
+  								value="#{funcionarioBean.funcionario.email}" required="false" lable="E-mail" />
+  					
+  					<h:outputLabel for="situacao" value="Situação: *"/>
+  					<p:selectOneMenu id="situacao" value="#{funcionarioBean.funcionario.situacao}" required="true">
+  						<f:selectItem noSelectionOption="true" itemLabel="Selecione uma situação" itemValue="" />
+  						<f:selectItems value="#{funcionarioBean.situacoes}" />
+  					</p:selectOneMenu>
+  					
+  				</h:panelGrid>
+
+  				<p:commandButton value="Salvar" rendered="#{!centroBean.somenteLeitura}" 
+  						disabled="#{centroBean.somenteLeitura}" 
+  						update=":frmMensagens:growl" action="#{centroBean.salvar}"/>
+  				
+  				<p:commandButton value="#{centroBean.textoBotaoFecharOuCancelar}" 
+  								immediate="true" action="centro" />
+
+  			</p:panel>
+    		
+  		</h:form>
+ 	</f:view>
+</h:body>
+</html>

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html 
+	xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+>
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+	<title>DistCar 1.0 - Departamento</title>
+	<h:outputStylesheet name="styles-PSC.css" library="css"></h:outputStylesheet>
+</h:head>
+<h:body>
+	<f:view id="viewDepto-prop">
+		
+		<h:form id="frmMensagens">
+			<p:messages id="messages" showDetail="true" autoUpdate="true" closable="true"></p:messages>
+			<p:growl id="growl" showDetail="true" sticky="false" globalOnly="true" />
+		</h:form>
+		
+  		<h:form id="frmPrincipal">
+  			<p:panel id="panel" header="DistCar - #{deptoBean.tituloOperacao}">
+  				<h:panelGrid columns="2" cellpadding="5">
+  					<h:outputLabel for="nome" value="Nome: *"/>
+  					<h:inputText id="nome" value="#{deptoBean.departamento.nome}" lable="Nome" required="true"/>
+					
+					<h:outputLabel for="cbxGestor" value="Gestor: "/>
+  					<p:selectOneMenu id="cpxgestor" value="#{deptoBean.departamento.gestor.codigo}">
+  						<f:selectItem disabled="#{empty(deptoBean.gestores)}" itemLabel="Selecione um gestor" itemValue="" />
+  						<f:selectItems value="#{deptoBean.gestores}" var="gestor" 
+  									itemLabel="#{gestor.nome}" itemValue="#{gestor.codigo}"/>
+  					</p:selectOneMenu>
+  					  					
+  					<h:outputLabel for="cbxDeptoSup" value="Depto/centro (superior): "/>
+  					<p:selectOneMenu id="cpxDeptoSup" value="#{deptoBean.departamento.departamentoSuperior.codigo}">
+  						<f:selectItem itemLabel="Selecione um departamento" itemValue="" />
+  						<f:selectItems value="#{deptoBean.deptosSuperiores}" var="deptoSup" 
+  									itemLabel="#{deptoSup}" itemValue="#{deptoSup.codigo}"/>
+  					</p:selectOneMenu>
+  					
+  					<h:outputLabel for="situacao" value="Situação: *"/>
+  					<p:selectOneMenu id="situacao" value="#{deptoBean.departamentoParaPesquisa.situacao}" required="true">
+  						<f:selectItem noSelectionOption="true" itemLabel="Todas as situações" itemValue="" />
+  						<f:selectItems value="#{DeptoBean.situacoes}" />
+  					</p:selectOneMenu>
+  					
+  				</h:panelGrid>
+
+  				<p:commandButton value="Salvar" rendered="#{!deptoBean.somenteLeitura}" 
+  						disabled="#{deptoBean.somenteLeitura}" 
+  						update=":frmMensagens:growl" action="#{deptoBean.salvar}"/>
+  				
+  				<p:commandButton value="#{deptoBean.textoBotaoFecharOuCancelar}" 
+  								immediate="true" action="departamento" />
+
+  			</p:panel>
+    		
+  		</h:form>
+ 	</f:view>
+</h:body>
+</html>

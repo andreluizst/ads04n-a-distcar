@@ -327,10 +327,10 @@ public class ControladorOrganizacional {
 					centro.getDadosPJ().getEndereco().setTipoLogradouro(tpLog);
 				}
 				String cnpj = centro.getDadosPJ().getCnpj().replace(".", "");
-				//System.out.println(cnpj);
 				cnpj = cnpj.replace("-", "").replace("/", "");
-				//System.out.println(cnpj);
 				centro.getDadosPJ().setCnpj(cnpj);
+				String cep = centro.getDadosPJ().getEndereco().getCep().replace("-", "");
+				centro.getDadosPJ().getEndereco().setCep(cep);
 				centro.getDadosPJ().setDataUltimaAtualizacao(centro.getDataUltimaAtualizacao());
 				centro.getDadosPJ().setSituacao(centro.getSituacao());
 			}
@@ -352,6 +352,8 @@ public class ControladorOrganizacional {
 		
 		String cnpj = centro.getDadosPJ().getCnpj();
 		cnpj = cnpj.replace(".", "").replace("-", "").replace("/", "");
+		String cep = centro.getDadosPJ().getEndereco().getCep();
+		cep = cep.replace("-", "");
 		
 		PessoaJuridica pj = daoPJ.pegarPJ(cnpj);
 		
@@ -362,6 +364,7 @@ public class ControladorOrganizacional {
 		EntityTransaction et = entityManager.getTransaction();
 		try{
 			et.begin();
+			centro.getDadosPJ().getEndereco().setCep(cep);
 			centro.getDadosPJ().setCnpj(cnpj);
 			centro.setDataUltimaAtualizacao(Calendar.getInstance());
 			if (centro.getSituacao() == null)

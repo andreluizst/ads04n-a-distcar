@@ -81,9 +81,7 @@ public class Centro extends ObjetoGeral {
 
 	@Override
 	public String toString() {
-		return "Centro [dadosPJ=" + dadosPJ + ", alias=" + alias
-				+ ", capacidadeArmazenamento=" + capacidadeArmazenamento
-				+ ", tipoCentro=" + tipoCentro + "]";
+		return alias + "[" + tipoCentro + "]";
 	}
 
 	@Override
