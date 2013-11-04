@@ -90,20 +90,28 @@ public class ControladorCarro {
 	}
 	//Item de Serie
 	
-	public void inserir(ItemSerieCarro entidade) {
-		itemSerieCarroDAO.inserir(entidade);
+	public void inserir(ItemSerieCarro itemSerieCarro) {
+		itemSerieCarroDAO.inserir(itemSerieCarro);
 	}
 	
-	public void alterar(ItemSerieCarro entidade) {
-		itemSerieCarroDAO.alterar(entidade);
+	public void alterar(ItemSerieCarro itemSerieCarro) {
+		itemSerieCarroDAO.alterar(itemSerieCarro);
 	}
-	public void remover(ItemSerieCarro entidade) {
-		itemSerieCarroDAO.remover(entidade);
+	public void remover(ItemSerieCarro itemSerieCarro) {
+		itemSerieCarroDAO.remover(itemSerieCarro);
 	}
 	
 	public List<ItemSerieCarro> listarItem(){
 		return itemSerieCarroDAO.consultarTodos();
 	}
+	public ItemSerieCarro pesquisarItem(int codigo) {
+		return itemSerieCarroDAO.consultarPorId(codigo);
+	}
+	
+	public List<ItemSerieCarro> pesquisarItens(ItemSerieCarro itemSerieCarro){
+		return itemSerieCarroDAO.pesquisar(itemSerieCarro);
+	}
+	
 	//Acessório Carro
 	
 
