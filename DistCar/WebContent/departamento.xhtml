@@ -41,8 +41,8 @@
   					<h:inputText id="nome" value="#{deptoBean.departamentoParaPesquisa.nome}" lable="Nome"/>
   					
   					<h:outputLabel for="cbxDeptoSup" value="Depto/centro (superior): "/>
-  					<p:selectOneMenu id="cpxDeptoSup" value="#{deptoBean.departamentoParaPesquisa.departamentoSuperior.codigo}">
-  						<f:selectItem itemLabel="Selecione um departamento" itemValue="" />
+  					<p:selectOneMenu id="cbxDeptoSup" value="#{deptoBean.departamentoParaPesquisa.departamentoSuperior.codigo}">
+  						<f:selectItem itemLabel="Todos os departamentos" itemValue="" />
   						<f:selectItems value="#{deptoBean.deptosSuperiores}" var="deptoSup" 
   									itemLabel="#{deptoSup}" itemValue="#{deptoSup.codigo}"/>
   					</p:selectOneMenu>

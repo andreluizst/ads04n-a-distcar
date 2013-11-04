@@ -41,7 +41,7 @@ public class Funcionario extends PessoaFisica {
 	public Funcionario(){
 		funcao = new Funcao();
 		escolaridade = new Escolaridade();
-		departamento = new Departamento();
+		//departamento = new Departamento();
 		usuario = new Usuario();
 	}
 	

@@ -37,6 +37,8 @@ public class Departamento extends ObjetoGeral {
 	public Departamento() {
 		super();
 		centro = new Centro();
+		//departamentoSuperior = new Departamento();
+		//gestor = new Gestor();
 	}
 	
 	public Departamento(String nome, Departamento departamentoSuperior,
@@ -51,12 +53,18 @@ public class Departamento extends ObjetoGeral {
 	public Departamento(Calendar dataUltimaAtualizacao, Situacao situacao) {
 		super(dataUltimaAtualizacao, situacao);
 		// TODO Auto-generated constructor stub
+		centro = new Centro();
+		//departamentoSuperior = new Departamento();
+		//gestor = new Gestor();
 	}
 	
 	public Departamento(Integer codigo, Calendar dataUltimaAtualizacao,
 			Situacao situacao) {
 		super(codigo, dataUltimaAtualizacao, situacao);
 		// TODO Auto-generated constructor stub
+		centro = new Centro();
+		//departamentoSuperior = new Departamento();
+		//gestor = new Gestor();
 	}
 	
 	public String getNome() {

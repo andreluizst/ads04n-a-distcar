@@ -53,6 +53,13 @@ public class FuncionarioBean {
 		inicializar();
 	}
 	
+	private void inicializarObjParaPesquisa(){
+		funcionarioParaPesquisa = new Funcionario();
+		funcionarioParaPesquisa.setDepartamento(new Departamento());
+		//funcionarioParaPesquisa.setFuncao(new Funcao);
+		//funcionarioParaPesquisa.setEscolaridade(new Escolaridade());
+	}
+	
 	private void inicializar(){
 		novoFuncionario();
 		if (lista==null)
@@ -60,7 +67,7 @@ public class FuncionarioBean {
 		else
 			lista.clear();
 		listaEstaVazia = true;
-		funcionarioParaPesquisa = new Funcionario();
+		inicializarObjParaPesquisa();
 		funcionarioSelecionado = null;
 		tituloOperacao = FuncionarioBean.OP_VISUALIZAR;
 		textoBotaoFecharOuCancelar = FuncionarioBean.TXT_BTN_FECHAR;
@@ -163,7 +170,7 @@ public class FuncionarioBean {
 	}
 	
 	public void limpar(){
-		funcionarioParaPesquisa = new Funcionario();
+		inicializarObjParaPesquisa();
 		situacaoSelecionada = null;
 	}
 	

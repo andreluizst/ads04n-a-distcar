@@ -166,30 +166,28 @@ public class ControladorOrganizacional {
 	}
 	
 	public void inserirDepartamento(Departamento departamento) throws Exception{
-		// TODO Auto-generated method stub
-		if(		departamento.getCodigo()==null||departamento.getCodigo().equals("")||
-					departamento.getNome()==null||departamento.getNome().equals("")||
-						departamento.getSituacao()==null||departamento.getSituacao().equals("")||
-							departamento.getDepartamentoSuperior()==null||departamento.getDepartamentoSuperior().equals("")||
-								departamento.getGestor()==null||departamento.getGestor().equals("")||
-									departamento.getDataUltimaAtualizacao()==null||departamento.getDataUltimaAtualizacao().equals(""))
+		departamento.setDataUltimaAtualizacao(Calendar.getInstance());
+		if (departamento.getSituacao() == null)
+			departamento.setSituacao(Situacao.ATIVO);
+		if(departamento.getNome()==null||departamento.getNome().equals("")||
+						departamento.getSituacao()==null||departamento.getSituacao().equals(""))
 				{
-					throw new NegocioExceptionDepartamento("Campos inválidos");
+					throw new NegocioExceptionDepartamento("Inserir depto: Campos inválidos");
 				}
 				
 		daoDepto.inserir(departamento);
 	}
 	
 	public void alterarDepartamento(Departamento departamento) throws Exception{
-		// TODO Auto-generated method stub
+		departamento.setDataUltimaAtualizacao(Calendar.getInstance());
+		if (departamento.getSituacao() == null)
+			departamento.setSituacao(Situacao.ATIVO);
 		if(	departamento.getCodigo()==null||departamento.getCodigo().equals("")||
 				departamento.getNome()==null||departamento.getNome().equals("")||
-					departamento.getSituacao()==null||departamento.getSituacao().equals("")||
 						departamento.getDepartamentoSuperior()==null||departamento.getDepartamentoSuperior().equals("")||
-							departamento.getGestor()==null||departamento.getGestor().equals("")||
-								departamento.getDataUltimaAtualizacao()==null||departamento.getDataUltimaAtualizacao().equals(""))
+							departamento.getGestor()==null||departamento.getGestor().equals(""))
 			{
-				throw new NegocioExceptionDepartamento("Campos inválidos");
+				throw new NegocioExceptionDepartamento("Alterar depto: Campos inválidos");
 		}
 							
 		daoDepto.alterar(departamento);

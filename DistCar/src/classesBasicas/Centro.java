@@ -81,7 +81,7 @@ public class Centro extends ObjetoGeral {
 
 	@Override
 	public String toString() {
-		return alias + "[" + tipoCentro + "]";
+		return alias + " [" + tipoCentro + "]";
 	}
 
 	@Override

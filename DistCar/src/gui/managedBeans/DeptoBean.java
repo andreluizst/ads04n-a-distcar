@@ -40,12 +40,21 @@ public class DeptoBean {
 	private List<Centro> centros;
 	private List<Departamento> deptosSuperiores;
 	private List<Gestor> gestores;
+	private boolean temGestores;
+	private boolean temCentros;
 	
 	
 	
 	public DeptoBean(){
 		fachada = Fachada.obterInstancia();
 		inicializar();
+	}
+	
+	private void inicializarObjParaPesquisa(){
+		departamentoParaPesquisa = new Departamento();
+		departamentoParaPesquisa.setDepartamentoSuperior(new Departamento());
+		departamentoParaPesquisa.setGestor(new Gestor());
+		departamentoParaPesquisa.setCentro(new Centro());
 	}
 	
 	private void inicializar(){
@@ -55,7 +64,7 @@ public class DeptoBean {
 		else
 			lista.clear();
 		listaEstaVazia = true;
-		departamentoParaPesquisa = new Departamento();
+		inicializarObjParaPesquisa();
 		departamentoSelecionado = null;
 		tituloOperacao = DeptoBean.OP_VISUALIZAR;
 		textoBotaoFecharOuCancelar = DeptoBean.TXT_BTN_FECHAR;
@@ -64,6 +73,8 @@ public class DeptoBean {
 			centros = fachada.listarCentros();
 			deptosSuperiores = fachada.listarDepartamentos();
 			gestores = fachada.listarGestores();
+			temGestores = gestores.size()>0?true:false;
+			temCentros = centros.size()>0?true:false;
 		}catch(Exception ex){
 			MsgPrimeFaces.exibirMensagemDeErro(ex.getMessage());
 		}
@@ -156,7 +167,7 @@ public class DeptoBean {
 	}
 	
 	public void limpar(){
-		departamentoParaPesquisa = new Departamento();
+		inicializarObjParaPesquisa();
 		situacaoSelecionada = null;
 	}
 	
@@ -231,6 +242,14 @@ public class DeptoBean {
 
 	public List<Gestor> getGestores() {
 		return gestores;
+	}
+
+	public boolean isTemGestores() {
+		return temGestores;
+	}
+
+	public boolean isTemCentros() {
+		return temCentros;
 	}
 	
 	

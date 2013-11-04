@@ -24,25 +24,35 @@
   				<h:panelGrid columns="2" cellpadding="5">
   					<h:outputLabel for="nome" value="Nome: *"/>
   					<h:inputText id="nome" value="#{deptoBean.departamento.nome}" lable="Nome" required="true"/>
+  					
+  					<h:outputLabel for="cbxCentro" value="Centro: *"/>
+  					<p:selectOneMenu id="cbxCentro" value="#{deptoBean.departamento.centro.codigo}"
+  								disabled="#{!deptoBean.temCentros}" required="true">
+  						<f:selectItem noSelectionOption="true" itemLabel="Selecione um centro" itemValue="" />
+  						<f:selectItems value="#{deptoBean.centros}" var="centro" 
+  									itemLabel="#{centro}" itemValue="#{centro.codigo}"/>
+  					</p:selectOneMenu>
 					
 					<h:outputLabel for="cbxGestor" value="Gestor: "/>
-  					<p:selectOneMenu id="cpxgestor" value="#{deptoBean.departamento.gestor.codigo}">
-  						<f:selectItem disabled="#{empty(deptoBean.gestores)}" itemLabel="Selecione um gestor" itemValue="" />
+  					<p:selectOneMenu id="cbxGestor" value="#{deptoBean.departamento.gestor.codigo}"
+  								disabled="#{!deptoBean.temGestores}">
+  						<f:selectItem itemLabel="Selecione um gestor" itemValue="" />
   						<f:selectItems value="#{deptoBean.gestores}" var="gestor" 
   									itemLabel="#{gestor.nome}" itemValue="#{gestor.codigo}"/>
   					</p:selectOneMenu>
   					  					
   					<h:outputLabel for="cbxDeptoSup" value="Depto/centro (superior): "/>
-  					<p:selectOneMenu id="cpxDeptoSup" value="#{deptoBean.departamento.departamentoSuperior.codigo}">
+  					<p:selectOneMenu id="cbxDeptoSup" value="#{deptoBean.departamento.departamentoSuperior.codigo}"
+  									disabled="#{!deptoBean.temGestores}">
   						<f:selectItem itemLabel="Selecione um departamento" itemValue="" />
   						<f:selectItems value="#{deptoBean.deptosSuperiores}" var="deptoSup" 
   									itemLabel="#{deptoSup}" itemValue="#{deptoSup.codigo}"/>
   					</p:selectOneMenu>
   					
-  					<h:outputLabel for="situacao" value="Situação: *"/>
-  					<p:selectOneMenu id="situacao" value="#{deptoBean.departamentoParaPesquisa.situacao}" required="true">
-  						<f:selectItem noSelectionOption="true" itemLabel="Todas as situações" itemValue="" />
-  						<f:selectItems value="#{DeptoBean.situacoes}" />
+  					<h:outputLabel for="situacao" value="Situação: "/>
+  					<p:selectOneMenu id="situacao" value="#{deptoBean.departamento.situacao}" >
+  						<f:selectItem noSelectionOption="true" itemLabel="Selecione uma situação" itemValue="" />
+  						<f:selectItems value="#{deptoBean.situacoes}" />
   					</p:selectOneMenu>
   					
   				</h:panelGrid>
