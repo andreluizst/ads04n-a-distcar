@@ -34,7 +34,7 @@ public class Departamento extends ObjetoGeral {
 	
 	public Departamento() {
 		super();
-		centro = new Centro();
+		//centro = new Centro();
 		//departamentoSuperior = new Departamento();
 		//gestor = new Gestor();
 	}

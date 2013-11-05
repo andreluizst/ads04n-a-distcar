@@ -23,7 +23,6 @@ public class Centro extends ObjetoGeral {
 	
 	public Centro() {
 		super();
-		dadosPJ = new PessoaJuridica();
 	}
 
 	public Centro(PessoaJuridica dadosPJ, String alias,

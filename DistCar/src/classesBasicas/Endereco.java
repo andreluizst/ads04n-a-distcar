@@ -29,8 +29,6 @@ public class Endereco {
 	
 	public Endereco() {
 		super();
-		tipoLogradouro = new TipoLogradouro();
-		cidade = new Cidade();
 	}
 	
 	public Endereco(TipoLogradouro tipoLogradouro, String logradouro,

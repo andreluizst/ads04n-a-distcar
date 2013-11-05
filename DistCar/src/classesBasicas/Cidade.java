@@ -17,7 +17,6 @@ public class Cidade extends ObjetoGeral {
 	
 	public Cidade() {
 		super();
-		unidadeFederativa = new UnidadeFederativa();
 	}
 	
 	public Cidade(String nome, UnidadeFederativa unidadeFederativa) {

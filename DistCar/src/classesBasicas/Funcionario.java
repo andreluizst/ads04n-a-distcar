@@ -39,10 +39,10 @@ public class Funcionario extends PessoaFisica {
 	
 	//**** CONSTRUTORES ****
 	public Funcionario(){
-		funcao = new Funcao();
+		/*funcao = new Funcao();
 		escolaridade = new Escolaridade();
 		//departamento = new Departamento();
-		usuario = new Usuario();
+		usuario = new Usuario();*/
 	}
 	
 	public Funcionario(Funcao funcao, String cpts, Date dataAdmissao,

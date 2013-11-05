@@ -133,6 +133,7 @@ public class DeptoBean {
 	
 	public String salvar(){
 		try{
+			//atlzCentroSelecionado();
 			fachada.salvarDepartamento(departamento);
 			MsgPrimeFaces.exibirMensagemInfomativa("Departamento salvo com sucesso!");
 			novoDepartamento();
@@ -142,6 +143,15 @@ public class DeptoBean {
 			MsgPrimeFaces.exibirMensagemDeErro(ex.getMessage());
 		}
 		return null;
+	}
+	
+	private void atlzCentroSelecionado(){
+		for (Centro c : centros){
+			if (c.getCodigo() == departamento.getCentro().getCodigo()){
+				departamento.setCentro(c);
+				break;
+			}
+		}
 	}
 	
 	public void consultar(){

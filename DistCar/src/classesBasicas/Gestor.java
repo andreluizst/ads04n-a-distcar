@@ -18,7 +18,6 @@ public class Gestor extends Funcionario {
 
 	public Gestor() {
 		super();
-		tipoGerencia = new TipoGerencia();
 	}
 
 	public Gestor(Funcao funcao, String cpts, Date dataAdmissao,

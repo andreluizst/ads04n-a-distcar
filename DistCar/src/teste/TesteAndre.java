@@ -105,7 +105,20 @@ public class TesteAndre {
 						)
 					), "Filial 0002-22", 100, TipoCentro.LOJA, Calendar.getInstance(), Situacao.ATIVO
 				);
-		em.persist(centro2);
+			em.persist(centro2);
+			
+			//******* persistindo departamento
+			Departamento depto = new Departamento();
+			depto.setNome("Diretoria Comercial");
+			depto.setCentro(centro);
+			depto.setSituacao(Situacao.ATIVO);
+			em.persist(depto);
+			
+			Departamento depto2 = new Departamento();
+			depto2.setNome("Comercial 0002-22");
+			depto2.setCentro(centro2);
+			depto2.setSituacao(Situacao.ATIVO);
+			em.persist(depto2);
 			
 			et.commit();
 		}catch(Exception ex){
