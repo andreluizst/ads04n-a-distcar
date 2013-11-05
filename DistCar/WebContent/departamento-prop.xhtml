@@ -43,7 +43,7 @@
   					  					
   					<h:outputLabel for="cbxDeptoSup" value="Depto/centro (superior): "/>
   					<p:selectOneMenu id="cbxDeptoSup" value="#{deptoBean.departamento.departamentoSuperior.codigo}"
-  									disabled="#{!deptoBean.temGestores}">
+  									disabled="#{!deptoBean.temDeptosSuperiores}">
   						<f:selectItem itemLabel="Selecione um departamento" itemValue="" />
   						<f:selectItems value="#{deptoBean.deptosSuperiores}" var="deptoSup" 
   									itemLabel="#{deptoSup}" itemValue="#{deptoSup.codigo}"/>

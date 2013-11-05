@@ -42,6 +42,7 @@ public class DeptoBean {
 	private List<Gestor> gestores;
 	private boolean temGestores;
 	private boolean temCentros;
+	private boolean temDeptosSuperiores;
 	
 	
 	
@@ -75,6 +76,7 @@ public class DeptoBean {
 			gestores = fachada.listarGestores();
 			temGestores = gestores.size()>0?true:false;
 			temCentros = centros.size()>0?true:false;
+			temDeptosSuperiores = deptosSuperiores.size()>0?true:false;
 		}catch(Exception ex){
 			MsgPrimeFaces.exibirMensagemDeErro(ex.getMessage());
 		}
@@ -86,6 +88,7 @@ public class DeptoBean {
 			return null;
 		if (departamentoSelecionado != null)
 			departamento = departamentoSelecionado;
+		iniciarFKdoDepartamentoSeNulo();
 		tituloOperacao = DeptoBean.OP_ALTERAR;
 		textoBotaoFecharOuCancelar = DeptoBean.TXT_BTN_CANCELAR;
 		somenteLeitura = false;
@@ -103,6 +106,9 @@ public class DeptoBean {
 	private void novoDepartamento(){
 		departamento = new Departamento();
 		departamento.setNome("Digite um nome aqui");
+		departamento.setDepartamentoSuperior(new Departamento());
+		departamento.setCentro(new Centro());
+		departamento.setGestor(new Gestor());
 	}
 	
 	public void excluir(){
@@ -146,11 +152,22 @@ public class DeptoBean {
 		}
 	}
 	
+	private void iniciarFKdoDepartamentoSeNulo(){
+		if (departamento.getCentro() == null)
+			departamento.setCentro(new Centro());
+		if (departamento.getDepartamentoSuperior() == null)
+			departamento.setDepartamentoSuperior(new Departamento());
+		if (departamento.getGestor() == null)
+			departamento.setGestor(new Gestor());
+	}
+	
 	public String visualizar(){
 		if (listaEstaVazia)
 			return null;
-		if (departamentoSelecionado != null)
+		if (departamentoSelecionado != null){
 			departamento = departamentoSelecionado;
+		iniciarFKdoDepartamentoSeNulo();
+		}
 		tituloOperacao = DeptoBean.OP_VISUALIZAR;
 		textoBotaoFecharOuCancelar = DeptoBean.TXT_BTN_FECHAR;
 		somenteLeitura = true;
@@ -250,6 +267,10 @@ public class DeptoBean {
 
 	public boolean isTemCentros() {
 		return temCentros;
+	}
+
+	public boolean isTemDeptosSuperiores() {
+		return temDeptosSuperiores;
 	}
 	
 	

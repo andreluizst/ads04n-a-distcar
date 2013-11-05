@@ -23,9 +23,7 @@ public class Departamento extends ObjetoGeral {
 	@JoinColumn(name="codDepSup", insertable=true, updatable=true)
 	private Departamento departamentoSuperior;
 	
-	@OneToOne(fetch = FetchType.EAGER, 
-				cascade = {CascadeType.MERGE, CascadeType.DETACH, 
-							CascadeType.PERSIST, CascadeType.REFRESH})
+	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
 	@JoinColumn(name="codGestor", insertable=true, updatable=true)
 	private Gestor gestor;
 	
