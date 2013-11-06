@@ -42,7 +42,7 @@
 
 					<h:outputLabel for="descricao" value="Descricão: *" />
 					<p:inputText id="descricao"
-						value="#{itemSerieBean.itemSerieCarro.descricao}" required="false"
+						value="#{itemSerieBean.itemSerieCarro.descricao}"  required="false"
 						label="Descricão" requiredMessage="Nome obrigatório: *" />
 					<p:message for="descricao" />
 						
@@ -53,15 +53,15 @@
 						requerid="false" label="Valor" />
 					<p:message for="valor" />
 
-					<h:outputLabel for="modelo" value="Modelo: * " />
-					<h:selectOneMenu id="modelo" required="false"
-						value="#{itemSerieBean.codigoSelecionado}">
+						<h:outputLabel for="modelo" value="Modelo: * " />
+					<h:selectOneMenu id="modelo" 
+						value="#{itemSerieBean.codigoSelecionado}" >
 						<f:selectItem noSelectionOption="true"
 							itemLabel="Selecione o Modelo" itemValue=""/>
 						<f:selectItems value="#{itemSerieBean.modeloCarros}" var="vm"
 							itemLabel="#{vm.descricao} #{vm.ano}" itemValue="#{vm.codigo}" />
 					</h:selectOneMenu>
-					<p:message for="modelo" /> 
+					<p:message for="modelo" />
 					
 					<h:outputLabel for="situacao" value="Situação: "/>
   					<p:selectOneMenu id="situacao" value="#{itemSerieBean.itemSerieCarro.situacao}" >
@@ -72,11 +72,9 @@
 				</h:panelGrid> 
 				
 				
-			<p:commandButton value="Consultar" update="TBitem"
+			<p:commandButton value="Consultar" update="panel"
 					action="#{itemSerieBean.consultar}" />	
 				
-				
-
 				<p:commandButton value="Novo" update="TBitem"
 					action="#{itemSerieBean.novo}" />
 				<p:commandButton value="Alterar" update="panel"
@@ -94,7 +92,7 @@
 					action="#{itemSerieBean.excluir}" />
 			</p:panel>
 			<p:dataTable  id="TBitem" var="item"
-				value="#{itemSerieBean.listaItens}" paginator="true" rows="5"
+				value="#{itemSerieBean.listaItens}"  paginator="true" rows="5"
 				paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
 				rowsPerPageTemplate="5,10,15"
 				selection="#{itemSerieBean.itemSelecionado}" selectionMode="single"

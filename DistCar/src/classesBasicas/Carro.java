@@ -71,11 +71,60 @@ public class Carro extends ObjetoGeral {
 		this.valorCarro = valorCarro;
 	}
 	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = super.hashCode();
+		result = prime * result
+				+ ((anoFabricacao == null) ? 0 : anoFabricacao.hashCode());
+		result = prime * result + ((chassi == null) ? 0 : chassi.hashCode());
+		result = prime * result + ((cor == null) ? 0 : cor.hashCode());
+		result = prime * result
+				+ ((valorCarro == null) ? 0 : valorCarro.hashCode());
+		result = prime * result
+				+ ((versaoCarro == null) ? 0 : versaoCarro.hashCode());
+		return result;
+	}
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!super.equals(obj))
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Carro other = (Carro) obj;
+		if (anoFabricacao == null) {
+			if (other.anoFabricacao != null)
+				return false;
+		} else if (!anoFabricacao.equals(other.anoFabricacao))
+			return false;
+		if (chassi == null) {
+			if (other.chassi != null)
+				return false;
+		} else if (!chassi.equals(other.chassi))
+			return false;
+		if (cor == null) {
+			if (other.cor != null)
+				return false;
+		} else if (!cor.equals(other.cor))
+			return false;
+		if (valorCarro == null) {
+			if (other.valorCarro != null)
+				return false;
+		} else if (!valorCarro.equals(other.valorCarro))
+			return false;
+		if (versaoCarro == null) {
+			if (other.versaoCarro != null)
+				return false;
+		} else if (!versaoCarro.equals(other.versaoCarro))
+			return false;
+		return true;
+	}
+	@Override
 	public String toString() {
 		return "Carro [chassi=" + chassi + ", cor=" + cor + ", anoFabricacao="
 				+ anoFabricacao + ", versaoCarro=" + versaoCarro
 				+ ", valorCarro=" + valorCarro + "]";
 	}
-	
 	
 }

@@ -50,11 +50,11 @@
 
 
 					<h:outputLabel for="modelo" value="Modelo: * " />
-					<h:selectOneMenu id="modelo" required="true"
-						value="#{itemSerieBean.codigoSelecionado}">
-						<f:selectItem noSelectionOption="true"
+					<h:selectOneMenu id="modelo" 
+						value="#{itemSerieBean.codigoSelecionado}" >
+						<f:selectItem  noSelectionOption="true"
 							itemLabel="Selecione o Modelo" itemValue=""/>
-						<f:selectItems value="#{itemSerieBean.modeloCarros}" var="vm"
+						<f:selectItems  value="#{itemSerieBean.modeloCarros}" var="vm"
 							itemLabel="#{vm.descricao} #{vm.ano}" itemValue="#{vm.codigo}" />
 					</h:selectOneMenu>
 					<p:message for="modelo" />

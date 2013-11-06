@@ -4,8 +4,11 @@ import java.awt.event.ActionEvent;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+
+import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+
 import classesBasicas.ItemSerieCarro;
 import classesBasicas.ModeloCarro;
 import classesBasicas.Situacao;
@@ -22,6 +25,7 @@ public class ItemSerieBean {
 	private List<ModeloCarro> modeloCarros;
 	private int codigoSelecionado;
 	public String mensagem;
+	public ModeloCarro modelo;
 	private Date data;
 	private List<ItemSerieCarro> listaItens;
 	private ItemSerieCarro itemSelecionado;
@@ -29,7 +33,32 @@ public class ItemSerieBean {
 	private ItemSerieCarro situacaoSelecionada;
 	private Situacao[] situacoes = Situacao.values();
 	
+	@PostConstruct
+	public void init() {
+		f = new Fachada();
+		itemSerieCarro = new ItemSerieCarro();
+		itemSerieCarro.setModeloCarro(new ModeloCarro());
+		listarModelo();
+		data = Calendar.getInstance().getTime();
+		listarItens();
+		codigoSelecionado=0;
+		System.out.println(codigoSelecionado);
+	}
+
 	
+	
+	public ModeloCarro getModelo() {
+		return modelo;
+	}
+
+
+
+	public void setModelo(ModeloCarro modelo) {
+		this.modelo = modelo;
+	}
+
+
+
 	public ItemSerieCarro getSituacaoSelecionada() {
 		return situacaoSelecionada;
 	}
@@ -46,17 +75,23 @@ public class ItemSerieBean {
 		this.situacoes = situacoes;
 	}
 
+	
+
+
 	public ItemSerieCarro getItemSelecionado() {
 		return itemSelecionado;
 	}
+
+
 
 	public void setItemSelecionado(ItemSerieCarro itemSelecionado) {
 		this.itemSelecionado = itemSelecionado;
 	}
 
 
+
 	public void novo(ActionEvent actionEvent) {
-		itemSerieCarro = new ItemSerieCarro();
+		init();
 	}
 
 	public ItemSerieCarro getItemSerieCarro() {
@@ -114,14 +149,14 @@ public class ItemSerieBean {
 	
 	public String salvar() throws Exception {
 		
-		itemSerieCarro.setModeloCarro(f.pesquisarModeloCarro(codigoSelecionado));
+		//System.out.println(itemSerieCarro.toString());
 		//Adicionar os setSituação e setDataAtualizacao na regra de negocio;
 		//itemSerieCarro.setSituacao(situacaoSelecionada);
+		itemSerieCarro.setModeloCarro(f.pesquisarModeloCarro(codigoSelecionado));
 		itemSerieCarro.setDataUltimaAtualizacao(Calendar.getInstance());
 		f.salvarItemSerie(itemSerieCarro);
 		MsgPrimeFaces.exibirMensagemInfomativa("Item Séria salvo com sucesso!");
-		itemSerieCarro = new ItemSerieCarro();
-		consulta();
+		init();
 		return "item";
 	
 	}
@@ -140,21 +175,15 @@ public class ItemSerieBean {
 		return modeloCarros;
 	}
 
-	public ItemSerieBean() {
-		f = new Fachada();
-		itemSerieCarro = new ItemSerieCarro();
-		listarModelo();
-		data = Calendar.getInstance().getTime();
-		listarItens();
-	}
 
 	public void excluir(){
 		if(itemSelecionado==null){
 			MsgPrimeFaces.exibirMensagemInfomativa("Selecione um item para exclusão!");
 		}
 		else{
-		itemSerieCarro = f.pesquisarItem(itemSelecionado.getCodigo());
-		f.removerItem(itemSerieCarro);
+		//itemSerieCarro = f.pesquisarItem(itemSelecionado.getCodigo());
+		f.removerItem(itemSelecionado);
+		MsgPrimeFaces.exibirMensagemInfomativa("Item Excluído com sucesso!");
 		consulta();
 		}
 	}
@@ -162,12 +191,13 @@ public class ItemSerieBean {
 	public void consulta(){
 		listaItens = f.listarItem();
 	}
+	
 	public void Alterar(ItemSerieCarro itemSerieCarro) throws Exception{
 		
 		f.alterarItem(itemSerieCarro);
 		MsgPrimeFaces.exibirMensagemInfomativa("Item Série alterado com sucesso!");
 		this.itemSerieCarro = new ItemSerieCarro();
-		consulta();
+		init();
 	}
 	
 	  /* public void onEdit(RowEditEvent event) throws Exception {  
@@ -185,6 +215,7 @@ public class ItemSerieBean {
 	    } */
 	    public String novo(){
 	    	itemSerieCarro = new ItemSerieCarro();
+	    	codigoSelecionado=0;
 			return "novoItem";
 		}           
 	    
@@ -194,9 +225,8 @@ public class ItemSerieBean {
 	    		return "item";
 	    	}
 	    	else{
-	    		System.out.println(itemSelecionado.toString());
+	    	codigoSelecionado = itemSelecionado.getCodigo();
 	    	itemSerieCarro = itemSelecionado;
-	    	
 	    	return "novoItem";
 	    	}
 	    }
@@ -207,13 +237,13 @@ public class ItemSerieBean {
 	    	return "item";
 	    }   */
 	    
-	    public void consultar(){
-	    
-	    	itemSerieCarro.setModeloCarro(f.pesquisarModeloCarro(codigoSelecionado));
-	    //	itemSerieCarro.setSituacao(situacaoSelecionada);
-	    	System.out.println(itemSerieCarro.toString());
-	    	listaItens = f.pesquisarItens(itemSerieCarro);
-			 itemSerieCarro = new ItemSerieCarro();   	
+	    public String consultar(){
+	    	
+	    	 itemSerieCarro.setModeloCarro(f.pesquisarModeloCarro(codigoSelecionado));
+		 	 listaItens = f.pesquisarItens(this.itemSerieCarro);
+			 itemSerieCarro = new ItemSerieCarro();  
+			 codigoSelecionado=0;
+			 return  "item";
 	    }
 	    
 }

@@ -51,15 +51,69 @@ public class ModeloCarro extends ObjetoGeral {
 	public ModeloCarro() {
 		super();
 	}
-	public ModeloCarro(String descricao, Integer ano, MarcaCarro marcaCarro,
-			List<ItemSerieCarro> itemSerieCarros,
+	public ModeloCarro(Integer codigo, Calendar dataUltimaAtualizacao,
+			Situacao situacao, String descricao, Integer ano,
+			MarcaCarro marcaCarro, List<ItemSerieCarro> itemSerieCarros,
 			List<AcessorioCarro> acessorioCarros) {
-		super();
+		super(codigo, dataUltimaAtualizacao, situacao);
 		this.descricao = descricao;
 		this.ano = ano;
 		this.marcaCarro = marcaCarro;
 		this.itemSerieCarros = itemSerieCarros;
 		this.acessorioCarros = acessorioCarros;
+	}
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = super.hashCode();
+		result = prime * result
+				+ ((acessorioCarros == null) ? 0 : acessorioCarros.hashCode());
+		result = prime * result + ((ano == null) ? 0 : ano.hashCode());
+		result = prime * result
+				+ ((descricao == null) ? 0 : descricao.hashCode());
+		result = prime * result
+				+ ((itemSerieCarros == null) ? 0 : itemSerieCarros.hashCode());
+		result = prime * result
+				+ ((marcaCarro == null) ? 0 : marcaCarro.hashCode());
+		return result;
+	}
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!super.equals(obj))
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		ModeloCarro other = (ModeloCarro) obj;
+		if (acessorioCarros == null) {
+			if (other.acessorioCarros != null)
+				return false;
+		} else if (!acessorioCarros.equals(other.acessorioCarros))
+			return false;
+		if (ano == null) {
+			if (other.ano != null)
+				return false;
+		} else if (!ano.equals(other.ano))
+			return false;
+		if (descricao == null) {
+			if (other.descricao != null)
+				return false;
+		} else if (!descricao.equals(other.descricao))
+			return false;
+		if (itemSerieCarros == null) {
+			if (other.itemSerieCarros != null)
+				return false;
+		} else if (!itemSerieCarros.equals(other.itemSerieCarros))
+			return false;
+		if (marcaCarro == null) {
+			if (other.marcaCarro != null)
+				return false;
+		} else if (!marcaCarro.equals(other.marcaCarro))
+			return false;
+		return true;
+		
+		
 	}
 	@Override
 	public String toString() {
@@ -70,6 +124,5 @@ public class ModeloCarro extends ObjetoGeral {
 				+ ", getDataUltimaAtualizacao()=" + getDataUltimaAtualizacao()
 				+ ", getSituacao()=" + getSituacao() + "]";
 	}
-
 	
 }

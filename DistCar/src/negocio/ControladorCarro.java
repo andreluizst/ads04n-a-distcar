@@ -112,6 +112,9 @@ public class ControladorCarro {
 		return itemSerieCarroDAO.pesquisar(itemSerieCarro);
 	}
 	
+	public List<ItemSerieCarro> pesquisarPorModelo(Integer codigo){
+		return itemSerieCarroDAO.pesquisarPorModelo(codigo);
+	}
 	//Acessório Carro
 	
 

@@ -321,13 +321,12 @@ public class Fachada implements IFachada {
 
 	@Override
 	public ItemSerieCarro pesquisarItem(int codigo) {
-		// TODO Auto-generated method stub
-		return null;
+		return this.controladorCarro.pesquisarItem(codigo);
 	}
 
 	@Override
 	public void removerItem(ItemSerieCarro itemSerieCarro) {
-		// TODO Auto-generated method stub
+		this.controladorCarro.remover(itemSerieCarro);
 		
 	}
 
@@ -339,8 +338,13 @@ public class Fachada implements IFachada {
 
 	@Override
 	public List<ItemSerieCarro> pesquisarItens(ItemSerieCarro itemSerieCarro) {
-		// TODO Auto-generated method stub
-		return null;
+		return this.controladorCarro.pesquisarItens(itemSerieCarro);
+		
+	}
+
+	@Override
+	public List<ItemSerieCarro> pesquisarPorModelo(Integer codigo) {
+		return this.controladorCarro.pesquisarPorModelo(codigo);
 	}
 	
 	
