@@ -6,6 +6,7 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
+
 import util.Parametros;
 import classesBasicas.Centro;
 import classesBasicas.Cidade;
@@ -14,7 +15,6 @@ import classesBasicas.Escolaridade;
 import classesBasicas.Funcao;
 import classesBasicas.Funcionario;
 import classesBasicas.Gestor;
-import classesBasicas.PessoaJuridica;
 import classesBasicas.Situacao;
 import classesBasicas.TipoGerencia;
 import classesBasicas.TipoLogradouro;
@@ -183,100 +183,17 @@ public class ControladorOrganizacional {
 		return false;
 	}
 	
-	private void sincronizarChavesEstrangeirasDoDepto(Departamento departamento) throws Exception{
-		Departamento deptoSup;
-		Gestor gestor;
-		
-		System.out.println("Chamando: daoCentro.consultarPorId(departamento.getCentro().getCodigo())....");
-		Centro centro = daoCentro.consultarPorId(departamento.getCentro().getCodigo());
-		UnidadeFederativa uf = daoUF.consultarPorId(centro.getDadosPJ().getEndereco().getCidade().getUnidadeFederativa().getCodigo());
-		centro.getDadosPJ().getEndereco().getCidade().setUnidadeFederativa(uf);
-		System.out.println("prox linha: departamento.setCentro(centro);");
-		System.out.println("Centro: " + centro + " - " + centro.getDadosPJ().getEndereco() 
-				+ " UF.nome = " + centro.getDadosPJ().getEndereco().getCidade().getUnidadeFederativa().getNome());
-		departamento.setCentro(centro);
-		System.out.println("prox linha: verificando gestor...");
-		if (departamento.getGestor() != null){
-			if ((departamento.getGestor().getCodigo()!=null) && (departamento.getGestor().getCodigo() > 0)){
-				gestor = daoGestor.consultarPorId(departamento.getGestor().getCodigo());
-				departamento.setGestor(gestor);
-				System.out.println("---- Gestor: " + gestor.toString());
-			}
-		}
-		System.out.println("---- Gestor verificado!!!!");
-		System.out.println("prox linha: verificando depto superior...");
-		if (departamento.getDepartamentoSuperior() != null){
-			if ((departamento.getDepartamentoSuperior().getCodigo()!=null) && (departamento.getDepartamentoSuperior().getCodigo() > 0)){
-				deptoSup = daoDepto.consultarPorId(departamento.getDepartamentoSuperior().getCodigo());
-				departamento.setDepartamentoSuperior(deptoSup);
-			}
-		}
-		System.out.println("---- Departamento superior verificado!!!");
-	}
-	
 	public void inserirDepartamento(Departamento departamento) throws Exception{
-		//EntityManager em = emf.createEntityManager();
-       
         departamento.setDataUltimaAtualizacao(Calendar.getInstance());
         if (departamento.getSituacao() == null)
                 departamento.setSituacao(Situacao.ATIVO);
-        if(departamento.getNome()==null||departamento.getNome().equals(""))
-                        {
-                                throw new NegocioExceptionDepartamento("Inserir depto: Campos inválidos");
-                        }
-        System.out.println("iniciando transação de insersão de departamento...........");
-        System.out.println("iniciando transação de insersão de departamento...........");
-        System.out.println("iniciando transação de insersão de departamento...........");
-       
-        entityManager.clear();
-        //daoDepto.inserir(departamento);
-        EntityTransaction et = entityManager.getTransaction();
-        try{
-        	System.out.println("------- Iniciando transasão..........");
-            et.begin();
-            
-            System.out.println("------- Verificando centor..........");
-            if ((departamento.getCentro() != null) && (departamento.getCentro().getCodigo() != null) 
-            		&& (!entityManager.contains(departamento.getCentro()))){
-            	departamento.setCentro(entityManager.merge(departamento.getCentro()));
-            	//entityManager.refresh(departamento.getCentro());
-            	System.out.println("------- Centro: " + departamento.getCentro());
-            }
-            System.out.println("------- Centro verificado!!!");
-            System.out.println("------- Verificando departamento superior..........");
-            if ((departamento.getDepartamentoSuperior() != null) && (departamento.getDepartamentoSuperior().getCodigo() != null) 
-            		&& (!entityManager.contains(departamento.getDepartamentoSuperior()))){
-            	departamento.setDepartamentoSuperior(entityManager.merge(departamento.getDepartamentoSuperior()));
-            	//entityManager.refresh(departamento.getCentro());
-            	System.out.println("------- Departamento superior: " + departamento);
-            	if ((departamento.getDepartamentoSuperior().getCentro() != null) && (departamento.getDepartamentoSuperior().getCentro().getCodigo() != null)
-            		&& (!entityManager.contains(departamento.getDepartamentoSuperior().getCentro()))){
-            		departamento.getDepartamentoSuperior().setCentro(entityManager.merge(departamento.getDepartamentoSuperior().getCentro()));
-            		System.out.println("------- Centro do depto superior verificado!!!");
-            	}
-            }
-            System.out.println("------- Departamento superior verificado!!");
-            System.out.println("------- Setando gestor par null..........");
-            departamento.setGestor(null);
-            System.out.println("------- Chamando daoDepto.inserir..........");
-            
-            System.out.println("------- Chamando inserirSemTratamento..........");
-            //daoDepto.inserirSemTratamento(departamento);
-            entityManager.merge(departamento);
-            System.out.println("------- C O M M I T .......");
-            
-            et.commit();
-        }catch(Exception ex){
-        	ex.printStackTrace();
-        	if ((et != null) && (et.isActive()))
-        		et.rollback();
-            throw new Exception(ex.getMessage());
+        if(departamento.getNome()==null||departamento.getNome().equals("")){
+        	throw new NegocioExceptionDepartamento("Inserir depto: Campos inválidos");
         }
+        daoDepto.inserir(departamento);
 	}
 	
 	public void alterarDepartamento(Departamento departamento) throws Exception{
-		EntityManager em = emf.createEntityManager();
-		
 		departamento.setDataUltimaAtualizacao(Calendar.getInstance());
 		if (departamento.getSituacao() == null)
 			departamento.setSituacao(Situacao.ATIVO);
@@ -288,55 +205,6 @@ public class ControladorOrganizacional {
 		}
 		
 		daoDepto.alterar(departamento);
-							
-		/*daoDepto.setEntityManager(em);
-		daoCentro.setEntityManager(em);
-		daoGestor.setEntityManager(em);*/
-		/*EntityTransaction et = entityManager.getTransaction();
-		try{
-			et.begin();
-			
-			System.out.println("Iniciando sincronizarChavesEstrangeirasDoDepto(departamento)....");
-			//sincronizarChavesEstrangeirasDoDepto(departamento);
-			/*
-			Departamento deptoSup;
-			Gestor gestor;
-			System.out.println("Chamando: daoCentro.consultarPorId(departamento.getCentro().getCodigo())....");
-			Centro centro = daoCentro.consultarPorId(departamento.getCentro().getCodigo());
-			System.out.println("prox linha: departamento.setCentro(centro);");
-			departamento.setCentro(centro);
-			System.out.println("prox linha: verificando gestor...");
-			if (departamento.getGestor() != null){
-				if ((departamento.getGestor().getCodigo()!=null) && (departamento.getGestor().getCodigo() > 0)){
-					System.out.println("##### gestor = " + departamento.getGestor());
-					gestor = daoGestor.consultarPorId(departamento.getGestor().getCodigo());
-					departamento.setGestor(gestor);
-				}
-			}
-			System.out.println("prox linha: verificando depto superior...");
-			if (departamento.getDepartamentoSuperior() != null){
-				if ((departamento.getDepartamentoSuperior().getCodigo()!=null) && (departamento.getDepartamentoSuperior().getCodigo() > 0)){
-					deptoSup = daoDepto.consultarPorId(departamento.getDepartamentoSuperior().getCodigo());
-					departamento.setDepartamentoSuperior(deptoSup);
-				}
-			}
-			
-			///*********************
-			System.out.println("Finalizando sincronizarChavesEstrangeirasDoDepto(departamento)....");
-			System.out.println("Alterando departamento....");
-			*/
-			/*
-			daoDepto.alterarSemTratamento(departamento);
-			et.commit();
-			System.out.println("Departamento ALTERADO.");
-		}catch(Exception ex){
-			et.rollback();
-			throw new Exception("Aletrar depto: " + ex.getMessage());
-		}*/
-		/*em.close();
-		daoCentro.setEntityManager(entityManager);
-		daoDepto.setEntityManager(entityManager);
-		daoGestor.setEntityManager(entityManager);*/
 	}
 	
 	public void removerDepartamento(Departamento departamento) throws Exception{
@@ -370,6 +238,10 @@ public class ControladorOrganizacional {
 	
 	public List<Departamento> listarDepartamentos(){
 		return daoDepto.consultarTodos();
+	}
+	
+	public Departamento pegarDepartamentoPorId(Integer codigo) throws Exception {
+		return daoDepto.consultarPorId(codigo);
 	}
 	
 	
@@ -413,43 +285,17 @@ public class ControladorOrganizacional {
 	}
 	
 	public void inserirFuncionario (Funcionario funcionario) throws Exception {
-		EntityManager em = emf.createEntityManager();
-		
-		
 		funcionario.setDataUltimaAtualizacao(Calendar.getInstance());
 		if (funcionario.getSituacao() == null){
 			funcionario.setSituacao(Situacao.ATIVO);
 		}
-		if(	funcionario.getNome()==null||funcionario.getNome().equals(""))
-				{
+		if(	funcionario.getNome()==null||funcionario.getNome().equals("")){
 					throw new NegocioExceptionFuncionario ("Campos inválidos");
-				}
-		daoDepto.setEntityManager(em);
-		//daoGestor.setEntityManager(em);
-		daoEscolaridade.setEntityManager(em);
-		daoFuncao.setEntityManager(em);
-		daoFuncionario.setEntityManager(entityManager);
-		EntityTransaction et = em.getTransaction();
-		try{
-			et.begin();
-			sincronizarChavesEstrangeirasDoFuncionario(funcionario);
-			daoFuncionario.inserirSemTratamento(funcionario);
-			et.commit();
-		}catch(Exception ex){
-			et.rollback();
-			throw ex;
 		}
-		em.close();
-		daoFuncionario.setEntityManager(entityManager);
-		daoEscolaridade.setEntityManager(entityManager);
-		daoDepto.setEntityManager(entityManager);
-		daoFuncao.setEntityManager(entityManager);
-		//daoGestor.setEntityManager(entityManager);
+		daoFuncionario.inserir(funcionario);
 	}
 	
 	public void alterarFuncionario(Funcionario funcionario) throws Exception{
-		EntityManager em = emf.createEntityManager();
-		
 		funcionario.setDataUltimaAtualizacao(Calendar.getInstance());
 		if (funcionario.getSituacao() == null){
 			funcionario.setSituacao(Situacao.ATIVO);
@@ -466,27 +312,8 @@ public class ControladorOrganizacional {
 		if(func==null){
 			throw new NegocioExceptionFuncionario("Funcionário não cadastrado");
 		}
-		daoDepto.setEntityManager(em);
-		//daoGestor.setEntityManager(em);
-		daoEscolaridade.setEntityManager(em);
-		daoFuncao.setEntityManager(em);
-		daoFuncionario.setEntityManager(entityManager);
-		EntityTransaction et = em.getTransaction();
-		try{
-			et.begin();
-			sincronizarChavesEstrangeirasDoFuncionario(funcionario);
-			daoFuncionario.alterarSemTratamento(funcionario);
-			et.commit();
-		}catch(Exception ex){
-			et.rollback();
-			throw ex;
-		}
-		em.close();
-		daoFuncionario.setEntityManager(entityManager);
-		daoEscolaridade.setEntityManager(entityManager);
-		daoDepto.setEntityManager(entityManager);
-		daoFuncao.setEntityManager(entityManager);
-		//daoGestor.setEntityManager(entityManager);
+		
+		daoFuncionario.alterar(funcionario);
 	}
 	
 	public void removerFuncionario(Funcionario funcionario) throws Exception{
@@ -500,6 +327,10 @@ public class ControladorOrganizacional {
 
 	public List<Funcionario> pesquisarFuncionario(Funcionario funcionario) throws NegocioExceptionFuncionario {
 		return daoFuncionario.pesquisar(funcionario);
+	}
+	
+	public Funcionario pegarFuncionarioPorId(Integer codigo) throws Exception{
+		return daoFuncionario.consultarPorId(codigo);
 	}
 	
 	
@@ -564,6 +395,10 @@ public class ControladorOrganizacional {
 		return daoGestor.consultarTodos();
 	}
 	
+	public Gestor pegarGestorPorId(Integer codigo) throws Exception {
+		return daoGestor.consultarPorId(codigo);
+	}
+	
 	//*********************************  C E N T R O  *********************************************
 	public boolean centroExiste(Centro centro) throws Exception{
 		Centro obj = null;
@@ -577,14 +412,12 @@ public class ControladorOrganizacional {
 	}
 	
 	public void inserirCentro(Centro centro) throws Exception{
-		Cidade cid;
-		TipoLogradouro tpLog;
-		/*if (entityManager.isOpen())
-			entityManager.close();
-		entityManager = emf.createEntityManager();*/
 		centro.setDataUltimaAtualizacao(Calendar.getInstance());
 		if (centro.getSituacao() == null)
 			centro.setSituacao(Situacao.ATIVO);
+		daoCentro.inserir(centro);
+		/*Cidade cid;
+		TipoLogradouro tpLog;
 		
 		EntityTransaction et = entityManager.getTransaction();
 		try{
@@ -609,52 +442,11 @@ public class ControladorOrganizacional {
 		}catch(Exception ex){
 			et.rollback();
 			throw new Exception(ex.getMessage());
-		}
+		}*/
 	}
 	
 	public void alterarCentro(Centro centro) throws Exception{
-		/*if (entityManager.isOpen())
-			entityManager.close();
-		entityManager = emf.createEntityManager();*/
-		
-		System.out.println("Iniciando alterarCentro(Centro centro)..........");
-		System.out.println("Iniciando alterarCentro(Centro centro)..........");
-		System.out.println("Iniciando alterarCentro(Centro centro)..........");
-		System.out.println("Iniciando alterarCentro(Centro centro)..........");
-		
-		
-		String cnpj = centro.getDadosPJ().getCnpj();
-		cnpj = cnpj.replace(".", "").replace("-", "").replace("/", "");
-		String cep = centro.getDadosPJ().getEndereco().getCep();
-		cep = cep.replace("-", "");
-		
-		PessoaJuridica pj = daoPJ.pegarPJ(cnpj);
-		
-		System.out.println("PJ do banco: " + pj);
-		System.out.println("centro.getDadosPJ = " + centro.getDadosPJ());
-		
-		//EntityManager em = emf.createEntityManager();
-		
-		EntityTransaction et = entityManager.getTransaction();
-		try{
-			et.begin();
-			centro.getDadosPJ().getEndereco().setCep(cep);
-			centro.getDadosPJ().setCnpj(cnpj);
-			centro.setDataUltimaAtualizacao(Calendar.getInstance());
-			if (centro.getSituacao() == null)
-				centro.setSituacao(Situacao.ATIVO);
-			
-			if (!centro.getDadosPJ().equals(pj)){
-				System.out.println("Dados de PJ foram modificados!!");
-				centro.getDadosPJ().setDataUltimaAtualizacao(centro.getDataUltimaAtualizacao());
-				centro.getDadosPJ().setSituacao(centro.getSituacao());
-			}
-			daoCentro.alterarSemTratamento(centro);
-			et.commit();
-		}catch(Exception ex){
-			et.rollback();
-			throw new Exception(ex.getMessage());
-		}
+		daoCentro.alterar(centro);
 	}
 	
 	public void removerCentro(Centro centro) throws Exception{
@@ -679,6 +471,10 @@ public class ControladorOrganizacional {
 		return daoCentro.consultarTodos();
 	}
 	
+	public Centro pegarCentroPorId(Integer codigo) throws Exception {
+		return daoCentro.consultarPorId(codigo);
+	}
+	
 	//************************* T I P O S   L O G R A D O U R O S  *********************
 	public boolean tipoLogradouroExiste(TipoLogradouro tipoLogradouro) throws Exception{
 		TipoLogradouro obj = null;
@@ -701,6 +497,10 @@ public class ControladorOrganizacional {
 	
 	public List<TipoLogradouro> listarTiposLogradouros() throws Exception{
 		return daoTipoLogradouro.consultarTodos();
+	}
+	
+	public TipoLogradouro pegarTipoLogradouroPorId(Integer codigo) throws Exception{
+		return daoTipoLogradouro.consultarPorId(codigo);
 	}
 	
 	//****************************  C I D A D E  *****************************************
@@ -731,9 +531,17 @@ public class ControladorOrganizacional {
 		return daoCidade.consultarTodos();
 	}
 	
+	public Cidade pegarCidadePorId(Integer codigo) throws Exception{
+		return daoCidade.consultarPorId(codigo);
+	}
+	
 	//*******************  U N I D A D E   F E D E R A T I V A  ****************************
 	public List<UnidadeFederativa> listarUFs() throws Exception{
 		return daoUF.consultarTodos();
+	}
+	
+	public UnidadeFederativa pegarUfPorId(Integer codigo) throws Exception{
+		return  daoUF.consultarPorId(codigo);
 	}
 	
 	//************************  T I P O   G E R E N C I A  **********************************
@@ -766,5 +574,9 @@ public class ControladorOrganizacional {
 	
 	public List<TipoGerencia> listarTiposGerencia() throws Exception{
 		return daoTipoGerencia.consultarTodos();
+	}
+	
+	public TipoGerencia pegarTipoGerenciaPorId(Integer codigo) throws Exception{
+		return daoTipoGerencia.consultarPorId(codigo);
 	}
 }

@@ -133,6 +133,12 @@ public class CentroBean {
 	
 	public String salvar(){
 		try{
+			if (centro.getDadosPJ().getEndereco().getCidade().getCodigo() == null 
+					|| centro.getDadosPJ().getEndereco().getCidade().getCodigo() == 0){
+				centro.getDadosPJ().getEndereco().setCidade(null);
+			}else{
+				centro.getDadosPJ().getEndereco().setCidade(fachada.pegarCidadePorId(centro.getDadosPJ().getEndereco().getCidade().getCodigo()));
+			}
 			fachada.salvarCentro(centro);
 			MsgPrimeFaces.exibirMensagemInfomativa("Centro salvo com sucesso!");
 			novoCentro();

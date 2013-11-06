@@ -27,6 +27,7 @@ public interface IFachada {
 	public void excluirCentro(Centro centro) throws Exception;
 	public List<Centro> consultarCentro(Centro centro) throws Exception;
 	public List<Centro> listarCentros() throws Exception;
+	public Centro pegarCentroPorId(Integer codigo) throws Exception;
 	
 	//**************************  F U N C I O N Á R I O  ************************************
 	public void salvarFuncionario(Funcionario funcionario) throws Exception;
@@ -38,12 +39,14 @@ public interface IFachada {
 	public void excluirDepartamento(Departamento depto) throws Exception;
 	public List<Departamento> consultarDepartamento(Departamento depto) throws Exception;
 	public List<Departamento> listarDepartamentos() throws Exception;
+	public Departamento pegarDepartamentoPorId(Integer codigo) throws Exception;
 	
 	//*******************************  G E S T O R  *****************************************
 	public void salvarGestor(Gestor gestor) throws Exception;
 	public void excluirGestor(Gestor gestor) throws Exception;
 	public List<Gestor> consultarGestor(Gestor gestor) throws Exception;
 	public List<Gestor> listarGestores() throws Exception;
+	public Gestor pegarGestorPorId(Integer codigo) throws Exception;
 	
 	//************************  T I P O   G E R E N C I A  **********************************
 	public void salvarTipoGerencia(TipoGerencia tipoGerencia) throws Exception;
@@ -59,6 +62,7 @@ public interface IFachada {
 	//***************************  C I D A D E  S  *******************************************
 	public void salvarCidade(Cidade cidade) throws Exception;
 	public List<Cidade> listarCidades() throws Exception;
+	public Cidade pegarCidadePorId(Integer codigo) throws Exception;
 	
 	//*******************  U N I D A D E   F E D E R A T I V A  ****************************
 	public List<UnidadeFederativa> listarUFs() throws Exception;

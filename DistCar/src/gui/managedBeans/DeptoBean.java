@@ -132,8 +132,33 @@ public class DeptoBean {
 	}
 	
 	public String salvar(){
+		/*
+		musica.setArtista(Fachada.getInstancia().
+				consultarArtistaPorId(artistaSelecionado));
+		if (musica.getCodigo() == null || musica.getCodigo() == 0){
+			musica.setCodigo(null);
+			Fachada.getInstancia().inserirMusica(musica);	
+		} else {
+			Fachada.getInstancia().alterarMusica(musica);
+		} 
+		*/
 		try{
 			//atlzCentroSelecionado();
+			departamento.setCentro(fachada.pegarCentroPorId(departamento.getCentro().getCodigo()));
+			if (departamento.getDepartamentoSuperior().getCodigo() == null 
+					|| departamento.getDepartamentoSuperior().getCodigo() == 0){
+				departamento.setDepartamentoSuperior(null);
+			}else{
+				departamento.setDepartamentoSuperior(fachada.pegarDepartamentoPorId(departamento.getDepartamentoSuperior().getCodigo()));
+			}
+			if (departamento.getGestor().getCodigo() == null 
+					|| departamento.getGestor().getCodigo() == 0){
+				departamento.setGestor(null);
+			}else{
+				departamento.setGestor(fachada.pegarGestorPorId(departamento.getGestor().getCodigo()));
+			}
+			if (departamento.getCodigo() == null || departamento.getCodigo() == 0)
+				departamento.setCodigo(null);
 			fachada.salvarDepartamento(departamento);
 			MsgPrimeFaces.exibirMensagemInfomativa("Departamento salvo com sucesso!");
 			novoDepartamento();

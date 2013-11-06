@@ -94,6 +94,11 @@ public class Fachada implements IFachada {
 		return ctrlOrg.listarCentros();
 	}
 	
+	@Override
+	public Centro pegarCentroPorId(Integer codigo) throws Exception {
+		return ctrlOrg.pegarCentroPorId(codigo);
+	}
+	
 	//**************************  F U N C I O N Á R I O  ************************************
 	@Override
 	public void salvarFuncionario(Funcionario funcionario) throws Exception{
@@ -137,6 +142,11 @@ public class Fachada implements IFachada {
 		return ctrlOrg.listarDepartamentos();
 	}
 	
+	@Override
+	public Departamento pegarDepartamentoPorId(Integer codigo) throws Exception {
+		return ctrlOrg.pegarDepartamentoPorId(codigo);
+	}
+	
 	//*******************************  G E S T O R  *****************************************
 	@Override
 	public void salvarGestor(Gestor gestor) throws Exception{
@@ -159,6 +169,11 @@ public class Fachada implements IFachada {
 	@Override
 	public List<Gestor> listarGestores() throws Exception{
 		return ctrlOrg.listarGestores();
+	}
+	
+	@Override
+	public Gestor pegarGestorPorId(Integer codigo) throws Exception {
+		return ctrlOrg.pegarGestorPorId(codigo);
 	}
 	
 	//************************  T I P O   G E R E N C I A  **********************************
@@ -212,6 +227,11 @@ public class Fachada implements IFachada {
 	@Override
 	public List<Cidade> listarCidades() throws Exception{
 		return ctrlOrg.listarCidades();
+	}
+	
+	@Override
+	public Cidade pegarCidadePorId(Integer codigo) throws Exception{
+		return ctrlOrg.pegarCidadePorId(codigo);
 	}
 	
 	//*******************  U N I D A D E   F E D E R A T I V A  ****************************
@@ -346,7 +366,6 @@ public class Fachada implements IFachada {
 	public List<ItemSerieCarro> pesquisarPorModelo(Integer codigo) {
 		return this.controladorCarro.pesquisarPorModelo(codigo);
 	}
-	
-	
-	
+
+
 }
