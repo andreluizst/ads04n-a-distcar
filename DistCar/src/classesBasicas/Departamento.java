@@ -19,15 +19,15 @@ public class Departamento extends ObjetoGeral {
 	/* Necessario para montar o organograma da empresa 
 	   Diretoria Financeira > Controladoria > Gerencia de Faturamento
 	*/
-	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+	@ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
 	@JoinColumn(name="codDepSup", insertable=true, updatable=true)
 	private Departamento departamentoSuperior;
 	
-	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+	@OneToOne(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
 	@JoinColumn(name="codGestor", insertable=true, updatable=true)
 	private Gestor gestor;
 	
-	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+	@ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
 	@JoinColumn(name="codCentro", insertable=true, updatable=true, nullable=false)
 	private Centro centro;
 	

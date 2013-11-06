@@ -13,6 +13,8 @@ import javax.faces.event.ActionEvent;
 
 import classesBasicas.Centro;
 import classesBasicas.Cidade;
+import classesBasicas.Endereco;
+import classesBasicas.PessoaJuridica;
 import classesBasicas.Situacao;
 import classesBasicas.TipoCentro;
 import classesBasicas.TipoLogradouro;
@@ -40,7 +42,7 @@ public class CentroBean {
 	private TipoCentro[] tiposCentros = TipoCentro.values();
 	private List<TipoLogradouro> tiposLogradouros; 
 	private List<Cidade> cidades;
-	private List<UnidadeFederativa> unidadesFederativas;
+	//private List<UnidadeFederativa> unidadesFederativas;
 	private TipoCentro tipoCentroSelecionado;
 	private String textoBotaoFecharOuCancelar;
 	private boolean somenteLeitura;
@@ -59,7 +61,7 @@ public class CentroBean {
 		else
 			lista.clear();
 		listaEstaVazia = true;
-		centroParaPesquisa = new Centro();
+		iniciarObjParaPesquisa();
 		centroSelecionado = null;
 		tituloOperacao = CentroBean.OP_VISUALIZAR;
 		textoBotaoFecharOuCancelar = CentroBean.TXT_BTN_FECHAR;
@@ -67,12 +69,18 @@ public class CentroBean {
 		try{
 			tiposLogradouros = fachada.listarTiposLogradouros();
 			cidades = fachada.listarCidades();
-			unidadesFederativas = fachada.listarUFs();
+			//unidadesFederativas = fachada.listarUFs();
 		}catch(Exception ex){
 			MsgPrimeFaces.exibirMensagemDeErro(ex.getMessage());
 		}
 	}
 
+	private void iniciarObjParaPesquisa(){
+		centroParaPesquisa = new Centro();
+		centroParaPesquisa.setDadosPJ(new PessoaJuridica());
+		centroParaPesquisa.getDadosPJ().setEndereco(new Endereco());
+		centroParaPesquisa.getDadosPJ().getEndereco().setCidade(new Cidade());
+	}
 
 	public String alterar(){
 		if (listaEstaVazia)
@@ -96,6 +104,10 @@ public class CentroBean {
 	private void novoCentro(){
 		centro = new Centro();
 		centro.setAlias("Digite um nome aqui");
+		centro.setDadosPJ(new PessoaJuridica());
+		centro.getDadosPJ().setEndereco(new Endereco());
+		centro.getDadosPJ().getEndereco().setTipoLogradouro(new TipoLogradouro());
+		centro.getDadosPJ().getEndereco().setCidade(new Cidade());
 	}
 	
 	public void excluir(){
@@ -161,7 +173,7 @@ public class CentroBean {
 	}
 	
 	public void limpar(){
-		centroParaPesquisa = new Centro();
+		iniciarObjParaPesquisa();
 		situacaoSelecionada = null;
 	}
 	
