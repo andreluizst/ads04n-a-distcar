@@ -17,50 +17,62 @@ import fachada.Fachada;
 public class ObjetoGeralConverter implements Converter {
 
 	@Override
-	public Object getAsObject(FacesContext ctx, UIComponent component, String value) {
+	/*public Object getAsObject(FacesContext arg0, UIComponent arg1, String arg2) {
 		// TODO Auto-generated method stub
-		if(value!=null && !"".equals(value)){
-			Fachada f = new Fachada();
-			System.out.println(value.toString());
-			ModeloCarro m = new ModeloCarro();
-			m = f.pesquisarModeloCarro(Integer.valueOf(value));
-			System.out.println(m.toString());
-			return m;
-		}
-		return null;
-	}
+		if (arg2 != null) {
+			return this.getAttributesFrom(arg1).get(arg2);
+			}
+			return null;
+			}
 
 	@Override
-	public String getAsString(FacesContext ctx, UIComponent component, Object value) {
+	public String getAsString(FacesContext arg0, UIComponent arg1, Object arg2) {
 		// TODO Auto-generated method stub
-		System.out.println(value.toString());
-		
-		if(value instanceof ModeloCarro){
+		if (arg2 != null && ! "".equals(arg2)) {
 			
-			ModeloCarro modelo = (ModeloCarro) value;
-			return String.valueOf(modelo.getCodigo());
-		}
-		return "";
-		/*if(value!=null && !"".equals(value)){
-			ObjetoGeral obj = (ObjetoGeral) value;
-			 if (obj.getCodigo() != null) {
-	                this.addAttribute(component, obj);
-	 
-	                if (obj.getCodigo() != null) {
-	                    return String.valueOf(obj.getCodigo());
-	                }
-			return (String) value;
-			 }
-		}
-		return "";
+			ModeloCarro mc = (ModeloCarro) arg2;
+			if (mc.getCodigo() != null) {
+			this.addAttribute(arg1, mc);
+			if (mc.getCodigo() != null) {
+			return String.valueOf(mc.getCodigo());
+			}
+			return (String) arg2;
+			}
+			}
+			return "";
 	}
 	
-	private void addAttribute(UIComponent component, ObjetoGeral o){
-		this.getAttributesFrom(component).put(o.getCodigo().toString(),o);
-	}
-
-	private Map<String, Object> getAttributesFrom(UIComponent component){
+	private void addAttribute(UIComponent component, ModeloCarro m) {
+		this.getAttributesFrom(component).put(m.getCodigo().toString(), m);
+		}
+	
+		private Map<String, Object> getAttributesFrom(UIComponent component) {
 		return component.getAttributes();
-	}*/
-}
+		}*/
+	
+	 public Object getAsObject(FacesContext context, UIComponent component, String value)  {  
+        
+     
+            if (value == null || value.equalsIgnoreCase("-1"))   
+                return null;  
+            Integer id = new Integer(value);              
+            return Fachada.obterInstancia().pesquisarModeloCarro(id);  
+              
+       
+    }  
+  
+    public String getAsString(FacesContext context, UIComponent componente, Object value) {  
+        
+        if (value == null) 
+            return null;  
+        if (value instanceof ModeloCarro) {  
+            ModeloCarro aux = (ModeloCarro) value;  
+            return aux.getCodigo().toString();  
+        }  
+        else if(value instanceof String && ((String)value).equalsIgnoreCase("-1")){  
+            return "-1";  
+        }
+		return null; 
+    }
+      	
 }
