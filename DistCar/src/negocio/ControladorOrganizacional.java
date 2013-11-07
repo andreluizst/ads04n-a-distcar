@@ -171,6 +171,40 @@ public class ControladorOrganizacional {
 		return daoFuncao.consultarTodos();
 	}
 	
+	//************************  E S C O L A R I D A D E  ********************************
+	public boolean escolaridadeExiste(Escolaridade escolaridade) throws Exception{
+		Escolaridade obj = null;
+		if (escolaridade.getCodigo() == null)
+			return false;
+		obj = daoEscolaridade.consultarPorId(escolaridade.getCodigo());
+		if (obj != null)
+			if (obj.getCodigo() == escolaridade.getCodigo())
+				return true;
+		return false;
+	}
+	
+	public void inserirEscolaridade(Escolaridade escolaridade) throws Exception{
+		escolaridade.setDataUltimaAtualizacao(Calendar.getInstance());
+        if (escolaridade.getSituacao() == null)
+        	escolaridade.setSituacao(Situacao.ATIVO);
+		daoEscolaridade.inserir(escolaridade);
+	}
+	
+	public void alterarEscolaridade(Escolaridade escolaridade) throws Exception{
+		escolaridade.setDataUltimaAtualizacao(Calendar.getInstance());
+        if (escolaridade.getSituacao() == null)
+        	escolaridade.setSituacao(Situacao.ATIVO);
+		daoEscolaridade.alterar(escolaridade);
+	}
+	
+	public void excluirEscolaridade(Escolaridade escolaridade) throws Exception{
+		daoEscolaridade.remover(escolaridade);
+	}
+	
+	public List<Escolaridade> consultarEscolaridade(Escolaridade escolaridade) throws Exception{
+		return daoEscolaridade.pesquisar(escolaridade);
+	}
+	
 	
 	//*************************  D E P A R T A M E N T O  **************************************
 	public boolean departamentoExiste(Departamento obj) throws Exception{
@@ -235,33 +269,6 @@ public class ControladorOrganizacional {
 			if (outroObj.getCodigo() == obj.getCodigo())
 				return true;
 		return false;
-	}
-	
-	private void sincronizarChavesEstrangeirasDoFuncionario(Funcionario funcionario) throws Exception{
-		Departamento depto;
-		Escolaridade escolaridade;
-		Funcao funcao;
-		//Atributo obtido num comboBox na view da web. Só contém o código da entidade
-		if (funcionario.getDepartamento() != null){
-			if (funcionario.getDepartamento().getCodigo() > 0){
-				depto = daoDepto.consultarPorId(funcionario.getDepartamento().getCodigo());
-				funcionario.setDepartamento(depto);
-			}
-		}
-		//Atributo obtido num comboBox na view da web. Só contém o código da entidade
-		if (funcionario.getEscolaridade() != null){
-			if (funcionario.getEscolaridade().getCodigo() > 0){
-				escolaridade = daoEscolaridade.consultarPorId(funcionario.getEscolaridade().getCodigo());
-				funcionario.setEscolaridade(escolaridade);
-			}
-		}
-		//Atributo obtido num comboBox na view da web. Só contém o código da entidade
-		if (funcionario.getFuncao() != null){
-			if (funcionario.getFuncao().getCodigo() > 0){
-				funcao = daoFuncao.consultarPorId(funcionario.getFuncao().getCodigo());
-				funcionario.setFuncao(funcao);
-			}
-		}
 	}
 	
 	public void inserirFuncionario (Funcionario funcionario) throws Exception {
@@ -472,6 +479,9 @@ public class ControladorOrganizacional {
 	}
 	
 	public void inserirCidade(Cidade cidade) throws Exception{
+		cidade.setDataUltimaAtualizacao(Calendar.getInstance());
+		if (cidade.getSituacao() == null)
+			cidade.setSituacao(Situacao.ATIVO);
 		List<Cidade> lista = daoCidade.pesquisar(cidade);
 		if (lista.size() > 0)
 			throw new Exception("A cidade " + cidade.getNome()
@@ -480,11 +490,22 @@ public class ControladorOrganizacional {
 	}
 	
 	public void alterarCidade(Cidade cidade) throws Exception{
+		cidade.setDataUltimaAtualizacao(Calendar.getInstance());
+		if (cidade.getSituacao() == null)
+			cidade.setSituacao(Situacao.ATIVO);
 		daoCidade.alterar(cidade);
+	}
+	
+	public void excluirCidade(Cidade cidade) throws Exception{
+		daoCidade.remover(cidade);
 	}
 	
 	public List<Cidade> listarCidades() throws Exception{
 		return daoCidade.consultarTodos();
+	}
+	
+	public List<Cidade> consultarCidade(Cidade cidade) throws Exception{
+		return daoCidade.pesquisar(cidade);
 	}
 	
 	public List<Cidade> consultarCidadesPorUF(UnidadeFederativa uf) throws Exception{
@@ -549,4 +570,20 @@ public class ControladorOrganizacional {
 	public PessoaJuridica pegarPessoaJuridicaPorId(Integer codigo) throws Exception{
 		return daoPJ.consultarPorId(codigo);
 	}
+	
+	//************************  P E S S O A  F Í S I C A  *******************************
+	//public List<PessoaFisica> listarPF() throws Exception{
+		
+	//}
+	
+	//****************************  E S C O L A R I D A D E  ****************************
+	public List<Escolaridade> listarEscolaridades(){
+		return daoEscolaridade.consultarTodos();
+	}
+	
+	public Escolaridade pegarEscolaridadePorId(Integer codigo) throws Exception{
+		return daoEscolaridade.consultarPorId(codigo);
+	}
+	
+	
 }

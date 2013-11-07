@@ -65,7 +65,9 @@ public interface IFachada {
 	public void salvarCidade(Cidade cidade) throws Exception;
 	public List<Cidade> listarCidades() throws Exception;
 	public List<Cidade> consultarCidadesPorUF(UnidadeFederativa uf) throws Exception;
+	public List<Cidade> consultarCidade(Cidade cidade) throws Exception;
 	public Cidade pegarCidadePorId(Integer codigo) throws Exception;
+	public void excluirCidade(Cidade cidade) throws Exception;
 	
 	//*******************  U N I D A D E   F E D E R A T I V A  ****************************
 	public List<UnidadeFederativa> listarUFs() throws Exception;
@@ -75,6 +77,11 @@ public interface IFachada {
 	//***********************  P E S S O A     J U R Í D I C A  *************************
 	public List<PessoaJuridica> listarPJ() throws Exception;
 	public PessoaJuridica pegarPessoaJuridicaPorId(Integer codigo) throws Exception;
+	
+	//************************  E S C O L A R I D A D E  ********************************
+	public void salvarEscolaridade(Escolaridade escolaridade) throws Exception;
+	public List<Escolaridade> consultarEscolaridade(Escolaridade escolaridade) throws Exception;
+	public void excluirEscolaridade(Escolaridade escolaridade) throws Exception;
 	
 	//***********************************************************************************
 	//*******************************  V E N D A S  *************************************

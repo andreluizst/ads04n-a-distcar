@@ -8,6 +8,7 @@ import classesBasicas.Carro;
 import classesBasicas.Centro;
 import classesBasicas.Cidade;
 import classesBasicas.Departamento;
+import classesBasicas.Escolaridade;
 import classesBasicas.Fabricante;
 import classesBasicas.Funcao;
 import classesBasicas.Funcionario;
@@ -67,6 +68,25 @@ public class Fachada implements IFachada {
 	@Override
 	public List<Funcao> consultarFuncao(Funcao funcao) throws Exception{
 		return ctrlOrg.pesquisarFuncao(funcao);
+	}
+	
+	//************************  E S C O L A R I D A D E  ********************************
+	@Override
+	public void salvarEscolaridade(Escolaridade escolaridade) throws Exception{
+		if (ctrlOrg.escolaridadeExiste(escolaridade))
+			ctrlOrg.alterarEscolaridade(escolaridade);
+		else
+			ctrlOrg.inserirEscolaridade(escolaridade);
+	}
+	
+	@Override
+	public List<Escolaridade> consultarEscolaridade(Escolaridade escolaridade) throws Exception{
+		return ctrlOrg.consultarEscolaridade(escolaridade);
+	}
+	
+	@Override
+	public void excluirEscolaridade(Escolaridade escolaridade) throws Exception{
+		ctrlOrg.excluirEscolaridade(escolaridade);
 	}
 	
 	
@@ -230,8 +250,18 @@ public class Fachada implements IFachada {
 	}
 	
 	@Override
+	public void excluirCidade(Cidade cidade) throws Exception{
+		ctrlOrg.excluirCidade(cidade);
+	}
+	
+	@Override
 	public List<Cidade> listarCidades() throws Exception{
 		return ctrlOrg.listarCidades();
+	}
+	
+	@Override
+	public List<Cidade> consultarCidade(Cidade cidade) throws Exception {
+		return ctrlOrg.consultarCidade(cidade);
 	}
 	
 	@Override
