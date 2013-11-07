@@ -10,6 +10,7 @@ import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.event.ActionEvent;
+import javax.faces.event.ValueChangeEvent;
 
 import classesBasicas.Centro;
 import classesBasicas.Cidade;
@@ -42,8 +43,13 @@ public class CentroBean {
 	private TipoCentro[] tiposCentros = TipoCentro.values();
 	private List<TipoLogradouro> tiposLogradouros; 
 	private List<Cidade> cidades;
-	//private List<UnidadeFederativa> unidadesFederativas;
+	private List<UnidadeFederativa> ufs;
+	
+	private Integer ufSelecionada;
+	private Integer cidadeSelecionada;
 	private TipoCentro tipoCentroSelecionado;
+	private Integer tipoLogradouroSelecionado;
+	
 	private String textoBotaoFecharOuCancelar;
 	private boolean somenteLeitura;
 	
@@ -69,7 +75,7 @@ public class CentroBean {
 		try{
 			tiposLogradouros = fachada.listarTiposLogradouros();
 			cidades = fachada.listarCidades();
-			//unidadesFederativas = fachada.listarUFs();
+			ufs = fachada.listarUFs();
 		}catch(Exception ex){
 			MsgPrimeFaces.exibirMensagemDeErro(ex.getMessage());
 		}
@@ -82,11 +88,27 @@ public class CentroBean {
 		centroParaPesquisa.getDadosPJ().getEndereco().setCidade(new Cidade());
 	}
 
+	private void prepararParaExibirDados(Centro obj){
+		this.centro = obj;
+		this.centro.setDadosPJ(obj.getDadosPJ());
+		this.centro.setSituacao(obj.getSituacao());
+		cidadeSelecionada = obj.getDadosPJ().getEndereco().getCidade().getCodigo();
+		ufSelecionada = obj.getDadosPJ().getEndereco().getCidade().getUnidadeFederativa().getCodigo();
+		tipoLogradouroSelecionado = obj.getDadosPJ().getEndereco().getTipoLogradouro().getCodigo();
+		tipoCentroSelecionado = obj.getTipoCentro();
+		UnidadeFederativa uf = new UnidadeFederativa();
+		uf.setCodigo(ufSelecionada);
+		try{
+		cidades = fachada.consultarCidadesPorUF(uf);
+		}catch(Exception ex){
+			MsgPrimeFaces.exibirMensagemDeErro("Não foi possível filtrar as cidades pelo estado selecionado!");
+		}
+	}
+	
 	public String alterar(){
 		if (listaEstaVazia)
 			return null;
-		if (centroSelecionado != null)
-			centro = centroSelecionado;
+		prepararParaExibirDados(centroSelecionado);
 		tituloOperacao = CentroBean.OP_ALTERAR;
 		textoBotaoFecharOuCancelar = CentroBean.TXT_BTN_CANCELAR;
 		somenteLeitura = false;
@@ -108,6 +130,10 @@ public class CentroBean {
 		centro.getDadosPJ().setEndereco(new Endereco());
 		centro.getDadosPJ().getEndereco().setTipoLogradouro(new TipoLogradouro());
 		centro.getDadosPJ().getEndereco().setCidade(new Cidade());
+		cidadeSelecionada = 0;//new Cidade();
+		ufSelecionada = 0;//new UnidadeFederativa();
+		tipoCentroSelecionado = null;
+		tipoLogradouroSelecionado = 0;
 	}
 	
 	public void excluir(){
@@ -118,7 +144,6 @@ public class CentroBean {
 			fachada.excluirCentro(centro);
 			MsgPrimeFaces.exibirMensagemInfomativa("Centro " + centroSelecionado.getAlias() + " excluido com sucesso!");
 			novoCentro();
-			//atualizarLista(listar());
 		}catch(Exception ex){
 			MsgPrimeFaces.exibirMensagemDeErro(ex.getMessage());
 		}
@@ -133,12 +158,12 @@ public class CentroBean {
 	
 	public String salvar(){
 		try{
-			if (centro.getDadosPJ().getEndereco().getCidade().getCodigo() == null 
-					|| centro.getDadosPJ().getEndereco().getCidade().getCodigo() == 0){
-				centro.getDadosPJ().getEndereco().setCidade(null);
-			}else{
-				centro.getDadosPJ().getEndereco().setCidade(fachada.pegarCidadePorId(centro.getDadosPJ().getEndereco().getCidade().getCodigo()));
-			}
+			centro.getDadosPJ().getEndereco().setCidade(fachada.pegarCidadePorId(cidadeSelecionada));
+			centro.getDadosPJ().getEndereco().setTipoLogradouro(fachada.pegarTipoLogradouroPorId(tipoLogradouroSelecionado));
+			centro.getDadosPJ().getEndereco().setCep(centro.getDadosPJ().getEndereco().getCep().replace("-", ""));
+			centro.getDadosPJ().setCnpj(centro.getDadosPJ().getCnpj().replace(".", "").replace("/", "").replace("-", ""));
+			if (centro.getCodigo() == null || centro.getCodigo() == 0)
+				centro.setCodigo(null);
 			fachada.salvarCentro(centro);
 			MsgPrimeFaces.exibirMensagemInfomativa("Centro salvo com sucesso!");
 			novoCentro();
@@ -161,8 +186,7 @@ public class CentroBean {
 	public String visualizar(){
 		if (listaEstaVazia)
 			return null;
-		if (centroSelecionado != null)
-			centro = centroSelecionado;
+		prepararParaExibirDados(centroSelecionado);
 		tituloOperacao = CentroBean.OP_VISUALIZAR;
 		textoBotaoFecharOuCancelar = CentroBean.TXT_BTN_FECHAR;
 		somenteLeitura = true;
@@ -271,5 +295,54 @@ public class CentroBean {
 	public List<Cidade> getCidades(){
 		return cidades;
 	}
+
+	public void filtrarCidades(ValueChangeEvent evento){
+		if (!somenteLeitura){
+		try{
+			ufSelecionada = (Integer)evento.getNewValue();
+			UnidadeFederativa uf = new UnidadeFederativa();
+			uf.setCodigo(ufSelecionada);
+			if (ufSelecionada != null){
+				cidades = fachada.consultarCidadesPorUF(uf);
+			}else
+				MsgPrimeFaces.exibirMensagemDeErro("Não foi possível filtar as cidades da UF = null.");
+			if (centro.getDadosPJ().getEndereco().getCidade().getCodigo() != null && centro.getDadosPJ().getEndereco().getCidade().getCodigo() > 0)
+				cidadeSelecionada = centro.getDadosPJ().getEndereco().getCidade().getCodigo();
+		}catch(Exception ex){
+			MsgPrimeFaces.exibirMensagemDeErro("Não foi possível filtar as cidades pela UF!");
+		}
+		}
+	}
+
+	public List<UnidadeFederativa> getUfs() {
+		return ufs;
+	}
+
+	public Integer getUfSelecionada() {
+		return ufSelecionada;
+	}
+
+	public void setUfSelecionada(Integer ufSelecionada) {
+		this.ufSelecionada = ufSelecionada;
+	}
+
+	public Integer getCidadeSelecionada() {
+		return cidadeSelecionada;
+	}
+
+	public void setCidadeSelecionada(Integer cidadeSelecionada) {
+		this.cidadeSelecionada = cidadeSelecionada;
+	}
+
+	public Integer getTipoLogradouroSelecionado() {
+		return tipoLogradouroSelecionado;
+	}
+
+	public void setTipoLogradouroSelecionado(Integer tipoLogradouroSelecionado) {
+		this.tipoLogradouroSelecionado = tipoLogradouroSelecionado;
+	}
+	
+	
+	
 		
 }

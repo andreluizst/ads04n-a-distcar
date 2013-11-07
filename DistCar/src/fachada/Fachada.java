@@ -15,6 +15,7 @@ import classesBasicas.Gestor;
 import classesBasicas.ItemSerieCarro;
 import classesBasicas.ModeloCarro;
 import classesBasicas.Pessoa;
+import classesBasicas.PessoaJuridica;
 import classesBasicas.TipoGerencia;
 import classesBasicas.TipoLogradouro;
 import classesBasicas.UnidadeFederativa;
@@ -192,8 +193,7 @@ public class Fachada implements IFachada {
 	
 	@Override
 	public List<TipoGerencia> consultarGerencia(TipoGerencia tipoGerencia) throws Exception{
-		//Falta implementar
-		return null;
+		return ctrlOrg.listarTiposGerencia();
 	}
 	
 	@Override
@@ -215,6 +215,11 @@ public class Fachada implements IFachada {
 		return ctrlOrg.listarTiposLogradouros();
 	}
 	
+	@Override
+	public TipoLogradouro pegarTipoLogradouroPorId(Integer codigo) throws Exception{
+		return ctrlOrg.pegarTipoLogradouroPorId(codigo);
+	}
+	
 	//****************************  C I D A D E  *****************************************
 	@Override
 	public void salvarCidade(Cidade cidade) throws Exception{
@@ -230,6 +235,11 @@ public class Fachada implements IFachada {
 	}
 	
 	@Override
+	public List<Cidade> consultarCidadesPorUF(UnidadeFederativa uf) throws Exception{
+		return ctrlOrg.consultarCidadesPorUF(uf);
+	}
+	
+	@Override
 	public Cidade pegarCidadePorId(Integer codigo) throws Exception{
 		return ctrlOrg.pegarCidadePorId(codigo);
 	}
@@ -238,6 +248,23 @@ public class Fachada implements IFachada {
 	@Override
 	public List<UnidadeFederativa> listarUFs() throws Exception{
 		return ctrlOrg.listarUFs();
+	}
+	
+	@Override
+	public UnidadeFederativa pegarUnidadeFederativaPorId(Integer codigo) throws Exception{
+		return ctrlOrg.pegarUfPorId(codigo);
+	}
+	
+	
+	//***********************  P E S S O A     J U R Í D I C A  *************************
+	@Override
+	public List<PessoaJuridica> listarPJ() throws Exception{
+		return ctrlOrg.listarPJ();
+	}
+	
+	@Override
+	public PessoaJuridica pegarPessoaJuridicaPorId(Integer codigo) throws Exception{
+		return ctrlOrg.pegarPessoaJuridicaPorId(codigo);
 	}
 	
 	

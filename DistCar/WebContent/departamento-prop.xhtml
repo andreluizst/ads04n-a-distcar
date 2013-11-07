@@ -26,25 +26,26 @@
   					<h:inputText id="nome" value="#{deptoBean.departamento.nome}" lable="Nome" required="true"/>
   					
   					<h:outputLabel for="cbxCentro" value="Centro: *"/>
-  					<p:selectOneMenu id="cbxCentro" value="#{deptoBean.departamento.centro.codigo}"
-  								disabled="#{!deptoBean.temCentros}" required="true">
-  						<f:selectItem noSelectionOption="true" itemLabel="Selecione um centro" itemValue="" />
+  					<p:selectOneMenu id="cbxCentro" value="#{deptoBean.codigoCentroSelecionado}"
+  								disabled="#{!deptoBean.temCentros}" 
+  								required="true" requiredMessage="Informe um centro!">
+  						<f:selectItem noSelectionOption="true" itemLabel="Selecione um centro" itemValue="#{null}" />
   						<f:selectItems value="#{deptoBean.centros}" var="centro" 
   									itemLabel="#{centro}" itemValue="#{centro.codigo}"/>
   					</p:selectOneMenu>
 					
 					<h:outputLabel for="cbxGestor" value="Gestor: "/>
-  					<p:selectOneMenu id="cbxGestor" value="#{deptoBean.departamento.gestor.codigo}"
+  					<p:selectOneMenu id="cbxGestor" value="#{deptoBean.codigoGestorSelecionado}"
   								disabled="#{!deptoBean.temGestores}">
-  						<f:selectItem itemLabel="Selecione um gestor" itemValue="" />
+  						<f:selectItem itemLabel="Selecione um gestor" itemValue="#{null}" />
   						<f:selectItems value="#{deptoBean.gestores}" var="gestor" 
   									itemLabel="#{gestor.nome}" itemValue="#{gestor.codigo}"/>
   					</p:selectOneMenu>
   					  					
   					<h:outputLabel for="cbxDeptoSup" value="Depto/centro (superior): "/>
-  					<p:selectOneMenu id="cbxDeptoSup" value="#{deptoBean.departamento.departamentoSuperior.codigo}"
+  					<p:selectOneMenu id="cbxDeptoSup" value="#{deptoBean.codigoDeptoSuperiorSelecionado}"
   									disabled="#{!deptoBean.temDeptosSuperiores}">
-  						<f:selectItem itemLabel="Selecione um departamento" itemValue="" />
+  						<f:selectItem itemLabel="Selecione um departamento" itemValue="#{null}" />
   						<f:selectItems value="#{deptoBean.deptosSuperiores}" var="deptoSup" 
   									itemLabel="#{deptoSup}" itemValue="#{deptoSup.codigo}"/>
   					</p:selectOneMenu>

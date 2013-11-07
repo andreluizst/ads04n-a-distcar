@@ -58,14 +58,23 @@ public interface IFachada {
 	//******************  T I P O S   L O G R A D O U R O S  *********************************
 	public void salvarTipoLogradouro(TipoLogradouro tipoLogradouro) throws Exception;
 	public List<TipoLogradouro> listarTiposLogradouros() throws Exception;
+	public TipoLogradouro pegarTipoLogradouroPorId(Integer codigo) throws Exception;
+	
 	
 	//***************************  C I D A D E  S  *******************************************
 	public void salvarCidade(Cidade cidade) throws Exception;
 	public List<Cidade> listarCidades() throws Exception;
+	public List<Cidade> consultarCidadesPorUF(UnidadeFederativa uf) throws Exception;
 	public Cidade pegarCidadePorId(Integer codigo) throws Exception;
 	
 	//*******************  U N I D A D E   F E D E R A T I V A  ****************************
 	public List<UnidadeFederativa> listarUFs() throws Exception;
+	public UnidadeFederativa pegarUnidadeFederativaPorId(Integer codigo) throws Exception;
+	
+	
+	//***********************  P E S S O A     J U R Í D I C A  *************************
+	public List<PessoaJuridica> listarPJ() throws Exception;
+	public PessoaJuridica pegarPessoaJuridicaPorId(Integer codigo) throws Exception;
 	
 	//***********************************************************************************
 	//*******************************  V E N D A S  *************************************

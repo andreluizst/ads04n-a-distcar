@@ -15,6 +15,7 @@ import classesBasicas.Escolaridade;
 import classesBasicas.Funcao;
 import classesBasicas.Funcionario;
 import classesBasicas.Gestor;
+import classesBasicas.PessoaJuridica;
 import classesBasicas.Situacao;
 import classesBasicas.TipoGerencia;
 import classesBasicas.TipoLogradouro;
@@ -208,28 +209,7 @@ public class ControladorOrganizacional {
 	}
 	
 	public void removerDepartamento(Departamento departamento) throws Exception{
-		List<Departamento> lista;
-		lista = daoDepto.pesquisarNomeDepartamento(departamento.getNome());
-		if(lista == null){
-			throw new NegocioExceptionDepartamento("Departamento não encontrado!");
-		}
-		else{
-			Funcionario fun = new Funcionario();
-			fun.setDepartamento(departamento);
-			
-			List<Funcionario> funcionarios = pesquisarFuncionario(fun);
-			if (funcionarios.size() > 0)
-				throw new Exception("Não é possível excluir o departamento selecionado porque existe um ou mais funcionarios nesse departamento!");
-			EntityTransaction et = entityManager.getTransaction();
-			try{
-				et.begin();
-				daoDepto.removerSemTratamento(lista.get(0));
-				et.commit();
-			}catch(Exception ex){
-				et.rollback();
-				throw new Exception(ex.getMessage());
-			}
-		}
+		daoDepto.remover(departamento);
 	}
 
 	public List<Departamento> pesquisarDepartamento(Departamento departamento) throws NegocioExceptionDepartamento {
@@ -416,36 +396,12 @@ public class ControladorOrganizacional {
 		if (centro.getSituacao() == null)
 			centro.setSituacao(Situacao.ATIVO);
 		daoCentro.inserir(centro);
-		/*Cidade cid;
-		TipoLogradouro tpLog;
-		
-		EntityTransaction et = entityManager.getTransaction();
-		try{
-			et.begin();
-			if (centro.getDadosPJ() != null){
-				if (centro.getDadosPJ().getEndereco().getCidade() != null){
-					cid = daoCidade.consultarPorId(centro.getDadosPJ().getEndereco().getCidade().getCodigo());
-					centro.getDadosPJ().getEndereco().setCidade(cid);
-					tpLog = daoTipoLogradouro.consultarPorId(centro.getDadosPJ().getEndereco().getTipoLogradouro().getCodigo());
-					centro.getDadosPJ().getEndereco().setTipoLogradouro(tpLog);
-				}
-				String cnpj = centro.getDadosPJ().getCnpj().replace(".", "");
-				cnpj = cnpj.replace("-", "").replace("/", "");
-				centro.getDadosPJ().setCnpj(cnpj);
-				String cep = centro.getDadosPJ().getEndereco().getCep().replace("-", "");
-				centro.getDadosPJ().getEndereco().setCep(cep);
-				centro.getDadosPJ().setDataUltimaAtualizacao(centro.getDataUltimaAtualizacao());
-				centro.getDadosPJ().setSituacao(centro.getSituacao());
-			}
-			daoCentro.inserirSemTratamento(centro);
-			et.commit();
-		}catch(Exception ex){
-			et.rollback();
-			throw new Exception(ex.getMessage());
-		}*/
 	}
 	
 	public void alterarCentro(Centro centro) throws Exception{
+		centro.setDataUltimaAtualizacao(Calendar.getInstance());
+		if (centro.getSituacao() == null)
+			centro.setSituacao(Situacao.ATIVO);
 		daoCentro.alterar(centro);
 	}
 	
@@ -531,6 +487,10 @@ public class ControladorOrganizacional {
 		return daoCidade.consultarTodos();
 	}
 	
+	public List<Cidade> consultarCidadesPorUF(UnidadeFederativa uf) throws Exception{
+		return daoCidade.pesquisarCidadePorUF(uf);
+	}
+	
 	public Cidade pegarCidadePorId(Integer codigo) throws Exception{
 		return daoCidade.consultarPorId(codigo);
 	}
@@ -578,5 +538,15 @@ public class ControladorOrganizacional {
 	
 	public TipoGerencia pegarTipoGerenciaPorId(Integer codigo) throws Exception{
 		return daoTipoGerencia.consultarPorId(codigo);
+	}
+	
+	//***********************  P E S S O A     J U R Í D I C A  *************************
+	public List<PessoaJuridica> listarPJ() throws Exception{
+		return daoPJ.consultarTodos();
+	}
+		
+	
+	public PessoaJuridica pegarPessoaJuridicaPorId(Integer codigo) throws Exception{
+		return daoPJ.consultarPorId(codigo);
 	}
 }

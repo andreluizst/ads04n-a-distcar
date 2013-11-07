@@ -18,7 +18,7 @@
 		</h:form>
 		
   		<h:form id="frmFuncao">
-  			<p:panel id="panelFuncao" header="DistCar - #{funcaoBean.tituloOperacao} Função">
+  			<p:panel id="panelFuncao" header="DistCar - #{deptoBean.tituloOperacao}">
   				<h:panelGrid columns="3" cellpadding="5">
   					<h:outputLabel for="descricao" value="Descrição: *"/>
   					<h:inputText id="descricao" value="#{funcaoBean.funcao.descricao}" required="true" lable="Descrição"/>
@@ -37,9 +37,12 @@
   					
   				</h:panelGrid>
 
-  				<p:commandButton value="Salvar"  update=":frmMensagens:growl" action="#{funcaoBean.salvar}"/>
+  				<p:commandButton value="Salvar" rendered="#{!funcaoBean.somenteLeitura}" 
+  						disabled="#{funcaoBean.somenteLeitura}" 
+  						update=":frmMensagens:growl" action="#{funcaoBean.salvar}"/>
   				
-  				<p:commandButton value="Cancelar" immediate="true" action="funcao" />
+  				<p:commandButton value="#{funcaoBean.textoBotaoFecharOuCancelar}" 
+  								immediate="true" action="funcao" />
 
   			</p:panel>
     		

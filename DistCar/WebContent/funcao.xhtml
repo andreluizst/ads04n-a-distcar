@@ -58,6 +58,7 @@
    				</p:commandButton>
 
   				<p:commandButton value="Consultar"  update="frmFuncao" actionListener="#{funcaoBean.consultar}"/>
+  				<p:commandButton disabled="#{funcaoBean.listaEstaVazia}" value="Detalhes" update="panelFuncao" action="#{funcaoBean.visualizar}" />
   				<p:commandButton value="Limpar"  update="frmFuncao" actionListener="#{funcaoBean.limpar}"/>
   				
   			</p:panel>

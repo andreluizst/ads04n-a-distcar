@@ -7,6 +7,11 @@ import java.util.List;
 
 
 
+
+
+
+
+
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -23,8 +28,11 @@ import gui.MsgPrimeFaces;
 @ManagedBean
 @SessionScoped
 public class FuncaoBean {
-	private static final String OP_NOVA = "  NOVA  ";
-	private static final String OP_ALTERAR = "Alterar";
+	private static final String OP_NOVA = "NOVA Função";
+	private static final String OP_ALTERAR = "Alterar Função";
+	private static final String OP_VISUALIZAR = "Propriedades da Função";
+	private static final String TXT_BTN_CANCELAR = "Cancelar";
+	private static final String TXT_BTN_FECHAR = "Fechar";
 	
 	private IFachada fachada;
 	
@@ -37,6 +45,10 @@ public class FuncaoBean {
 	private Situacao[] situacoes = Situacao.values();
 	private boolean listaEstaVazia;
 	private String tituloOperacao;
+	private String textoBotaoFecharOuCancelar;
+	private boolean somenteLeitura;
+	
+	
 	
 	public FuncaoBean(){
 		fachada = Fachada.obterInstancia();
@@ -53,6 +65,11 @@ public class FuncaoBean {
 		funcaoDePesquisa = new Funcao();
 		funcaoSelecionada = null;
 		tituloOperacao = FuncaoBean.OP_NOVA;
+	}
+	
+	private void prepararParaExibirDados(Funcao obj){
+		if (obj != null)
+			funcao = obj;
 	}
 
 	
@@ -71,15 +88,18 @@ public class FuncaoBean {
 	public String alterar(){
 		if (listaEstaVazia)
 			return null;
-		if (funcaoSelecionada != null)
-			funcao = funcaoSelecionada;
+		prepararParaExibirDados(funcaoSelecionada);
 		tituloOperacao = FuncaoBean.OP_ALTERAR;
+		textoBotaoFecharOuCancelar = FuncaoBean.TXT_BTN_CANCELAR;
+		somenteLeitura = false;
 		return "funcao-prop";
 	}
 	
 	public String novo(){
 		novaFuncao();
 		tituloOperacao = FuncaoBean.OP_NOVA;
+		textoBotaoFecharOuCancelar = FuncaoBean.TXT_BTN_CANCELAR;
+		somenteLeitura = false;
 		return "funcao-prop";
 	}
 	
@@ -144,6 +164,16 @@ public class FuncaoBean {
 		}catch(Exception ex){
 			MsgPrimeFaces.exibirMensagemDeErro(ex.getMessage());
 		}
+	}
+	
+	public String visualizar(){
+		if (listaEstaVazia)
+			return null;
+		prepararParaExibirDados(funcaoSelecionada);
+		tituloOperacao = FuncaoBean.OP_VISUALIZAR;
+		textoBotaoFecharOuCancelar = FuncaoBean.TXT_BTN_FECHAR;
+		somenteLeitura = true;
+		return "funcao-prop";
 	}
 	
 
@@ -211,12 +241,6 @@ public class FuncaoBean {
 	public boolean isListaEstaVazia() {
 		return listaEstaVazia;
 	}
-
-
-
-	public void setListaEstaVazia(boolean listaEstaVazia) {
-		this.listaEstaVazia = listaEstaVazia;
-	}
 	
 	public String carregarPagina(){
 		inicializar();
@@ -233,6 +257,14 @@ public class FuncaoBean {
 
 	public void setTituloOperacao(String tituloOperacao) {
 		this.tituloOperacao = tituloOperacao;
+	}
+
+	public String getTextoBotaoFecharOuCancelar() {
+		return textoBotaoFecharOuCancelar;
+	}
+
+	public boolean isSomenteLeitura() {
+		return somenteLeitura;
 	}
 	
 	

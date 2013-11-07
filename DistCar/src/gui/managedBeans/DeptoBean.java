@@ -43,6 +43,9 @@ public class DeptoBean {
 	private boolean temGestores;
 	private boolean temCentros;
 	private boolean temDeptosSuperiores;
+	private Integer codigoDeptoSuperiorSelecionado;
+	private Integer codigoGestorSelecionado;
+	private Integer codigoCentroSelecionado;
 	
 	
 	
@@ -67,6 +70,9 @@ public class DeptoBean {
 		listaEstaVazia = true;
 		inicializarObjParaPesquisa();
 		departamentoSelecionado = null;
+		codigoDeptoSuperiorSelecionado = null;
+		codigoCentroSelecionado = null;
+		codigoGestorSelecionado = null;
 		tituloOperacao = DeptoBean.OP_VISUALIZAR;
 		textoBotaoFecharOuCancelar = DeptoBean.TXT_BTN_FECHAR;
 		somenteLeitura = true;
@@ -82,13 +88,30 @@ public class DeptoBean {
 		}
 	}
 
-
+	private void prepararParaExibirDados(Departamento obj){
+		departamento = obj;
+		departamento.setCentro(obj.getCentro());
+		departamento.setDepartamentoSuperior(obj.getDepartamentoSuperior());
+		departamento.setGestor(obj.getGestor());
+		departamento.setSituacao(obj.getSituacao());
+		if (obj.getDepartamentoSuperior() != null && obj.getDepartamentoSuperior().getCodigo() != null)
+			codigoDeptoSuperiorSelecionado = obj.getDepartamentoSuperior().getCodigo();
+		else
+			codigoDeptoSuperiorSelecionado = null;
+		if (obj.getGestor() != null && obj.getGestor().getCodigo() != null)
+			codigoGestorSelecionado = obj.getGestor().getCodigo();
+		else
+			codigoGestorSelecionado = null;
+		if (obj.getCentro() != null && obj.getCentro().getCodigo() != null)
+			codigoCentroSelecionado = obj.getCentro().getCodigo();
+		else
+			codigoCentroSelecionado = null;
+	}
+	
 	public String alterar(){
 		if (listaEstaVazia)
 			return null;
-		if (departamentoSelecionado != null)
-			departamento = departamentoSelecionado;
-		iniciarFKdoDepartamentoSeNulo();
+		prepararParaExibirDados(departamentoSelecionado);
 		tituloOperacao = DeptoBean.OP_ALTERAR;
 		textoBotaoFecharOuCancelar = DeptoBean.TXT_BTN_CANCELAR;
 		somenteLeitura = false;
@@ -132,31 +155,24 @@ public class DeptoBean {
 	}
 	
 	public String salvar(){
-		/*
-		musica.setArtista(Fachada.getInstancia().
-				consultarArtistaPorId(artistaSelecionado));
-		if (musica.getCodigo() == null || musica.getCodigo() == 0){
-			musica.setCodigo(null);
-			Fachada.getInstancia().inserirMusica(musica);	
-		} else {
-			Fachada.getInstancia().alterarMusica(musica);
-		} 
-		*/
 		try{
-			//atlzCentroSelecionado();
-			departamento.setCentro(fachada.pegarCentroPorId(departamento.getCentro().getCodigo()));
-			if (departamento.getDepartamentoSuperior().getCodigo() == null 
-					|| departamento.getDepartamentoSuperior().getCodigo() == 0){
+			departamento.setCentro(fachada.pegarCentroPorId(codigoCentroSelecionado));
+			/*if (departamento.getDepartamentoSuperior() == null
+					|| departamento.getDepartamentoSuperior().getCodigo() == null 
+					|| departamento.getDepartamentoSuperior().getCodigo() == 0){*/
+			if (codigoDeptoSuperiorSelecionado == null){
 				departamento.setDepartamentoSuperior(null);
 			}else{
-				departamento.setDepartamentoSuperior(fachada.pegarDepartamentoPorId(departamento.getDepartamentoSuperior().getCodigo()));
+				departamento.setDepartamentoSuperior(fachada.pegarDepartamentoPorId(codigoDeptoSuperiorSelecionado));
 			}
-			if (departamento.getGestor().getCodigo() == null 
-					|| departamento.getGestor().getCodigo() == 0){
+			/*if (departamento.getGestor() == null || departamento.getGestor().getCodigo() == null 
+					|| departamento.getGestor().getCodigo() == 0){*/
+			if (codigoGestorSelecionado ==null){
 				departamento.setGestor(null);
 			}else{
-				departamento.setGestor(fachada.pegarGestorPorId(departamento.getGestor().getCodigo()));
+				departamento.setGestor(fachada.pegarGestorPorId(codigoGestorSelecionado));
 			}
+			
 			if (departamento.getCodigo() == null || departamento.getCodigo() == 0)
 				departamento.setCodigo(null);
 			fachada.salvarDepartamento(departamento);
@@ -170,15 +186,6 @@ public class DeptoBean {
 		return null;
 	}
 	
-	private void atlzCentroSelecionado(){
-		for (Centro c : centros){
-			if (c.getCodigo() == departamento.getCentro().getCodigo()){
-				departamento.setCentro(c);
-				break;
-			}
-		}
-	}
-	
 	public void consultar(){
 		try{
 			atualizarLista(fachada.consultarDepartamento(departamentoParaPesquisa));
@@ -187,22 +194,10 @@ public class DeptoBean {
 		}
 	}
 	
-	private void iniciarFKdoDepartamentoSeNulo(){
-		if (departamento.getCentro() == null)
-			departamento.setCentro(new Centro());
-		if (departamento.getDepartamentoSuperior() == null)
-			departamento.setDepartamentoSuperior(new Departamento());
-		if (departamento.getGestor() == null)
-			departamento.setGestor(new Gestor());
-	}
-	
 	public String visualizar(){
 		if (listaEstaVazia)
 			return null;
-		if (departamentoSelecionado != null){
-			departamento = departamentoSelecionado;
-		iniciarFKdoDepartamentoSeNulo();
-		}
+		prepararParaExibirDados(departamentoSelecionado);
 		tituloOperacao = DeptoBean.OP_VISUALIZAR;
 		textoBotaoFecharOuCancelar = DeptoBean.TXT_BTN_FECHAR;
 		somenteLeitura = true;
@@ -306,6 +301,31 @@ public class DeptoBean {
 
 	public boolean isTemDeptosSuperiores() {
 		return temDeptosSuperiores;
+	}
+
+	public Integer getCodigoDeptoSuperiorSelecionado() {
+		return codigoDeptoSuperiorSelecionado;
+	}
+
+	public void setCodigoDeptoSuperiorSelecionado(
+			Integer codigoDeptoSuperiorSelecionado) {
+		this.codigoDeptoSuperiorSelecionado = codigoDeptoSuperiorSelecionado;
+	}
+
+	public Integer getCodigoGestorSelecionado() {
+		return codigoGestorSelecionado;
+	}
+
+	public void setCodigoGestorSelecionado(Integer codigoGestorSelecionado) {
+		this.codigoGestorSelecionado = codigoGestorSelecionado;
+	}
+
+	public Integer getCodigoCentroSelecionado() {
+		return codigoCentroSelecionado;
+	}
+
+	public void setCodigoCentroSelecionado(Integer codigoCentroSelecionado) {
+		this.codigoCentroSelecionado = codigoCentroSelecionado;
 	}
 	
 	
