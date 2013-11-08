@@ -23,11 +23,11 @@
   			<p:panel id="panelFuncao" header="DistCar - #{centroBean.tituloOperacao}">
   				<h:panelGrid columns="2" cellpadding="5">
   					<h:outputLabel for="alias" value="Alias: *"/>
-  					<h:inputText id="alias" value="#{centroBean.centro.alias}" lable="Alias"
+  					<p:inputText id="alias" value="#{centroBean.centro.alias}" lable="Alias"
   								required="true" requiredMessage="Um alias é obrigatório!" />
   					
   					<h:outputLabel for="nome" value="Nome/Razão social: *"/>
-  					<h:inputText id="nome" value="#{centroBean.centro.dadosPJ.nome}" lable="Nome"
+  					<p:inputText id="nome" value="#{centroBean.centro.dadosPJ.nome}" lable="Nome"
   							required="true" requiredMessage="O nome é obrigatório!" />
   					
   					<h:outputLabel for="cnpj" value="CNPJ: *"/>
@@ -53,7 +53,7 @@
   						effect="explode" pattern="dd/MM/yyyy" />
   					
   					<h:outputLabel for="inscEst" value="Inscrição estadual: *"/>
-  					<h:inputText id="inscEst" value="#{centroBean.centro.dadosPJ.inscricaoEstadual}" lable="Inscrição estadual"
+  					<p:inputText id="inscEst" value="#{centroBean.centro.dadosPJ.inscricaoEstadual}" lable="Inscrição estadual"
   								required="true" requiredMessage="Informe a inscrição estadual. se não tiver digite: ISENTO"/>
   					
   					

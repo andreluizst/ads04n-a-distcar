@@ -60,8 +60,10 @@
   				</h:panelGrid>
 				
 				<p:commandButton value="Novo"    update="panelPesquisa" action="#{funcionarioBean.novo}"/>
-   				<p:commandButton disabled="#{funcionarioBean.listaEstaVazia}" value="Alterar" update="panelPesquisa" action="#{funcionarioBean.alterar}" />
-   				<p:commandButton disabled="#{funcionarioBean.listaEstaVazia}" value="Excluir" update="tbLista" actionListener="#{funcionarioBean.excluir}">
+   				<p:commandButton disabled="#{funcionarioBean.listaEstaVazia}" value="Alterar" 
+   								update="panelPesquisa" action="#{funcionarioBean.alterar}" />
+   				<p:commandButton disabled="#{funcionarioBean.listaEstaVazia}" value="Excluir" 
+   								update="tbLista" actionListener="#{funcionarioBean.excluir}">
    					<p:confirm header="Confirmação" 
    							message="Confirma a exclusão do funcionário selecionado?"
    							icon="ui-icon-alert" />  
@@ -117,7 +119,7 @@
   				<p:column>
   					<f:facet name="header"><h:outputText value="Última atualização"/> </f:facet>
   					<h:outputText value="#{funcionario.dataUltimaAtualizacao.time}">
-  						<f:convertDateTime pattern="dd/MM/yyyy"/>
+  						<f:convertDateTime pattern="dd/MM/yyyy 'às' HH:mm:ss"/>
   					</h:outputText>
   				</p:column>
   				

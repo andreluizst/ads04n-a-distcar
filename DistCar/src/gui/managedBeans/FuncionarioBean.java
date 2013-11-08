@@ -14,7 +14,6 @@ import javax.faces.event.ValueChangeEvent;
 
 import classesBasicas.Cidade;
 import classesBasicas.Departamento;
-import classesBasicas.Endereco;
 import classesBasicas.Escolaridade;
 import classesBasicas.Funcao;
 import classesBasicas.Funcionario;

@@ -14,42 +14,49 @@
 <h:body>
 	<f:view id="viewFuncionario-prop">
 		
+		<p:tooltip/>
+				
 		<h:form id="frmMensagens">
 			<p:messages id="messages" showDetail="true" autoUpdate="true" closable="true"></p:messages>
-			<p:growl id="growl" showDetail="true" sticky="false" globalOnly="true" />
 		</h:form>
 		
   		<h:form id="frmPrincipal">
   			<p:panel id="panelProp" header="DistCar - #{funcionarioBean.tituloOperacao}">
-  				<h:panelGrid columns="2" cellpadding="5">
+  				<h:panelGrid id="grid" columns="3" cellpadding="5">
   					<h:outputLabel for="nome" value="Nome: *"/>
-  					<h:inputText id="nome" value="#{funcionarioBean.funcionario.nome}" lable="Nome"
-  							 size="60" required="true" requiredMessage="Informe o nome do funcionário!" />
+  					<p:inputText id="nome" value="#{funcionarioBean.funcionario.nome}" lable="Nome"
+  							 size="50" required="true" requiredMessage="Informe o nome do funcionário!" />
+  					<p:message for="nome" display="default" />
   					
   					<h:outputLabel for="ctps" value="CTPS: *"/>
-  					<h:inputText id="ctps" value="#{funcionarioBean.funcionario.cpts}" lable="CTPS" size="20"
+  					<p:inputText id="ctps" value="#{funcionarioBean.funcionario.cpts}" lable="CTPS" size="20"
   							converterMessage="Digite apenas números no campo CTPS" 
 							required="true" requiredMessage="Informe o número da carteira profissional (CTPS)!" />
+					<p:message for="ctps" display="icon" />
   					
   					<h:outputLabel for="cpf" value="CPF: *"/>
   					<p:inputMask id="cpf" mask="99.999.999-99" size="20"
   							value="#{funcionarioBean.funcionario.cpf}" lable="CPF"
   							required="true" requiredMessage="Informe o CPF!">
   					</p:inputMask>
+  					<p:message for="cpf" display="default" />
   					
   					<h:outputLabel for="rg" value="RG: *"/>
-  					<h:inputText id="rg" value="#{funcionarioBean.funcionario.rg}" lable="RG" size="20"
+  					<p:inputText id="rg" value="#{funcionarioBean.funcionario.rg}" lable="RG" size="20"
   							converterMessage="Digite apenas números no campo RG" 
 							required="true" requiredMessage="Informe o RG!" />
+  					<p:message for="rg" display="default" />
   					
   					<h:outputLabel for="orgaoExp" value="Orgão expedidor: *"/>
-  					<h:inputText id="orgaoExp" value="#{funcionarioBean.funcionario.orgaoExpedidor}" lable="Orgão expedidor"
+  					<p:inputText id="orgaoExp" value="#{funcionarioBean.funcionario.orgaoExpedidor}" lable="Orgão expedidor"
   							 required="true" requiredMessage="Informe o orgão expedidor do documento de identidade!" />
+  					<p:message for="orgaoExp" display="default" />
   					
   					<h:outputLabel for="data" value="Data de nascimento: *"/>
   					<p:calendar id="data" value="#{funcionarioBean.funcionario.dataNascimento}"
   						effect="explode" pattern="dd/MM/yyyy" 
   						required="true" requiredMessage="Informe a data de nascimento!" />
+  					<p:message for="data" display="deafult" />
   					
   					<h:outputLabel for="cbxEscolaridade" value="Escolaridade: *"/>
   					<p:selectOneMenu id="cbxEscolaridade" value="#{funcionarioBean.codigoEscolaridadeSelecionada}" 
@@ -58,6 +65,7 @@
   						<f:selectItems value="#{funcionarioBean.escolaridades}" var="escolaridade" 
   									itemLabel="#{escolaridade.descricao}" itemValue="#{escolaridade.codigo}"/>
   					</p:selectOneMenu>
+  					<p:message for="cbxEscolaridade" display="default" />
   					
 					<h:outputLabel for="cbxDepto" value="Departamento: *"/>
   					<p:selectOneMenu id="cbxDepto" value="#{funcionarioBean.codigoDepartamentoSelecionado}"
@@ -66,6 +74,7 @@
   						<f:selectItems value="#{funcionarioBean.departamentos}" var="depto" 
   									itemLabel="#{depto.nome}" itemValue="#{depto.codigo}"/>
   					</p:selectOneMenu>
+  					<p:message for="cbxDepto" display="default" />
   					
   					<h:outputLabel for="cbxFuncao" value="Função: *"/>
   					<p:selectOneMenu id="cbxFuncao" value="#{funcionarioBean.codigoFuncaoSelecionada}" required="true">
@@ -73,6 +82,7 @@
   						<f:selectItems value="#{funcionarioBean.funcoes}" var="funcao" 
   									itemLabel="#{funcao}" itemValue="#{funcao.codigo}"/>
   					</p:selectOneMenu>
+  					<p:message for="cbxFuncao" display="default" />
   					
   					<h:outputLabel for="tipoLog" value="Tipo logradouro: *"/>
   					<p:selectOneMenu id="tipoLog" value="#{funcionarioBean.codigoTipoLogradouroSelecionado}"
@@ -81,21 +91,25 @@
   						<f:selectItems value="#{funcionarioBean.tiposLogradouros}" var="tpLog" 
   								itemLabel="#{tpLog.descricao}" itemValue="#{tpLog.codigo}" />
   					</p:selectOneMenu>
+  					<p:message for="tipoLog" display="default" />
   					
   					<h:outputLabel for="logradouro" value="Logradouro: *"/>
   					<p:inputText id="logradouro"  
   								value="#{funcionarioBean.funcionario.endereco.logradouro}" lable="logradouro"
   								required="true" requiredMessage="Informe o logradouro!" />
+  					<p:message for="logradouro" display="default" />
   					
   					<h:outputLabel for="numero" value="Número: *"/>
   					<p:inputText id="numero"  
   								value="#{funcionarioBean.funcionario.endereco.numero}" lable="numero"
   								required="true" requiredMessage="Informe o número do logradouro!" />
+  					<p:message for="numero" display="default" />
   					
   					<h:outputLabel for="bairro" value="Bairro: *"/>
   					<p:inputText id="bairro"  
   								value="#{funcionarioBean.funcionario.endereco.bairro}" lable="Bairro"
   								required="true" requiredMessage="Informe o bairro!" />
+  					<p:message for="bairro" display="default" />
   					
   					<h:outputLabel for="unidadeFederativa" value="UF: *"/>
   					<p:selectOneMenu id="unidadeFederativa" value="#{funcionarioBean.codigoUfSelecionada}" 
@@ -106,6 +120,7 @@
   								itemLabel="#{uf}" itemValue="#{uf.codigo}" />
   						<f:ajax render="cbxCidades" event="valueChange"/>
   					</p:selectOneMenu>
+  					<p:message for="unidadeFederativa" display="default" />
   								
   					<h:outputLabel for="cbxCidades" value="Cidade: *"/>
   					<p:selectOneMenu id="cbxCidades" value="#{funcionarioBean.codigoCidadeSelecionada}"
@@ -114,28 +129,32 @@
   						<f:selectItems value="#{funcionarioBean.cidades}" var="cid" 
   								itemLabel="#{cid}" itemValue="#{cid.codigo}" />
   					</p:selectOneMenu>
+  					<p:message for="cbxCidades" display="default" />
   					
   					<h:outputLabel for="cep" value="CEP: *"/>
   					<p:inputMask id="cep" mask="99999-999" size="12" 
   							value="#{funcionarioBean.funcionario.endereco.cep}" lable="CEP"
   							required="true" requiredMessage="Informe o CEP!">
   					</p:inputMask>
+  					<p:message for="cep" display="default" />
   					
   					<h:outputLabel for="email" value="E-mail: "/>
   					<p:inputText id="email"  
   								value="#{funcionarioBean.funcionario.email}" required="false" lable="E-mail" />
+  					<p:message for="email" display="tooltip" />
   					
   					<h:outputLabel for="situacao" value="Situação: "/>
   					<p:selectOneMenu id="situacao" value="#{funcionarioBean.funcionario.situacao}">
   						<f:selectItem  itemLabel="Selecione uma situação" itemValue="#{null}" />
   						<f:selectItems value="#{funcionarioBean.situacoes}" />
   					</p:selectOneMenu>
+  					<p:message for="situacao" display="tooltip" />
   					
   				</h:panelGrid>
 
   				<p:commandButton value="Salvar" rendered="#{!funcionarioBean.somenteLeitura}" 
   						disabled="#{funcionarioBean.somenteLeitura}" 
-  						update=":frmMensagens:growl" action="#{funcionarioBean.salvar}"/>
+  						update="grid" action="#{funcionarioBean.salvar}"/>
   				
   				<p:commandButton value="#{funcionarioBean.textoBotaoFecharOuCancelar}" 
   								immediate="true" action="funcionario" />
