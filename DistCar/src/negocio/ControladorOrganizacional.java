@@ -171,6 +171,10 @@ public class ControladorOrganizacional {
 		return daoFuncao.consultarTodos();
 	}
 	
+	public Funcao pegarFuncaoPorId(Integer codigo) throws Exception{
+		return daoFuncao.consultarPorId(codigo);
+	}
+	
 	//************************  E S C O L A R I D A D E  ********************************
 	public boolean escolaridadeExiste(Escolaridade escolaridade) throws Exception{
 		Escolaridade obj = null;
@@ -203,6 +207,14 @@ public class ControladorOrganizacional {
 	
 	public List<Escolaridade> consultarEscolaridade(Escolaridade escolaridade) throws Exception{
 		return daoEscolaridade.pesquisar(escolaridade);
+	}
+	
+	public List<Escolaridade> listarEscolaridades(){
+		return daoEscolaridade.consultarTodos();
+	}
+	
+	public Escolaridade pegarEscolaridadePorId(Integer codigo) throws Exception{
+		return daoEscolaridade.consultarPorId(codigo);
 	}
 	
 	
@@ -576,14 +588,7 @@ public class ControladorOrganizacional {
 		
 	//}
 	
-	//****************************  E S C O L A R I D A D E  ****************************
-	public List<Escolaridade> listarEscolaridades(){
-		return daoEscolaridade.consultarTodos();
-	}
-	
-	public Escolaridade pegarEscolaridadePorId(Integer codigo) throws Exception{
-		return daoEscolaridade.consultarPorId(codigo);
-	}
+
 	
 	
 }

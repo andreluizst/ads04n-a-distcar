@@ -27,7 +27,7 @@ public class Fachada implements IFachada {
 	private ControladorOrganizacional ctrlOrg;
 	private ControladorCarro controladorCarro;
 	
-	public Fachada(){
+	private Fachada(){
 		ctrlOrg = new ControladorOrganizacional();
 		this.controladorCarro = new ControladorCarro();
 	}
@@ -70,6 +70,11 @@ public class Fachada implements IFachada {
 		return ctrlOrg.pesquisarFuncao(funcao);
 	}
 	
+	@Override
+	public Funcao pegarFuncaoPorId(Integer codigo) throws Exception{
+		return ctrlOrg.pegarFuncaoPorId(codigo);
+	}
+	
 	//************************  E S C O L A R I D A D E  ********************************
 	@Override
 	public void salvarEscolaridade(Escolaridade escolaridade) throws Exception{
@@ -87,6 +92,16 @@ public class Fachada implements IFachada {
 	@Override
 	public void excluirEscolaridade(Escolaridade escolaridade) throws Exception{
 		ctrlOrg.excluirEscolaridade(escolaridade);
+	}
+	
+	@Override
+	public Escolaridade pegarEscolaridadePorId(Integer codigo) throws Exception{
+		return ctrlOrg.pegarEscolaridadePorId(codigo);
+	}
+	
+	@Override
+	public List<Escolaridade> listarEscolaridades() throws Exception{
+		return ctrlOrg.listarEscolaridades();
 	}
 	
 	

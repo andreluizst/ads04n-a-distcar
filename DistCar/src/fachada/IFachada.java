@@ -21,6 +21,7 @@ public interface IFachada {
 	public List<Funcao> listarFuncoes() throws Exception;
 	public void excluirFuncao(Funcao funcao) throws Exception;
 	public List<Funcao> consultarFuncao(Funcao funcao) throws Exception;
+	public Funcao pegarFuncaoPorId(Integer codigo) throws Exception;
 	
 	//**************************  C E N T R O  **********************************************
 	public void salvarCentro(Centro centro) throws Exception;
@@ -82,6 +83,8 @@ public interface IFachada {
 	public void salvarEscolaridade(Escolaridade escolaridade) throws Exception;
 	public List<Escolaridade> consultarEscolaridade(Escolaridade escolaridade) throws Exception;
 	public void excluirEscolaridade(Escolaridade escolaridade) throws Exception;
+	public Escolaridade pegarEscolaridadePorId(Integer codigo) throws Exception;
+	public List<Escolaridade> listarEscolaridades() throws Exception;
 	
 	//***********************************************************************************
 	//*******************************  V E N D A S  *************************************

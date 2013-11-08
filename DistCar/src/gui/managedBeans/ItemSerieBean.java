@@ -35,7 +35,7 @@ public class ItemSerieBean {
 	
 	@PostConstruct
 	public void init() {
-		f = new Fachada();
+		f = Fachada.obterInstancia();
 		itemSerieCarro = new ItemSerieCarro();
 		itemSerieCarro.setModeloCarro(new ModeloCarro());
 		listarModelo();

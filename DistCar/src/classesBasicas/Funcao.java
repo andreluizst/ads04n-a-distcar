@@ -38,7 +38,7 @@ public class Funcao extends EntidadeBasica {
 
 	@Override
 	public String toString() {
-		return getDescricao() + " = " + salario;
+		return getDescricao() + " [" + salario +"]";
 	}
 
 	@Override

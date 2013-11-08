@@ -19,11 +19,16 @@ public class ObjetoGeralConverter implements Converter {
 	@Override
 	/*public Object getAsObject(FacesContext arg0, UIComponent arg1, String arg2) {
 		// TODO Auto-generated method stub
-		if (arg2 != null) {
-			return this.getAttributesFrom(arg1).get(arg2);
-			}
-			return null;
-			}
+		if(value!=null && !"".equals(value)){
+			Fachada f = Fachada.obterInstancia();
+			System.out.println(value.toString());
+			ModeloCarro m = new ModeloCarro();
+			m = f.pesquisarModeloCarro(Integer.valueOf(value));
+			System.out.println(m.toString());
+			return m;
+		}
+		return null;
+	}
 
 	@Override
 	public String getAsString(FacesContext arg0, UIComponent arg1, Object arg2) {
