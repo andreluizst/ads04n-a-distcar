@@ -4,6 +4,7 @@ import java.util.List;
 
 import negocio.ControladorCarro;
 import negocio.ControladorOrganizacional;
+import classesBasicas.AcessorioCarro;
 import classesBasicas.Carro;
 import classesBasicas.Centro;
 import classesBasicas.Cidade;
@@ -411,6 +412,7 @@ public class Fachada implements IFachada {
 		return null;
 	}
 
+	//Item Série Carro
 	@Override
 	public ItemSerieCarro pesquisarItem(int codigo) {
 		return this.controladorCarro.pesquisarItem(codigo);
@@ -437,6 +439,36 @@ public class Fachada implements IFachada {
 	@Override
 	public List<ItemSerieCarro> pesquisarPorModelo(Integer codigo) {
 		return this.controladorCarro.pesquisarPorModelo(codigo);
+	}
+
+	//Acessório
+	@Override
+	public List<AcessorioCarro> listarAcessorio() {
+		return this.controladorCarro.listarAcessorio();
+	}
+
+	@Override
+	public void salvarAcessorio(AcessorioCarro acessorio) {
+		this.controladorCarro.inserir(acessorio);
+		
+	}
+
+	@Override
+	public AcessorioCarro pesquisarAcessorioCarro(int codigo) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void removerAcessorio(AcessorioCarro acessorio) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public List<AcessorioCarro> pesquisarAcessorio(AcessorioCarro acessorio) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 

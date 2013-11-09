@@ -5,12 +5,12 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 
-import org.primefaces.expression.impl.ThisExpressionResolver;
 
-import java.util.Map;
+
+
 
 import classesBasicas.ModeloCarro;
-import classesBasicas.ObjetoGeral;
+
 import fachada.Fachada;
 
 @FacesConverter(value="objetoGeralConverter",forClass=ModeloCarro.class)
@@ -58,7 +58,7 @@ public class ObjetoGeralConverter implements Converter {
 	 public Object getAsObject(FacesContext context, UIComponent component, String value)  {  
         
      
-            if (value == null || value.equalsIgnoreCase("-1"))   
+            if (value == null)   
                 return null;  
             Integer id = new Integer(value);              
             return Fachada.obterInstancia().pesquisarModeloCarro(id);  

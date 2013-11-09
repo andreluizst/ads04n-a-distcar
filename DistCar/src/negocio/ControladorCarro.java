@@ -2,14 +2,17 @@ package negocio;
 
 import java.util.List;
 
+import classesBasicas.AcessorioCarro;
 import classesBasicas.Carro;
 import classesBasicas.ItemSerieCarro;
 import classesBasicas.ModeloCarro;
 import classesBasicas.VersaoCarro;
+import dao.DAOAcessorio;
 import dao.DAOCarro;
 import dao.DAOItemSerieCarro;
 import dao.DAOModeloCarro;
 import dao.DAOVersaoModeloCarro;
+import dao.IDAOAcessorio;
 import dao.IDAOCarro;
 import dao.IDAOItemSerieCarro;
 import dao.IDAOModeloCarro;
@@ -21,6 +24,7 @@ public class ControladorCarro {
 	private IDAOItemSerieCarro itemSerieCarroDAO;
 	private IDAOVersaoModeloCarro versaoModeloCarroDAO;
 	private IDAOModeloCarro modeloCarroDAO;
+	private IDAOAcessorio acessorioDAO;
 	
 	public ControladorCarro(){
 		super();
@@ -28,6 +32,7 @@ public class ControladorCarro {
 		this.carroDAO = new DAOCarro();
 		this.versaoModeloCarroDAO = new DAOVersaoModeloCarro();
 		this.modeloCarroDAO = new DAOModeloCarro();
+		this.acessorioDAO = new DAOAcessorio();
 		
 	}
 	//Carro
@@ -117,6 +122,29 @@ public class ControladorCarro {
 	}
 	//Acessório Carro
 	
+
+	public List<AcessorioCarro> listarAcessorio() {
+		return acessorioDAO.consultarTodos();
+	}
+
+	public void inserir(AcessorioCarro acessorio) {
+		acessorioDAO.inserir(acessorio);
+		
+	}
+
+	public AcessorioCarro pesquisarAcessorioCarro(int codigo) {
+		return acessorioDAO.consultarPorId(codigo);
+	}
+
+
+	public void removerAcessorio(AcessorioCarro acessorio) {
+		acessorioDAO.remover(acessorio);
+		
+	}
+
+	public List<AcessorioCarro> pesquisarAcessorio(AcessorioCarro acessorio) {
+		return acessorioDAO.pesquisar(acessorio);
+	}
 
 
 }

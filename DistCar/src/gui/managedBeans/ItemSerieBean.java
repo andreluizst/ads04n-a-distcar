@@ -23,16 +23,27 @@ public class ItemSerieBean {
 
 	private ItemSerieCarro itemSerieCarro;
 	private List<ModeloCarro> modeloCarros;
-	private int codigoSelecionado;
 	public String mensagem;
-	public ModeloCarro modelo;
 	private Date data;
 	private List<ItemSerieCarro> listaItens;
 	private ItemSerieCarro itemSelecionado;
 	private Fachada f;
 	private ItemSerieCarro situacaoSelecionada;
 	private Situacao[] situacoes = Situacao.values();
+	private int codigoSelecionado;
 	
+	
+	
+	public int getCodigoSelecionado() {
+		return codigoSelecionado;
+	}
+
+
+	public void setCodigoSelecionado(int codigoSelecionado) {
+		this.codigoSelecionado = codigoSelecionado;
+	}
+
+
 	@PostConstruct
 	public void init() {
 		f = Fachada.obterInstancia();
@@ -41,22 +52,7 @@ public class ItemSerieBean {
 		listarModelo();
 		data = Calendar.getInstance().getTime();
 		listarItens();
-		codigoSelecionado=0;
-		System.out.println(codigoSelecionado);
 	}
-
-	
-	
-	public ModeloCarro getModelo() {
-		return modelo;
-	}
-
-
-
-	public void setModelo(ModeloCarro modelo) {
-		this.modelo = modelo;
-	}
-
 
 
 	public ItemSerieCarro getSituacaoSelecionada() {
@@ -110,14 +106,6 @@ public class ItemSerieBean {
 		this.modeloCarros = modeloCarros;
 	}
 
-	public int getCodigoSelecionado() {
-		return codigoSelecionado;
-	}
-
-	public void setCodigoSelecionado(int codigoSelecionado) {
-		this.codigoSelecionado = codigoSelecionado;
-	}
-
 	public String getMensagem() {
 		return mensagem;
 	}
@@ -149,10 +137,6 @@ public class ItemSerieBean {
 	
 	public String salvar() throws Exception {
 		
-		//System.out.println(itemSerieCarro.toString());
-		//Adicionar os setSituação e setDataAtualizacao na regra de negocio;
-		//itemSerieCarro.setSituacao(situacaoSelecionada);
-		itemSerieCarro.setModeloCarro(f.pesquisarModeloCarro(codigoSelecionado));
 		itemSerieCarro.setDataUltimaAtualizacao(Calendar.getInstance());
 		f.salvarItemSerie(itemSerieCarro);
 		MsgPrimeFaces.exibirMensagemInfomativa("Item Séria salvo com sucesso!");
@@ -181,7 +165,6 @@ public class ItemSerieBean {
 			MsgPrimeFaces.exibirMensagemInfomativa("Selecione um item para exclusão!");
 		}
 		else{
-		//itemSerieCarro = f.pesquisarItem(itemSelecionado.getCodigo());
 		f.removerItem(itemSelecionado);
 		MsgPrimeFaces.exibirMensagemInfomativa("Item Excluído com sucesso!");
 		consulta();
@@ -192,15 +175,7 @@ public class ItemSerieBean {
 		listaItens = f.listarItem();
 	}
 	
-	public void Alterar(ItemSerieCarro itemSerieCarro) throws Exception{
-		
-		f.alterarItem(itemSerieCarro);
-		MsgPrimeFaces.exibirMensagemInfomativa("Item Série alterado com sucesso!");
-		this.itemSerieCarro = new ItemSerieCarro();
-		init();
-	}
-	
-	  /* public void onEdit(RowEditEvent event) throws Exception {  
+		  /* public void onEdit(RowEditEvent event) throws Exception {  
 		   
 		   ItemSerieCarro i = (ItemSerieCarro) event.getObject();
 		   itemSerieCarro = Fachada.obterInstancia().pesquisarItem(i.getCodigo());
@@ -215,7 +190,6 @@ public class ItemSerieBean {
 	    } */
 	    public String novo(){
 	    	itemSerieCarro = new ItemSerieCarro();
-	    	codigoSelecionado=0;
 			return "novoItem";
 		}           
 	    
@@ -225,24 +199,24 @@ public class ItemSerieBean {
 	    		return "item";
 	    	}
 	    	else{
-	    	codigoSelecionado = itemSelecionado.getCodigo();
 	    	itemSerieCarro = itemSelecionado;
-	    	return "novoItem";
+	    	itemSerieCarro.setModeloCarro(Fachada.obterInstancia().pesquisarModeloCarro(itemSelecionado.getModeloCarro().getCodigo()));
+	    	return "item-prop";
 	    	}
 	    }
 	    
-	    /*public String cancelar(){
+	    public String cancelar(){
 	    	itemSerieCarro = new ItemSerieCarro();
-	    	consulta();
+	    	itemSelecionado = null;
 	    	return "item";
-	    }   */
+	    }  
 	    
 	    public String consultar(){
 	    	
-	    	 itemSerieCarro.setModeloCarro(f.pesquisarModeloCarro(codigoSelecionado));
-		 	 listaItens = f.pesquisarItens(this.itemSerieCarro);
+	    	 itemSerieCarro.setModeloCarro(Fachada.obterInstancia().pesquisarModeloCarro(itemSerieCarro.getModeloCarro().getCodigo()));
+		 	 listaItens = Fachada.obterInstancia().pesquisarItens(itemSerieCarro);
 			 itemSerieCarro = new ItemSerieCarro();  
-			 codigoSelecionado=0;
+
 			 return  "item";
 	    }
 	    

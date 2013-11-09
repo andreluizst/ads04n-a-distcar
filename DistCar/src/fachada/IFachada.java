@@ -139,7 +139,12 @@ public interface IFachada {
 		
 	//Acessório
 	
-	
+		public List<AcessorioCarro> listarAcessorio();
+		public void salvarAcessorio(AcessorioCarro acessorio);
+		public AcessorioCarro pesquisarAcessorioCarro(int codigo);
+		public void removerAcessorio(AcessorioCarro acessorio);
+		public List<AcessorioCarro> pesquisarAcessorio(AcessorioCarro acessorio);
+		
 
 
 
