@@ -156,7 +156,7 @@ public class EscolaridadeBean {
 	
 	public String carregarPagina(){
 		inicializar();
-		return "escolaridade";
+		return "escolaridade.xhtml?faces-redirect=true";
 	}
 	
 	

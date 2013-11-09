@@ -51,8 +51,8 @@ public interface IFachada {
 	
 	//************************  T I P O   G E R E N C I A  **********************************
 	public void salvarTipoGerencia(TipoGerencia tipoGerencia) throws Exception;
-	public void excluirGerencia(TipoGerencia tipoGerencia) throws Exception;
-	public List<TipoGerencia> consultarGerencia(TipoGerencia tipoGerencia) throws Exception;
+	public void excluirTipoGerencia(TipoGerencia tipoGerencia) throws Exception;
+	public List<TipoGerencia> consultarTipoGerencia(TipoGerencia tipoGerencia) throws Exception;
 	public List<TipoGerencia> listarTiposGerencia() throws Exception;
 	
 	

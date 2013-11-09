@@ -244,7 +244,7 @@ public class FuncaoBean {
 	
 	public String carregarPagina(){
 		inicializar();
-		return "funcao";
+		return "funcao.xhtml?faces-redirect=true";
 	}
 
 

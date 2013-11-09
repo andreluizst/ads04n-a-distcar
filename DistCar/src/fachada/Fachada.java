@@ -223,12 +223,12 @@ public class Fachada implements IFachada {
 	}
 	
 	@Override
-	public void excluirGerencia(TipoGerencia tipoGerencia) throws Exception{
+	public void excluirTipoGerencia(TipoGerencia tipoGerencia) throws Exception{
 		ctrlOrg.removerTipoGerencia(tipoGerencia);
 	}
 	
 	@Override
-	public List<TipoGerencia> consultarGerencia(TipoGerencia tipoGerencia) throws Exception{
+	public List<TipoGerencia> consultarTipoGerencia(TipoGerencia tipoGerencia) throws Exception{
 		return ctrlOrg.listarTiposGerencia();
 	}
 	

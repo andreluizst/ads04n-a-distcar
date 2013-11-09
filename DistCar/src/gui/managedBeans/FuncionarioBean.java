@@ -274,7 +274,7 @@ public class FuncionarioBean {
 	
 	public String carregarPagina(){
 		inicializar();
-		return "funcionario";
+		return "funcionario.xhtml?faces-redirect=true";
 	}
 	
 	public void filtrarCidades(ValueChangeEvent evento){

@@ -27,7 +27,7 @@
   			<p:panel id="panelFuncao" header="DistCar - Função">
   				<f:facet name="header">
   					<h:panelGrid columns="2">
-  						<p:commandLink action="index.xhtml?faces-redirect=true">
+  						<p:commandLink action="index.xhtml">
   							<p:graphicImage value="/resources/images/home-02.jpg" height="35px" width="35px" />
   						</p:commandLink>
   						<h:outputText value="DisctCar 1.0 - Função" />
@@ -49,17 +49,15 @@
   					
   				</h:panelGrid>
 				
-				<p:commandButton id="btnNovo" value="Novo"    update="panelFuncao" action="#{funcaoBean.novo}"/>
-   				<p:commandButton id="btnAlterar" disabled="#{funcaoBean.listaEstaVazia}" value="Alterar" 
-   						update="panelFuncao" action="#{funcaoBean.alterar}" />
-   				<p:commandButton id="btnExcluir" disabled="#{funcaoBean.listaEstaVazia}" value="Excluir" update="tbFuncoes" actionListener="#{funcaoBean.excluir}">
+				<p:commandButton value="Novo"    update="panelFuncao" action="#{funcaoBean.novo}"/>
+   				<p:commandButton disabled="#{funcaoBean.listaEstaVazia}" value="Alterar" update="panelFuncao" action="#{funcaoBean.alterar}" />
+   				<p:commandButton disabled="#{funcaoBean.listaEstaVazia}" value="Excluir" update="tbFuncoes" actionListener="#{funcaoBean.excluir}">
    					<p:confirm header="Confirmação" 
    							message="Confirma a exclusão da função selecionada?"
    							icon="ui-icon-alert" />  
    				</p:commandButton>
 
-  				<p:commandButton value="Consultar"  update="frmFuncao" 
-  						actionListener="#{funcaoBean.consultar}"/>
+  				<p:commandButton value="Consultar"  update="frmFuncao" actionListener="#{funcaoBean.consultar}"/>
   				<p:commandButton disabled="#{funcaoBean.listaEstaVazia}" value="Detalhes" update="panelFuncao" action="#{funcaoBean.visualizar}" />
   				<p:commandButton value="Limpar"  update="frmFuncao" actionListener="#{funcaoBean.limpar}"/>
   				
@@ -94,7 +92,7 @@
   				</p:column>
   				
   				<f:facet name="footer">  
-  					Rodapé
+ 					
         		</f:facet> 
   			</p:dataTable>
     		

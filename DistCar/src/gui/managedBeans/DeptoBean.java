@@ -220,7 +220,7 @@ public class DeptoBean {
 	
 	public String carregarPagina(){
 		inicializar();
-		return "departamento";
+		return "departamento.xhtml?faces-redirect=true";
 	}
 
 	public Departamento getDepartamento() {

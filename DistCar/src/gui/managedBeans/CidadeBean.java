@@ -173,7 +173,7 @@ public class CidadeBean {
 	
 	public String carregarPagina(){
 		inicializar();
-		return "cidade";
+		return "cidade.xhtml?faces-redirect=true";
 	}
 	
 	//*** GETs e SETs

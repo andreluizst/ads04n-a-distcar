@@ -209,7 +209,7 @@ public class CentroBean {
 	
 	public String carregarPagina(){
 		inicializar();
-		return "centro";
+		return "centro.xhtml?faces-redirect=true";
 	}
 
 	public Centro getCentro() {
