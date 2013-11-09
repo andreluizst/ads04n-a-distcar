@@ -5,7 +5,7 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:p="http://primefaces.org/ui">
 <h:head>
-	<title>Acessório_de_Carro</title>
+	<title>Versão_Carro</title>
 </h:head>
 <h:body>
 	<f:view id="View">
@@ -25,7 +25,7 @@
 					styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
 			</p:confirmDialog>
 
-			<p:panel id="panel" header="DistCar - Acessório"
+			<p:panel id="panel" header="DistCar - Versão Carro"
 				style="margin-bottom:10px;">
 
 				<f:facet name="header">
@@ -34,7 +34,7 @@
 							<p:graphicImage value="/resources/images/home-02.jpg"
 								height="35px" width="35px" />
 						</p:commandLink>
-						<h:outputText value="DisctCar 1.0 -  Acessório" />
+						<h:outputText value="DisctCar 1.0 -  Versão Carro" />
 					</h:panelGrid>
 				</f:facet>
 				
@@ -42,20 +42,20 @@
 
 					<h:outputLabel for="descricao" value="Descricão: *" />
 					<p:inputText id="descricao"
-						value="#{acessorioBean.acessorio.descricao}"  required="false"
+						value="#{versaoBean.versaoCarro.descricao}"  required="false"
 						label="Descricão" requiredMessage="Nome obrigatório: *" />
 					<p:message for="descricao" />
 						
 					<h:outputLabel for="valor" value="Valor: *" />
 					<p:inputText id="valor" required="false"
 						converterMessage="Digite um número decimal no formato 999.00"
-						value="#{acessorioBean.acessorio.valor}"
+						value="#{versaoBean.versaoCarro.valor}"
 						requerid="false" label="Valor" />
 					<p:message for="valor" />
 
 						<h:outputLabel for="modelo" value="Modelo: * " />
 					<h:selectOneMenu id="modelo" converter="objetoGeralConverter"
-						value="#{acessorioBean.acessorio.modeloCarro}" >
+						value="#{versaoBean.versaoCarro.modeloCarro}" >
 						<f:selectItem noSelectionOption="true"
 							itemLabel="Selecione o Modelo" itemValue="-1"/>
 						<f:selectItems value="#{acessorioBean.modeloCarros}" var="ac"
@@ -64,51 +64,51 @@
 					<p:message for="modelo" />
 					
 					<h:outputLabel for="situacao" value="Situação: "/>
-  					<p:selectOneMenu id="situacao" value="#{acessorioBean.acessorio.situacao}" >
+  					<p:selectOneMenu id="situacao" value="#{versaoBean.versaoCarro.situacao}" >
   						<f:selectItem itemLabel="Selecione uma opção" itemValue="" />
-  						<f:selectItems value="#{acessorioBean.situacoes}" />
+  						<f:selectItems value="#{versaoBean.situacoes}" />
   					</p:selectOneMenu>
 					<p:message for="situacao" />
 				</h:panelGrid> 
 				
 				
 			<p:commandButton value="Consultar" update="form"
-					action="#{acessorioBean.consultar}" />	
+					action="#{versaoBean.consultar}" />	
 				
 				<p:commandButton value="Novo" update="form" immediate="true"
-					action="#{acessorioBean.novo}" />
+					action="#{versaoBean.novo}" />
 				<p:commandButton value="Alterar" update="panel"
-					action="#{acessorioBean.alterar}"  />
+					action="#{versaoBean.alterar}"  />
 				<p:commandButton value="Excluir" update="form"
-					action="#{acessorioBean.excluir}" >
+					action="#{versaoBean.excluir}" >
 					<p:confirm header="Confirmação"
 						message="Confirma a exclusão da função selecionada?"
 						icon="ui-icon-alert" />
 				</p:commandButton>
 				<p:commandButton value="Fechar" update="panel"
-					action="#{acessorioBean.excluir}" />
+					action="#{versaoBean.excluir}" />
 			</p:panel>
-			<p:dataTable  id="TBacessorio" var="acessorio" 
-				value="#{acessorioBean.listaAcessorios}"  paginator="true" rows="5"
+			<p:dataTable  id="TBversao" var="versao" 
+				value="#{versaoBean.listarVersoes}"  paginator="true" rows="5"
 				paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
 				rowsPerPageTemplate="5,10,15"
-				selection="#{acessorioBean.acessorioSelecionado}" selectionMode="single"
-				rowKey="#{acessorio}">
+				selection="#{versaoBean.versaoSelecionada}" selectionMode="single"
+				rowKey="#{versao}">
 				<f:facet name="header">
-           	 		Acessórios Carros
+           	 		Versões Carros
         		</f:facet>
 
 				<p:column width="8" style="text-align: center;">
 					<f:facet name="header">
 						<h:outputText value="Codigo" />
 					</f:facet>
-					<h:outputText value="#{acessorio.codigo}" />
+					<h:outputText value="#{versao.codigo}" />
 				</p:column>
 				<p:column width="8" style="text-align: center;">
 					<f:facet name="header">
 						<h:outputText value="Descrição" />
 					</f:facet>
-					<h:outputText value="#{acessorio.descricao}" />
+					<h:outputText value="#{versao.descricao}" />
 				</p:column>
 
 				<p:column width="8" style="text-align: center;">
@@ -116,28 +116,28 @@
 						<h:outputText value="Modelo" />
 					</f:facet>
 					<h:outputText 
-						value="#{acessorio.modeloCarro.descricao} #{acessorio.modeloCarro.ano}"/>
+						value="#{versao.modeloCarro.descricao} #{versao.modeloCarro.ano}"/>
 				</p:column>
 
 				<p:column width="5" style="text-align: center;">
 					<f:facet name="header">
 						<h:outputText value="Valor" />
 					</f:facet>
-					<h:outputText value="#{acessorio.valor}" />
+					<h:outputText value="#{versao.valor}" />
 				</p:column>
 
 				<p:column width="5" style="text-align: center;">
 					<f:facet name="header">
 						<h:outputText value="Situação" />
 					</f:facet>
-					<h:outputText value="#{acessorio.situacao}" />
+					<h:outputText value="#{versao.situacao}" />
 				</p:column>
 
 				<p:column width="5" style="text-align: center;">
 					<f:facet name="header">
 						<h:outputText value="Data da Atualização" />
 					</f:facet>
-					<h:outputText value="#{acessorio.dataUltimaAtualizacao.time}">
+					<h:outputText value="#{versao.dataUltimaAtualizacao.time}">
 						<f:convertDateTime pattern="dd/MM/yyyy HH:MM"></f:convertDateTime>
 					</h:outputText>
 				</p:column> 

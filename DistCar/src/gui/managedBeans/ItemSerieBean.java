@@ -27,7 +27,6 @@ public class ItemSerieBean {
 	private Date data;
 	private List<ItemSerieCarro> listaItens;
 	private ItemSerieCarro itemSelecionado;
-	private Fachada f;
 	private ItemSerieCarro situacaoSelecionada;
 	private Situacao[] situacoes = Situacao.values();
 	private int codigoSelecionado;
@@ -46,7 +45,6 @@ public class ItemSerieBean {
 
 	@PostConstruct
 	public void init() {
-		f = Fachada.obterInstancia();
 		itemSerieCarro = new ItemSerieCarro();
 		itemSerieCarro.setModeloCarro(new ModeloCarro());
 		listarModelo();
@@ -131,14 +129,14 @@ public class ItemSerieBean {
 	}
 
 	private List<ItemSerieCarro> listarItens() {  
-      listaItens = Fachada.obterInstancia().listarItem();
+      listaItens = Fachada.obterInstancia().listarItens();
       return listaItens;
       } 
 	
 	public String salvar() throws Exception {
 		
 		itemSerieCarro.setDataUltimaAtualizacao(Calendar.getInstance());
-		f.salvarItemSerie(itemSerieCarro);
+		Fachada.obterInstancia().salvarItemSerie(itemSerieCarro);
 		MsgPrimeFaces.exibirMensagemInfomativa("Item Séria salvo com sucesso!");
 		init();
 		return "item";
@@ -146,12 +144,12 @@ public class ItemSerieBean {
 	}
 		
 	public void listar(){
-		listaItens = Fachada.obterInstancia().listarItem();
+		listaItens = Fachada.obterInstancia().listarItens();
 	}
 		
 	public List<ModeloCarro> listarModelo() {
 		try {
-			modeloCarros = f.listarModelo();
+			modeloCarros = Fachada.obterInstancia().listarModelosCarros();
 			return modeloCarros;
 		} catch (Exception ex) {
 			mensagem = ex.getMessage();
@@ -165,14 +163,14 @@ public class ItemSerieBean {
 			MsgPrimeFaces.exibirMensagemInfomativa("Selecione um item para exclusão!");
 		}
 		else{
-		f.removerItem(itemSelecionado);
+		Fachada.obterInstancia().removerItem(itemSelecionado);
 		MsgPrimeFaces.exibirMensagemInfomativa("Item Excluído com sucesso!");
 		consulta();
 		}
 	}
 	
 	public void consulta(){
-		listaItens = f.listarItem();
+		listaItens = Fachada.obterInstancia().listarItens();
 	}
 	
 		  /* public void onEdit(RowEditEvent event) throws Exception {  
@@ -200,7 +198,7 @@ public class ItemSerieBean {
 	    	}
 	    	else{
 	    	itemSerieCarro = itemSelecionado;
-	    	itemSerieCarro.setModeloCarro(Fachada.obterInstancia().pesquisarModeloCarro(itemSelecionado.getModeloCarro().getCodigo()));
+	    	itemSerieCarro.setModeloCarro(Fachada.obterInstancia().pesquisarModelosCarroCodigo(itemSelecionado.getModeloCarro().getCodigo()));
 	    	return "item-prop";
 	    	}
 	    }
@@ -212,11 +210,9 @@ public class ItemSerieBean {
 	    }  
 	    
 	    public String consultar(){
-	    	
-	    	 itemSerieCarro.setModeloCarro(Fachada.obterInstancia().pesquisarModeloCarro(itemSerieCarro.getModeloCarro().getCodigo()));
-		 	 listaItens = Fachada.obterInstancia().pesquisarItens(itemSerieCarro);
+	  
+		 	 listaItens = Fachada.obterInstancia().consultarItens(itemSerieCarro);
 			 itemSerieCarro = new ItemSerieCarro();  
-
 			 return  "item";
 	    }
 	    

@@ -61,7 +61,7 @@ public class ObjetoGeralConverter implements Converter {
             if (value == null)   
                 return null;  
             Integer id = new Integer(value);              
-            return Fachada.obterInstancia().pesquisarModeloCarro(id);  
+            return Fachada.obterInstancia().pesquisarModelosCarroCodigo(id);  
               
        
     }  

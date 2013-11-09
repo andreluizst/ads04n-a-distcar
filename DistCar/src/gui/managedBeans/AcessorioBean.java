@@ -16,19 +16,18 @@ import gui.MsgPrimeFaces;
 @SessionScoped
 public class AcessorioBean {
 	
-	private AcessorioCarro acessorio;
+	private AcessorioCarro acessorioCarro;
 	private List<ModeloCarro> modeloCarros;
 	private List<AcessorioCarro> listaAcessorios;
 	private AcessorioCarro acessorioSelecionado;
-	private Fachada f;
 	private AcessorioCarro situacaoSelecionada;
 	private Situacao[] situacoes = Situacao.values();
 	
-	public AcessorioCarro getAcessorio() {
-		return acessorio;
+	public AcessorioCarro getAcessorioCarro() {
+		return acessorioCarro;
 	}
-	public void setAcessorio(AcessorioCarro acessorio) {
-		this.acessorio = acessorio;
+	public void setAcessorioCarro(AcessorioCarro acessorioCarro) {
+		this.acessorioCarro = acessorioCarro;
 	}
 	public List<ModeloCarro> getModeloCarros() {
 		return modeloCarros;
@@ -64,8 +63,7 @@ public class AcessorioBean {
 	}
 	@PostConstruct
 	public void init() {
-		f = Fachada.obterInstancia();
-		acessorio = new AcessorioCarro();
+		acessorioCarro = new AcessorioCarro();
 		listarModelo();
 		listarAcessorios();
 	}
@@ -76,14 +74,14 @@ public class AcessorioBean {
 
 
 	private List<AcessorioCarro> listarAcessorios() {  
-      listaAcessorios = Fachada.obterInstancia().listarAcessorio();
+      listaAcessorios = Fachada.obterInstancia().listarAcessorios();
       return listaAcessorios;
       } 
 	
 	public String salvar() throws Exception {
 		
-		acessorio.setDataUltimaAtualizacao(Calendar.getInstance());
-		f.salvarAcessorio(acessorio);
+		acessorioCarro.setDataUltimaAtualizacao(Calendar.getInstance());
+		Fachada.obterInstancia().salvarAcessorio(acessorioCarro);
 		MsgPrimeFaces.exibirMensagemInfomativa("Item Séria salvo com sucesso!");
 		init();
 		return "acessorio";
@@ -91,12 +89,12 @@ public class AcessorioBean {
 	}
 		
 	public void listar(){
-		listaAcessorios = Fachada.obterInstancia().listarAcessorio();
+		listaAcessorios = Fachada.obterInstancia().listarAcessorios();
 	}
 		
 	public List<ModeloCarro> listarModelo() {
 		try {
-			modeloCarros = f.listarModelo();
+			modeloCarros = Fachada.obterInstancia().listarModelosCarros();
 			return modeloCarros;
 		} catch (Exception ex) {
 			MsgPrimeFaces.exibirMensagemInfomativa( ex.getMessage());
@@ -110,7 +108,7 @@ public class AcessorioBean {
 			MsgPrimeFaces.exibirMensagemInfomativa("Selecione um acessório para exclusão!");
 		}
 		else{
-		f.removerAcessorio(acessorio);
+		Fachada.obterInstancia().removerAcessorio(acessorioSelecionado);
 		MsgPrimeFaces.exibirMensagemInfomativa("Acessório Excluído com sucesso!");
 		consulta();
 		}
@@ -121,7 +119,7 @@ public class AcessorioBean {
 	}
 	
 	    public String novo(){
-	    	acessorio = new AcessorioCarro();
+	    	acessorioCarro = new AcessorioCarro();
 			return "acessorio-prop";
 		}           
 	    
@@ -131,23 +129,22 @@ public class AcessorioBean {
 	    		return "acessorio";
 	    	}
 	    	else{
-	    	acessorio = acessorioSelecionado;
-	    	acessorio.setModeloCarro(Fachada.obterInstancia().pesquisarModeloCarro(acessorioSelecionado.getModeloCarro().getCodigo()));
+	    	acessorioCarro = acessorioSelecionado;
+	    	acessorioCarro.setModeloCarro(Fachada.obterInstancia().pesquisarModelosCarroCodigo(acessorioSelecionado.getModeloCarro().getCodigo()));
 	    	return "acessorio-prop";
 	    	}
 	    }
 	    
 	    public String cancelar(){
-	    	acessorio = new AcessorioCarro();
+	    	acessorioCarro = new AcessorioCarro();
 	    	acessorioSelecionado = null;
 	    	return "acessorio";
 	    }  
 	    
 	    public String consultar(){
 	    	
-		 	 listaAcessorios = Fachada.obterInstancia().pesquisarAcessorio(acessorio);
-			 acessorio= new AcessorioCarro();  
-
+		 	 listaAcessorios = Fachada.obterInstancia().consultarAcessorios(acessorioCarro);
+			 acessorioCarro= new AcessorioCarro();  
 			 return  "acessorio";
 	    }
 	    

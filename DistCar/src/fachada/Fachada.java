@@ -15,6 +15,7 @@ import classesBasicas.Funcao;
 import classesBasicas.Funcionario;
 import classesBasicas.Gestor;
 import classesBasicas.ItemSerieCarro;
+import classesBasicas.MarcaCarro;
 import classesBasicas.ModeloCarro;
 import classesBasicas.Pessoa;
 import classesBasicas.PessoaJuridica;
@@ -318,51 +319,6 @@ public class Fachada implements IFachada {
 	//********************* F I M   C R U D    Organizacional ***************************
 	//***********************************************************************************
 
-	//Carro - Felipe Carlos
-	
-	@Override
-	public void salvarCarro(Carro carro) throws Exception {
-		// TODO Auto-generated method stub
-		this.controladorCarro.inserir(carro);
-	}
-
-	@Override
-	public void salvarItemSerie(ItemSerieCarro itemSerieCarro) throws Exception {
-		// TODO Auto-generated method stub
-		this.controladorCarro.inserir(itemSerieCarro);
-	}
-
-	@Override
-	public void salvarModeloCarro(ModeloCarro modeloCarro) throws Exception {
-		// TODO Auto-generated method stub
-		this.controladorCarro.inserir(modeloCarro);
-	}
-
-	@Override
-	public List<VersaoCarro> listarVersao() throws Exception {
-		return this.controladorCarro.consultarTodasVersao();
-	}
-	
-	public List<ModeloCarro> listarModelo() throws Exception {
-		return this.controladorCarro.consultarTodosModelos();
-	}
-
-	@Override
-	public VersaoCarro pesquisarVersao(int codigo) {
-		return this.controladorCarro.pesquisarVersao(codigo);
-	}
-
-	@Override
-	public ModeloCarro pesquisarModeloCarro(int codigo) {
-		return this.controladorCarro.pesquisarModeloCarro(codigo);
-	}
-
-	@Override
-	public List<ItemSerieCarro> listarItem() {
-		// TODO Auto-generated method stub
-		return this.controladorCarro.listarItem();
-	}
-
 	@Override
 	public void salvarCliente(Pessoa cliente) throws Exception {
 		// TODO Auto-generated method stub
@@ -412,64 +368,169 @@ public class Fachada implements IFachada {
 		return null;
 	}
 
-	//Item Série Carro
+
+	//Controlador Carro - Felipe Carlos
+	
+	//Carrp
 	@Override
-	public ItemSerieCarro pesquisarItem(int codigo) {
-		return this.controladorCarro.pesquisarItem(codigo);
+	public void salvarCarro(Carro carro) {
+		this.controladorCarro.inserir(carro);
+	}
+
+	@Override
+	public void removerCarro(Carro carro) {
+		this.controladorCarro.remover(carro);
+	}
+
+	@Override
+	public List<Carro> listarCarros() {
+		return this.controladorCarro.listarCarros();
+	}
+
+	@Override
+	public Carro pesquisarCarroCodigo(int codigo) {
+		return this.controladorCarro.pesquisarCarro(codigo);
+	}
+
+	@Override
+	public List<Carro> consultarCarros(Carro carro) {
+		return this.controladorCarro.pesquisarCarros(carro);
+	}
+
+	//Marca
+	
+	@Override
+	public void salvarMarcaCarro(MarcaCarro marcaCarro) {
+		this.controladorCarro.inserir(marcaCarro);
+	}
+
+	@Override
+	public void removerMarcaCarro(MarcaCarro marcaCarro) {
+		this.controladorCarro.removerMarca(marcaCarro);
+	}
+
+	@Override
+	public List<MarcaCarro> listarMarcasCarros() {
+		return this.controladorCarro.listarMarcas();
+	}
+
+	@Override
+	public MarcaCarro pesquisarMarcasCarroCodigo(int codigo) {
+		return this.controladorCarro.pesquisarMarcaCodigo(codigo);
+	}
+
+	@Override
+	public List<MarcaCarro> consultarMarcasCarros(MarcaCarro marcaCarro) {
+		return this.controladorCarro.pesquisarMarcas(marcaCarro);
+	}
+
+	//Modelo
+	
+	@Override
+	public void salvarModeloCarro(ModeloCarro modeloCarro) {
+		this.controladorCarro.inserir(modeloCarro);
+		
+	}
+
+	@Override
+	public void removerModeloCarro(ModeloCarro modeloCarro) {
+		this.controladorCarro.remover(modeloCarro);;
+	}
+
+	@Override
+	public List<ModeloCarro> listarModelosCarros() {
+		return this.controladorCarro.listarModelos();
+	}
+
+	@Override
+	public ModeloCarro pesquisarModelosCarroCodigo(int codigo) {
+		return this.controladorCarro.pesquisarModeloCarro(codigo);
+	}
+
+	@Override
+	public List<ModeloCarro> consultarModelosCarros(ModeloCarro modeloCarro) {
+		return this.controladorCarro.pesquisarModeloCarros(modeloCarro);
+	}
+
+	//Versao
+	
+	@Override
+	public void salvarVersao(VersaoCarro versaoCarro) {
+		this.controladorCarro.inserir(versaoCarro);
+	}
+
+	@Override
+	public void removerVersao(VersaoCarro versaoCarro) {
+		this.controladorCarro.remover(versaoCarro);
+	}
+
+	@Override
+	public List<VersaoCarro> listarVersoes() {
+		return this.controladorCarro.listarVersoes();
+	}
+
+	@Override
+	public VersaoCarro pesquisarVersaoCodigo(int codigo) {
+		return this.controladorCarro.pesquisarVersaoCodigo(codigo);
+	}
+
+	@Override
+	public List<VersaoCarro> consultarVersoes(VersaoCarro versaoCarro) {
+		return this.controladorCarro.pesquisarVersoes(versaoCarro);
+	}
+
+	//Item Série
+	
+	@Override
+	public void salvarItemSerie(ItemSerieCarro itemSerieCarro) throws Exception {
+		this.controladorCarro.inserir(itemSerieCarro);
 	}
 
 	@Override
 	public void removerItem(ItemSerieCarro itemSerieCarro) {
 		this.controladorCarro.remover(itemSerieCarro);
-		
 	}
 
 	@Override
-	public void alterarItem(ItemSerieCarro itemSerieCarro) {
-		// TODO Auto-generated method stub
-		
+	public List<ItemSerieCarro> listarItens() {
+		return this.controladorCarro.listarItens();
 	}
 
 	@Override
-	public List<ItemSerieCarro> pesquisarItens(ItemSerieCarro itemSerieCarro) {
+	public ItemSerieCarro pesquisarItemCodigo(int codigo) {
+		return this.controladorCarro.pesquisarItemCodigo(codigo);
+	}
+
+	@Override
+	public List<ItemSerieCarro> consultarItens(ItemSerieCarro itemSerieCarro) {
 		return this.controladorCarro.pesquisarItens(itemSerieCarro);
-		
+	}
+
+	//Acessorio
+	
+	@Override
+	public void salvarAcessorio(AcessorioCarro acessorioCarro) {
+		this.controladorCarro.inserir(acessorioCarro);
 	}
 
 	@Override
-	public List<ItemSerieCarro> pesquisarPorModelo(Integer codigo) {
-		return this.controladorCarro.pesquisarPorModelo(codigo);
-	}
-
-	//Acessório
-	@Override
-	public List<AcessorioCarro> listarAcessorio() {
-		return this.controladorCarro.listarAcessorio();
+	public void removerAcessorio(AcessorioCarro acessorioCarro) {
+		this.controladorCarro.removerAcessorio(acessorioCarro);
 	}
 
 	@Override
-	public void salvarAcessorio(AcessorioCarro acessorio) {
-		this.controladorCarro.inserir(acessorio);
-		
+	public List<AcessorioCarro> listarAcessorios() {
+		return this.controladorCarro.listarAcessorios();
 	}
 
 	@Override
-	public AcessorioCarro pesquisarAcessorioCarro(int codigo) {
-		// TODO Auto-generated method stub
-		return null;
+	public AcessorioCarro pesquisarAcessorioCodigo(int codigo) {
+		return this.controladorCarro.pesquisarAcessorioCarroCodigo(codigo);
 	}
 
 	@Override
-	public void removerAcessorio(AcessorioCarro acessorio) {
-		// TODO Auto-generated method stub
-		
+	public List<AcessorioCarro> consultarAcessorios(AcessorioCarro acessorioCarro) {
+		return this.controladorCarro.pesquisarAcessorios(acessorioCarro);
 	}
-
-	@Override
-	public List<AcessorioCarro> pesquisarAcessorio(AcessorioCarro acessorio) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 
 }

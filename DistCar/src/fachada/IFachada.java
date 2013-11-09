@@ -113,41 +113,50 @@ public interface IFachada {
 	
 	//Carro
 	
-		public void salvarCarro(Carro carro) throws Exception;
+	public void salvarCarro(Carro carro);
+	public void removerCarro(Carro carro);
+	public List<Carro> listarCarros();
+	public Carro pesquisarCarroCodigo(int codigo);
+	public List<Carro> consultarCarros(Carro carro);
+		
+	//Marca
+	
+	public void salvarMarcaCarro(MarcaCarro marcaCarro);
+	public void removerMarcaCarro(MarcaCarro marcaCarro);
+	public List<MarcaCarro> listarMarcasCarros();
+	public MarcaCarro pesquisarMarcasCarroCodigo(int codigo);
+	public List<MarcaCarro> consultarMarcasCarros(MarcaCarro marcaCarro);
 	
 	//Modelo
 		
-		public void salvarModeloCarro(ModeloCarro modeloCarro) throws Exception;
-		public ModeloCarro pesquisarModeloCarro(int codigo);
+	public void salvarModeloCarro(ModeloCarro modeloCarro);
+	public void removerModeloCarro(ModeloCarro modeloCarro);
+	public List<ModeloCarro> listarModelosCarros();
+	public ModeloCarro pesquisarModelosCarroCodigo(int codigo);
+	public List<ModeloCarro> consultarModelosCarros(ModeloCarro modeloCarro);
 		
 	//Versao
 		
-		public List<VersaoCarro> listarVersao() throws Exception;
-		public VersaoCarro pesquisarVersao(int codigo);
-	
+	public void salvarVersao(VersaoCarro versaoCarro);
+	public void removerVersao(VersaoCarro versaoCarro);
+	public List<VersaoCarro> listarVersoes();
+	public VersaoCarro pesquisarVersaoCodigo(int codigo);
+	public List<VersaoCarro> consultarVersoes(VersaoCarro versaoCarro);
+		
 	//Item 
 		
-		public List<ItemSerieCarro> listarItem();
-		public void salvarItemSerie(ItemSerieCarro itemSerieCarro)throws Exception;
-		public ItemSerieCarro pesquisarItem(int codigo);
-		public void removerItem(ItemSerieCarro itemSerieCarro);
-		public void alterarItem(ItemSerieCarro itemSerieCarro);
-		public List<ItemSerieCarro> pesquisarItens(ItemSerieCarro itemSerieCarro);
-		public List<ItemSerieCarro> pesquisarPorModelo(Integer codigo);
-		
-
+	public void salvarItemSerie(ItemSerieCarro itemSerieCarro)throws Exception;
+	public void removerItem(ItemSerieCarro itemSerieCarro);
+	public List<ItemSerieCarro> listarItens();
+	public ItemSerieCarro pesquisarItemCodigo(int codigo);
+	public List<ItemSerieCarro> consultarItens(ItemSerieCarro itemSerieCarro);
 		
 	//Acessório
 	
-		public List<AcessorioCarro> listarAcessorio();
-		public void salvarAcessorio(AcessorioCarro acessorio);
-		public AcessorioCarro pesquisarAcessorioCarro(int codigo);
-		public void removerAcessorio(AcessorioCarro acessorio);
-		public List<AcessorioCarro> pesquisarAcessorio(AcessorioCarro acessorio);
+	public void salvarAcessorio(AcessorioCarro acessorioCarro);
+	public void removerAcessorio(AcessorioCarro acessorioCarro);
+	public List<AcessorioCarro> listarAcessorios();
+	public AcessorioCarro pesquisarAcessorioCodigo(int codigo);
+	public List<AcessorioCarro> consultarAcessorios(AcessorioCarro acessorioCarro);
 		
-
-
-
-
-
 }
