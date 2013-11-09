@@ -5,7 +5,7 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:p="http://primefaces.org/ui">
 <h:head>
-	<title>Cadastrar_Acessório_de_Carro</title>
+	<title>Acessório_de_Carro</title>
 </h:head>
 <h:body>
 	<f:view id="View">
@@ -34,7 +34,7 @@
 							<p:graphicImage value="/resources/images/home-02.jpg"
 								height="35px" width="35px" />
 						</p:commandLink>
-						<h:outputText value="DisctCar 1.0 - Item Série" />
+						<h:outputText value="DisctCar 1.0 -  Acessório" />
 					</h:panelGrid>
 				</f:facet>
 				
@@ -49,7 +49,7 @@
 					<h:outputLabel for="valor" value="Valor: *" />
 					<p:inputText id="valor" required="false"
 						converterMessage="Digite um número decimal no formato 999.00"
-						value="#{acessorioBean.acessorio.descricao}"
+						value="#{acessorioBean.acessorio.valor}"
 						requerid="false" label="Valor" />
 					<p:message for="valor" />
 
