@@ -16,4 +16,4 @@ Felipe Carlos
 	fellipecarllos@gmail.com
 José Francisco
 
-
+André precido de um selecionar fabricante por id, tem como vc realizar ai na sua fachada?
