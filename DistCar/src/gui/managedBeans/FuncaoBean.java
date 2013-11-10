@@ -12,6 +12,8 @@ import java.util.List;
 
 
 
+import java.util.ResourceBundle;
+
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -35,6 +37,7 @@ public class FuncaoBean {
 	private static final String TXT_BTN_FECHAR = "Fechar";
 	
 	private IFachada fachada;
+	private ResourceBundle resourceBundle = ResourceBundle.getBundle("util.config");
 	
 	private Funcao funcao;
 	private Funcao funcaoDePesquisa;
@@ -92,7 +95,7 @@ public class FuncaoBean {
 		tituloOperacao = FuncaoBean.OP_ALTERAR;
 		textoBotaoFecharOuCancelar = FuncaoBean.TXT_BTN_CANCELAR;
 		somenteLeitura = false;
-		return "funcao-prop";
+		return resourceBundle.getString("linkFuncaoProp");//"funcao-prop";
 	}
 	
 	public String novo(){
@@ -100,7 +103,7 @@ public class FuncaoBean {
 		tituloOperacao = FuncaoBean.OP_NOVA;
 		textoBotaoFecharOuCancelar = FuncaoBean.TXT_BTN_CANCELAR;
 		somenteLeitura = false;
-		return "funcao-prop";
+		return resourceBundle.getString("linkFuncaoProp");//"funcao-prop";
 	}
 	
 	private void novaFuncao(){
@@ -151,7 +154,7 @@ public class FuncaoBean {
 			Fachada.obterInstancia().salvarFuncao(funcao);
 			MsgPrimeFaces.exibirMensagemInfomativa("Função salva com sucesso!");
 			novaFuncao();
-			return "funcao";
+			return resourceBundle.getString("linkFuncao");//"funcao";
 		}catch(Exception ex){
 			MsgPrimeFaces.exibirMensagemDeErro(ex.getMessage());
 		}
@@ -173,7 +176,7 @@ public class FuncaoBean {
 		tituloOperacao = FuncaoBean.OP_VISUALIZAR;
 		textoBotaoFecharOuCancelar = FuncaoBean.TXT_BTN_FECHAR;
 		somenteLeitura = true;
-		return "funcao-prop";
+		return resourceBundle.getString("linkFuncaoProp");//"funcao-prop";
 	}
 	
 
@@ -244,7 +247,7 @@ public class FuncaoBean {
 	
 	public String carregarPagina(){
 		inicializar();
-		return "funcao.xhtml?faces-redirect=true";
+		return resourceBundle.getString("linkFuncao");//"funcao.xhtml?faces-redirect=true";
 	}
 
 

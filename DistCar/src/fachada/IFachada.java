@@ -103,6 +103,7 @@ public interface IFachada {
 	public void excluirFabricante(Fabricante fabricante) throws Exception;
 	public List<Fabricante> consultarFabricante(Fabricante fabricante) throws Exception;
 	public List<Fabricante> listarFabricantes() throws Exception;	
+	public Fabricante consultarFabricantePorId(Integer codigo) throws Exception;
 	
 	
 	

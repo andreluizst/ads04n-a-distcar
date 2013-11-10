@@ -367,6 +367,11 @@ public class Fachada implements IFachada {
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
+	@Override
+	public Fabricante consultarFabricantePorId(Integer codigo) throws Exception{
+		return ctrlOrg.consultarFabricantePorId(codigo);
+	}
 
 
 	//Controlador Carro - Felipe Carlos

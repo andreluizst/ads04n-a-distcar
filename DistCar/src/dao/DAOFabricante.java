@@ -2,11 +2,22 @@ package dao;
 
 import java.util.List;
 
+import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 
 import classesBasicas.Fabricante;
 
 public class DAOFabricante extends DAOGenerico<Fabricante> implements IDAOFabricante{
+	
+	public DAOFabricante() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	public DAOFabricante(EntityManager entityManager) {
+		super(entityManager);
+		// TODO Auto-generated constructor stub
+	}
 
 	@Override
 	public List<Fabricante> pesquisarFabricante(Fabricante f) {

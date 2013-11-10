@@ -12,6 +12,7 @@ import classesBasicas.Centro;
 import classesBasicas.Cidade;
 import classesBasicas.Departamento;
 import classesBasicas.Escolaridade;
+import classesBasicas.Fabricante;
 import classesBasicas.Funcao;
 import classesBasicas.Funcionario;
 import classesBasicas.Gestor;
@@ -24,6 +25,7 @@ import dao.DAOCentro;
 import dao.DAOCidade;
 import dao.DAODepartamento;
 import dao.DAOEscolaridade;
+import dao.DAOFabricante;
 import dao.DAOFuncao;
 import dao.DAOFuncionario;
 import dao.DAOGestor;
@@ -35,6 +37,7 @@ import dao.IDAOCentro;
 import dao.IDAOCidade;
 import dao.IDAODepartamento;
 import dao.IDAOEscolaridade;
+import dao.IDAOFabricante;
 import dao.IDAOFuncao;
 import dao.IDAOFuncionario;
 import dao.IDAOGestor;
@@ -62,6 +65,7 @@ public class ControladorOrganizacional {
 	private IDAOCidade daoCidade;
 	private IDAOUnidadeFederativa daoUF;
 	private IDAOEscolaridade daoEscolaridade;
+	private IDAOFabricante daoFabricante;
 	
 	public ControladorOrganizacional(){
 		emf = Parametros.EMF_Default;
@@ -99,7 +103,7 @@ public class ControladorOrganizacional {
 		daoCidade = new DAOCidade(entityManager);
 		daoUF = new DAOUnidadeFederativa(entityManager);
 		daoTipoGerencia = new DAOTipoGerencia(entityManager);
-		
+		daoFabricante = new DAOFabricante(entityManager);
 
 	}
 	
@@ -589,6 +593,40 @@ public class ControladorOrganizacional {
 	//}
 	
 
+	//************************  F A B R I C A N T E  ************************************
+	public boolean fabricanteExiste(Fabricante obj) throws Exception{
+		Fabricante outroObj = null;
+		if (obj.getCodigo() == null)
+			return false;
+		outroObj = daoFabricante.consultarPorId(obj.getCodigo());
+		if (outroObj != null)
+			if (outroObj.getCodigo() == obj.getCodigo())
+				return true;
+		return false;
+	}
 	
+	public void inserirFabricante(Fabricante fabricante) throws Exception{
+		daoFabricante.inserir(fabricante);
+	}
+	
+	public void alterarFabricante(Fabricante fabricante) throws Exception{
+		daoFabricante.alterar(fabricante);
+	}
+	
+	public void exclujirFabricante(Fabricante fabricante) throws Exception{
+		daoFabricante.remover(fabricante);
+	}
+	
+	public List<Fabricante> listarFabricantes() throws Exception{
+		return daoFabricante.consultarTodos();
+	}
+	
+	public Fabricante consultarFabricantePorId(Integer codigo) throws Exception{
+		return daoFabricante.consultarPorId(codigo);
+	}
+	
+	public List<Fabricante> consultarFabricante(Fabricante fabricante) throws Exception{
+		return daoFabricante.pesquisar(fabricante);
+	}
 	
 }

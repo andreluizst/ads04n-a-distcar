@@ -29,7 +29,7 @@ public class Fabricante /*extends ObjetoGeral*/ {
 	
 	public Fabricante() {
 		super();
-		//pj = new PessoaJuridica();
+		pj = new PessoaJuridica();
 	}
 	/*
 	public Fabricante(Calendar dataUltimaAtualizacao, Situacao situacao) {
