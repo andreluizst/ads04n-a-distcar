@@ -34,6 +34,17 @@
 							required="true" requiredMessage="Informe o número da carteira profissional (CTPS)!" />
 					<p:message for="ctps" display="icon" />
   					
+  					<h:outputLabel for="dataAdimissao" value="Data de admissão: *"/>
+  					<p:calendar id="dataAdimissao" value="#{funcionarioBean.funcionario.dataAdmissao}"
+  						effect="explode" pattern="dd/MM/yyyy" 
+  						required="true" requiredMessage="Informe a data de admissão!" />
+  					<p:message for="dataAdimissao" display="deafult" />
+  					
+  					<h:outputLabel for="dataDemissao" value="Data de demissão: "/>
+  					<p:calendar id="dataDemissao" value="#{funcionarioBean.funcionario.dataDemissao}"
+  						effect="explode" pattern="dd/MM/yyyy"/>
+  					<p:message for="dataDemissao" display="deafult" />
+  					
   					<h:outputLabel for="cpf" value="CPF: *"/>
   					<p:inputMask id="cpf" mask="99.999.999-99" size="20"
   							value="#{funcionarioBean.funcionario.cpf}" lable="CPF"
