@@ -4,6 +4,7 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
+
 import classesBasicas.Fabricante;
 import fachada.Fachada;
 
@@ -11,10 +12,16 @@ import fachada.Fachada;
 public class FabricanteConverter implements Converter {
 
 	public Object getAsObject(FacesContext context, UIComponent component, String value)  {     
-        if (value == null)   
+        if (value == null )   
             return null;  
         Integer id = new Integer(value);  
-        return Fachada.obterInstancia().pesquisarFabricanteCodigo(id); 
+        try {
+			return Fachada.obterInstancia().consultarFabricantePorId(id);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null; 
 }  
 
 public String getAsString(FacesContext context, UIComponent componente, Object value) {  
