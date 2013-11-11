@@ -375,7 +375,7 @@ public class Fachada implements IFachada {
 
 	//Controlador Carro - Felipe Carlos
 	
-	//Carrp
+	//Carro
 	@Override
 	public void salvarCarro(Carro carro) {
 		this.controladorCarro.inserir(carro);
@@ -426,6 +426,10 @@ public class Fachada implements IFachada {
 	@Override
 	public List<MarcaCarro> consultarMarcasCarros(MarcaCarro marcaCarro) {
 		return this.controladorCarro.pesquisarMarcas(marcaCarro);
+	}
+	
+	public Fabricante pesquisarFabricanteCodigo(int codigo){
+		return this.pesquisarFabricanteCodigo(codigo);
 	}
 
 	//Modelo

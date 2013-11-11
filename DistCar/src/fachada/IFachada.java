@@ -127,6 +127,7 @@ public interface IFachada {
 	public List<MarcaCarro> listarMarcasCarros();
 	public MarcaCarro pesquisarMarcasCarroCodigo(int codigo);
 	public List<MarcaCarro> consultarMarcasCarros(MarcaCarro marcaCarro);
+	public Fabricante pesquisarFabricanteCodigo(int codigo);
 	
 	//Modelo
 		
