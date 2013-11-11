@@ -10,6 +10,7 @@ public class MarcaCarro extends ObjetoGeral {
 	private String descricao;
 	@ManyToOne
 	private Fabricante fabricante;
+	
 	public String getDescricao() {
 		return descricao;
 	}
