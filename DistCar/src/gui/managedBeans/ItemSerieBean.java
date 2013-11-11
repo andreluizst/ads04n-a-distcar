@@ -188,7 +188,7 @@ public class ItemSerieBean {
 	    } */
 	    public String novo(){
 	    	itemSerieCarro = new ItemSerieCarro();
-			return "novoItem";
+			return "item-prop";
 		}           
 	    
 	    public String alterar(){

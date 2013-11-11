@@ -82,7 +82,7 @@ public class AcessorioBean {
 		
 		acessorioCarro.setDataUltimaAtualizacao(Calendar.getInstance());
 		Fachada.obterInstancia().salvarAcessorio(acessorioCarro);
-		MsgPrimeFaces.exibirMensagemInfomativa("Item Séria salvo com sucesso!");
+		MsgPrimeFaces.exibirMensagemInfomativa("Acessório salvo com sucesso!");
 		init();
 		return "acessorio";
 	
