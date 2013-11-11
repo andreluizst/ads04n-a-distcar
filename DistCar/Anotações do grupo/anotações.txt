@@ -24,3 +24,5 @@ André 10/11/2013 23:24
 
 Felipe 11/11/2013 00:08
     André irá concluir a classe fabricante quando preciso tbm do listar
+    André me explica ai essa tua classe fabricante, ela que vai cadastrar as marcas? Pq criei um MarcaCarroBean so que pelo que entendi
+    do seu codigo o fabricante vai gerar as marcas entao em modelocarro vou ter um atributo fabricante ao inves de marca é isso?
