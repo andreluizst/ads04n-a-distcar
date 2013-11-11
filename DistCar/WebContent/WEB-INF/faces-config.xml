@@ -8,7 +8,10 @@
         <converter-id>ModeloCarroConverter</converter-id>  
         <converter-class>util.ModeloCarroConverter</converter-class>  
     </converter>
-
+<converter>  
+        <converter-id>FabricanteConverter</converter-id>  
+        <converter-class>util.FabricanteConverter</converter-class>  
+    </converter>
 
 
 </faces-config>

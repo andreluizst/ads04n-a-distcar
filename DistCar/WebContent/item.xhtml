@@ -54,12 +54,12 @@
 					<p:message for="valor" />
 
 						<h:outputLabel for="modelo" value="Modelo: * " />
-					<h:selectOneMenu id="modelo" converter="objetoGeralConverter"
+					<h:selectOneMenu id="modelo" converter="ModeloCarroConverter"
 						value="#{itemSerieBean.itemSerieCarro.modeloCarro}" >
 						<f:selectItem noSelectionOption="true"
 							itemLabel="Selecione o Modelo" itemValue="-1"/>
-						<f:selectItems value="#{itemSerieBean.modeloCarros}" var="vm"
-							itemLabel="#{vm.descricao} #{vm.ano}" itemValue="#{vm}" />
+						<f:selectItems value="#{itemSerieBean.modeloCarros}" var="m"
+							itemLabel="#{m.descricao} #{m.ano}" itemValue="#{m}" />
 					</h:selectOneMenu>
 					<p:message for="modelo" />
 					
