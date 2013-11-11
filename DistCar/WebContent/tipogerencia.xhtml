@@ -7,86 +7,88 @@
 	xmlns:p="http://primefaces.org/ui"
 >
 
-<h:head><title>Função jsp pf</title> </h:head>
+<h:head><title>Tipo Gerência</title> </h:head>
 <h:outputStylesheet name="styles-PSC.css" library="css"></h:outputStylesheet>
 <h:body>
-	<f:view id="viewEntrada">
+	<f:view id="viewTipoGerencia">
 		
 		<h:form id="frmMensagens">
 			<p:messages id="messages" showDetail="true" autoUpdate="true" closable="true"></p:messages>
-			<p:growl id="growl" showDetail="true" sticky="false" globalOnly="true" />
-			
 		</h:form>
 		
-  		<h:form id="frmFuncao">
+  		<h:form id="frmPrincipal">
   			<p:confirmDialog id="dlgMsg" global="true" showEffect="fade" hideEffect="explode">  
         		<p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check"/>  
         		<p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close"/>       
     		</p:confirmDialog>
   		
-  			<p:panel id="panelFuncao" header="DistCar - Função">
+  			<p:panel id="panelPesquisa" header="DistCar - Tipo Gerência">
   				<f:facet name="header">
   					<h:panelGrid columns="2">
-  						<p:commandLink action="index.xhtml">
+  						<p:commandLink action="index.xhtml?faces-redirect=true">
   							<p:graphicImage value="/resources/images/home-02.jpg" height="35px" width="35px" />
   						</p:commandLink>
-  						<h:outputText value="DisctCar 1.0 - Função" />
+  						<h:outputText value="DisctCar 1.0 - Tipo Gerência" />
   					</h:panelGrid>
   				</f:facet>
   				<h:panelGrid columns="2" cellpadding="5">
   					<h:outputLabel for="descricao" value="Descrição: "/>
-  					<h:inputText id="descricao" value="#{funcaoBean.funcaoDePesquisa.descricao}" required="false" lable="Descrição"/>
+  					<h:inputText id="descricao" value="#{tipoGerenciaBean.tipoGerenciaParaPesquisa.descricao}" lable="Descrição"/>
   					
-  					<h:outputLabel for="salario" value="Salário: "></h:outputLabel>
-  					<p:inputText id="salario" converterMessage="Digite um número decimal no formato 999.00" 
-  								value="#{funcaoBean.funcaoDePesquisa.salario}" dir="rtl" lable="Salário"></p:inputText>
+  					<h:outputLabel for="valGratificacao" value="Valor da gratificação: "></h:outputLabel>
+  					<p:inputText id="valGratificacao" converterMessage="Digite um número decimal no formato 999.00" 
+  								value="#{tipoGerenciaBean.tipoGerenciaParaPesquisa.valorGratificacao}" dir="rtl" lable="Salário"></p:inputText>
   					
   					<h:outputLabel for="situacao" value="Situação: "/>
-  					<p:selectOneMenu id="situacao" value="#{funcaoBean.funcaoDePesquisa.situacao}" >
+  					<p:selectOneMenu id="situacao" value="#{tipoGerenciaBean.tipoGerenciaParaPesquisa.situacao}" >
   						<f:selectItem itemLabel="Todas as situações" itemValue="" />
-  						<f:selectItems value="#{funcaoBean.situacoes}" />
+  						<f:selectItems value="#{tipoGerenciaBean.situacoes}" />
   					</p:selectOneMenu>
   					
   				</h:panelGrid>
 				
-				<p:commandButton value="Novo"    update="panelFuncao" action="#{funcaoBean.novo}"/>
-   				<p:commandButton disabled="#{funcaoBean.listaEstaVazia}" value="Alterar" update="panelFuncao" action="#{funcaoBean.alterar}" />
-   				<p:commandButton disabled="#{funcaoBean.listaEstaVazia}" value="Excluir" update="tbFuncoes" actionListener="#{funcaoBean.excluir}">
+				<p:commandButton value="Novo"    update="panelPesquisa" action="#{tipoGerenciaBean.novo}"/>
+   				<p:commandButton disabled="#{tipoGerenciaBean.listaEstaVazia}" value="Alterar" update="panelPesquisa"
+   						 action="#{tipoGerenciaBean.alterar}" />
+   				<p:commandButton disabled="#{tipoGerenciaBean.listaEstaVazia}" value="Excluir" update="tbLista"
+   						 actionListener="#{tipoGerenciaBean.excluir}">
    					<p:confirm header="Confirmação" 
-   							message="Confirma a exclusão da função selecionada?"
+   							message="Confirma a exclusão do tipo de gerência selecionada?"
    							icon="ui-icon-alert" />  
    				</p:commandButton>
 
-  				<p:commandButton value="Consultar"  update="frmFuncao" actionListener="#{funcaoBean.consultar}"/>
-  				<p:commandButton disabled="#{funcaoBean.listaEstaVazia}" value="Detalhes" update="panelFuncao" action="#{funcaoBean.visualizar}" />
-  				<p:commandButton value="Limpar"  update="frmFuncao" actionListener="#{funcaoBean.limpar}"/>
+  				<p:commandButton value="Consultar"  update="frmPrincipal" actionListener="#{tipoGerenciaBean.consultar}"/>
+  				<p:commandButton disabled="#{tipoGerenciaBean.listaEstaVazia}" value="Detalhes" 
+  						update="panelPesquisa" action="#{tipoGerenciaBean.visualizar}" />
+  				<p:commandButton value="Limpar"  update="panelPesquisa" actionListener="#{tipoGerenciaBean.limpar}"/>
   				
   			</p:panel>
 
-  			<p:dataTable id="tbFuncoes" var="funcao" value="#{funcaoBean.funcoes}" paginator="true" rows="5"
+  			<p:dataTable id="tbLista" var="tipoGerencia" value="#{tipoGerenciaBean.lista}" paginator="true" rows="5"
   						paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks}
   						{NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rowsPerPageTemplate="5,10,15"
-  						selection="#{funcaoBean.funcaoSelecionada}" selectionMode="single" rowKey="#{funcao}">
-  				<f:facet name="header">Lista de Funções</f:facet>
+  						selection="#{tipoGerenciaBean.tipoGerenciaSelecionada}" selectionMode="single"
+  						rowKey="#{tipoGerencia}">
+  				<f:facet name="header">Lista de Tipos de Gerências</f:facet>
   				<p:column>
   					<f:facet name="header"><h:outputText value="Código"/> </f:facet>
-  					<h:outputText value="#{funcao.codigo}"/>
+  					<h:outputText value="#{tipoGerencia.codigo}"/>
   				</p:column>
   				<p:column>
   					<f:facet name="header"><h:outputText value="Descrição"/> </f:facet>
-  					<h:outputText value="#{funcao.descricao}"/>
+  					<h:outputText value="#{tipoGerencia.descricao}"/>
   				</p:column>
   				<p:column>
-  					<f:facet name="header"><h:outputText value="Salário"/> </f:facet>
-  					<h:outputText dir="rtl" value="#{funcao.salario}"/>
+  					<f:facet name="header"><h:outputText value="Gratificação"/> </f:facet>
+  					<h:outputText dir="rtl" value="#{tipoGerencia.valorGratificacao}"/>
   				</p:column>
   				<p:column>
   					<f:facet name="header"><h:outputText value="Situação"/> </f:facet>
-  					<h:outputText value="#{funcao.situacao}"/>
+  					<h:outputText value="#{tipoGerencia.situacao}"/>
   				</p:column>
   				<p:column>
   					<f:facet name="header"><h:outputText value="Última atualização"/> </f:facet>
-  					<h:outputText value="#{funcao.dataUltimaAtualizacao.time}">
+  					<h:outputText value="#{tipoGerencia.dataUltimaAtualizacao.time}">
   						<f:convertDateTime pattern="dd/MM/yyyy"/>
   					</h:outputText>
   				</p:column>

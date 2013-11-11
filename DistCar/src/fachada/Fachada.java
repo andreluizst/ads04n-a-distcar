@@ -345,27 +345,26 @@ public class Fachada implements IFachada {
 
 	@Override
 	public void salvarFabricante(Fabricante fabricante) throws Exception {
-		// TODO Auto-generated method stub
-		
+		if (ctrlOrg.fabricanteExiste(fabricante))
+			ctrlOrg.alterarFabricante(fabricante);
+		else
+			ctrlOrg.inserirFabricante(fabricante);
 	}
 
 	@Override
 	public void excluirFabricante(Fabricante fabricante) throws Exception {
-		// TODO Auto-generated method stub
-		
+		ctrlOrg.excluirFabricante(fabricante);
 	}
 
 	@Override
 	public List<Fabricante> consultarFabricante(Fabricante fabricante)
 			throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		return ctrlOrg.consultarFabricante(fabricante);
 	}
 
 	@Override
 	public List<Fabricante> listarFabricantes() throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		return ctrlOrg.listarFabricantes();
 	}
 	
 	@Override

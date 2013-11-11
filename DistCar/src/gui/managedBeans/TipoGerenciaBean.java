@@ -2,6 +2,7 @@ package gui.managedBeans;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ResourceBundle;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -24,6 +25,7 @@ public class TipoGerenciaBean {
 	private static final String TXT_BTN_FECHAR = "Fechar";
 	
 	private IFachada fachada;
+	private ResourceBundle resourceBundle = ResourceBundle.getBundle("util.config");
 	
 	private TipoGerencia tipoGerencia;
 	private TipoGerencia tipoGerenciaParaPesquisa;
@@ -73,7 +75,7 @@ public class TipoGerenciaBean {
 		tituloOperacao = TipoGerenciaBean.OP_ALTERAR;
 		textoBotaoFecharOuCancelar = TipoGerenciaBean.TXT_BTN_CANCELAR;
 		somenteLeitura = false;
-		return "tipoGerencia-prop";
+		return resourceBundle.getString("linkTipoGerenciaProp");//"tipoGerencia-prop";
 	}
 	
 	public String novo(){
@@ -81,7 +83,7 @@ public class TipoGerenciaBean {
 		tituloOperacao = TipoGerenciaBean.OP_NOVA;
 		textoBotaoFecharOuCancelar = TipoGerenciaBean.TXT_BTN_CANCELAR;
 		somenteLeitura = false;
-		return "tipogerencia-prop";
+		return resourceBundle.getString("linkTipoGerenciaProp");//"tipogerencia-prop";
 	}
 	
 	private void novoTipoGerencia(){
@@ -117,11 +119,15 @@ public class TipoGerenciaBean {
 			MsgPrimeFaces.exibirMensagemInfomativa("Tipo de gerência salva com sucesso!");
 			novoTipoGerencia();
 			somenteLeitura = true;
-			return "tipogerencia";
+			return resourceBundle.getString("linkTipoGerencia");//"tipogerencia";
 		}catch(Exception ex){
 			MsgPrimeFaces.exibirMensagemDeErro(ex.getMessage());
 		}
 		return null;
+	}
+	
+	public String cancelar(){
+		return resourceBundle.getString("linkTipoGerencia");
 	}
 	
 	public void consultar(){
@@ -139,7 +145,7 @@ public class TipoGerenciaBean {
 		tituloOperacao = TipoGerenciaBean.OP_VISUALIZAR;
 		textoBotaoFecharOuCancelar = TipoGerenciaBean.TXT_BTN_FECHAR;
 		somenteLeitura = true;
-		return "tipogerencia-prop";
+		return resourceBundle.getString("linkTipoGerenciaProp");//"tipogerencia-prop";
 	}
 	
 
@@ -158,7 +164,7 @@ public class TipoGerenciaBean {
 	
 	public String carregarPagina(){
 		inicializar();
-		return "tipogerencia.xhtml?faces-redirect=true";
+		return resourceBundle.getString("linkTipoGerencia");//"tipogerencia.xhtml?faces-redirect=true";
 	}
 	
 	

@@ -23,6 +23,7 @@ import classesBasicas.TipoLogradouro;
 import classesBasicas.UnidadeFederativa;
 import dao.DAOCentro;
 import dao.DAOCidade;
+import dao.DAOCliente;
 import dao.DAODepartamento;
 import dao.DAOEscolaridade;
 import dao.DAOFabricante;
@@ -35,6 +36,7 @@ import dao.DAOTipoLogradouro;
 import dao.DAOUnidadeFederativa;
 import dao.IDAOCentro;
 import dao.IDAOCidade;
+import dao.IDAOCliente;
 import dao.IDAODepartamento;
 import dao.IDAOEscolaridade;
 import dao.IDAOFabricante;
@@ -66,6 +68,7 @@ public class ControladorOrganizacional {
 	private IDAOUnidadeFederativa daoUF;
 	private IDAOEscolaridade daoEscolaridade;
 	private IDAOFabricante daoFabricante;
+	private IDAOCliente daoCliente;
 	
 	public ControladorOrganizacional(){
 		emf = Parametros.EMF_Default;
@@ -104,7 +107,7 @@ public class ControladorOrganizacional {
 		daoUF = new DAOUnidadeFederativa(entityManager);
 		daoTipoGerencia = new DAOTipoGerencia(entityManager);
 		daoFabricante = new DAOFabricante(entityManager);
-
+		daoCliente = new DAOCliente(entityManager);
 	}
 	
 	
@@ -350,6 +353,9 @@ public class ControladorOrganizacional {
 	}
 	
 	public void inserirGestor (Gestor gestor) throws Exception {
+		gestor.setDataUltimaAtualizacao(Calendar.getInstance());
+		if (gestor.getSituacao() == null)
+			gestor.setSituacao(Situacao.ATIVO);
 		// TODO Auto-generated method stub
 		if(	gestor.getCodigo()==null||gestor.getCodigo().equals("")||
 				gestor.getNome()==null||gestor.getNome().equals("")||
@@ -363,6 +369,10 @@ public class ControladorOrganizacional {
 	}
 	
 	public void alterarGestor (Gestor gestor) throws Exception {
+		gestor.setDataUltimaAtualizacao(Calendar.getInstance());
+		if (gestor.getSituacao() == null)
+			gestor.setSituacao(Situacao.ATIVO);
+		
 		if(	gestor.getCodigo()==null||gestor.getCodigo().equals("")||
 				gestor.getNome()==null||gestor.getNome().equals("")||
 						gestor.getSituacao()==null||gestor.getSituacao().equals("")||
@@ -467,10 +477,16 @@ public class ControladorOrganizacional {
 	}
 	
 	public void inserirTipoLogradouro(TipoLogradouro tipoLogradouro) throws Exception{
+		tipoLogradouro.setDataUltimaAtualizacao(Calendar.getInstance());
+		if (tipoLogradouro.getSituacao() == null)
+			tipoLogradouro.setSituacao(Situacao.ATIVO);
 		daoTipoLogradouro.inserir(tipoLogradouro);
 	}
 	
 	public void alterarTipoLogradouro(TipoLogradouro tipoLogradouro) throws Exception{
+		tipoLogradouro.setDataUltimaAtualizacao(Calendar.getInstance());
+		if (tipoLogradouro.getSituacao() == null)
+			tipoLogradouro.setSituacao(Situacao.ATIVO);
 		daoTipoLogradouro.alterar(tipoLogradouro);
 	}
 	
@@ -554,10 +570,16 @@ public class ControladorOrganizacional {
 	}
 	
 	public void inserirTipoGerencia(TipoGerencia tipoGerencia) throws Exception{
+		tipoGerencia.setDataUltimaAtualizacao(Calendar.getInstance());
+		if (tipoGerencia.getSituacao() == null)
+			tipoGerencia.setSituacao(Situacao.ATIVO);
 		daoTipoGerencia.inserir(tipoGerencia);
 	}
 	
 	public void alterarTipoGerencia(TipoGerencia tipoGerencia) throws Exception{
+		tipoGerencia.setDataUltimaAtualizacao(Calendar.getInstance());
+		if (tipoGerencia.getSituacao() == null)
+			tipoGerencia.setSituacao(Situacao.ATIVO);
 		daoTipoGerencia.alterar(tipoGerencia);
 	}
 	
@@ -606,14 +628,20 @@ public class ControladorOrganizacional {
 	}
 	
 	public void inserirFabricante(Fabricante fabricante) throws Exception{
+		fabricante.getPj().setDataUltimaAtualizacao(Calendar.getInstance());
+		if (fabricante.getPj().getSituacao() == null)
+			fabricante.getPj().setSituacao(Situacao.ATIVO);
 		daoFabricante.inserir(fabricante);
 	}
 	
 	public void alterarFabricante(Fabricante fabricante) throws Exception{
+		fabricante.getPj().setDataUltimaAtualizacao(Calendar.getInstance());
+		if (fabricante.getPj().getSituacao() == null)
+			fabricante.getPj().setSituacao(Situacao.ATIVO);
 		daoFabricante.alterar(fabricante);
 	}
 	
-	public void exclujirFabricante(Fabricante fabricante) throws Exception{
+	public void excluirFabricante(Fabricante fabricante) throws Exception{
 		daoFabricante.remover(fabricante);
 	}
 	

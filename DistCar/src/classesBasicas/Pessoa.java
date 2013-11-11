@@ -23,10 +23,15 @@ public abstract class Pessoa  extends ObjetoGeral {
 	
 	private String email;
 	
+	@Enumerated(EnumType.STRING)
+	@Column(columnDefinition = "varchar(15) default 'NAO_É_CLIENTE'", nullable=false)
+	private TipoCliente tipoCliente;
+	
 	
 	public Pessoa() {
 		super();
 		endereco = new Endereco();
+		tipoCliente = TipoCliente.NAO_É_CLIENTE;
 	}
 	
 	public Pessoa(Calendar dataUltimaAtualizacao, Situacao situacao) {
@@ -39,8 +44,27 @@ public abstract class Pessoa  extends ObjetoGeral {
 		// TODO Auto-generated constructor stub
 	}
 	
+	public Pessoa(String nome, Endereco endereco, Collection<String> telefones,
+			String email) {
+		super();
+		this.nome = nome;
+		this.endereco = endereco;
+		this.telefones = telefones;
+		this.email = email;
+	}
 	
-	
+	public Pessoa(String nome, Endereco endereco, Collection<String> telefones,
+			String email, Calendar dataUltimaAtualizacao,
+			Situacao situacao) {
+		super();
+		this.nome = nome;
+		this.endereco = endereco;
+		this.telefones = telefones;
+		this.email = email;
+		super.setDataUltimaAtualizacao(dataUltimaAtualizacao);
+		super.setSituacao(situacao);
+	}
+
 	public String getNome() {
 		return nome;
 	}
@@ -66,6 +90,17 @@ public abstract class Pessoa  extends ObjetoGeral {
 	public void setEmail(String email) {
 		this.email = email;
 	}
+	
+	public TipoCliente getTipoCliente() {
+		return tipoCliente;
+	}
+
+	public void setTipoCliente(TipoCliente tipoCliente) {
+		this.tipoCliente = tipoCliente;
+	}
+	
+	
+	
 
 	@Override
 	public String toString() {

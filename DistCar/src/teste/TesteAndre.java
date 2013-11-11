@@ -8,7 +8,9 @@ import javax.persistence.EntityTransaction;
 import javax.swing.JOptionPane;
 
 import classesBasicas.*;
+import dao.DAOTipoLogradouro;
 import dao.DAOUnidadeFederativa;
+import dao.IDAOTipoLogradouro;
 import dao.IDAOUnidadeFederativa;
 
 public class TesteAndre {
@@ -16,8 +18,15 @@ public class TesteAndre {
 		EntityManager em = emf.createEntityManager();
 		EntityTransaction et = em.getTransaction();
 		IDAOUnidadeFederativa daoUF = new DAOUnidadeFederativa(em);
+		IDAOTipoLogradouro daoTipoLog = new DAOTipoLogradouro(em);
 		try{
 			et.begin();
+			
+			//****** persistindo Tipos de logradouro
+			daoTipoLog.inserirSemTratamento(new TipoLogradouro("Rua"));
+			daoTipoLog.inserirSemTratamento(new TipoLogradouro("Av"));
+			daoTipoLog.inserirSemTratamento(new TipoLogradouro("Rod"));
+			daoTipoLog.inserirSemTratamento(new TipoLogradouro("Praça"));
 			
 			// **** persistindo unidades federativas **** 
 			daoUF.inserirSemTratamento(new UnidadeFederativa("Acre", "AC", Calendar.getInstance(), Situacao.ATIVO));
@@ -45,22 +54,34 @@ public class TesteAndre {
 			daoUF.inserirSemTratamento(new UnidadeFederativa("São Paulo", "SP", Calendar.getInstance(), Situacao.ATIVO));
 			daoUF.inserirSemTratamento(new UnidadeFederativa("Tocantins", "TO", Calendar.getInstance(), Situacao.ATIVO));
 			
-			//**** persistindo PF ***
+			//**** persistindo Cliente PF ***
 			PessoaFisica pf = new PessoaFisica("Maria Lima", "22233344455", "111222333", "SSPPE");
-			pf.setEndereco(new Endereco(new TipoLogradouro("Rua"), "Rua 8", "s/n", "teste1",
+			pf.setEndereco(new Endereco(daoTipoLog.consultarPorId(1), "Rua 8", "s/n", "teste1",
 											new Cidade("Recife", daoUF.pegarUF("Pernambuco", "PE")),"51245000"
 										)
 								);
+			pf.setTipoCliente(TipoCliente.PESSOA_FISICA);
 			pf.setDataUltimaAtualizacao(Calendar.getInstance());
 			pf.setSituacao(Situacao.ATIVO);
 			em.persist(pf);
 			
+			PessoaFisica pf2 = new PessoaFisica("Antônio Carlos", "12145456", "3654984", "SSPPE");
+			pf2.setEndereco(new Endereco(daoTipoLog.consultarPorId(1), "Júlia Rocha", "26", "Bairro da Rocha",
+											new Cidade("Jaboatão dos Guararapes", daoUF.pegarUF("Pernambuco", "PE")),"51245000"
+										)
+								);
+			pf2.setTipoCliente(TipoCliente.PESSOA_FISICA);
+			pf2.setDataUltimaAtualizacao(Calendar.getInstance());
+			pf2.setSituacao(Situacao.ATIVO);
+			em.persist(pf2);
+			
 			//***** persistindo PJ *****
 			PessoaJuridica pj = new PessoaJuridica("FIAT", "10111222000100", "111222333", Calendar.getInstance().getTime());
-			pj.setEndereco(new Endereco(new TipoLogradouro("Av"), "Carros Novos", "102", "endereço 2",
+			pj.setEndereco(new Endereco(daoTipoLog.consultarPorId(2), "Carros Novos", "102", "endereço 2",
 											new Cidade("Olinda", daoUF.pegarUF("Pernambuco", "PE")), "50000650"
 										)
 								);
+			pj.setTipoCliente(TipoCliente.NAO_É_CLIENTE);
 			pj.setDataUltimaAtualizacao(Calendar.getInstance());
 			pj.setSituacao(Situacao.ATIVO);
 			em.persist(pj);
@@ -81,7 +102,7 @@ public class TesteAndre {
 			marcaCarro.setDescricao("Honda");
 			Fabricante fabricante = new Fabricante(
 							new PessoaJuridica("Honda Co", "00222444000101", "44444444", Calendar.getInstance().getTime(), 
-								new Endereco(new TipoLogradouro("Rod"), "Carros Novos km 21", "1000", "endereço GM",
+								new Endereco(daoTipoLog.consultarPorId(3), "Carros Novos km 21", "1000", "endereço GM",
 									new Cidade("Belém", daoUF.pegarUF("Pará", "PA")), "51030540"
 								)
 							),
@@ -91,7 +112,7 @@ public class TesteAndre {
 			//*** persistindo Centro ***
 			Centro centro = new Centro(
 						new PessoaJuridica("Carros Brasil", "44555666000101", "555555", Calendar.getInstance().getTime(), 
-							new Endereco(new TipoLogradouro("Praça"), "Vitrine Automotiva", "10", "Bairro matriz",
+							new Endereco(daoTipoLog.consultarPorId(4), "Vitrine Automotiva", "10", "Bairro matriz",
 								new Cidade("Salvador", daoUF.pegarUF("Bahia", "BA")), "55060020"
 							)
 						), "Central distribuição", 100, TipoCentro.DISTRIBUIÇÃO, Calendar.getInstance(), Situacao.ATIVO
@@ -100,7 +121,7 @@ public class TesteAndre {
 			
 			Centro centro2 = new Centro(
 					new PessoaJuridica("Carros Brasil", "44555666000222", "555555", Calendar.getInstance().getTime(), 
-						new Endereco(new TipoLogradouro("Praça teste"), "Logradouro teste", "20", "Bairro filial",
+						new Endereco(daoTipoLog.consultarPorId(4), "Logradouro teste", "20", "Bairro filial",
 							new Cidade("Campinas", daoUF.pegarUF("São Paulo", "SP")), "54652000"
 						)
 					), "Filial 0002-22", 100, TipoCentro.LOJA, Calendar.getInstance(), Situacao.ATIVO

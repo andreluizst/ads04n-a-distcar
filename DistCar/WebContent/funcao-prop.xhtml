@@ -7,26 +7,29 @@
 	xmlns:p="http://primefaces.org/ui"
 >
 
-<h:head><title>Função jsp pf</title> </h:head>
+<h:head><title>Função</title> </h:head>
 <h:outputStylesheet name="styles-PSC.css" library="css"></h:outputStylesheet>
 <body>
 	<f:view id="viewEntrada">
 		
 		<h:form id="frmMensagens">
 			<p:messages id="messages" showDetail="true" autoUpdate="true" closable="true"></p:messages>
-			<p:growl id="growl" showDetail="true" sticky="false" globalOnly="true" />
 		</h:form>
 		
   		<h:form id="frmFuncao">
-  			<p:panel id="panelFuncao" header="DistCar - #{deptoBean.tituloOperacao}">
+  			<p:panel id="panelFuncao" header="DistCar - #{funcaoBean.tituloOperacao}">
   				<h:panelGrid columns="3" cellpadding="5">
   					<h:outputLabel for="descricao" value="Descrição: *"/>
-  					<p:inputText id="descricao" value="#{funcaoBean.funcao.descricao}" required="true" lable="Descrição"/>
+  					<p:inputText id="descricao" value="#{funcaoBean.funcao.descricao}" lable="Descrição"
+  							required="true" requiredMessage="Informe a descrição!"/>
   					<p:message for="descricao"/>
   					
-  					<h:outputLabel for="salario" value="Salário: "></h:outputLabel>
-  					<p:inputText id="salario" converterMessage="Digite um número decimal no formato 999.00" 
-  								value="#{funcaoBean.funcao.salario}" dir="rtl" lable="Salário"></p:inputText>
+  					<h:outputLabel for="salario" value="Salário: *"></h:outputLabel>
+  					<p:inputText id="salario" validatorMessage="O valor do salário deve ser maior que 680!" converterMessage="Digite um número decimal no formato 999.00" 
+  								value="#{funcaoBean.funcao.salario}" dir="rtl" lable="Salário"
+  								required="true" requiredMessage="O salário deve ser informado!">
+  						<f:validateLongRange minimum="680"></f:validateLongRange>
+  					</p:inputText>
   					<p:message for="salario"></p:message>
   					
   					<h:outputLabel for="situacao" value="Situação: "/>
@@ -39,7 +42,7 @@
 
   				<p:commandButton value="Salvar" rendered="#{!funcaoBean.somenteLeitura}" 
   						disabled="#{funcaoBean.somenteLeitura}" 
-  						update=":frmMensagens:growl" action="#{funcaoBean.salvar}"/>
+  						update="frmFuncao" action="#{funcaoBean.salvar}"/>
   				
   				<p:commandButton value="#{funcaoBean.textoBotaoFecharOuCancelar}" 
   								immediate="true" action="funcao" />
