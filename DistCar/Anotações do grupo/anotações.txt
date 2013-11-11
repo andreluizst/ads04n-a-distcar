@@ -21,3 +21,6 @@ André precido de um selecionar fabricante por id, tem como vc realizar ai na sua
 André 10/11/2013 23:24
 	Favor recriarem o banco, pois adicionei uma propriedade na classe básica Pessoa.java.
 	Incluí o método solicitado por Felipe.
+
+Felipe 11/11/2013 00:08
+    André irá concluir a classe fabricante quando preciso tbm do listar
