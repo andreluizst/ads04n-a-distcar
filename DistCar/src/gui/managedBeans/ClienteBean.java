@@ -15,6 +15,7 @@ import classesBasicas.Pessoa;
 import classesBasicas.PessoaFisica;
 import classesBasicas.PessoaJuridica;
 import classesBasicas.Situacao;
+import classesBasicas.TipoCliente;
 import classesBasicas.TipoLogradouro;
 import classesBasicas.UnidadeFederativa;
 import fachada.Fachada;
@@ -43,9 +44,15 @@ public class ClienteBean {
 	private List<Cliente> lista;
 	private Cliente clienteSelecionado;
 	private Situacao[] situacoes = Situacao.values();
+	private TipoCliente[] tiposCliente = TipoCliente.values(); 
 	private List<TipoLogradouro> tiposLogradouros; 
 	private List<Cidade> cidades;
 	private List<UnidadeFederativa> ufs;
+	private List<UnidadeFederativa> ufsPesquisa;
+	private List<Cidade> cidadesPesquisa;
+	private Integer codigoUfPesquisa;
+	private Integer codigoCidadePesquisa;
+	private String cpfCnpjPesquisa;
 	private Integer codigoUfSelecionada;
 	private Integer codigoCidadeSelecionada;
 	private Integer codigoTipoLogradouroSelecionado;
@@ -70,8 +77,8 @@ public class ClienteBean {
 		somenteLeitura = true;
 		try{
 			tiposLogradouros = fachada.listarTiposLogradouros();
-			cidades = fachada.listarCidades();
-			ufs = fachada.listarUFs();
+			cidadesPesquisa = fachada.listarCidades();
+			ufsPesquisa = fachada.listarUFs();
 		}catch(Exception ex){
 			MsgPrimeFaces.exibirMensagemDeErro(ex.getMessage());
 		}
@@ -79,6 +86,9 @@ public class ClienteBean {
 
 	private void iniciarObjParaPesquisa(){
 		clienteParaPesquisa = new Cliente();
+		codigoUfPesquisa = null;
+		codigoCidadePesquisa = null;
+		cpfCnpjPesquisa = "";
 		/*clienteParaPesquisa.setDadosPessoa(new PessoaJuridica());
 		clienteParaPesquisa.getDadosPessoa().setEndereco(new Endereco());
 		clienteParaPesquisa.getDadosPessoa().getEndereco().setCidade(new Cidade());*/
@@ -95,6 +105,8 @@ public class ClienteBean {
 		UnidadeFederativa uf = new UnidadeFederativa();
 		uf.setCodigo(codigoUfSelecionada);
 		try{
+			tiposLogradouros = fachada.listarTiposLogradouros();
+			ufs = fachada.listarUFs();
 			cidades = fachada.consultarCidadesPorUF(uf);
 		}catch(Exception ex){
 			MsgPrimeFaces.exibirMensagemDeErro("Não foi possível filtrar as cidades pelo estado selecionado!");
@@ -166,6 +178,9 @@ public class ClienteBean {
 			MsgPrimeFaces.exibirMensagemInfomativa("Cliente salvo com sucesso!");
 			novoCliente();
 			somenteLeitura = true;
+			tiposLogradouros.clear();
+			cidades.clear();
+			ufs.clear();
 			return resourceBundle.getString("linkCliente");//"cliente";
 		}catch(Exception ex){
 			MsgPrimeFaces.exibirMensagemDeErro(ex.getMessage());
@@ -175,6 +190,10 @@ public class ClienteBean {
 	
 	public void consultar(){
 		try{
+			if (codigoCidadePesquisa != null && codigoCidadePesquisa > 0)
+				clienteParaPesquisa.getDadosPessoa().getEndereco().getCidade().setCodigo(codigoCidadePesquisa);
+			if (codigoUfPesquisa != null && codigoUfPesquisa > 0)
+				clienteParaPesquisa.getDadosPessoa().getEndereco().getCidade().getUnidadeFederativa().setCodigo(codigoUfPesquisa);
 			atualizarLista(fachada.consultarCliente(clienteParaPesquisa));
 		}catch(Exception ex){
 			MsgPrimeFaces.exibirMensagemDeErro(ex.getMessage());
@@ -198,6 +217,14 @@ public class ClienteBean {
 		else
 			this.lista = lista;
 		listaEstaVazia = this.lista.size()>0?false:true;
+	}
+	
+	public String cancelar(){
+		somenteLeitura = true;
+		tiposLogradouros.clear();
+		cidades.clear();
+		ufs.clear();
+		return resourceBundle.getString("linkCliente");
 	}
 	
 	public void limpar(){
@@ -313,6 +340,43 @@ public class ClienteBean {
 	public List<UnidadeFederativa> getUfs() {
 		return ufs;
 	}
+
+	public TipoCliente[] getTiposCliente() {
+		return tiposCliente;
+	}
+
+	public Integer getCodigoUfPesquisa() {
+		return codigoUfPesquisa;
+	}
+
+	public void setCodigoUfPesquisa(Integer codigoUfPesquisa) {
+		this.codigoUfPesquisa = codigoUfPesquisa;
+	}
+
+	public Integer getCodigoCidadePesquisa() {
+		return codigoCidadePesquisa;
+	}
+
+	public void setCodigoCidadePesquisa(Integer codigoCidadePesquisa) {
+		this.codigoCidadePesquisa = codigoCidadePesquisa;
+	}
+
+	public List<UnidadeFederativa> getUfsPesquisa() {
+		return ufsPesquisa;
+	}
+
+	public List<Cidade> getCidadesPesquisa() {
+		return cidadesPesquisa;
+	}
+
+	public String getCpfCnpjPesquisa() {
+		return cpfCnpjPesquisa;
+	}
+
+	public void setCpfCnpjPesquisa(String cpfCnpjPesquisa) {
+		this.cpfCnpjPesquisa = cpfCnpjPesquisa;
+	}
+	
 	
 	
 }
