@@ -8,6 +8,7 @@ import classesBasicas.AcessorioCarro;
 import classesBasicas.Carro;
 import classesBasicas.Centro;
 import classesBasicas.Cidade;
+import classesBasicas.Cliente;
 import classesBasicas.Departamento;
 import classesBasicas.Escolaridade;
 import classesBasicas.Fabricante;
@@ -17,7 +18,6 @@ import classesBasicas.Gestor;
 import classesBasicas.ItemSerieCarro;
 import classesBasicas.MarcaCarro;
 import classesBasicas.ModeloCarro;
-import classesBasicas.Pessoa;
 import classesBasicas.PessoaJuridica;
 import classesBasicas.TipoGerencia;
 import classesBasicas.TipoLogradouro;
@@ -318,31 +318,33 @@ public class Fachada implements IFachada {
 	//***********************************************************************************
 	//********************* F I M   C R U D    Organizacional ***************************
 	//***********************************************************************************
+	
+	//**************************  C L I E N T E  ****************************************
+	@Override
+	public void salvarCliente(Cliente cliente) throws Exception {
+		if (ctrlOrg.clienteExiste(cliente))
+			ctrlOrg.alterarCliente(cliente);
+		else
+			ctrlOrg.inserirCliente(cliente);
+	}
 
 	@Override
-	public void salvarCliente(Pessoa cliente) throws Exception {
-		// TODO Auto-generated method stub
+	public void excluirCliente(Cliente cliente) throws Exception {
+		ctrlOrg.excluirCliente(cliente);
 		
 	}
 
 	@Override
-	public void excluirCliente(Pessoa cliente) throws Exception {
-		// TODO Auto-generated method stub
-		
+	public List<Cliente> consultarCliente(Cliente cliente) throws Exception {
+		return ctrlOrg.consultarCliente(cliente);
 	}
 
 	@Override
-	public List<Pessoa> consultarCliente(Pessoa cliente) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Cliente> listarClientes() throws Exception {
+		return ctrlOrg.listarClientes();
 	}
-
-	@Override
-	public List<Pessoa> listarClientes() throws Exception {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
+	
+	//*************************  F A B R I C A N T E  ***********************************
 	@Override
 	public void salvarFabricante(Fabricante fabricante) throws Exception {
 		if (ctrlOrg.fabricanteExiste(fabricante))

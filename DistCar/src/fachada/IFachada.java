@@ -94,10 +94,10 @@ public interface IFachada {
 
 	
 	//****************************  C L I E N T E  ***************************************
-	public void salvarCliente(Pessoa cliente) throws Exception;
-	public void excluirCliente(Pessoa cliente) throws Exception;
-	public List<Pessoa> consultarCliente(Pessoa cliente) throws Exception;
-	public List<Pessoa> listarClientes() throws Exception;
+	public void salvarCliente(Cliente cliente) throws Exception;
+	public void excluirCliente(Cliente cliente) throws Exception;
+	public List<Cliente> consultarCliente(Cliente cliente) throws Exception;
+	public List<Cliente> listarClientes() throws Exception;
 	
 	//***********************  F A B R I C A N T E  ***************************************
 	public void salvarFabricante(Fabricante fabricante) throws Exception;

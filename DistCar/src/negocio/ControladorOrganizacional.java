@@ -10,6 +10,7 @@ import javax.persistence.EntityTransaction;
 import util.Parametros;
 import classesBasicas.Centro;
 import classesBasicas.Cidade;
+import classesBasicas.Cliente;
 import classesBasicas.Departamento;
 import classesBasicas.Escolaridade;
 import classesBasicas.Fabricante;
@@ -609,10 +610,43 @@ public class ControladorOrganizacional {
 		return daoPJ.consultarPorId(codigo);
 	}
 	
-	//************************  P E S S O A  F Í S I C A  *******************************
-	//public List<PessoaFisica> listarPF() throws Exception{
-		
-	//}
+	//***************************  C L I E N T E  *************************************
+	public boolean clienteExiste(Cliente obj) throws Exception{
+		Cliente outroObj = null;
+		if (obj.getCodigo() == null)
+			return false;
+		outroObj = daoCliente.consultarPorId(obj.getCodigo());
+		if (outroObj != null)
+			if (outroObj.getCodigo() == obj.getCodigo())
+				return true;
+		return false;
+	}
+	
+	public void inserirCliente(Cliente cliente) throws Exception{
+		cliente.setDataUltimaAtualizacao(Calendar.getInstance());
+		if (cliente.getSituacao() == null)
+			cliente.setSituacao(Situacao.ATIVO);
+		daoCliente.inserir(cliente);
+	}
+	
+	public void alterarCliente(Cliente cliente) throws Exception{
+		cliente.setDataUltimaAtualizacao(Calendar.getInstance());
+		if (cliente.getSituacao() == null)
+			cliente.setSituacao(Situacao.ATIVO);
+		daoCliente.alterar(cliente);
+	}
+	
+	public void excluirCliente(Cliente cliente) throws Exception{
+		daoCliente.remover(cliente);
+	}
+	
+	public List<Cliente> listarClientes() throws Exception{
+		return daoCliente.consultarTodos();
+	}
+	
+	public List<Cliente> consultarCliente(Cliente cliente) throws Exception{
+		return daoCliente.pesquisar(cliente);
+	}
 	
 
 	//************************  F A B R I C A N T E  ************************************
@@ -656,5 +690,7 @@ public class ControladorOrganizacional {
 	public List<Fabricante> consultarFabricante(Fabricante fabricante) throws Exception{
 		return daoFabricante.pesquisar(fabricante);
 	}
+	
+	
 	
 }
