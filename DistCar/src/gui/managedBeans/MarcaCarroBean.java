@@ -3,9 +3,11 @@ package gui.managedBeans;
 import java.awt.event.ActionEvent;
 import java.util.Calendar;
 import java.util.List;
+
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+
 import classesBasicas.Fabricante;
 import classesBasicas.MarcaCarro;
 import classesBasicas.Situacao;
@@ -131,14 +133,14 @@ public class MarcaCarroBean {
 		return "marca-prop";
 	}
 
-	public String alterar() {
+	public String alterar() throws Exception {
 		if (marcaSelecionada == null) {
 			MsgPrimeFaces
 					.exibirMensagemInfomativa("Selecione um acessório para alterar!");
 			return "marca";
 		} else {
 			marcaCarro = marcaSelecionada;
-			// marcaCarro.setFabricante(Fachada.obterInstancia().consultarFabricante(marcaSelecionada.getFabricante());
+			marcaCarro.setFabricante(Fachada.obterInstancia().consultarFabricantePorId(marcaSelecionada.getFabricante().getCodigo()));
 			return "marca-prop";
 		}
 	}

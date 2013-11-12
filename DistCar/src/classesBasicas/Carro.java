@@ -20,13 +20,7 @@ public class Carro extends ObjetoGeral {
 	@Column(length=10, nullable=false)
 	private Integer anoFabricacao;
 	@ManyToOne
-	private VersaoCarro versaoCarro;
-	//@ManyToOne
-	//@Cascade(CascadeType.PERSIST)
-	//private ModeloCarro modeloCarro;
-	//@ManyToOne
-	//@Cascade(CascadeType.PERSIST)
-	//private VersaoCarro versaoModeloCarro;
+	private ModeloCarro modelo;
 	private Double valorCarro;
 	public String getChassi() {
 		return chassi;
@@ -46,11 +40,11 @@ public class Carro extends ObjetoGeral {
 	public void setAnoFabricacao(Integer anoFabricacao) {
 		this.anoFabricacao = anoFabricacao;
 	}
-	public VersaoCarro getVersaoCarro() {
-		return versaoCarro;
+	public ModeloCarro getModelo() {
+		return modelo;
 	}
-	public void setVersaoCarro(VersaoCarro versaoCarro) {
-		this.versaoCarro = versaoCarro;
+	public void setModelo(ModeloCarro modelo) {
+		this.modelo = modelo;
 	}
 	public Double getValorCarro() {
 		return valorCarro;
@@ -58,17 +52,11 @@ public class Carro extends ObjetoGeral {
 	public void setValorCarro(Double valorCarro) {
 		this.valorCarro = valorCarro;
 	}
-	public Carro() {
-		super();
-	}
-	public Carro(String chassi, String cor, Integer anoFabricacao,
-			VersaoCarro versaoCarro, Double valorCarro) {
-		super();
-		this.chassi = chassi;
-		this.cor = cor;
-		this.anoFabricacao = anoFabricacao;
-		this.versaoCarro = versaoCarro;
-		this.valorCarro = valorCarro;
+	@Override
+	public String toString() {
+		return "Carro [chassi=" + chassi + ", cor=" + cor + ", anoFabricacao="
+				+ anoFabricacao + ", modelo=" + modelo + ", valorCarro="
+				+ valorCarro + "]";
 	}
 	@Override
 	public int hashCode() {
@@ -78,10 +66,9 @@ public class Carro extends ObjetoGeral {
 				+ ((anoFabricacao == null) ? 0 : anoFabricacao.hashCode());
 		result = prime * result + ((chassi == null) ? 0 : chassi.hashCode());
 		result = prime * result + ((cor == null) ? 0 : cor.hashCode());
+		result = prime * result + ((modelo == null) ? 0 : modelo.hashCode());
 		result = prime * result
 				+ ((valorCarro == null) ? 0 : valorCarro.hashCode());
-		result = prime * result
-				+ ((versaoCarro == null) ? 0 : versaoCarro.hashCode());
 		return result;
 	}
 	@Override
@@ -108,23 +95,17 @@ public class Carro extends ObjetoGeral {
 				return false;
 		} else if (!cor.equals(other.cor))
 			return false;
+		if (modelo == null) {
+			if (other.modelo != null)
+				return false;
+		} else if (!modelo.equals(other.modelo))
+			return false;
 		if (valorCarro == null) {
 			if (other.valorCarro != null)
 				return false;
 		} else if (!valorCarro.equals(other.valorCarro))
 			return false;
-		if (versaoCarro == null) {
-			if (other.versaoCarro != null)
-				return false;
-		} else if (!versaoCarro.equals(other.versaoCarro))
-			return false;
 		return true;
-	}
-	@Override
-	public String toString() {
-		return "Carro [chassi=" + chassi + ", cor=" + cor + ", anoFabricacao="
-				+ anoFabricacao + ", versaoCarro=" + versaoCarro
-				+ ", valorCarro=" + valorCarro + "]";
 	}
 	
 }

@@ -1,28 +1,23 @@
 package gui.managedBeans;
 
-import java.awt.event.ActionEvent;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
-
 import classesBasicas.ItemSerieCarro;
 import classesBasicas.ModeloCarro;
 import classesBasicas.Situacao;
 import fachada.Fachada;
 import gui.MsgPrimeFaces;
 
-
-
 @ManagedBean
 @SessionScoped
 public class ItemSerieBean {
 
 	private ItemSerieCarro itemSerieCarro;
-	private List<ModeloCarro> modeloCarros;
+	private List<ModeloCarro> modelos;
 	public String mensagem;
 	private Date data;
 	private List<ItemSerieCarro> listaItens;
@@ -32,60 +27,12 @@ public class ItemSerieBean {
 	private int codigoSelecionado;
 	
 	
-	
-	public int getCodigoSelecionado() {
-		return codigoSelecionado;
+	public List<ModeloCarro> getModelos() {
+		return modelos;
 	}
 
-
-	public void setCodigoSelecionado(int codigoSelecionado) {
-		this.codigoSelecionado = codigoSelecionado;
-	}
-
-
-	@PostConstruct
-	public void init() {
-		itemSerieCarro = new ItemSerieCarro();
-		itemSerieCarro.setModeloCarro(new ModeloCarro());
-		listarModelo();
-		data = Calendar.getInstance().getTime();
-		listarItens();
-	}
-
-
-	public ItemSerieCarro getSituacaoSelecionada() {
-		return situacaoSelecionada;
-	}
-
-	public void setSituacaoSelecionada(ItemSerieCarro situacaoSelecionada) {
-		this.situacaoSelecionada = situacaoSelecionada;
-	}
-
-	public Situacao[] getSituacoes() {
-		return situacoes;
-	}
-
-	public void setSituacoes(Situacao[] situacoes) {
-		this.situacoes = situacoes;
-	}
-
-	
-
-
-	public ItemSerieCarro getItemSelecionado() {
-		return itemSelecionado;
-	}
-
-
-
-	public void setItemSelecionado(ItemSerieCarro itemSelecionado) {
-		this.itemSelecionado = itemSelecionado;
-	}
-
-
-
-	public void novo(ActionEvent actionEvent) {
-		init();
+	public void setModelos(List<ModeloCarro> modelos) {
+		this.modelos = modelos;
 	}
 
 	public ItemSerieCarro getItemSerieCarro() {
@@ -96,12 +43,12 @@ public class ItemSerieBean {
 		this.itemSerieCarro = itemSerieCarro;
 	}
 
-	public List<ModeloCarro> getModeloCarros() {
-		return modeloCarros;
+	public List<ModeloCarro> getModelo() {
+		return modelos;
 	}
 
-	public void setModeloCarros(List<ModeloCarro> modeloCarros) {
-		this.modeloCarros = modeloCarros;
+	public void setModelo(List<ModeloCarro> modelo) {
+		this.modelos = modelo;
 	}
 
 	public String getMensagem() {
@@ -128,6 +75,47 @@ public class ItemSerieBean {
 		this.listaItens = listaItens;
 	}
 
+	public ItemSerieCarro getItemSelecionado() {
+		return itemSelecionado;
+	}
+
+	public void setItemSelecionado(ItemSerieCarro itemSelecionado) {
+		this.itemSelecionado = itemSelecionado;
+	}
+
+	public ItemSerieCarro getSituacaoSelecionada() {
+		return situacaoSelecionada;
+	}
+
+	public void setSituacaoSelecionada(ItemSerieCarro situacaoSelecionada) {
+		this.situacaoSelecionada = situacaoSelecionada;
+	}
+
+	public Situacao[] getSituacoes() {
+		return situacoes;
+	}
+
+	public void setSituacoes(Situacao[] situacoes) {
+		this.situacoes = situacoes;
+	}
+
+	public int getCodigoSelecionado() {
+		return codigoSelecionado;
+	}
+
+	public void setCodigoSelecionado(int codigoSelecionado) {
+		this.codigoSelecionado = codigoSelecionado;
+	}
+
+	@PostConstruct
+	public void init() {
+		itemSerieCarro = new ItemSerieCarro();
+		itemSerieCarro.setModelo(new ModeloCarro());
+		listarModelo();
+		data = Calendar.getInstance().getTime();
+		listarItens();
+	}
+
 	private List<ItemSerieCarro> listarItens() {  
       listaItens = Fachada.obterInstancia().listarItens();
       return listaItens;
@@ -149,12 +137,12 @@ public class ItemSerieBean {
 		
 	public List<ModeloCarro> listarModelo() {
 		try {
-			modeloCarros = Fachada.obterInstancia().listarModelosCarros();
-			return modeloCarros;
+			modelos = Fachada.obterInstancia().listarModelosCarros();
+			return modelos;
 		} catch (Exception ex) {
 			mensagem = ex.getMessage();
 		}
-		return modeloCarros;
+		return modelos;
 	}
 
 
@@ -198,7 +186,7 @@ public class ItemSerieBean {
 	    	}
 	    	else{
 	    	itemSerieCarro = itemSelecionado;
-	    	itemSerieCarro.setModeloCarro(Fachada.obterInstancia().pesquisarModelosCarroCodigo(itemSelecionado.getModeloCarro().getCodigo()));
+	    	itemSerieCarro.setModelo(Fachada.obterInstancia().pesquisarModelosCarroCodigo(itemSelecionado.getModelo().getCodigo()));
 	    	return "item-prop";
 	    	}
 	    }

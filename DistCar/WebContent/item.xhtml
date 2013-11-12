@@ -53,21 +53,21 @@
 						requerid="false" label="Valor" />
 					<p:message for="valor" />
 
-						<h:outputLabel for="modelo" value="Modelo: * " />
+						<h:outputLabel for="modelo" value="Modelo * " />
 					<h:selectOneMenu id="modelo" converter="ModeloCarroConverter"
-						value="#{itemSerieBean.itemSerieCarro.modeloCarro}" >
+						value="#{itemSerieBean.itemSerieCarro.modelo}" >
 						<f:selectItem noSelectionOption="true"
-							itemLabel="Selecione o Modelo" itemValue="-1"/>
-						<f:selectItems value="#{itemSerieBean.modeloCarros}" var="m"
+							itemLabel="Selecione uma opção" itemValue="-1"/>
+						<f:selectItems value="#{itemSerieBean.modelos}" var="m"
 							itemLabel="#{m.descricao} #{m.ano}" itemValue="#{m}" />
 					</h:selectOneMenu>
 					<p:message for="modelo" />
 					
 					<h:outputLabel for="situacao" value="Situação: "/>
-  					<p:selectOneMenu id="situacao" value="#{itemSerieBean.itemSerieCarro.situacao}" >
+  					<h:selectOneMenu id="situacao" value="#{itemSerieBean.itemSerieCarro.situacao}" >
   						<f:selectItem itemLabel="Selecione uma opção" itemValue="" />
   						<f:selectItems value="#{itemSerieBean.situacoes}" />
-  					</p:selectOneMenu>
+  					</h:selectOneMenu>
 					<p:message for="situacao" />
 				</h:panelGrid> 
 				

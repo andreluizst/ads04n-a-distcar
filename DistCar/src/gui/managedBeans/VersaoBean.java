@@ -8,6 +8,8 @@ import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 
+import classesBasicas.AcessorioCarro;
+import classesBasicas.ItemSerieCarro;
 import classesBasicas.ModeloCarro;
 import classesBasicas.Situacao;
 import classesBasicas.VersaoCarro;
@@ -19,12 +21,17 @@ import gui.MsgPrimeFaces;
 public class VersaoBean {
 	
 	private VersaoCarro versaoCarro;
-	private List<ModeloCarro> modeloCarros;
+	private List<ModeloCarro> modelos;
 	private List<VersaoCarro> listarVersoes;
 	private VersaoCarro versaoSelecionada;
 	private VersaoCarro situacaoSelecionada;
 	private Situacao[] situacoes = Situacao.values();
-
+	private List<AcessorioCarro> acessorios;
+	private List<ItemSerieCarro> itens;
+    private List<ItemSerieCarro> itensSelecionados;
+    private List<AcessorioCarro> acessoriosSelecionados;
+    
+    
 	public VersaoCarro getVersaoCarro() {
 		return versaoCarro;
 	}
@@ -33,12 +40,12 @@ public class VersaoBean {
 		this.versaoCarro = versaoCarro;
 	}
 
-	public List<ModeloCarro> getModeloCarros() {
-		return modeloCarros;
+	public List<ModeloCarro> getModelos() {
+		return modelos;
 	}
 
-	public void setModeloCarros(List<ModeloCarro> modeloCarros) {
-		this.modeloCarros = modeloCarros;
+	public void setModelos(List<ModeloCarro> modelos) {
+		this.modelos = modelos;
 	}
 
 	public List<VersaoCarro> getListarVersoes() {
@@ -73,11 +80,45 @@ public class VersaoBean {
 		this.situacoes = situacoes;
 	}
 
+	public List<AcessorioCarro> getAcessorios() {
+		return acessorios;
+	}
+
+	public void setAcessorios(List<AcessorioCarro> acessorios) {
+		this.acessorios = acessorios;
+	}
+
+	public List<ItemSerieCarro> getItens() {
+		return itens;
+	}
+
+	public void setItens(List<ItemSerieCarro> itens) {
+		this.itens = itens;
+	}
+
+	public List<ItemSerieCarro> getItensSelecionados() {
+		return itensSelecionados;
+	}
+
+	public void setItensSelecionados(List<ItemSerieCarro> itensSelecionados) {
+		this.itensSelecionados = itensSelecionados;
+	}
+
+	public List<AcessorioCarro> getAcessoriosSelecionados() {
+		return acessoriosSelecionados;
+	}
+
+	public void setAcessoriosSelecionados(
+			List<AcessorioCarro> acessoriosSelecionados) {
+		this.acessoriosSelecionados = acessoriosSelecionados;
+	}
+
 	@PostConstruct
 	public void init() {
 		versaoCarro = new VersaoCarro();
 		listarModelo();
 		listarVersoes();
+		listarItens();
 	}
 
 	public void novo(ActionEvent actionEvent) {
@@ -90,7 +131,7 @@ public class VersaoBean {
       } 
 	
 	public String salvar() throws Exception {
-		
+		versaoCarro.setItens(itensSelecionados);
 		versaoCarro.setDataUltimaAtualizacao(Calendar.getInstance());
 		Fachada.obterInstancia().salvarVersao(versaoCarro);
 		MsgPrimeFaces.exibirMensagemInfomativa("Versão de carro salvo com sucesso!");
@@ -104,12 +145,12 @@ public class VersaoBean {
 		
 	public List<ModeloCarro> listarModelo() {
 		try {
-			modeloCarros = Fachada.obterInstancia().listarModelosCarros();
-			return modeloCarros;
+			modelos = Fachada.obterInstancia().listarModelosCarros();
+			return modelos;
 		} catch (Exception ex) {
 			MsgPrimeFaces.exibirMensagemInfomativa( ex.getMessage());
 		}
-		return modeloCarros;
+		return modelos;
 	}
 
 
@@ -156,5 +197,15 @@ public class VersaoBean {
 		 	 listarVersoes = Fachada.obterInstancia().consultarVersoes(versaoCarro);
 			 versaoCarro= new VersaoCarro();  
 			 return  "versao";
+	    }
+	    
+	    public void listarAcessorios(){
+	    	
+	    	acessorios = Fachada.obterInstancia().listarAcessoriosPorModelo(Fachada.obterInstancia().pesquisarModelosCarroCodigo(versaoCarro.getModeloCarro().getCodigo()));
+	    }
+	    
+	    public List<ItemSerieCarro> listarItens(){
+	    	//itens = Fachada.obterInstancia().listarItensPorModelo(Fachada.obterInstancia().pesquisarModelosCarroCodigo(versaoCarro.getModeloCarro().getCodigo()));
+	    	return itens = Fachada.obterInstancia().listarItensPorModelo(Fachada.obterInstancia().pesquisarModelosCarroCodigo(1));
 	    }
 }

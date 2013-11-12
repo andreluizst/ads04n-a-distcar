@@ -1,8 +1,4 @@
 package classesBasicas;
-
-
-import java.util.Calendar;
-
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 
@@ -13,7 +9,7 @@ public class ItemSerieCarro extends ObjetoGeral{
 	private String descricao;
 	private double valorItemSerie;
 	@ManyToOne
-	private ModeloCarro modeloCarro;
+	private ModeloCarro modelo;
 	public String getDescricao() {
 		return descricao;
 	}
@@ -26,20 +22,16 @@ public class ItemSerieCarro extends ObjetoGeral{
 	public void setValorItemSerie(double valorItemSerie) {
 		this.valorItemSerie = valorItemSerie;
 	}
-	public ModeloCarro getModeloCarro() {
-		return modeloCarro;
+	public ModeloCarro getModelo() {
+		return modelo;
 	}
-	public void setModeloCarro(ModeloCarro modeloCarro) {
-		this.modeloCarro = modeloCarro;
+	public void setModelo(ModeloCarro modelo) {
+		this.modelo = modelo;
 	}
-	
-	
-	public ItemSerieCarro(Integer codigo, String descricao,ModeloCarro modeloCarro, double valorItemSerie,
-			Calendar dataUltimaAtualizacao,Situacao situacao) {
-		super(codigo, dataUltimaAtualizacao, situacao);
-		this.descricao = descricao;
-		this.valorItemSerie = valorItemSerie;
-		this.modeloCarro = modeloCarro;
+	@Override
+	public String toString() {
+		return "ItemSerieCarro [descricao=" + descricao + ", valorItemSerie="
+				+ valorItemSerie + ", modelo=" + modelo + "]";
 	}
 	@Override
 	public int hashCode() {
@@ -47,8 +39,7 @@ public class ItemSerieCarro extends ObjetoGeral{
 		int result = super.hashCode();
 		result = prime * result
 				+ ((descricao == null) ? 0 : descricao.hashCode());
-		result = prime * result
-				+ ((modeloCarro == null) ? 0 : modeloCarro.hashCode());
+		result = prime * result + ((modelo == null) ? 0 : modelo.hashCode());
 		long temp;
 		temp = Double.doubleToLongBits(valorItemSerie);
 		result = prime * result + (int) (temp ^ (temp >>> 32));
@@ -68,27 +59,25 @@ public class ItemSerieCarro extends ObjetoGeral{
 				return false;
 		} else if (!descricao.equals(other.descricao))
 			return false;
-		if (modeloCarro == null) {
-			if (other.modeloCarro != null)
+		if (modelo == null) {
+			if (other.modelo != null)
 				return false;
-		} else if (!modeloCarro.equals(other.modeloCarro))
+		} else if (!modelo.equals(other.modelo))
 			return false;
 		if (Double.doubleToLongBits(valorItemSerie) != Double
 				.doubleToLongBits(other.valorItemSerie))
 			return false;
 		return true;
 	}
+	public ItemSerieCarro(String descricao, double valorItemSerie,
+			ModeloCarro modelo) {
+		super();
+		this.descricao = descricao;
+		this.valorItemSerie = valorItemSerie;
+		this.modelo = modelo;
+	}
 	public ItemSerieCarro() {
 		super();
 	}
-	@Override
-	public String toString() {
-		return "ItemSerieCarro [descricao=" + descricao + ", valorItemSerie="
-				+ valorItemSerie + ", modeloCarro=" + modeloCarro
-				+ ", getCodigo()=" + getCodigo()
-				+ ", getDataUltimaAtualizacao()=" + getDataUltimaAtualizacao()
-				+ ", getSituacao()=" + getSituacao() + "]";
-	}
-
 	
 }

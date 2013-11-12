@@ -17,6 +17,7 @@ import classesBasicas.Situacao;
 import classesBasicas.VersaoCarro;
 import dao.DAOCarro;
 import dao.IDAOCarro;
+import fachada.Fachada;
 
 public class TesteCarlos {
 	private static EntityManagerFactory emf = Persistence
@@ -25,7 +26,7 @@ public class TesteCarlos {
 
 public static void main(String[] args) {
 		
-		ItemSerieCarro is = new ItemSerieCarro();
+		/*ItemSerieCarro is = new ItemSerieCarro();
 		is.setDescricao("Arcondicionado");
 		is.setValorItemSerie(1500);
 		
@@ -70,7 +71,7 @@ public static void main(String[] args) {
 		
 		
 		IDAOCarro carroDAO = new DAOCarro();
-		carroDAO.inserir(carro);
+		carroDAO.inserir(carro);*/
 		
 		/*List<Carro> carroCons = carroDAO.pesquisarCarroPorChassi("121d");
 		for(Carro c : carroCons){
@@ -87,11 +88,12 @@ public static void main(String[] args) {
 			System.out.println(c.toString());
 		}*/
 		
-		List<Carro> carroCons = carroDAO.pesquisarCarroPorItemSerie("Ar condicionado");
+		/*List<Carro> carroCons = carroDAO.pesquisarCarroPorItemSerie("Ar condicionado");
 		for(Carro c : carroCons){
 			System.out.println(c.toString());
-		}
+		}*/
 		
+		System.out.println(Fachada.obterInstancia().listarItensPorModelo(Fachada.obterInstancia().pesquisarModelosCarroCodigo(1)));
 	em.close();
 	emf.close();
 	}

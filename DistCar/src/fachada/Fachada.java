@@ -486,6 +486,16 @@ public class Fachada implements IFachada {
 	public List<VersaoCarro> consultarVersoes(VersaoCarro versaoCarro) {
 		return this.controladorCarro.pesquisarVersoes(versaoCarro);
 	}
+	
+	@Override
+	public List<ItemSerieCarro> listarItensPorModelo(ModeloCarro modelo) {
+		return this.controladorCarro.listarItensPorModelo(modelo);
+	}
+
+	@Override
+	public List<AcessorioCarro> listarAcessoriosPorModelo(ModeloCarro modelo) {
+		return this.controladorCarro.listarAcessoriosPorModelo(modelo);
+	}
 
 	//Item Série
 	

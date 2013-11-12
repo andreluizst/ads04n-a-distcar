@@ -3,6 +3,7 @@ package fachada;
 import java.util.List;
 
 
+
 /*import classesBasicas.Carro;
 import classesBasicas.Funcao;
 import classesBasicas.ItemSerieCarro;
@@ -144,6 +145,8 @@ public interface IFachada {
 	public List<VersaoCarro> listarVersoes();
 	public VersaoCarro pesquisarVersaoCodigo(int codigo);
 	public List<VersaoCarro> consultarVersoes(VersaoCarro versaoCarro);
+	public List<ItemSerieCarro> listarItensPorModelo(ModeloCarro modelo);
+	public List<AcessorioCarro> listarAcessoriosPorModelo(ModeloCarro modelo);
 		
 	//Item 
 		

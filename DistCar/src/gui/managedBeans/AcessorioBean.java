@@ -3,6 +3,7 @@ package gui.managedBeans;
 import java.awt.event.ActionEvent;
 import java.util.Calendar;
 import java.util.List;
+
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -17,50 +18,61 @@ import gui.MsgPrimeFaces;
 public class AcessorioBean {
 	
 	private AcessorioCarro acessorioCarro;
-	private List<ModeloCarro> modeloCarros;
+	private List<ModeloCarro> modelos;
 	private List<AcessorioCarro> listaAcessorios;
 	private AcessorioCarro acessorioSelecionado;
 	private AcessorioCarro situacaoSelecionada;
 	private Situacao[] situacoes = Situacao.values();
 	
+
 	public AcessorioCarro getAcessorioCarro() {
 		return acessorioCarro;
 	}
+
 	public void setAcessorioCarro(AcessorioCarro acessorioCarro) {
 		this.acessorioCarro = acessorioCarro;
 	}
-	public List<ModeloCarro> getModeloCarros() {
-		return modeloCarros;
+
+	public List<ModeloCarro> getModelos() {
+		return modelos;
 	}
-	public void setModeloCarros(List<ModeloCarro> modeloCarros) {
-		this.modeloCarros = modeloCarros;
+
+	public void setModelos(List<ModeloCarro> modelos) {
+		this.modelos = modelos;
 	}
-	
-	public AcessorioCarro getAcessorioSelecionado() {
-		return acessorioSelecionado;
-	}
-	public void setAcessorioSelecionado(AcessorioCarro acessorioSelecionado) {
-		this.acessorioSelecionado = acessorioSelecionado;
-	}
-	public AcessorioCarro getSituacaoSelecionada() {
-		return situacaoSelecionada;
-	}
-	public void setSituacaoSelecionada(AcessorioCarro situacaoSelecionada) {
-		this.situacaoSelecionada = situacaoSelecionada;
-	}
-	public Situacao[] getSituacoes() {
-		return situacoes;
-	}
-	public void setSituacoes(Situacao[] situacoes) {
-		this.situacoes = situacoes;
-	}
-	
+
 	public List<AcessorioCarro> getListaAcessorios() {
 		return listaAcessorios;
 	}
+
 	public void setListaAcessorios(List<AcessorioCarro> listaAcessorios) {
 		this.listaAcessorios = listaAcessorios;
 	}
+
+	public AcessorioCarro getAcessorioSelecionado() {
+		return acessorioSelecionado;
+	}
+
+	public void setAcessorioSelecionado(AcessorioCarro acessorioSelecionado) {
+		this.acessorioSelecionado = acessorioSelecionado;
+	}
+
+	public AcessorioCarro getSituacaoSelecionada() {
+		return situacaoSelecionada;
+	}
+
+	public void setSituacaoSelecionada(AcessorioCarro situacaoSelecionada) {
+		this.situacaoSelecionada = situacaoSelecionada;
+	}
+
+	public Situacao[] getSituacoes() {
+		return situacoes;
+	}
+
+	public void setSituacoes(Situacao[] situacoes) {
+		this.situacoes = situacoes;
+	}
+
 	@PostConstruct
 	public void init() {
 		acessorioCarro = new AcessorioCarro();
@@ -71,7 +83,6 @@ public class AcessorioBean {
 	public void novo(ActionEvent actionEvent) {
 		init();
 	}
-
 
 	private List<AcessorioCarro> listarAcessorios() {  
       listaAcessorios = Fachada.obterInstancia().listarAcessorios();
@@ -94,12 +105,12 @@ public class AcessorioBean {
 		
 	public List<ModeloCarro> listarModelo() {
 		try {
-			modeloCarros = Fachada.obterInstancia().listarModelosCarros();
-			return modeloCarros;
+			modelos = Fachada.obterInstancia().listarModelosCarros();
+			return modelos;
 		} catch (Exception ex) {
 			MsgPrimeFaces.exibirMensagemInfomativa( ex.getMessage());
 		}
-		return modeloCarros;
+		return modelos;
 	}
 
 
@@ -130,7 +141,7 @@ public class AcessorioBean {
 	    	}
 	    	else{
 	    	acessorioCarro = acessorioSelecionado;
-	    	acessorioCarro.setModeloCarro(Fachada.obterInstancia().pesquisarModelosCarroCodigo(acessorioSelecionado.getModeloCarro().getCodigo()));
+	    	acessorioCarro.setModelo(Fachada.obterInstancia().pesquisarModelosCarroCodigo(acessorioSelecionado.getModelo().getCodigo()));
 	    	return "acessorio-prop";
 	    	}
 	    }

@@ -117,6 +117,12 @@ public class ControladorCarro {
 		return versaoCarroDAO.pesquisar(versaoCarro);
 	}
 	
+	public List<ItemSerieCarro> listarItensPorModelo(ModeloCarro modelo){
+		return versaoCarroDAO.listarItensPorModelo(modelo);
+	}
+	public List<AcessorioCarro> listarAcessoriosPorModelo(ModeloCarro modelo){
+		return versaoCarroDAO.listarAcessoriosPorModelo(modelo);
+	}
 	// Marca
 	
 	public void inserir(MarcaCarro marcaCarro) {

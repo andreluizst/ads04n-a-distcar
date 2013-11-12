@@ -12,6 +12,9 @@
         <converter-id>FabricanteConverter</converter-id>  
         <converter-class>util.FabricanteConverter</converter-class>  
     </converter>
-
+    <converter>  
+        <converter-id>VersaoConverter</converter-id>  
+        <converter-class>util.VersaoConverter</converter-class>  
+    </converter>
 
 </faces-config>

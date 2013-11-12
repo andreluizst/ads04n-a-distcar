@@ -1,6 +1,7 @@
 package classesBasicas;
 
 
+import java.util.List;
 import javax.persistence.*;
 
 
@@ -12,6 +13,10 @@ public class VersaoCarro extends ObjetoGeral {
 	private String descricao;
 	@ManyToOne
 	private ModeloCarro modeloCarro;
+	@ManyToMany
+	private List<AcessorioCarro> acessorios;
+	@ManyToMany
+	private List<ItemSerieCarro> itens;
 	public double getValor() {
 		return valor;
 	}
@@ -30,26 +35,33 @@ public class VersaoCarro extends ObjetoGeral {
 	public void setModeloCarro(ModeloCarro modeloCarro) {
 		this.modeloCarro = modeloCarro;
 	}
-	public VersaoCarro() {
-		super();
+	public List<AcessorioCarro> getAcessorios() {
+		return acessorios;
 	}
-	public VersaoCarro(double valor, String descricao, ModeloCarro modeloCarro) {
-		super();
-		this.valor = valor;
-		this.descricao = descricao;
-		this.modeloCarro = modeloCarro;
+	public void setAcessorios(List<AcessorioCarro> acessorios) {
+		this.acessorios = acessorios;
+	}
+	public List<ItemSerieCarro> getItens() {
+		return itens;
+	}
+	public void setItens(List<ItemSerieCarro> itens) {
+		this.itens = itens;
 	}
 	@Override
 	public String toString() {
 		return "VersaoCarro [valor=" + valor + ", descricao=" + descricao
-				+ ", modeloCarro=" + modeloCarro + "]";
+				+ ", modeloCarro=" + modeloCarro + ", acessorios=" + acessorios
+				+ ", itens=" + itens + "]";
 	}
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = super.hashCode();
 		result = prime * result
+				+ ((acessorios == null) ? 0 : acessorios.hashCode());
+		result = prime * result
 				+ ((descricao == null) ? 0 : descricao.hashCode());
+		result = prime * result + ((itens == null) ? 0 : itens.hashCode());
 		result = prime * result
 				+ ((modeloCarro == null) ? 0 : modeloCarro.hashCode());
 		long temp;
@@ -66,10 +78,20 @@ public class VersaoCarro extends ObjetoGeral {
 		if (getClass() != obj.getClass())
 			return false;
 		VersaoCarro other = (VersaoCarro) obj;
+		if (acessorios == null) {
+			if (other.acessorios != null)
+				return false;
+		} else if (!acessorios.equals(other.acessorios))
+			return false;
 		if (descricao == null) {
 			if (other.descricao != null)
 				return false;
 		} else if (!descricao.equals(other.descricao))
+			return false;
+		if (itens == null) {
+			if (other.itens != null)
+				return false;
+		} else if (!itens.equals(other.itens))
 			return false;
 		if (modeloCarro == null) {
 			if (other.modeloCarro != null)
@@ -81,5 +103,18 @@ public class VersaoCarro extends ObjetoGeral {
 			return false;
 		return true;
 	}
+	public VersaoCarro() {
+		super();
+	}
+	public VersaoCarro(double valor, String descricao, ModeloCarro modeloCarro,
+			List<AcessorioCarro> acessorios, List<ItemSerieCarro> itens) {
+		super();
+		this.valor = valor;
+		this.descricao = descricao;
+		this.modeloCarro = modeloCarro;
+		this.acessorios = acessorios;
+		this.itens = itens;
+	}
+	
 	
 }

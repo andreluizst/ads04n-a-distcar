@@ -53,7 +53,7 @@
 						<f:selectItem noSelectionOption="true"
 							itemLabel="Selecione o fabricante" itemValue="-1"/>
 						<f:selectItems value="#{marcaCarroBean.fabricanteCarros}" var="f"
-							itemLabel="#{f.nome}" itemValue="#{f}" />
+							itemLabel="#{f.pj.nome}" itemValue="#{f}" />
 					</h:selectOneMenu>
 					<p:message for="fabricante" />
 					
@@ -110,7 +110,7 @@
 						<h:outputText value="Fabricante" />
 					</f:facet>
 					<h:outputText 
-						value="#{marca.fabricante.nome}"/>
+						value="#{marca.fabricante.pj.nome}"/>
 				</p:column>
 
 				<p:column width="5" style="text-align: center;">
