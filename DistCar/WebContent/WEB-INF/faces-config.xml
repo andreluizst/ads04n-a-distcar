@@ -16,5 +16,9 @@
         <converter-id>VersaoConverter</converter-id>  
         <converter-class>util.VersaoConverter</converter-class>  
     </converter>
+     <converter>  
+        <converter-id>ItensConverter</converter-id>  
+        <converter-class>util.ItensConverter</converter-class>  
+    </converter>
 
 </faces-config>
