@@ -23,15 +23,10 @@ public abstract class Pessoa  extends ObjetoGeral {
 	
 	private String email;
 	
-	@Enumerated(EnumType.STRING)
-	@Column(columnDefinition = "varchar(15) default 'NAO_É_CLIENTE'", nullable=false)
-	private TipoCliente tipoCliente;
-	
 	
 	public Pessoa() {
 		super();
 		endereco = new Endereco();
-		tipoCliente = TipoCliente.NAO_É_CLIENTE;
 	}
 	
 	public Pessoa(Calendar dataUltimaAtualizacao, Situacao situacao) {
@@ -90,15 +85,6 @@ public abstract class Pessoa  extends ObjetoGeral {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	
-	public TipoCliente getTipoCliente() {
-		return tipoCliente;
-	}
-
-	public void setTipoCliente(TipoCliente tipoCliente) {
-		this.tipoCliente = tipoCliente;
-	}
-	
 	
 	
 

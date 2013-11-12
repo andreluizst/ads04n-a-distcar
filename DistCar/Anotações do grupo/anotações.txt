@@ -24,4 +24,9 @@ André 10/11/2013 23:24
 
 André 11/11/2013  23:45
     Manda um link me ensinando como fazer para ao selecionar um combox ativar o debaixo de acordo com o item selecionado em cima.
-   
+ 	- RES: Felipe, olha no arquivo funcao-prop.xhtml, nas TAGs <selectOneMenu> das UFs e das Cidades, e também
+ 			no método filtarCidades da classe FuncaoBean.java 
+ 			
+ De André 2013-11-12 -> Pessoal, favor recriar o banco,pois tive que mudar a classe Pessoa e atualizar a classe
+ 	Cliente.java. Também corrigi a classe Fabricante que estava com um atribudo MarcaCarro (agora excluido).
+ 	Amanhão finalizarei o CRUD cliente, pois o ClienteBean já está 90% conluído.

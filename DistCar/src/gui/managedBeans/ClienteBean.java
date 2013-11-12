@@ -87,7 +87,7 @@ public class ClienteBean {
 	private void prepararParaExibirDados(Cliente obj){
 		this.cliente = obj;
 		this.cliente.setDadosPessoa(obj.getDadosPessoa());
-		this.cliente.setSituacao(obj.getSituacao());
+		this.cliente.getDadosPessoa().setSituacao(obj.getDadosPessoa().getSituacao());
 		codigoTipoLogradouroSelecionado = obj.getDadosPessoa().getEndereco().getTipoLogradouro().getCodigo();	
 		codigoCidadeSelecionada = obj.getDadosPessoa().getEndereco().getCidade().getCodigo();
 		codigoUfSelecionada = obj.getDadosPessoa().getEndereco().getCidade().getUnidadeFederativa().getCodigo();

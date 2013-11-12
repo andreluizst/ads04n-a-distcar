@@ -8,8 +8,10 @@ import javax.persistence.EntityTransaction;
 import javax.swing.JOptionPane;
 
 import classesBasicas.*;
+import dao.DAOPessoaJuridica;
 import dao.DAOTipoLogradouro;
 import dao.DAOUnidadeFederativa;
+import dao.IDAOPessoaJuridica;
 import dao.IDAOTipoLogradouro;
 import dao.IDAOUnidadeFederativa;
 
@@ -19,6 +21,7 @@ public class TesteAndre {
 		EntityTransaction et = em.getTransaction();
 		IDAOUnidadeFederativa daoUF = new DAOUnidadeFederativa(em);
 		IDAOTipoLogradouro daoTipoLog = new DAOTipoLogradouro(em);
+		IDAOPessoaJuridica daoPJ = new DAOPessoaJuridica(em);
 		try{
 			et.begin();
 			
@@ -55,25 +58,27 @@ public class TesteAndre {
 			daoUF.inserirSemTratamento(new UnidadeFederativa("Tocantins", "TO", Calendar.getInstance(), Situacao.ATIVO));
 			
 			//**** persistindo Cliente PF ***
-			PessoaFisica pf = new PessoaFisica("Maria Lima", "22233344455", "111222333", "SSPPE");
-			pf.setEndereco(new Endereco(daoTipoLog.consultarPorId(1), "Rua 8", "s/n", "teste1",
-											new Cidade("Recife", daoUF.pegarUF("Pernambuco", "PE")),"51245000"
-										)
-								);
-			pf.setTipoCliente(TipoCliente.PESSOA_FISICA);
-			pf.setDataUltimaAtualizacao(Calendar.getInstance());
-			pf.setSituacao(Situacao.ATIVO);
-			em.persist(pf);
+			Cliente cliente1 = new Cliente();
+			cliente1.setDadosPessoa(new PessoaFisica("Maria Lima", "22233344455", "111222333", "SSPPE"));
+			cliente1.getDadosPessoa().setEndereco(new Endereco(daoTipoLog.consultarPorId(1), "Rua 8", "s/n", "teste1",
+												new Cidade("Recife", daoUF.pegarUF("Pernambuco", "PE")),"51245000"
+											)
+									);
+			//pf.setTipoCliente(TipoCliente.PESSOA_FISICA);
+			cliente1.getDadosPessoa().setDataUltimaAtualizacao(Calendar.getInstance());
+			cliente1.getDadosPessoa().setSituacao(Situacao.ATIVO);
+			em.persist(cliente1);
 			
-			PessoaFisica pf2 = new PessoaFisica("Antônio Carlos", "12145456", "3654984", "SSPPE");
-			pf2.setEndereco(new Endereco(daoTipoLog.consultarPorId(1), "Júlia Rocha", "26", "Bairro da Rocha",
-											new Cidade("Jaboatão dos Guararapes", daoUF.pegarUF("Pernambuco", "PE")),"51245000"
-										)
-								);
-			pf2.setTipoCliente(TipoCliente.PESSOA_FISICA);
-			pf2.setDataUltimaAtualizacao(Calendar.getInstance());
-			pf2.setSituacao(Situacao.ATIVO);
-			em.persist(pf2);
+			Cliente cliente2 = new Cliente();
+			cliente2.setDadosPessoa(new PessoaFisica("Antônio Carlos", "12145456", "3654984", "SSPPE"));
+			cliente2.getDadosPessoa().setEndereco(new Endereco(daoTipoLog.consultarPorId(1), "Júlia Rocha", "26", "Bairro da Rocha",
+												new Cidade("Jaboatão dos Guararapes", daoUF.pegarUF("Pernambuco", "PE")),"51245000"
+											)
+									);
+			//pf2.setTipoCliente(TipoCliente.PESSOA_FISICA);
+			cliente2.getDadosPessoa().setDataUltimaAtualizacao(Calendar.getInstance());
+			cliente2.getDadosPessoa().setSituacao(Situacao.ATIVO);
+			em.persist(cliente2);
 			
 			//***** persistindo PJ *****
 			PessoaJuridica pj = new PessoaJuridica("FIAT", "10111222000100", "111222333", Calendar.getInstance().getTime());
@@ -81,10 +86,20 @@ public class TesteAndre {
 											new Cidade("Olinda", daoUF.pegarUF("Pernambuco", "PE")), "50000650"
 										)
 								);
-			pj.setTipoCliente(TipoCliente.NAO_É_CLIENTE);
+			//pj.setTipoCliente(TipoCliente.NAO_É_CLIENTE);
 			pj.setDataUltimaAtualizacao(Calendar.getInstance());
 			pj.setSituacao(Situacao.ATIVO);
 			em.persist(pj);
+			
+			
+			
+			//**** persistindo Cliente PJ
+			Cliente clientePJ = new Cliente();
+			clientePJ.setTipoCliente(TipoCliente.PESSOA_JURIDICA);
+			clientePJ.setDadosPessoa(daoPJ.consultarPorId(3));//PJ FIAT
+			em.persist(clientePJ);
+			
+			
 			
 			// *** persistindo Funcao ***
 			Funcao funcao1 = new Funcao("Atendente", 820.50);
@@ -106,7 +121,7 @@ public class TesteAndre {
 									new Cidade("Belém", daoUF.pegarUF("Pará", "PA")), "51030540"
 								)
 							),
-							marcaCarro, 10);
+							/*marcaCarro,*/ 10);
 			em.persist(fabricante);	
 		
 			//*** persistindo Centro ***

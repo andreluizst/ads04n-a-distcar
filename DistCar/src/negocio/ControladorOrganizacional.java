@@ -623,16 +623,16 @@ public class ControladorOrganizacional {
 	}
 	
 	public void inserirCliente(Cliente cliente) throws Exception{
-		cliente.setDataUltimaAtualizacao(Calendar.getInstance());
-		if (cliente.getSituacao() == null)
-			cliente.setSituacao(Situacao.ATIVO);
+		cliente.getDadosPessoa().setDataUltimaAtualizacao(Calendar.getInstance());
+		if (cliente.getDadosPessoa().getSituacao() == null)
+			cliente.getDadosPessoa().setSituacao(Situacao.ATIVO);
 		daoCliente.inserir(cliente);
 	}
 	
 	public void alterarCliente(Cliente cliente) throws Exception{
-		cliente.setDataUltimaAtualizacao(Calendar.getInstance());
-		if (cliente.getSituacao() == null)
-			cliente.setSituacao(Situacao.ATIVO);
+		cliente.getDadosPessoa().setDataUltimaAtualizacao(Calendar.getInstance());
+		if (cliente.getDadosPessoa().getSituacao() == null)
+			cliente.getDadosPessoa().setSituacao(Situacao.ATIVO);
 		daoCliente.alterar(cliente);
 	}
 	

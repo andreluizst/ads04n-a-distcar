@@ -16,9 +16,9 @@ public class Fabricante /*extends ObjetoGeral*/ {
 	@JoinColumn(name="codPJ", insertable=true, updatable=true)
 	private PessoaJuridica pj;
 	
-	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+	/*@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
 	@JoinColumn(name="codMarca", insertable=true, updatable=true)
-	private MarcaCarro marcaCarro;
+	private MarcaCarro marcaCarro;*/
 	
 	
 	private Integer loteMinimo;
@@ -43,11 +43,10 @@ public class Fabricante /*extends ObjetoGeral*/ {
 		// TODO Auto-generated constructor stub
 	}	*/
 	
-	public Fabricante(PessoaJuridica pj, MarcaCarro marcaCarro,
-			Integer loteMinimo) {
+	public Fabricante(PessoaJuridica pj, /*MarcaCarro marcaCarro,*/Integer loteMinimo) {
 		super();
 		this.pj = pj;
-		this.marcaCarro = marcaCarro;
+		//this.marcaCarro = marcaCarro;
 		this.loteMinimo = loteMinimo;
 	}
 	
@@ -77,18 +76,18 @@ public class Fabricante /*extends ObjetoGeral*/ {
 		this.codigo = codigo;
 	}
 
-	public MarcaCarro getMarcaCarro() {
+	/*public MarcaCarro getMarcaCarro() {
 		return marcaCarro;
 	}
 
 	public void setMarcaCarro(MarcaCarro marcaCarro) {
 		this.marcaCarro = marcaCarro;
-	}
+	}*/
 
 	@Override
 	public String toString() {
 		return "Fabricante [codigo=" + codigo + ", pj=" + pj + ", marcaCarro="
-				+ marcaCarro + ", loteMinimo=" + loteMinimo + "]";
+				/*+ marcaCarro*/ + ", loteMinimo=" + loteMinimo + "]";
 	}
 
 	@Override
@@ -98,8 +97,6 @@ public class Fabricante /*extends ObjetoGeral*/ {
 		result = prime * result + ((codigo == null) ? 0 : codigo.hashCode());
 		result = prime * result
 				+ ((loteMinimo == null) ? 0 : loteMinimo.hashCode());
-		result = prime * result
-				+ ((marcaCarro == null) ? 0 : marcaCarro.hashCode());
 		result = prime * result + ((pj == null) ? 0 : pj.hashCode());
 		return result;
 	}
@@ -110,7 +107,7 @@ public class Fabricante /*extends ObjetoGeral*/ {
 			return true;
 		if (obj == null)
 			return false;
-		if (getClass() != obj.getClass())
+		if (!(obj instanceof Fabricante))
 			return false;
 		Fabricante other = (Fabricante) obj;
 		if (codigo == null) {
@@ -123,11 +120,6 @@ public class Fabricante /*extends ObjetoGeral*/ {
 				return false;
 		} else if (!loteMinimo.equals(other.loteMinimo))
 			return false;
-		if (marcaCarro == null) {
-			if (other.marcaCarro != null)
-				return false;
-		} else if (!marcaCarro.equals(other.marcaCarro))
-			return false;
 		if (pj == null) {
 			if (other.pj != null)
 				return false;
@@ -135,7 +127,6 @@ public class Fabricante /*extends ObjetoGeral*/ {
 			return false;
 		return true;
 	}
-	
 	
 	
 }

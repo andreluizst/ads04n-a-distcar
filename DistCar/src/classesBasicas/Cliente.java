@@ -9,11 +9,18 @@ import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 
 @Entity
-public class Cliente extends ObjetoGeral{
+public class Cliente /*extends ObjetoGeral*/{
+	
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	private Integer codigo;
 	
 	@Enumerated(EnumType.STRING)
 	@Column(columnDefinition = "varchar(15) default 'PESSOA_FISICA'", nullable=false)
@@ -30,14 +37,18 @@ public class Cliente extends ObjetoGeral{
 	}
 
 	public Cliente(Calendar dataUltimaAtualizacao, Situacao situacao) {
-		super(dataUltimaAtualizacao, situacao);
-		// TODO Auto-generated constructor stub
+		//super(dataUltimaAtualizacao, situacao);
+		this();
+		dadosPessoa.setDataUltimaAtualizacao(dataUltimaAtualizacao);
+		dadosPessoa.setSituacao(situacao);
 	}
 
 	public Cliente(Integer codigo, Calendar dataUltimaAtualizacao,
 			Situacao situacao) {
-		super(codigo, dataUltimaAtualizacao, situacao);
-		// TODO Auto-generated constructor stub
+		//super(codigo, dataUltimaAtualizacao, situacao);
+		this(dataUltimaAtualizacao, situacao);
+		this.codigo = codigo;
+		//dadosPessoa.setCodigo(codigo);
 	}
 
 	public Cliente(String nome, Endereco endereco,
@@ -50,9 +61,9 @@ public class Cliente extends ObjetoGeral{
 		this.dadosPessoa.setEmail(email);
 		this.dadosPessoa.setDataUltimaAtualizacao(dataUltimaAtualizacao);
 		this.dadosPessoa.setSituacao(situacao);
-		setDataUltimaAtualizacao(dataUltimaAtualizacao);
-		setSituacao(situacao);
 		this.tipoCliente = tipoCliente;
+		//setDataUltimaAtualizacao(dataUltimaAtualizacao);
+		//setSituacao(situacao);
 	}
 
 	public Cliente(String nome, Endereco endereco,
@@ -65,6 +76,16 @@ public class Cliente extends ObjetoGeral{
 		this.tipoCliente = tipoCliente;
 	}
 	
+	
+	
+	public Integer getCodigo() {
+		return codigo;
+	}
+
+	public void setCodigo(Integer codigo) {
+		this.codigo = codigo;
+	}
+
 	public TipoCliente getTipoCliente() {
 		return tipoCliente;
 	}
