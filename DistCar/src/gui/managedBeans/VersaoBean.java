@@ -131,8 +131,9 @@ public class VersaoBean {
       } 
 	
 	public String salvar() throws Exception {
-		versaoCarro.setItens(itensSelecionados);
+		//versaoCarro.setItens(itensSelecionados);
 		versaoCarro.setDataUltimaAtualizacao(Calendar.getInstance());
+		System.out.println(versaoCarro);
 		Fachada.obterInstancia().salvarVersao(versaoCarro);
 		MsgPrimeFaces.exibirMensagemInfomativa("Versão de carro salvo com sucesso!");
 		init();
