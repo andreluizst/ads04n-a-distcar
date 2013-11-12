@@ -73,8 +73,9 @@
 				
 				 <h:panelGrid columns="4" style="margin-bottom:10px" cellpadding="5">  
 				<h:outputText value="Itens *" />  
-        				<p:selectManyCheckbox id="itens" value="#{versaoBean.itensSelecionados}" layout="grid" columns="1">  
-           				    <f:selectItems value="#{versaoBean.itens}" var="i"
+        				<p:selectManyCheckbox id="itens" converter="ItensConverter"
+        				 value="#{versaoBean.versaoCarro.itens}" layout="grid" columns="1">  
+           				    <f:selectItems value="#{versaoBean.itens}" var="i" 
            				      itemLabel="#{i.descricao}"/>  
        					</p:selectManyCheckbox>
        					
