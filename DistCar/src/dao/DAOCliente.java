@@ -81,9 +81,9 @@ public class DAOCliente extends DAOGenerico<Cliente> implements IDAOCliente {
 		if (temUf)
 			tqry.setParameter("codigoUf", cliente.getDadosPessoa().getEndereco().getCidade().getUnidadeFederativa().getCodigo());
 		if (temCpf)
-			tqry.setParameter("cpf", cpfCnpj);
+			tqry.setParameter("cpf", "%" + cpfCnpj + "%");
 		if (temCnpj)
-			tqry.setParameter("cnpj", cpfCnpj);
+			tqry.setParameter("cnpj", "%" + cpfCnpj + "%");
 		if (temSituacao)
 			tqry.setParameter("situacao", cliente.getDadosPessoa().getSituacao());
 		

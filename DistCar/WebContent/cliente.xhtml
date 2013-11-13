@@ -37,18 +37,22 @@
   				<h:panelGrid columns="2" cellpadding="5">
   				
   					<h:outputLabel for="tipoCliente" value="Tipo de cliente: "/>
-  					<p:selectOneMenu id="tipoCliente" value="#{clienteBean.clienteParaPesquisa.tipoCliente}" >
+  					<p:selectOneMenu id="tipoCliente" value="#{clienteBean.clienteParaPesquisa.tipoCliente}"
+  								valueChangeListener="#{clienteBean.mudarCpfCnpj}" >
   						<f:selectItem itemLabel="Todas os tipos" itemValue="#{null}" />
   						<f:selectItems value="#{clienteBean.tiposCliente}" />
+  						<f:ajax render="panelPesquisa" event="valueChange"/>
   					</p:selectOneMenu>
   				
   					<h:outputLabel for="nome" value="Nome: "/>
-  					<h:inputText id="nome" value="#{clienteBean.clienteParaPesquisa.dadosPessoa.nome}" lable="Nome"/>
+  					<h:inputText id="nome" value="#{clienteBean.nomeParaPesquisa}" lable="Nome"/>
   					
-  					<h:outputLabel for="cpf" value="CPF/CNPJ: "/>
-  					<p:inputMask id="cpf" validatorMessage="O campo CPF/CNPJ deve conter apeans números!" size="20" 
-  							value="#{clienteBean.cpfCnpjPesquisa}" lable="CPF/CNPJ">
-  						
+  					<h:outputLabel for="cpfOuCnpj" value="#{clienteBean.cpfOuCnpj}: "
+  								rendered="#{clienteBean.cpfOuCnpjVisible}" />
+  					<p:inputMask id="cpfOuCnpj" mask="#{clienteBean.mascaraCpfOuCnpj}" 
+  							validatorMessage="O campo CPF/CNPJ deve conter apeans números!" size="20" 
+  							value="#{clienteBean.cpfCnpjPesquisa}" lable="#{clienteBean.cpfOuCnpj}"
+  							rendered="#{clienteBean.cpfOuCnpjVisible}" >
   					</p:inputMask>
   					  							
   					<h:outputLabel for="unidadeFederativa" value="UF: "/>
