@@ -333,6 +333,11 @@ public class Fachada implements IFachada {
 		ctrlOrg.excluirCliente(cliente);
 		
 	}
+	
+	@Override
+	public List<Cliente> pesquisarCliente(Cliente exemplo) throws Exception{
+		return ctrlOrg.pesquisarCliente(exemplo);
+	}
 
 	@Override
 	public List<Cliente> consultarCliente(Cliente cliente) throws Exception {

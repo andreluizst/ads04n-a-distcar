@@ -644,8 +644,12 @@ public class ControladorOrganizacional {
 		return daoCliente.consultarTodos();
 	}
 	
+	public List<Cliente> pesquisarCliente(Cliente exemplo) throws Exception{
+		return daoCliente.pesquisar(exemplo);
+	}
+	
 	public List<Cliente> consultarCliente(Cliente cliente) throws Exception{
-		return daoCliente.pesquisar(cliente);
+		return daoCliente.consultar(cliente);
 	}
 	
 

@@ -64,10 +64,13 @@ public class FuncaoBean {
 			lista = new ArrayList<Funcao>();
 		else
 			lista.clear();
+		resourceBundle = ResourceBundle.getBundle("util.config");
 		listaEstaVazia = true;
 		funcaoDePesquisa = new Funcao();
 		funcaoSelecionada = null;
-		tituloOperacao = FuncaoBean.OP_NOVA;
+		tituloOperacao = FuncaoBean.OP_VISUALIZAR;
+		textoBotaoFecharOuCancelar = FuncaoBean.TXT_BTN_FECHAR;
+		somenteLeitura = true;
 	}
 	
 	private void prepararParaExibirDados(Funcao obj){

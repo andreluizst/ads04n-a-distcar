@@ -37,7 +37,7 @@
   				<h:panelGrid columns="2" cellpadding="5">
   				
   					<h:outputLabel for="tipoCliente" value="Tipo de cliente: "/>
-  					<p:selectOneMenu id="tipoCliente" value="#{clienteBean.clienteParaPesquisa.tipoPessoa}" >
+  					<p:selectOneMenu id="tipoCliente" value="#{clienteBean.clienteParaPesquisa.tipoCliente}" >
   						<f:selectItem itemLabel="Todas os tipos" itemValue="#{null}" />
   						<f:selectItems value="#{clienteBean.tiposCliente}" />
   					</p:selectOneMenu>
@@ -61,7 +61,7 @@
   					</p:selectOneMenu>
   					
   					<h:outputLabel for="cbxCidades" value="Cidade: "/>
-  					<p:selectOneMenu id="cbxCidades" value="#{cidadeBean.codigoCidadePesquisa}">
+  					<p:selectOneMenu id="cbxCidades" value="#{clienteBean.codigoCidadePesquisa}">
   						<f:selectItem noSelectionOption="true" itemLabel="Qualquer cidade" itemValue="#{null}" />
   						<f:selectItems value="#{clienteBean.cidadesPesquisa}" var="cid" 
   								itemLabel="#{cid.nome}" itemValue="#{cid.codigo}" />
@@ -76,67 +76,62 @@
   					
   				</h:panelGrid>
 				
-				<p:commandButton value="Novo"    update="panelPesquisa" action="#{funcionarioBean.novo}"/>
-   				<p:commandButton disabled="#{funcionarioBean.listaEstaVazia}" value="Alterar" 
-   								update="panelPesquisa" action="#{funcionarioBean.alterar}" />
-   				<p:commandButton disabled="#{funcionarioBean.listaEstaVazia}" value="Excluir" 
-   								update="tbLista" actionListener="#{funcionarioBean.excluir}">
+				<p:commandButton value="Novo"    update="panelPesquisa" action="#{clienteBean.novo}"/>
+   				<p:commandButton disabled="#{clienteBean.listaEstaVazia}" value="Alterar" 
+   								update="panelPesquisa" action="#{clienteBean.alterar}" />
+   				<p:commandButton disabled="#{clienteBean.listaEstaVazia}" value="Excluir" 
+   								update="tbLista" actionListener="#{clienteBean.excluir}">
    					<p:confirm header="Confirmação" 
-   							message="Confirma a exclusão do funcionário selecionado?"
+   							message="Confirma a exclusão do cliente selecionado?"
    							icon="ui-icon-alert" />  
    				</p:commandButton>
 
-  				<p:commandButton value="Consultar"  update="frmPrincipal" actionListener="#{funcionarioBean.consultar}"/>
-  				<p:commandButton disabled="#{funcionarioBean.listaEstaVazia}" value="Detalhes" update="panelPesquisa"
-  							 action="#{funcionarioBean.visualizar}" />
-  				<p:commandButton value="Limpar"  update="frmPrincipal" actionListener="#{funcionarioBean.limpar}"/>
+  				<p:commandButton value="Consultar"  update="frmPrincipal" actionListener="#{clienteBean.consultar}"/>
+  				<p:commandButton disabled="#{clienteBean.listaEstaVazia}" value="Detalhes"
+  						 update="panelPesquisa" action="#{clienteBean.visualizar}" />
+  				<p:commandButton value="Limpar"  update="frmPrincipal" actionListener="#{clienteBean.limpar}"/>
   				
  			</p:panel>
 
-  			<p:dataTable id="tbLista" var="funcionario" value="#{funcionarioBean.lista}" paginator="true" rows="5"
+  			<p:dataTable id="tbLista" var="cliente" value="#{clienteBean.lista}" paginator="true" rows="5"
   						paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks}
   						{NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rowsPerPageTemplate="5,10,15"
-  						selection="#{funcionarioBean.funcionarioSelecionado}" selectionMode="single" rowKey="#{funcionario}">
+  						selection="#{clienteBean.clienteSelecionado}" selectionMode="single" rowKey="#{cliente}">
   				<f:facet name="header">Lista de Funconários</f:facet>
   				<p:column>
   					<f:facet name="header"><h:outputText value="Código"/> </f:facet>
-  					<h:outputText value="#{funcionario.codigo}"/>
+  					<h:outputText value="#{cliente.codigo}"/>
+  				</p:column>
+  				
+  				<p:column>
+  					<f:facet name="header"><h:outputText value="Tipo cliente"/> </f:facet>
+  					<h:outputText value="#{cliente.tipoCliente}"/>
   				</p:column>
   				
   				<p:column>
   					<f:facet name="header"><h:outputText value="Nome"/> </f:facet>
-  					<h:outputText value="#{funcionario.nome}"/>
+  					<h:outputText value="#{cliente.dadosPessoa.nome}"/>
   				</p:column>
   				
   				<p:column>
-  					<f:facet name="header"><h:outputText value="CPF"/> </f:facet>
-  					<h:outputText value="#{funcionario.cpf}"/>
+  					<f:facet name="header"><h:outputText value="CPF/CNPJ"/> </f:facet>
+  					<h:outputText value="#{cliente.dadosPessoa}"/>
   				</p:column>
   				
   				<p:column>
-  					<f:facet name="header"><h:outputText value="RG"/> </f:facet>
-  					<h:outputText dir="rtl" value="#{funcionario.rg}"/>
-  				</p:column>
-  				
-  				<p:column>
-  					<f:facet name="header"><h:outputText value="Endereco"/> </f:facet>
-  					<h:outputText value="#{funcionario.endereco}"/>
-  				</p:column>
-  				
-  				<p:column>
-  					<f:facet name="header"><h:outputText value="Função"/> </f:facet>
-  					<h:outputText value="#{funcionario.funcao}"/>
+  					<f:facet name="header"><h:outputText value="Endereço"/> </f:facet>
+  					<h:outputText value="#{cliente.dadosPessoa.endereco}"/>
   				</p:column>
   				
   				<p:column>
   					<f:facet name="header"><h:outputText value="Situação"/> </f:facet>
-  					<h:outputText value="#{funcionario.situacao}"/>
+  					<h:outputText value="#{cliente.dadosPessoa.situacao}"/>
   				</p:column>
   				
   				<p:column>
   					<f:facet name="header"><h:outputText value="Última atualização"/> </f:facet>
-  					<h:outputText value="#{funcionario.dataUltimaAtualizacao.time}">
-  						<f:convertDateTime pattern="dd/MM/yyyy 'às' HH:mm:ss"/>
+  					<h:outputText value="#{cliente.dadosPessoa.dataUltimaAtualizacao.time}">
+  						<f:convertDateTime pattern="dd/MM/yyyy"/>
   					</h:outputText>
   				</p:column>
   				

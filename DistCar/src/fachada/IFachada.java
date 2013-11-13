@@ -96,6 +96,7 @@ public interface IFachada {
 	//****************************  C L I E N T E  ***************************************
 	public void salvarCliente(Cliente cliente) throws Exception;
 	public void excluirCliente(Cliente cliente) throws Exception;
+	public List<Cliente> pesquisarCliente(Cliente exemplo) throws Exception;
 	public List<Cliente> consultarCliente(Cliente cliente) throws Exception;
 	public List<Cliente> listarClientes() throws Exception;
 	

@@ -11,7 +11,6 @@ import javax.faces.event.ValueChangeEvent;
 
 import classesBasicas.Cidade;
 import classesBasicas.Cliente;
-import classesBasicas.Pessoa;
 import classesBasicas.PessoaFisica;
 import classesBasicas.PessoaJuridica;
 import classesBasicas.Situacao;
@@ -190,6 +189,15 @@ public class ClienteBean {
 	
 	public void consultar(){
 		try{
+			if (clienteParaPesquisa.getTipoCliente() == TipoCliente.PESSOA_FISICA){
+				clienteParaPesquisa.setDadosPessoa(new PessoaFisica());
+				((PessoaFisica)clienteParaPesquisa.getDadosPessoa()).setCpf(cpfCnpjPesquisa);
+			}else{
+				if (clienteParaPesquisa.getTipoCliente() == TipoCliente.PESSOA_JURIDICA){
+					clienteParaPesquisa.setDadosPessoa(new PessoaJuridica());
+					((PessoaJuridica)clienteParaPesquisa.getDadosPessoa()).setCnpj(cpfCnpjPesquisa);
+				}
+			}
 			if (codigoCidadePesquisa != null && codigoCidadePesquisa > 0)
 				clienteParaPesquisa.getDadosPessoa().getEndereco().getCidade().setCodigo(codigoCidadePesquisa);
 			if (codigoUfPesquisa != null && codigoUfPesquisa > 0)
@@ -234,6 +242,25 @@ public class ClienteBean {
 	public String carregarPagina(){
 		inicializar();
 		return resourceBundle.getString("linkCliente");//"cliente.xhtml?faces-redirect=true";
+	}
+	
+	public void filtrarCidadesPesquisa(ValueChangeEvent evento){
+		codigoUfPesquisa = (Integer)evento.getNewValue();
+		if (codigoUfPesquisa != null){
+			try{
+				codigoUfPesquisa = (Integer)evento.getNewValue();
+				UnidadeFederativa uf = new UnidadeFederativa();
+				uf.setCodigo(codigoUfPesquisa);
+				if (codigoUfPesquisa != null){
+					cidadesPesquisa = fachada.consultarCidadesPorUF(uf);
+				}else
+					MsgPrimeFaces.exibirMensagemDeErro("Não foi possível filtar as cidades da UF = null.");
+				//if (cliente.getDadosPessoa().getEndereco().getCidade().getCodigo() != null && cliente.getDadosPessoa().getEndereco().getCidade().getCodigo() > 0)
+					codigoCidadePesquisa = null;//cliente.getDadosPessoa().getEndereco().getCidade().getCodigo();
+			}catch(Exception ex){
+				MsgPrimeFaces.exibirMensagemDeErro("Não foi possível filtar as cidades pela UF!");
+			}
+		}
 	}
 	
 	public void filtrarCidades(ValueChangeEvent evento){
