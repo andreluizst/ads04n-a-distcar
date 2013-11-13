@@ -1,11 +1,168 @@
 <?xml version="1.0" encoding="ISO-8859-1" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
-<title>Insert title here</title>
-</head>
-<body>
+<html 
+	xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+>
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+	<title>DistCar 1.0 - Cliente</title>
+	<h:outputStylesheet name="styles-PSC.css" library="css"></h:outputStylesheet>
+</h:head>
+<h:body>
+	<f:view id="viewCliente-prop">
+		
+		<h:form id="frmMensagens">
+			<p:messages id="messages" showDetail="true" autoUpdate="true" closable="true"></p:messages>
+			<p:growl id="growl" showDetail="true" sticky="false" globalOnly="true" />
+		</h:form>
+		
+  		<h:form id="frmPrincial">
+  			<p:panel id="panel" header="DistCar - #{clienteBean.tituloOperacao}">
+  				<h:panelGrid columns="2" cellpadding="5">
+  					<h:outputLabel for="alias" value="Alias: *"/>
+  					<p:inputText id="alias" value="#{clienteBean.centro.alias}" lable="Alias"
+  								required="true" requiredMessage="Um alias é obrigatório!" />
+  					
+  					<h:outputLabel for="nome" value="Nome/Razão social: *"/>
+  					<p:inputText id="nome" value="#{clienteBean.cliente.dadosPessoa.nome}" lable="Nome"
+  							readonly="#{clienteBean.somenteLeitura}"
+  							required="true" requiredMessage="O nome é obrigatório!" />
+  					
+  					<p:panel header="Pessoa jurídica" rendered="#{clienteBean.pjVisivel}">
+  						
+  						<h:outputLabel for="cnpj" value="CNPJ: *"/>
+  						<p:inputMask id="cnpj" mask="99.999.999/9999-99" size="20" 
+  								readonly="#{clienteBean.somenteLeitura}"
+  								value="#{clienteBean.cliente.pjAux.cnpj}" lable="CNPJ"
+	  							required="true" requiredMessage="O preenchimento do campo CNPJ é obrigatório!" >
+  						</p:inputMask>
+  						
+  						<h:outputLabel for="data" value="Data da abertura: "/>
+  						<p:calendar id="data" value="#{clienteBean.pjAux.dataAbertura}"
+  							effect="explode" pattern="dd/MM/yyyy"
+  							readonly="#{clienteBean.somenteLeitura}" />
+  					
+  						<h:outputLabel for="inscEst" value="Inscrição estadual: *"/>
+  						<p:inputText id="inscEst" value="#{clienteBean.pjAux.inscricaoEstadual}"
+  									lable="Inscrição estadual" readonly="#{clienteBean.somenteLeitura}"
+	  								required="true" requiredMessage="Informe a inscrição estadual. se não tiver digite: ISENTO"/>
 
-</body>
+  					</p:panel>
+  					
+  					<p:panel header="Pessoa física" rendered="#{clienteBean.pfVisivel}">
+  					
+  						<h:outputLabel for="cpf" value="CPF: *"/>
+  						<p:inputMask id="cpf" mask="99.999.999-99" size="20"
+  								value="#{funcionarioBean.funcionario.cpf}" lable="CPF"
+  								readonly="#{funcionarioBean.somenteLeitura}"
+  								required="true" requiredMessage="Informe o CPF!">
+  						</p:inputMask>
+  						<p:message for="cpf" display="default" />
+  					
+  						<h:outputLabel for="rg" value="RG: *"/>
+  						<p:inputText id="rg" value="#{funcionarioBean.funcionario.rg}" lable="RG" size="20"
+  								converterMessage="Digite apenas números no campo RG" 
+								readonly="#{funcionarioBean.somenteLeitura}"
+								required="true" requiredMessage="Informe o RG!" />
+	  					<p:message for="rg" display="default" />
+					  					
+  						<h:outputLabel for="orgaoExp" value="Orgão expedidor: *"/>
+  						<p:inputText id="orgaoExp" value="#{funcionarioBean.funcionario.orgaoExpedidor}" lable="Orgão expedidor"
+  								 readonly="#{funcionarioBean.somenteLeitura}"
+  								 required="true" requiredMessage="Informe o orgão expedidor do documento de identidade!" />
+  						<p:message for="orgaoExp" display="default" />
+  						
+  						<h:outputLabel for="data" value="Data de nascimento: *"/>
+  						<p:calendar id="data" value="#{funcionarioBean.funcionario.dataNascimento}"
+  							effect="explode" pattern="dd/MM/yyyy" 
+  							readonly="#{funcionarioBean.somenteLeitura}"
+  							required="true" requiredMessage="Informe a data de nascimento!" />
+	  					<p:message for="data" display="deafult" />
+  					
+  					</p:panel>
+  					<h:outputLabel for="tipoLog" value="Tipo logradouro: *"/>
+  					<p:selectOneMenu id="tipoLog" value="#{clienteBean.tipoLogradouroSelecionado}"
+  									required="true" requiredMessage="Informe o tipo do logradouro!"
+  									readonly="#{clienteBean.somenteLeitura}" >
+  						<f:selectItem noSelectionOption="true" itemLabel="Selecione uma opção"  itemValue="#{null}"/>
+  						<f:selectItems value="#{clienteBean.tiposLogradouros}" var="tpLog" 
+  								itemLabel="#{tpLog.descricao}" itemValue="#{tpLog.codigo}" />
+  					</p:selectOneMenu>
+  					
+  					<h:outputLabel for="logradouro" value="Logradouro: *"/>
+  					<p:inputText id="logradouro"  
+  								value="#{clienteBean.centro.dadosPJ.endereco.logradouro}" lable="logradouro"
+  								readonly="#{clienteBean.somenteLeitura}"
+  								required="true" requiredMessage="Informe um logradouro!" />
+  					
+  					<h:outputLabel for="numero" value="Número: *"/>
+  					<p:inputText id="numero"  
+  								value="#{clienteBean.centro.dadosPJ.endereco.numero}" lable="numero"
+  								readonly="#{clienteBean.somenteLeitura}"
+  								required="true" requiredMessage="Informe o número do logradouro!" />
+  					
+  					<h:outputLabel for="bairro" value="Bairro: *"/>
+  					<p:inputText id="bairro"  
+  								value="#{clienteBean.centro.dadosPJ.endereco.bairro}" lable="Bairro"
+  								readonly="#{clienteBean.somenteLeitura}"
+  								required="true" requiredMessage="Informe o bairro!" />
+  				
+  					 
+  					<h:outputLabel for="unidadeFederativa" value="UF: *"/>
+  					<p:selectOneMenu id="unidadeFederativa" value="#{clienteBean.ufSelecionada}"
+  							readonly="#{clienteBean.somenteLeitura}" 
+  							required="true" requiredMessage="Informe a unidade federativa!"
+  							valueChangeListener="#{clienteBean.filtrarCidades}">
+  						<f:selectItem noSelectionOption="true" itemLabel="Selecione uma UF" itemValue="#{null}" />
+  						<f:selectItems value="#{clienteBean.ufs}" var="uf" 
+  								itemLabel="#{uf}" itemValue="#{uf.codigo}" />
+  						<f:ajax render="cbxCidades" event="valueChange"/>
+  					</p:selectOneMenu>
+  					
+  				
+  					<h:outputLabel for="cbxCidades" value="Cidade: *"/>
+  					<p:selectOneMenu id="cbxCidades" value="#{clienteBean.cidadeSelecionada}"
+  								readonly="#{clienteBean.somenteLeitura}"
+  								required="true" requiredMessage="Informe uma cidade!">
+  						<f:selectItem noSelectionOption="true" itemLabel="Selecione uma cidade" itemValue="#{null}" />
+  						<f:selectItems value="#{clienteBean.cidades}" var="cid" 
+  								itemLabel="#{cid}" itemValue="#{cid.codigo}" />
+  					</p:selectOneMenu>
+  					
+  					<h:outputLabel for="cep" value="CEP: *"/>
+  					<p:inputMask id="cep" mask="99999-999" size="12" 
+  							value="#{clienteBean.centro.dadosPJ.endereco.cep}" lable="CEP"
+  							readonly="#{clienteBean.somenteLeitura}"
+  							required="true" requiredMessage="Informe o CEP!">
+  					</p:inputMask>
+  					
+  					<h:outputLabel for="email" value="E-mail: "/>
+  					<p:inputText id="email"  
+  								readonly="#{clienteBean.somenteLeitura}"
+  								value="#{clienteBean.centro.dadosPJ.email}" required="false" lable="E-mail" />
+  					
+  					<h:outputLabel for="situacao" value="Situação: "/>
+  					<p:selectOneMenu id="situacao" value="#{clienteBean.centro.situacao}"
+  								readonly="#{clienteBean.somenteLeitura}" >
+  						<f:selectItem noSelectionOption="true" itemLabel="Selecione uma situação" itemValue="" />
+  						<f:selectItems value="#{clienteBean.situacoes}" />
+  					</p:selectOneMenu>
+  					
+  				</h:panelGrid>
+
+  				<p:commandButton value="Salvar" rendered="#{!clienteBean.somenteLeitura}" 
+  						disabled="#{clienteBean.somenteLeitura}" 
+  						update=":frmMensagens:growl" action="#{clienteBean.salvar}"/>
+  				
+  				<p:commandButton value="#{clienteBean.textoBotaoFecharOuCancelar}" 
+  								immediate="true" action="cliente.xhtml?faces-redirect=true" />
+
+  			</p:panel>
+    		
+  		</h:form>
+ 	</f:view>
+</h:body>
 </html>

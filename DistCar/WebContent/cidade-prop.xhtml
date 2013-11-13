@@ -24,10 +24,12 @@
   				<h:panelGrid columns="2" cellpadding="5">
   					<h:outputLabel for="nome" value="Nome: *"/>
   					<p:inputText id="nome" value="#{cidadeBean.cidade.nome}" lable="Nome"
+  								readonly="#{cidadeBean.somenteLeitura}"
   								required="true" requiredMessage="Informe o nome da cidade!"/>
   					
   					<h:outputLabel for="unidadeFederativa" value="UF: *"/>
   					<p:selectOneMenu id="unidadeFederativa" value="#{cidadeBean.codigoUfSelecionada}"
+  								readonly="#{cidadeBean.somenteLeitura}"
   								required="true" requiredMessage="Informe uma unidade federativa!">
   						<f:selectItem noSelectionOption="true" itemLabel="Selecione uma UF" itemValue="#{null}" />
   						<f:selectItems value="#{cidadeBean.ufs}" var="uf" 
@@ -35,7 +37,8 @@
   					</p:selectOneMenu>
   					
   					<h:outputLabel for="situacao" value="Situação: "/>
-  					<p:selectOneMenu id="situacao" value="#{cidadeBean.cidade.situacao}" >
+  					<p:selectOneMenu id="situacao" value="#{cidadeBean.cidade.situacao}" 
+  								readonly="#{cidadeBean.somenteLeitura}" >
   						<f:selectItem itemLabel="Selecione uma situação" itemValue="" />
   						<f:selectItems value="#{cidadeBean.situacoes}" />
   					</p:selectOneMenu>

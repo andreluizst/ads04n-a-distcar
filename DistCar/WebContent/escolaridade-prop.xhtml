@@ -24,10 +24,12 @@
   				<h:panelGrid columns="2" cellpadding="5">
   					<h:outputLabel for="descricao" value="Descrição: *"/>
   					<p:inputText id="descricao" value="#{escolaridadeBean.escolaridade.descricao}" lable="Descrição"
+  							readonly="#{escolaridadeBean.somenteLeitura}"
   							required="true" requiredMessage="Informe a descrição!"/>
   					
   					<h:outputLabel for="situacao" value="Situação: "/>
-  					<p:selectOneMenu id="situacao" value="#{escolaridadeBean.escolaridade.situacao}" >
+  					<p:selectOneMenu id="situacao" value="#{escolaridadeBean.escolaridade.situacao}"
+  							readonly="#{escolaridadeBean.somenteLeitura}" >
   						<f:selectItem itemLabel="Todas as situações" itemValue="#{null}" />
   						<f:selectItems value="#{escolaridadeBean.situacoes}" />
   					</p:selectOneMenu>

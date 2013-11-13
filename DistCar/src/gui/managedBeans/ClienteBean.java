@@ -61,6 +61,10 @@ public class ClienteBean {
 	private String cpfOuCnpj;
 	private String mascaraCpfOuCnpj;
 	private boolean cpfOuCnpjVisible;
+	private boolean mostrarCamposPJ;
+	private boolean mostrarCamposPF;
+	private PessoaFisica pfAux;
+	private PessoaJuridica pjAux;
 	
 	
 	public ClienteBean(){
@@ -76,6 +80,8 @@ public class ClienteBean {
 			lista.clear();
 		listaEstaVazia = true;
 		cpfOuCnpjVisible = false;
+		mostrarCamposPJ = false;
+		mostrarCamposPF = false;
 		iniciarObjParaPesquisa();
 		clienteSelecionado = null;
 		tituloOperacao = ClienteBean.OP_VISUALIZAR;
@@ -111,7 +117,17 @@ public class ClienteBean {
 		codigoCidadeSelecionada = obj.getDadosPessoa().getEndereco().getCidade().getCodigo();
 		codigoUfSelecionada = obj.getDadosPessoa().getEndereco().getCidade().getUnidadeFederativa().getCodigo();
 		codigoTipoLogradouroSelecionado = obj.getDadosPessoa().getEndereco().getTipoLogradouro().getCodigo();
+		mostrarCamposPF = cliente.getDadosPessoa() instanceof PessoaFisica?true:false;
+		mostrarCamposPJ = !mostrarCamposPF; 
 		UnidadeFederativa uf = new UnidadeFederativa();
+		if (pjAux == null)
+			pjAux = new PessoaJuridica();
+		if (pfAux == null)
+			pfAux = new PessoaFisica();
+		if (cliente.getDadosPessoa() instanceof PessoaFisica)
+			pfAux = (PessoaFisica)cliente.getDadosPessoa();
+		if (cliente.getDadosPessoa() instanceof PessoaJuridica)
+			pjAux = (PessoaJuridica)cliente.getDadosPessoa();
 		uf.setCodigo(codigoUfSelecionada);
 		try{
 			tiposLogradouros = fachada.listarTiposLogradouros();
@@ -268,7 +284,6 @@ public class ClienteBean {
 		codigoUfPesquisa = (Integer)evento.getNewValue();
 		if (codigoUfPesquisa != null){
 			try{
-				codigoUfPesquisa = (Integer)evento.getNewValue();
 				UnidadeFederativa uf = new UnidadeFederativa();
 				uf.setCodigo(codigoUfPesquisa);
 				if (codigoUfPesquisa != null){
@@ -457,6 +472,30 @@ public class ClienteBean {
 
 	public void setNomeParaPesquisa(String nomeParaPesquisa) {
 		this.nomeParaPesquisa = nomeParaPesquisa;
+	}
+
+	public boolean isMostrarCamposPJ() {
+		return mostrarCamposPJ;
+	}
+
+	public boolean isMostrarCamposPF() {
+		return mostrarCamposPF;
+	}
+
+	public PessoaFisica getPfAux() {
+		return pfAux;
+	}
+
+	public void setPfAux(PessoaFisica pfAux) {
+		this.pfAux = pfAux;
+	}
+
+	public PessoaJuridica getPjAux() {
+		return pjAux;
+	}
+
+	public void setPjAux(PessoaJuridica pjAux) {
+		this.pjAux = pjAux;
 	}
 	
 	

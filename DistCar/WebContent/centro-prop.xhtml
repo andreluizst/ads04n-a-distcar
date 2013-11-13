@@ -24,20 +24,24 @@
   				<h:panelGrid columns="2" cellpadding="5">
   					<h:outputLabel for="alias" value="Alias: *"/>
   					<p:inputText id="alias" value="#{centroBean.centro.alias}" lable="Alias"
+  								readonly="#{centroBean.somenteLeitura}"
   								required="true" requiredMessage="Um alias é obrigatório!" />
   					
   					<h:outputLabel for="nome" value="Nome/Razão social: *"/>
   					<p:inputText id="nome" value="#{centroBean.centro.dadosPJ.nome}" lable="Nome"
+  							readonly="#{centroBean.somenteLeitura}"
   							required="true" requiredMessage="O nome é obrigatório!" />
   					
   					<h:outputLabel for="cnpj" value="CNPJ: *"/>
   					<p:inputMask id="cnpj" mask="99.999.999/9999-99" size="20" 
   							value="#{centroBean.centro.dadosPJ.cnpj}" lable="CNPJ"
+  							readonly="#{centroBean.somenteLeitura}"
   							required="true" requiredMessage="O preenchimento do campo CNPJ é obrigatório!" >
   					</p:inputMask>
   					
 					<h:outputLabel for="tipoCentro" value="Tipo centro: *"/>
-  					<p:selectOneMenu id="tipoCentro" value="#{centroBean.centro.tipoCentro}" 
+  					<p:selectOneMenu id="tipoCentro" value="#{centroBean.centro.tipoCentro}"
+  							readonly="#{centroBean.somenteLeitura}" 
 							required="true" requiredMessage="Informe o tipo do centro!">
   						<f:selectItem noSelectionOption="true" itemLabel="Selecione uma situação" itemValue="" />
   						<f:selectItems value="#{centroBean.tiposCentros}" />
@@ -46,19 +50,23 @@
   					<h:outputLabel for="capacidade" value="Capacidade: *"/>
   					<p:inputText id="capacidade"  
   								value="#{centroBean.centro.capacidadeArmazenamento}" lable="capacidade"
+  								readonly="#{centroBean.somenteLeitura}"
   								required="true" requiredMessage="Informe a capacidade de armazenamento do centro!" />
   					
   					<h:outputLabel for="data" value="Data da abertura: "/>
   					<p:calendar id="data" value="#{centroBean.centro.dadosPJ.dataAbertura}"
-  						effect="explode" pattern="dd/MM/yyyy" />
+  						effect="explode" pattern="dd/MM/yyyy"
+  						readonly="#{centroBean.somenteLeitura}" />
   					
   					<h:outputLabel for="inscEst" value="Inscrição estadual: *"/>
-  					<p:inputText id="inscEst" value="#{centroBean.centro.dadosPJ.inscricaoEstadual}" lable="Inscrição estadual"
+  					<p:inputText id="inscEst" value="#{centroBean.centro.dadosPJ.inscricaoEstadual}"
+  								lable="Inscrição estadual" readonly="#{centroBean.somenteLeitura}"
   								required="true" requiredMessage="Informe a inscrição estadual. se não tiver digite: ISENTO"/>
   					
   					
   					<h:outputLabel for="tipoLog" value="Tipo logradouro: *"/>
   					<p:selectOneMenu id="tipoLog" value="#{centroBean.tipoLogradouroSelecionado}"
+  									readonly="#{centroBean.somenteLeitura}"
   									required="true" requiredMessage="Informe o tipo do logradouro!" >
   						<f:selectItem noSelectionOption="true" itemLabel="Selecione uma opção"  itemValue="#{null}"/>
   						<f:selectItems value="#{centroBean.tiposLogradouros}" var="tpLog" 
@@ -68,21 +76,25 @@
   					<h:outputLabel for="logradouro" value="Logradouro: *"/>
   					<p:inputText id="logradouro"  
   								value="#{centroBean.centro.dadosPJ.endereco.logradouro}" lable="logradouro"
+  								readonly="#{centroBean.somenteLeitura}"
   								required="true" requiredMessage="Informe um logradouro!" />
   					
   					<h:outputLabel for="numero" value="Número: *"/>
   					<p:inputText id="numero"  
   								value="#{centroBean.centro.dadosPJ.endereco.numero}" lable="numero"
+  								readonly="#{centroBean.somenteLeitura}"
   								required="true" requiredMessage="Informe o número do logradouro!" />
   					
   					<h:outputLabel for="bairro" value="Bairro: *"/>
   					<p:inputText id="bairro"  
   								value="#{centroBean.centro.dadosPJ.endereco.bairro}" lable="Bairro"
+  								readonly="#{centroBean.somenteLeitura}"
   								required="true" requiredMessage="Informe o bairro!" />
   				
   					 
   					<h:outputLabel for="unidadeFederativa" value="UF: *"/>
-  					<p:selectOneMenu id="unidadeFederativa" value="#{centroBean.ufSelecionada}" 
+  					<p:selectOneMenu id="unidadeFederativa" value="#{centroBean.ufSelecionada}"
+  							readonly="#{centroBean.somenteLeitura}" 
   							required="true" requiredMessage="Informe a unidade federativa!"
   							valueChangeListener="#{centroBean.filtrarCidades}">
   						<f:selectItem noSelectionOption="true" itemLabel="Selecione uma UF" itemValue="#{null}" />
@@ -94,6 +106,7 @@
   				
   					<h:outputLabel for="cbxCidades" value="Cidade: *"/>
   					<p:selectOneMenu id="cbxCidades" value="#{centroBean.cidadeSelecionada}"
+  								readonly="#{centroBean.somenteLeitura}"
   								required="true" requiredMessage="Informe uma cidade!">
   						<f:selectItem noSelectionOption="true" itemLabel="Selecione uma cidade" itemValue="#{null}" />
   						<f:selectItems value="#{centroBean.cidades}" var="cid" 
@@ -103,15 +116,18 @@
   					<h:outputLabel for="cep" value="CEP: *"/>
   					<p:inputMask id="cep" mask="99999-999" size="12" 
   							value="#{centroBean.centro.dadosPJ.endereco.cep}" lable="CEP"
+  							readonly="#{centroBean.somenteLeitura}"
   							required="true" requiredMessage="Informe o CEP!">
   					</p:inputMask>
   					
   					<h:outputLabel for="email" value="E-mail: "/>
   					<p:inputText id="email"  
+  								readonly="#{centroBean.somenteLeitura}"
   								value="#{centroBean.centro.dadosPJ.email}" required="false" lable="E-mail" />
   					
   					<h:outputLabel for="situacao" value="Situação: "/>
-  					<p:selectOneMenu id="situacao" value="#{centroBean.centro.situacao}" >
+  					<p:selectOneMenu id="situacao" value="#{centroBean.centro.situacao}"
+  								readonly="#{centroBean.somenteLeitura}" >
   						<f:selectItem noSelectionOption="true" itemLabel="Selecione uma situação" itemValue="" />
   						<f:selectItems value="#{centroBean.situacoes}" />
   					</p:selectOneMenu>

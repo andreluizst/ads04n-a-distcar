@@ -21,19 +21,22 @@
   				<h:panelGrid columns="3" cellpadding="5">
   					<h:outputLabel for="descricao" value="Descrição: *"/>
   					<p:inputText id="descricao" value="#{funcaoBean.funcao.descricao}" lable="Descrição"
+  							readonly="#{funcaoBean.somenteLeitura}"
   							required="true" requiredMessage="Informe a descrição!"/>
   					<p:message for="descricao"/>
   					
   					<h:outputLabel for="salario" value="Salário: *"></h:outputLabel>
   					<p:inputText id="salario" validatorMessage="O valor do salário deve ser maior que 680!" converterMessage="Digite um número decimal no formato 999.00" 
   								value="#{funcaoBean.funcao.salario}" dir="rtl" lable="Salário"
+  								readonly="#{funcaoBean.somenteLeitura}"
   								required="true" requiredMessage="O salário deve ser informado!">
   						<f:validateLongRange minimum="680"></f:validateLongRange>
   					</p:inputText>
   					<p:message for="salario"></p:message>
   					
   					<h:outputLabel for="situacao" value="Situação: "/>
-  					<p:selectOneMenu id="situacao" value="#{funcaoBean.funcao.situacao}" >
+  					<p:selectOneMenu id="situacao" value="#{funcaoBean.funcao.situacao}"
+  								readonly="#{funcaoBean.somenteLeitura}" >
   						<f:selectItem itemLabel="Selecione uma opção" itemValue="" />
   						<f:selectItems value="#{funcaoBean.situacoes}" />
   					</p:selectOneMenu>

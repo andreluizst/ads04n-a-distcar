@@ -21,6 +21,7 @@
   				<h:panelGrid columns="3" cellpadding="5">
   					<h:outputLabel for="descricao" value="Descrição: *"/>
   					<p:inputText id="descricao" value="#{tipoGerenciaBean.tipoGerencia.descricao}" 
+  							readonly="#{tipoGerenciaBean.somenteLeitura}"
   							required="true" requiredMessage="Informe uma descrição" lable="Descrição"/>
   					<p:message for="descricao"/>
   					
@@ -28,6 +29,7 @@
   					<p:inputText id="valGratificacao" converterMessage="Digite um número decimal no formato 999.00"
   								validatorMessage="O valor da gratificação deve ser na faixa de 500,00 a 1999,99!" 
   								value="#{tipoGerenciaBean.tipoGerencia.valorGratificacao}" dir="rtl" 
+  								readonly="#{tipoGerenciaBean.somenteLeitura}"
   								required="true" requiredMessage="O valor de gratificação de ser informado!"
   								lable="Valor da gratificação">
   						<f:validateDoubleRange minimum="500.00" maximum="1999.99"/>
@@ -35,7 +37,8 @@
   					<p:message for="valGratificacao"/>
   					
   					<h:outputLabel for="situacao" value="Situação: "/>
-  					<p:selectOneMenu id="situacao" value="#{tipoGerenciaBean.tipoGerencia.situacao}" >
+  					<p:selectOneMenu id="situacao" value="#{tipoGerenciaBean.tipoGerencia.situacao}"
+  								readonly="#{tipoGerenciaBean.somenteLeitura}" >
   						<f:selectItem itemLabel="Selecione uma opção" itemValue="" />
   						<f:selectItems value="#{tipoGerenciaBean.situacoes}" />
   					</p:selectOneMenu>
