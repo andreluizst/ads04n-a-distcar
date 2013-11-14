@@ -20,5 +20,9 @@
         <converter-id>ItensConverter</converter-id>  
         <converter-class>util.ItensConverter</converter-class>  
     </converter>
+    <converter>
+    	<converter-id>TipoLogradouroConverter</converter-id>
+    	<converter-class>util.TipoLogradouroConverter</converter-class>
+    </converter>
 
 </faces-config>
