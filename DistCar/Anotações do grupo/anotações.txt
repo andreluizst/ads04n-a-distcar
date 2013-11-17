@@ -30,3 +30,9 @@ André 11/11/2013  23:45
  De André 2013-11-12 -> Pessoal, favor recriar o banco,pois tive que mudar a classe Pessoa e atualizar a classe
  	Cliente.java. Também corrigi a classe Fabricante que estava com um atribudo MarcaCarro (agora excluido).
  	Amanhão finalizarei o CRUD cliente, pois o ClienteBean já está 90% conluído.
+ 	
+ Felipe 17/11/2013: andré vc pegou já este erro: failed to lazily initialize a collection, could not initialize proxy - no Session
+ ocorre quando carrego uma versao para alterar e lá possui uma lista de itens, um exemplo desmcarco um item e mando salvar ao apresenta 
+ o erro.
+ Ve esse site ai: http://blog.camilolopes.com.br/opensessionviewsolucao/
+ 
