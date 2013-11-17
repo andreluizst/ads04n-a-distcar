@@ -35,4 +35,4 @@ André 11/11/2013  23:45
  ocorre quando carrego uma versao para alterar e lá possui uma lista de itens, um exemplo desmcarco um item e mando salvar ao apresenta 
  o erro.
  Ve esse site ai: http://blog.camilolopes.com.br/opensessionviewsolucao/
- 
+ André não fica mexando no que está pronto não, eu tenho que ficar alterando aqui as coisa direto.
