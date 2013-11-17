@@ -81,17 +81,18 @@
   				</h:panelGrid>
 				
 				<p:commandButton value="Novo"    update="panelPesquisa" action="#{clienteBean.novo}"/>
-   				<p:commandButton disabled="#{clienteBean.listaEstaVazia}" value="Alterar" 
+   				<p:commandButton id="btnAlterar" disabled="#{clienteBean.listaEstaVazia}" value="Alterar" 
    								update="panelPesquisa" action="#{clienteBean.alterar}" />
-   				<p:commandButton disabled="#{clienteBean.listaEstaVazia}" value="Excluir" 
-   								update="tbLista" actionListener="#{clienteBean.excluir}">
+   				<p:commandButton id="btnExcluir" disabled="#{clienteBean.listaEstaVazia}" value="Excluir" 
+   								update="panelPesquisa,tbLista" actionListener="#{clienteBean.excluir}">
    					<p:confirm header="Confirmação" 
    							message="Confirma a exclusão do cliente selecionado?"
    							icon="ui-icon-alert" />  
    				</p:commandButton>
 
-  				<p:commandButton value="Consultar"  update="frmPrincipal" actionListener="#{clienteBean.consultar}"/>
-  				<p:commandButton disabled="#{clienteBean.listaEstaVazia}" value="Detalhes"
+  				<p:commandButton value="Consultar"  update="tbLista,btnAlterar,btnExcluir,btnDetalhe" 
+  						actionListener="#{clienteBean.consultar}"/>
+  				<p:commandButton id="btnDetalhe" disabled="#{clienteBean.listaEstaVazia}" value="Detalhes"
   						 update="panelPesquisa" action="#{clienteBean.visualizar}" />
   				<p:commandButton value="Limpar"  update="frmPrincipal" actionListener="#{clienteBean.limpar}"/>
   				
@@ -100,7 +101,8 @@
   			<p:dataTable id="tbLista" var="cliente" value="#{clienteBean.lista}" paginator="true" rows="5"
   						paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks}
   						{NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rowsPerPageTemplate="5,10,15"
-  						selection="#{clienteBean.clienteSelecionado}" selectionMode="single" rowKey="#{cliente}">
+  						selection="#{clienteBean.clienteSelecionado}" selectionMode="single"
+  						rowKey="#{cliente}" emptyMessage="Nenhum cliente encontrado.">
   				<f:facet name="header">Lista de Funconários</f:facet>
   				<p:column>
   					<f:facet name="header"><h:outputText value="Código"/> </f:facet>

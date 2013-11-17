@@ -9,7 +9,7 @@ package util;
  * 
  * Como o nome da classe sugere, faz a verificação de CPF ou CNPJ
  */
-public class VerificarCpfCnpj {
+public class CpfCnpj {
     /**
      * Executa o processo de verificação do CPF ou CNPJ
      * 
@@ -19,7 +19,7 @@ public class VerificarCpfCnpj {
      * @return 
      * Caso o CPF ou CNPJ informado for válido será retornado true ou false caso contrário
      */
-    public static boolean executar(String cpfOuCnpj){
+    public static boolean eValido(String cpfOuCnpj){
         Integer k=0, dig=0;
         Integer soma=0;
         boolean isCNPJ=false;

@@ -63,6 +63,7 @@ public class ClienteBean {
 	private boolean cpfOuCnpjVisible;
 	private boolean mostrarCamposPJ;
 	private boolean mostrarCamposPF;
+	private boolean modoDeInclusao;
 	private PessoaFisica pfAux;
 	private PessoaJuridica pjAux;
 	
@@ -82,6 +83,7 @@ public class ClienteBean {
 		cpfOuCnpjVisible = false;
 		mostrarCamposPJ = false;
 		mostrarCamposPF = false;
+		modoDeInclusao = false;
 		iniciarObjParaPesquisa();
 		clienteSelecionado = null;
 		tituloOperacao = ClienteBean.OP_VISUALIZAR;
@@ -124,10 +126,17 @@ public class ClienteBean {
 			pjAux = new PessoaJuridica();
 		if (pfAux == null)
 			pfAux = new PessoaFisica();
-		if (cliente.getDadosPessoa() instanceof PessoaFisica)
-			pfAux = (PessoaFisica)cliente.getDadosPessoa();
-		if (cliente.getDadosPessoa() instanceof PessoaJuridica)
-			pjAux = (PessoaJuridica)cliente.getDadosPessoa();
+		if (cliente.getDadosPessoa() instanceof PessoaFisica){
+			pfAux.setCpf(((PessoaFisica)cliente.getDadosPessoa()).getCpf());
+			pfAux.setDataNascimento(((PessoaFisica)cliente.getDadosPessoa()).getDataNascimento());
+			pfAux.setRg(((PessoaFisica)cliente.getDadosPessoa()).getRg());
+			pfAux.setOrgaoExpedidor(((PessoaFisica)cliente.getDadosPessoa()).getOrgaoExpedidor());
+		}
+		if (cliente.getDadosPessoa() instanceof PessoaJuridica){
+			pjAux.setCnpj(((PessoaJuridica)cliente.getDadosPessoa()).getCnpj());
+			pjAux.setDataAbertura(((PessoaJuridica)cliente.getDadosPessoa()).getDataAbertura());
+			pjAux.setInscricaoEstadual(((PessoaJuridica)cliente.getDadosPessoa()).getInscricaoEstadual());
+		}
 		uf.setCodigo(codigoUfSelecionada);
 		try{
 			tiposLogradouros = fachada.listarTiposLogradouros();
@@ -145,6 +154,7 @@ public class ClienteBean {
 		tituloOperacao = ClienteBean.OP_ALTERAR;
 		textoBotaoFecharOuCancelar = ClienteBean.TXT_BTN_CANCELAR;
 		somenteLeitura = false;
+		modoDeInclusao = false;
 		return resourceBundle.getString("linkClienteProp");//"cliente-prop";
 	}
 	
@@ -153,11 +163,14 @@ public class ClienteBean {
 		tituloOperacao = ClienteBean.OP_NOVA;
 		textoBotaoFecharOuCancelar = ClienteBean.TXT_BTN_CANCELAR;
 		somenteLeitura = false;
+		modoDeInclusao = true;
 		return resourceBundle.getString("linkClienteProp");//"cliente-prop";
 	}
 	
 	private void novoCliente(){
 		cliente = new Cliente();
+		pfAux = new PessoaFisica();
+		pjAux = new PessoaJuridica();
 		/*cliente.setPj(new PessoaJuridica());
 		cliente.getPj().setEndereco(new Endereco());
 		cliente.getPj().getEndereco().setTipoLogradouro(new TipoLogradouro());
@@ -189,18 +202,47 @@ public class ClienteBean {
 	
 	public String salvar(){
 		try{
-			cliente.getDadosPessoa().getEndereco().setCidade(fachada.pegarCidadePorId(codigoCidadeSelecionada));
-			cliente.getDadosPessoa().getEndereco().setTipoLogradouro(fachada.pegarTipoLogradouroPorId(codigoTipoLogradouroSelecionado));
+			//cliente.getDadosPessoa().getEndereco().setCidade(fachada.pegarCidadePorId(codigoCidadeSelecionada));
+			//cliente.getDadosPessoa().getEndereco().setTipoLogradouro(fachada.pegarTipoLogradouroPorId(codigoTipoLogradouroSelecionado));
 			cliente.getDadosPessoa().getEndereco().setCep(cliente.getDadosPessoa().getEndereco().getCep().replace("-", ""));
-			if (cliente.getDadosPessoa() instanceof PessoaJuridica)
-				((PessoaJuridica)cliente.getDadosPessoa()).setCnpj(((PessoaJuridica)cliente.getDadosPessoa()).getCnpj().replace(".", "").replace("/", "").replace("-", ""));
-			else
-				if (cliente.getDadosPessoa() instanceof PessoaFisica)
-					((PessoaFisica)cliente.getDadosPessoa()).setCpf(((PessoaFisica)cliente.getDadosPessoa()).getCpf().replace(".", "").replace("-", ""));
+			if (modoDeInclusao){
+				if (cliente.getTipoCliente() == TipoCliente.PESSOA_FISICA){
+					pfAux.setCpf(pfAux.getCpf().replace(".", "").replace("-", ""));
+					pfAux.setEndereco(cliente.getDadosPessoa().getEndereco());
+					pfAux.setNome(cliente.getDadosPessoa().getNome());
+					pfAux.setEmail(cliente.getDadosPessoa().getEmail());
+					pfAux.setTelefones(cliente.getDadosPessoa().getTelefones());
+					pfAux.setSituacao(cliente.getDadosPessoa().getSituacao());
+					cliente.setDadosPessoa(pfAux);
+				}
+				if (cliente.getTipoCliente() == TipoCliente.PESSOA_JURIDICA){
+					pjAux.setCnpj(pjAux.getCnpj().replace(".", "").replace("/", "").replace("-", ""));
+					pjAux.setEndereco(cliente.getDadosPessoa().getEndereco());
+					pjAux.setNome(cliente.getDadosPessoa().getNome());
+					pjAux.setEmail(cliente.getDadosPessoa().getEmail());
+					pjAux.setTelefones(cliente.getDadosPessoa().getTelefones());
+					pjAux.setSituacao(cliente.getDadosPessoa().getSituacao());
+					cliente.setDadosPessoa(pjAux);
+				}
+			}else{
+				if (cliente.getDadosPessoa() instanceof PessoaJuridica){
+					((PessoaJuridica)cliente.getDadosPessoa()).setCnpj(pjAux.getCnpj().replace(".", "").replace("/", "").replace("-", ""));
+					((PessoaJuridica)cliente.getDadosPessoa()).setDataAbertura(pjAux.getDataAbertura());
+					((PessoaJuridica)cliente.getDadosPessoa()).setInscricaoEstadual(pjAux.getInscricaoEstadual());
+				}
+				else
+					if (cliente.getDadosPessoa() instanceof PessoaFisica){
+						((PessoaFisica)cliente.getDadosPessoa()).setCpf(pfAux.getCpf().replace(".", "").replace("-", ""));
+						((PessoaFisica)cliente.getDadosPessoa()).setDataNascimento(pfAux.getDataNascimento());
+						((PessoaFisica)cliente.getDadosPessoa()).setRg(pfAux.getRg());
+						((PessoaFisica)cliente.getDadosPessoa()).setOrgaoExpedidor(pfAux.getOrgaoExpedidor());
+					}
+			}
 			if (cliente.getCodigo() == null || cliente.getCodigo() == 0)
 				cliente.setCodigo(null);
 			fachada.salvarCliente(cliente);
 			MsgPrimeFaces.exibirMensagemInfomativa("Cliente salvo com sucesso!");
+			modoDeInclusao = false;
 			novoCliente();
 			somenteLeitura = true;
 			tiposLogradouros.clear();
@@ -251,6 +293,7 @@ public class ClienteBean {
 		tituloOperacao = ClienteBean.OP_VISUALIZAR;
 		textoBotaoFecharOuCancelar = ClienteBean.TXT_BTN_FECHAR;
 		somenteLeitura = true;
+		modoDeInclusao = false;
 		return resourceBundle.getString("linkClienteProp");//"cliente-prop";
 	}
 	
@@ -322,14 +365,34 @@ public class ClienteBean {
 			if (tpCli == TipoCliente.PESSOA_FISICA){
 				mascaraCpfOuCnpj = ClienteBean.CPF_MASK;
 				cpfOuCnpj = "CPF";
+				mostrarCamposPF = true;
+				mostrarCamposPJ = false;
 			}
 			if (tpCli == TipoCliente.PESSOA_JURIDICA){
 				mascaraCpfOuCnpj = ClienteBean.CNPJ_MASK;
 				cpfOuCnpj = "CNPJ";
+				mostrarCamposPF = false;
+				mostrarCamposPJ = true;
 			}
 		}
 		cpfOuCnpjVisible = tpCli == null?false:true;
 	}
+	
+	public void mudarTipoCliente(ValueChangeEvent evento){
+		TipoCliente tpCli = (TipoCliente)evento.getNewValue();
+		if (tpCli != null){
+			if (tpCli == TipoCliente.PESSOA_FISICA){
+				mostrarCamposPF = true;
+				mostrarCamposPJ = false;
+			}
+			if (tpCli == TipoCliente.PESSOA_JURIDICA){
+				mostrarCamposPF = false;
+				mostrarCamposPJ = true;
+			}
+		}
+	}
+	
+	
 	
 	// GETs e SETs
 
@@ -496,6 +559,10 @@ public class ClienteBean {
 
 	public void setPjAux(PessoaJuridica pjAux) {
 		this.pjAux = pjAux;
+	}
+
+	public boolean isModoDeInclusao() {
+		return modoDeInclusao;
 	}
 	
 	

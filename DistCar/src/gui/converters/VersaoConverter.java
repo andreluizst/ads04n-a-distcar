@@ -1,4 +1,4 @@
-package util;
+package gui.converters;
 
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;

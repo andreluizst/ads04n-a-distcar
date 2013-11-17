@@ -53,15 +53,19 @@
   				</h:panelGrid>
 				
 				<p:commandButton value="Novo"    update="panelCentro" action="#{centroBean.novo}"/>
-   				<p:commandButton disabled="#{centroBean.listaEstaVazia}" value="Alterar" update="panelCentro" action="#{centroBean.alterar}" />
-   				<p:commandButton disabled="#{centroBean.listaEstaVazia}" value="Excluir" update="tbCentros" actionListener="#{centroBean.excluir}">
+   				<p:commandButton id="btnAlterar" disabled="#{centroBean.listaEstaVazia}" 
+   						value="Alterar" update="panelCentro" action="#{centroBean.alterar}" />
+   				<p:commandButton id="btnExcluir" disabled="#{centroBean.listaEstaVazia}" 
+   						value="Excluir" update="tbCentros" actionListener="#{centroBean.excluir}">
    					<p:confirm header="Confirmação" 
    							message="Confirma a exclusão do centro selecionado?"
    							icon="ui-icon-alert" />  
    				</p:commandButton>
 
-  				<p:commandButton value="Consultar"  update="frmCentro" actionListener="#{centroBean.consultar}"/>
-  				<p:commandButton disabled="#{centroBean.listaEstaVazia}" value="Detalhes" update="panelCentro" action="#{centroBean.visualizar}" />
+  				<p:commandButton value="Consultar"  update="tbCentros,btnAlterar,btnExcluir,btnDetalhe" 
+  						actionListener="#{centroBean.consultar}"/>
+  				<p:commandButton id="btnDetalhe" disabled="#{centroBean.listaEstaVazia}" 
+  						value="Detalhes" update="panelCentro" action="#{centroBean.visualizar}" />
   				<p:commandButton value="Limpar"  update="frmCentro" actionListener="#{centroBean.limpar}"/>
   				
  			</p:panel>

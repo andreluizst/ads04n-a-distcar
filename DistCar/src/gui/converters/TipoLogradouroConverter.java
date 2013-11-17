@@ -1,4 +1,4 @@
-package util;
+package gui.converters;
 
 import java.text.MessageFormat;
 import java.util.ResourceBundle;
@@ -12,7 +12,7 @@ import classesBasicas.TipoLogradouro;
 import fachada.Fachada;
 import gui.MsgPrimeFaces;
 
-@FacesConverter(forClass=TipoLogradouro.class, value="tipoLogradouroConverter")
+@FacesConverter(forClass=TipoLogradouro.class, value="TipoLogradouroConverter")
 public class TipoLogradouroConverter implements Converter {
 	private ResourceBundle rb = ResourceBundle.getBundle("util.idioma_pt_BR");
 
@@ -36,8 +36,17 @@ public class TipoLogradouroConverter implements Converter {
 
 	@Override
 	public String getAsString(FacesContext contexto, UIComponent componente, Object objArg) {
-		TipoLogradouro obj = (TipoLogradouro)objArg;
-		return obj!=null?obj.getCodigo()+"":"null";
+		if (objArg == null) 
+	           return null;  
+	    if (objArg instanceof TipoLogradouro) {  
+	        TipoLogradouro obj = (TipoLogradouro)objArg;
+	        if (obj.getCodigo() != null)
+	        	return obj.getCodigo().toString();  
+	    }  
+	    else if(objArg instanceof String && ((String)objArg).equalsIgnoreCase("-1")){  
+	        return "-1";  
+	    }
+		return null;
 	}
 
 }
