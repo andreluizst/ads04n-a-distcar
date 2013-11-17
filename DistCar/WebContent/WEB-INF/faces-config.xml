@@ -1,4 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<faces-config
+    xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd"
+    version="2.2">
+ <converter>  
+        <converter-id>ModeloCarroConverter</converter-id>  
+        <converter-class>util.ModeloCarroConverter</converter-class>  
+    </converter>
+<converter>  
+        <converter-id>FabricanteConverter</converter-id>  
+        <converter-class>util.FabricanteConverter</converter-class>  
+    </converter>
+    <converter>  
+        <converter-id>VersaoConverter</converter-id>  
+        <converter-class>util.VersaoConverter</converter-class>  
+    </converter>
+     <converter>  
+        <converter-id>ItensConverter</converter-id>  
+        <converter-class>util.ItensConverter</converter-class>  
+    </converter>
+    <converter>  
+        <converter-id>AcessoriosConverter</converter-id>  
+        <converter-class>util.AcessoriosConverter</converter-class>  
+    </converter>
+     <converter>  
+        <converter-id>MarcaConverter</converter-id>  
+        <converter-class>util.MarcaConverter</converter-class>  
+    </converter>
+    <converter>
+    	<converter-id>TipoLogradouroConverter</converter-id>
+    	<converter-class>util.TipoLogradouroConverter</converter-class>
+    </converter>
 <faces-config xmlns="http://xmlns.jcp.org/xml/ns/javaee"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd"
