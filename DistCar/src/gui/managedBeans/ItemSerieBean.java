@@ -185,8 +185,8 @@ public class ItemSerieBean {
 	    		return "item";
 	    	}
 	    	else{
-	    	itemSerieCarro = itemSelecionado;
-	    	itemSerieCarro.setModelo(Fachada.obterInstancia().pesquisarModelosCarroCodigo(itemSelecionado.getModelo().getCodigo()));
+	    	itemSerieCarro = Fachada.obterInstancia().pesquisarItemCodigo(itemSelecionado.getCodigo());
+	    	//itemSerieCarro.setModelo(Fachada.obterInstancia().pesquisarModelosCarroCodigo(itemSelecionado.getModelo().getCodigo()));
 	    	return "item-prop";
 	    	}
 	    }

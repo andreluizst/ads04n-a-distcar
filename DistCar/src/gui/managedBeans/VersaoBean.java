@@ -7,6 +7,7 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.event.ValueChangeEvent;
 
 import classesBasicas.AcessorioCarro;
 import classesBasicas.ItemSerieCarro;
@@ -118,7 +119,8 @@ public class VersaoBean {
 		versaoCarro = new VersaoCarro();
 		listarModelo();
 		listarVersoes();
-		listarItens();
+		itens=null;
+		acessorios=null;
 	}
 
 	public void novo(ActionEvent actionEvent) {
@@ -131,7 +133,6 @@ public class VersaoBean {
       } 
 	
 	public String salvar() throws Exception {
-		//versaoCarro.setItens(itensSelecionados);
 		versaoCarro.setDataUltimaAtualizacao(Calendar.getInstance());
 		System.out.println(versaoCarro);
 		Fachada.obterInstancia().salvarVersao(versaoCarro);
@@ -172,6 +173,8 @@ public class VersaoBean {
 	
 	    public String novo(){
 	    	versaoCarro = new VersaoCarro();
+	    	itens=null;
+	    	acessorios=null;
 			return "versao-prop";
 		}           
 	    
@@ -181,15 +184,18 @@ public class VersaoBean {
 	    		return "versao";
 	    	}
 	    	else{
-	    	versaoCarro = versaoSelecionada;
-	    	versaoCarro.setModeloCarro(Fachada.obterInstancia().pesquisarModelosCarroCodigo(versaoSelecionada.getModeloCarro().getCodigo()));
+	    	itens = Fachada.obterInstancia().listarItensPorModelo(Fachada.obterInstancia().pesquisarModelosCarroCodigo(versaoSelecionada.getModeloCarro().getCodigo()));
+			acessorios = Fachada.obterInstancia().listarAcessoriosPorModelo(Fachada.obterInstancia().pesquisarModelosCarroCodigo(versaoSelecionada.getModeloCarro().getCodigo()));
+			versaoCarro = Fachada.obterInstancia().pesquisarVersaoCodigo(versaoSelecionada.getCodigo());
+	    	//itens = versaoCarro.getItens();
+	    	//acessorios = versaoCarro.getAcessorios();
+	    	//versaoCarro.setModeloCarro(Fachada.obterInstancia().pesquisarModelosCarroCodigo(versaoSelecionada.getModeloCarro().getCodigo()));
 	    	return "versao-prop";
 	    	}
 	    }
 	    
 	    public String cancelar(){
-	    	versaoCarro = new VersaoCarro();
-	    	versaoSelecionada = null;
+	    	init();
 	    	return "versao";
 	    }  
 	    
@@ -205,8 +211,23 @@ public class VersaoBean {
 	    	acessorios = Fachada.obterInstancia().listarAcessoriosPorModelo(Fachada.obterInstancia().pesquisarModelosCarroCodigo(versaoCarro.getModeloCarro().getCodigo()));
 	    }
 	    
-	    public List<ItemSerieCarro> listarItens(){
+	  /*  public List<ItemSerieCarro> listarItens(){
 	    	//itens = Fachada.obterInstancia().listarItensPorModelo(Fachada.obterInstancia().pesquisarModelosCarroCodigo(versaoCarro.getModeloCarro().getCodigo()));
 	    	return itens = Fachada.obterInstancia().listarItensPorModelo(Fachada.obterInstancia().pesquisarModelosCarroCodigo(1));
+	    }*/
+	    
+	    public void filtrarItens(ValueChangeEvent evento){
+	    	
+	    	try{
+	    		versaoCarro.setModeloCarro((ModeloCarro) evento.getNewValue());
+				itens = Fachada.obterInstancia().listarItensPorModelo(Fachada.obterInstancia().pesquisarModelosCarroCodigo(versaoCarro.getModeloCarro().getCodigo()));
+				acessorios = Fachada.obterInstancia().listarAcessoriosPorModelo(Fachada.obterInstancia().pesquisarModelosCarroCodigo(versaoCarro.getModeloCarro().getCodigo()));
+	    	}catch(Exception ex){
+				MsgPrimeFaces.exibirMensagemDeAviso("Não foi possível filtar itens por modelo, selecione um modelo válido");
+				itens=null;
+				acessorios=null;
+			}
 	    }
+	    
+	    
 }

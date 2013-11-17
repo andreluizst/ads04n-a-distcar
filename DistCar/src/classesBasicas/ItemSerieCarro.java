@@ -30,8 +30,7 @@ public class ItemSerieCarro extends ObjetoGeral{
 	}
 	@Override
 	public String toString() {
-		return "ItemSerieCarro [descricao=" + descricao + ", valorItemSerie="
-				+ valorItemSerie + ", modelo=" + modelo + "]";
+		return descricao +" "+ valorItemSerie;
 	}
 	@Override
 	public int hashCode() {

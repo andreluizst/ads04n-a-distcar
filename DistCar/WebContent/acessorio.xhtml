@@ -93,7 +93,7 @@
 				paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
 				rowsPerPageTemplate="5,10,15"
 				selection="#{acessorioBean.acessorioSelecionado}" selectionMode="single"
-				rowKey="#{acessorio}">
+				rowKey="#{acessorio.codigo}">
 				<f:facet name="header">
            	 		Acessórios Carros
         		</f:facet>
@@ -116,7 +116,7 @@
 						<h:outputText value="Modelo" />
 					</f:facet>
 					<h:outputText 
-						value="#{acessorio.modelo.descicao} #{acessorio.modelo.ano}"/>
+						value="#{acessorio.modelo.descricao} #{acessorio.modelo.ano}"/>
 				</p:column>
 
 				<p:column width="5" style="text-align: center;">

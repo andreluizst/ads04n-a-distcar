@@ -140,8 +140,8 @@ public class AcessorioBean {
 	    		return "acessorio";
 	    	}
 	    	else{
-	    	acessorioCarro = acessorioSelecionado;
-	    	acessorioCarro.setModelo(Fachada.obterInstancia().pesquisarModelosCarroCodigo(acessorioSelecionado.getModelo().getCodigo()));
+	    	acessorioCarro = Fachada.obterInstancia().pesquisarAcessorioCodigo(acessorioSelecionado.getCodigo());
+	    	//acessorioCarro.setModelo(Fachada.obterInstancia().pesquisarModelosCarroCodigo(acessorioSelecionado.getModelo().getCodigo()));
 	    	return "acessorio-prop";
 	    	}
 	    }

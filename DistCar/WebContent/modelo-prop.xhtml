@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<title>Modelo_Carro</title>
+</h:head>
+<h:body>
+	<f:view id="View">
+	<h:form id="frmMensagens">
+			<p:messages id="messages" showDetail="true" autoUpdate="true" closable="true"></p:messages>
+			<p:growl id="growl" showDetail="true" sticky="false" globalOnly="true" />
+		</h:form>
+		<h:form id="form">
+
+			<p:growl id="messages" showDetail="true" />
+
+			<p:confirmDialog id="dlgMsg" global="true" showEffect="fade"
+				hideEffect="explode">
+				<p:commandButton value="Sim" type="button"
+					styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+				<p:commandButton value="Não" type="button"
+					styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+			</p:confirmDialog>
+
+			<p:panel id="panel" header="DistCar - Modelo"
+				style="margin-bottom:10px;">
+
+				<f:facet name="header">
+					<h:panelGrid columns="2">
+						<p:commandLink action="index.xhtml">
+							<p:graphicImage value="/resources/images/home-02.jpg"
+								height="35px" width="35px" />
+						</p:commandLink>
+						<h:outputText value="DisctCar 1.0 -  Modelo" />
+					</h:panelGrid>
+				</f:facet>
+				
+				<h:panelGrid columns="3" cellpadding="5">
+
+					<h:outputLabel for="descricao" value="Descricão: *" />
+					<p:inputText id="descricao"
+						value="#{modeloBean.modelo.descricao}"  required="false"
+						label="Descricão" requiredMessage="Nome obrigatório: *" />
+					<p:message for="descricao" />
+					
+						<h:outputLabel for="ano" value="Ano *" />
+					<p:inputText id="ano"
+						value="#{modeloBean.modelo.ano}"  required="false"
+						label="ano" requiredMessage="Nome obrigatório: *" />
+					<p:message for="ano" />
+					
+					<h:outputLabel for="marca" value="Marcas: *"/>
+  					<h:selectOneMenu id="marca" converter="MarcaConverter"
+  							value="#{modeloBean.modelo.marcaCarro}">
+  						<f:selectItem noSelectionOption="true" 
+  								itemLabel="Selecione uma marca" itemValue="-1"/>
+  						<f:selectItems value="#{modeloBean.marcas}" var="mc"
+  								itemLabel="#{mc.descricao}" />
+  					</h:selectOneMenu>
+					<p:message for="marca" />
+	
+					
+					<h:outputLabel for="situacao" value="Situação: *"/>
+  					<h:selectOneMenu id="situacao" value="#{modeloBean.modelo.situacao}" >
+  						<f:selectItem itemLabel="Selecione uma opção" itemValue="" />
+  						<f:selectItems value="#{modeloBean.situacoes}" />
+  					</h:selectOneMenu>
+					<p:message for="situacao" />
+				</h:panelGrid> 
+				
+				<p:commandButton value="Salvar"  update=":frmMensagens:growl" action="#{modeloBean.salvar}" />
+   				<p:commandButton value="Cancelar" update="form" immediate="true" action="#{modeloBean.cancelar}" />
+			
+					</p:panel>
+		</h:form>
+	</f:view>
+</h:body>
+</html>

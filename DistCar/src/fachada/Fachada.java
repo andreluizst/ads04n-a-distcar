@@ -494,15 +494,6 @@ public class Fachada implements IFachada {
 		return this.controladorCarro.pesquisarVersoes(versaoCarro);
 	}
 	
-	@Override
-	public List<ItemSerieCarro> listarItensPorModelo(ModeloCarro modelo) {
-		return this.controladorCarro.listarItensPorModelo(modelo);
-	}
-
-	@Override
-	public List<AcessorioCarro> listarAcessoriosPorModelo(ModeloCarro modelo) {
-		return this.controladorCarro.listarAcessoriosPorModelo(modelo);
-	}
 
 	//Item Série
 	
@@ -529,6 +520,11 @@ public class Fachada implements IFachada {
 	@Override
 	public List<ItemSerieCarro> consultarItens(ItemSerieCarro itemSerieCarro) {
 		return this.controladorCarro.pesquisarItens(itemSerieCarro);
+	}
+
+	@Override
+	public List<ItemSerieCarro> listarItensPorModelo(ModeloCarro modelo) {
+		return this.controladorCarro.listarItensPorModelo(modelo);
 	}
 
 	//Acessorio
@@ -558,4 +554,8 @@ public class Fachada implements IFachada {
 		return this.controladorCarro.pesquisarAcessorios(acessorioCarro);
 	}
 
+	@Override
+	public List<AcessorioCarro> listarAcessoriosPorModelo(ModeloCarro modelo) {
+		return this.controladorCarro.listarAcessoriosPorModelo(modelo);
+	}
 }

@@ -9,7 +9,7 @@
 </h:head>
 <h:body>
 	<f:view id="View">
-	<h:form id="frmMensagens">
+	<h:form id="frmMensagens" >
 			<p:messages id="messages" showDetail="true" autoUpdate="true" closable="true"></p:messages>
 			<p:growl id="growl" showDetail="true" sticky="false" globalOnly="true" />
 		</h:form>
@@ -52,40 +52,45 @@
 						value="#{versaoBean.versaoCarro.valor}"
 						requerid="false" label="Valor" />
 					<p:message for="valor" />
-
-						<h:outputLabel for="modelo" value="Modelo: * " />
+					
+					<h:outputLabel for="modelo" value="Modelo: * " />
 					<h:selectOneMenu id="modelo" converter="ModeloCarroConverter"
-						value="#{versaoBean.versaoCarro.modeloCarro}" >
+						value="#{versaoBean.versaoCarro.modeloCarro}"  valueChangeListener="#{versaoBean.filtrarItens}">
 						<f:selectItem noSelectionOption="true"
 							itemLabel="Selecione o Modelo" itemValue="-1"/>
 						<f:selectItems value="#{acessorioBean.modelos}" var="m"
 							itemLabel="#{m.descricao} #{m.ano}" itemValue="#{m}" />
+							<f:ajax render="itens acessorio" event="valueChange"/>
 					</h:selectOneMenu>
 					<p:message for="modelo" />
 					
-					<h:outputLabel for="situacao" value="Situação: "/>
-  					<p:selectOneMenu id="situacao" value="#{versaoBean.versaoCarro.situacao}" >
+					<h:outputLabel for="situacao" value="Situação: *"/>
+  					<h:selectOneMenu id="situacao" value="#{versaoBean.versaoCarro.situacao}" >
   						<f:selectItem itemLabel="Selecione uma opção" itemValue="" />
   						<f:selectItems value="#{versaoBean.situacoes}" />
-  					</p:selectOneMenu>
+  					</h:selectOneMenu>
 					<p:message for="situacao" />
 				</h:panelGrid> 
 				
+					
+				
 				 <h:panelGrid columns="4" style="margin-bottom:10px" cellpadding="5">  
-				<h:outputText value="Itens *" />  
-        				<p:selectManyCheckbox id="itens" converter="ItensConverter"
-        				 value="#{versaoBean.versaoCarro.itens}" layout="grid" columns="1">  
+				<h:outputText value="Itens: *"/>  
+        				<h:selectManyCheckbox id="itens" converter="ItensConverter"
+        				 value="#{versaoBean.versaoCarro.itens}" layout="pageDirection" columns="1">  
            				    <f:selectItems value="#{versaoBean.itens}" var="i" 
-           				      itemLabel="#{i.descricao}"/>  
-       					</p:selectManyCheckbox>
+           				      itemLabel="#{i.descricao}" itemValue="#{i}"/>  
+       					</h:selectManyCheckbox>
        					
-					 <h:outputText value="Acessório: *"  />  
-        				<p:selectManyCheckbox id="acessorio" value="#{versaoBean.acessoriosSelecionados}" layout="grid" columns="1">  
-           				    <f:selectItems value="#{versaoBean.acessorios}"/>
-       					</p:selectManyCheckbox>
+					<h:outputText value="Acessório: *"  />  
+        				<h:selectManyCheckbox id="acessorio" converter="AcessoriosConverter"
+        				value="#{versaoBean.versaoCarro.acessorios}" layout="pageDirection" columns="1">  
+           				    <f:selectItems value="#{versaoBean.acessorios}" var="a"
+           				    itemLabel="#{a.descricao}" itemValue="#{a}"/>
+       					</h:selectManyCheckbox>
 				</h:panelGrid> 
 				
-				<p:commandButton value="Salvar"  update=":frmMensagens:growl" action="#{versaoBean.salvar}" />
+				<p:commandButton value="Salvar"  update=":frmMensagens:growl form" action="#{versaoBean.salvar}" />
    				<p:commandButton value="Cancelar" update="form" immediate="true" action="#{versaoBean.cancelar}" />
 </p:panel>
  			</h:form>

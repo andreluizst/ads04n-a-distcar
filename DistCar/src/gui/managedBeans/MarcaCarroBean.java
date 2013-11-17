@@ -139,8 +139,8 @@ public class MarcaCarroBean {
 					.exibirMensagemInfomativa("Selecione um acessório para alterar!");
 			return "marca";
 		} else {
-			marcaCarro = marcaSelecionada;
-			marcaCarro.setFabricante(Fachada.obterInstancia().consultarFabricantePorId(marcaSelecionada.getFabricante().getCodigo()));
+			marcaCarro = Fachada.obterInstancia().pesquisarMarcasCarroCodigo(marcaSelecionada.getCodigo());
+			//marcaCarro.setFabricante(Fachada.obterInstancia().consultarFabricantePorId(marcaSelecionada.getFabricante().getCodigo()));
 			return "marca-prop";
 		}
 	}

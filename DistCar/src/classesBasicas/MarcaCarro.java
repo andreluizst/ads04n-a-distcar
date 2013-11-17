@@ -33,8 +33,7 @@ public class MarcaCarro extends ObjetoGeral {
 	}
 	@Override
 	public String toString() {
-		return "MarcaCarro [descricao=" + descricao + ", fabricante="
-				+ fabricante + "]";
+		return descricao +" ";
 	}
 	@Override
 	public int hashCode() {

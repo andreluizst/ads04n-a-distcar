@@ -74,5 +74,9 @@ public class AcessorioCarro extends ObjetoGeral{
 		this.valor = valor;
 		this.modelo = modelo;
 	}
+	@Override
+	public String toString() {
+		return descricao +" "+ valor;
+	}
 	
 }
