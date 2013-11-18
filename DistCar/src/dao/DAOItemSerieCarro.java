@@ -5,7 +5,9 @@ package dao;
 import java.util.List;
 
 import javax.persistence.TypedQuery;
+
 import classesBasicas.ItemSerieCarro;
+import classesBasicas.ModeloCarro;
 
 public class DAOItemSerieCarro extends DAOGenerico<ItemSerieCarro> implements IDAOItemSerieCarro{
 
@@ -17,7 +19,11 @@ public class DAOItemSerieCarro extends DAOGenerico<ItemSerieCarro> implements ID
 		
 	}
 
-
-
+	@Override
+	public List<ItemSerieCarro> listarItensPorModelo(ModeloCarro modelo) {
+		TypedQuery<ItemSerieCarro> query = entityManager.createQuery("from ItemSerieCarro i where i.modelo.codigo = :modeloCarro",ItemSerieCarro.class);
+		query.setParameter("modeloCarro", modelo.getCodigo());
+		return query.getResultList();
+	}
 	
 }

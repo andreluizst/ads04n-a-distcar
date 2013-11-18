@@ -399,7 +399,7 @@ public class Fachada implements IFachada {
 	}
 
 	@Override
-	public Carro pesquisarCarroCodigo(int codigo) {
+	public Carro pesquisarCarroCodigo(Integer codigo) {
 		return this.controladorCarro.pesquisarCarro(codigo);
 	}
 
@@ -426,7 +426,7 @@ public class Fachada implements IFachada {
 	}
 
 	@Override
-	public MarcaCarro pesquisarMarcasCarroCodigo(int codigo) {
+	public MarcaCarro pesquisarMarcasCarroCodigo(Integer codigo) {
 		return this.controladorCarro.pesquisarMarcaCodigo(codigo);
 	}
 
@@ -435,7 +435,7 @@ public class Fachada implements IFachada {
 		return this.controladorCarro.pesquisarMarcas(marcaCarro);
 	}
 	
-	public Fabricante pesquisarFabricanteCodigo(int codigo){
+	public Fabricante pesquisarFabricanteCodigo(Integer codigo){
 		return this.pesquisarFabricanteCodigo(codigo);
 	}
 
@@ -458,7 +458,7 @@ public class Fachada implements IFachada {
 	}
 
 	@Override
-	public ModeloCarro pesquisarModelosCarroCodigo(int codigo) {
+	public ModeloCarro pesquisarModelosCarroCodigo(Integer codigo) {
 		return this.controladorCarro.pesquisarModeloCarro(codigo);
 	}
 
@@ -467,6 +467,18 @@ public class Fachada implements IFachada {
 		return this.controladorCarro.pesquisarModeloCarros(modeloCarro);
 	}
 
+	@Override
+	public List<MarcaCarro> pesquisarMarcaPorFabr(Integer codigo) {
+		return this.controladorCarro.pesquisarMarcaPorFabr(codigo);
+	}
+	
+
+	@Override
+	public List<ModeloCarro> pesquisarModeloPorMarca(Integer codigo) {
+		return this.controladorCarro.pesquisarModeloPorMarca(codigo);
+	}
+
+	
 	//Versao
 	
 	@Override
@@ -485,7 +497,7 @@ public class Fachada implements IFachada {
 	}
 
 	@Override
-	public VersaoCarro pesquisarVersaoCodigo(int codigo) {
+	public VersaoCarro pesquisarVersaoCodigo(Integer codigo) {
 		return this.controladorCarro.pesquisarVersaoCodigo(codigo);
 	}
 
@@ -494,6 +506,10 @@ public class Fachada implements IFachada {
 		return this.controladorCarro.pesquisarVersoes(versaoCarro);
 	}
 	
+	@Override
+	public List<VersaoCarro> pesquisarVersaoPorModelo(Integer codigo) {
+		return this.controladorCarro.pesquisarVersaoPorModelo(codigo);
+	}
 
 	//Item Série
 	
@@ -513,7 +529,7 @@ public class Fachada implements IFachada {
 	}
 
 	@Override
-	public ItemSerieCarro pesquisarItemCodigo(int codigo) {
+	public ItemSerieCarro pesquisarItemCodigo(Integer codigo) {
 		return this.controladorCarro.pesquisarItemCodigo(codigo);
 	}
 
@@ -545,7 +561,7 @@ public class Fachada implements IFachada {
 	}
 
 	@Override
-	public AcessorioCarro pesquisarAcessorioCodigo(int codigo) {
+	public AcessorioCarro pesquisarAcessorioCodigo(Integer codigo) {
 		return this.controladorCarro.pesquisarAcessorioCarroCodigo(codigo);
 	}
 
@@ -558,4 +574,6 @@ public class Fachada implements IFachada {
 	public List<AcessorioCarro> listarAcessoriosPorModelo(ModeloCarro modelo) {
 		return this.controladorCarro.listarAcessoriosPorModelo(modelo);
 	}
+
+	
 }

@@ -1,6 +1,7 @@
 package gui.managedBeans;
 
 import java.awt.event.ActionEvent;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
@@ -121,6 +122,7 @@ public class VersaoBean {
 		listarVersoes();
 		itens=null;
 		acessorios=null;
+		versaoSelecionada=null;
 	}
 
 	public void novo(ActionEvent actionEvent) {
@@ -138,6 +140,8 @@ public class VersaoBean {
 		Fachada.obterInstancia().salvarVersao(versaoCarro);
 		MsgPrimeFaces.exibirMensagemInfomativa("Versão de carro salvo com sucesso!");
 		init();
+		itens=null;
+		acessorios=null;
 		return "versao";
 	}
 		
@@ -189,13 +193,14 @@ public class VersaoBean {
 			versaoCarro = Fachada.obterInstancia().pesquisarVersaoCodigo(versaoSelecionada.getCodigo());
 	    	//itens = versaoCarro.getItens();
 	    	//acessorios = versaoCarro.getAcessorios();
-	    	//versaoCarro.setModeloCarro(Fachada.obterInstancia().pesquisarModelosCarroCodigo(versaoSelecionada.getModeloCarro().getCodigo()));
+	    	versaoCarro.setModeloCarro(Fachada.obterInstancia().pesquisarModelosCarroCodigo(versaoSelecionada.getModeloCarro().getCodigo()));
 	    	return "versao-prop";
 	    	}
 	    }
 	    
 	    public String cancelar(){
 	    	init();
+	    	versaoSelecionada=null;
 	    	return "versao";
 	    }  
 	    
@@ -229,5 +234,13 @@ public class VersaoBean {
 			}
 	    }
 	    
-	    
+		public void somar(ValueChangeEvent evento){
+	    	List<ItemSerieCarro> i = new ArrayList<>();
+			double soma =versaoCarro.getValor();
+	    	i = (List<ItemSerieCarro>) evento.getNewValue();
+	    	for(ItemSerieCarro is :i){
+	    		soma = soma + is.getValorItemSerie();
+	    	}
+	    	versaoCarro.setValor(soma);
+	    }   
 }

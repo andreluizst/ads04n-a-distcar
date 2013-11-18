@@ -3,14 +3,9 @@ package classesBasicas;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
 import javax.persistence.ManyToOne;
 
-
-
 @Entity
-@Inheritance(strategy=InheritanceType.SINGLE_TABLE)
 public class Carro extends ObjetoGeral {
 	
 	@Column(unique=true)
@@ -20,7 +15,7 @@ public class Carro extends ObjetoGeral {
 	@Column(length=10, nullable=false)
 	private Integer anoFabricacao;
 	@ManyToOne
-	private ModeloCarro modelo;
+	private VersaoCarro versao;
 	private Double valorCarro;
 	public String getChassi() {
 		return chassi;
@@ -40,23 +35,17 @@ public class Carro extends ObjetoGeral {
 	public void setAnoFabricacao(Integer anoFabricacao) {
 		this.anoFabricacao = anoFabricacao;
 	}
-	public ModeloCarro getModelo() {
-		return modelo;
+	public VersaoCarro getVersao() {
+		return versao;
 	}
-	public void setModelo(ModeloCarro modelo) {
-		this.modelo = modelo;
+	public void setVersao(VersaoCarro versao) {
+		this.versao = versao;
 	}
 	public Double getValorCarro() {
 		return valorCarro;
 	}
 	public void setValorCarro(Double valorCarro) {
 		this.valorCarro = valorCarro;
-	}
-	@Override
-	public String toString() {
-		return "Carro [chassi=" + chassi + ", cor=" + cor + ", anoFabricacao="
-				+ anoFabricacao + ", modelo=" + modelo + ", valorCarro="
-				+ valorCarro + "]";
 	}
 	@Override
 	public int hashCode() {
@@ -66,9 +55,9 @@ public class Carro extends ObjetoGeral {
 				+ ((anoFabricacao == null) ? 0 : anoFabricacao.hashCode());
 		result = prime * result + ((chassi == null) ? 0 : chassi.hashCode());
 		result = prime * result + ((cor == null) ? 0 : cor.hashCode());
-		result = prime * result + ((modelo == null) ? 0 : modelo.hashCode());
 		result = prime * result
 				+ ((valorCarro == null) ? 0 : valorCarro.hashCode());
+		result = prime * result + ((versao == null) ? 0 : versao.hashCode());
 		return result;
 	}
 	@Override
@@ -95,17 +84,35 @@ public class Carro extends ObjetoGeral {
 				return false;
 		} else if (!cor.equals(other.cor))
 			return false;
-		if (modelo == null) {
-			if (other.modelo != null)
-				return false;
-		} else if (!modelo.equals(other.modelo))
-			return false;
 		if (valorCarro == null) {
 			if (other.valorCarro != null)
 				return false;
 		} else if (!valorCarro.equals(other.valorCarro))
 			return false;
+		if (versao == null) {
+			if (other.versao != null)
+				return false;
+		} else if (!versao.equals(other.versao))
+			return false;
 		return true;
+	}
+	public Carro() {
+		super();
+	}
+	public Carro(String chassi, String cor, Integer anoFabricacao,
+			VersaoCarro versao, Double valorCarro) {
+		super();
+		this.chassi = chassi;
+		this.cor = cor;
+		this.anoFabricacao = anoFabricacao;
+		this.versao = versao;
+		this.valorCarro = valorCarro;
+	}
+	@Override
+	public String toString() {
+		return "Carro [chassi=" + chassi + ", cor=" + cor + ", anoFabricacao="
+				+ anoFabricacao + ", versao=" + versao + ", valorCarro="
+				+ valorCarro + "]";
 	}
 	
 }

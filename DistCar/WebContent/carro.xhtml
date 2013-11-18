@@ -5,7 +5,7 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:p="http://primefaces.org/ui">
 <h:head>
-	<title>Versão_Carro</title>
+	<title>Carros</title>
 </h:head>
 <h:body>
 	<f:view id="View">
@@ -25,7 +25,7 @@
 					styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
 			</p:confirmDialog>
 
-			<p:panel id="panel" header="DistCar - Versão Carro"
+			<p:panel id="panel" header="DistCar - Carro"
 				style="margin-bottom:10px;">
 
 				<f:facet name="header">
@@ -34,38 +34,75 @@
 							<p:graphicImage value="/resources/images/home-02.jpg"
 								height="35px" width="35px" />
 						</p:commandLink>
-						<h:outputText value="DisctCar 1.0 -  Versão Carro" />
+						<h:outputText value="DisctCar 1.0 - Carro" />
 					</h:panelGrid>
 				</f:facet>
 				
 				<h:panelGrid columns="3" cellpadding="5">
 
-					<h:outputLabel for="descricao" value="Descricão: *" />
-					<p:inputText id="descricao"
-						value="#{versaoBean.versaoCarro.descricao}"  required="false"
-						label="Descricão" requiredMessage="Nome obrigatório: *" />
-					<p:message for="descricao" />
+					<h:outputLabel for="chassi" value="Chassi *" />
+					<p:inputText id="chassi"
+						value="#{carroBean.carro.chassi}"  required="false"
+						label="Chassi" requiredMessage="Nome obrigatório: *" />
+					<p:message for="chassi" />
 						
-					<h:outputLabel for="valor" value="Valor: *" />
-					<p:inputText id="valor" required="false"
-						converterMessage="Digite um número decimal no formato 999.00"
-						value="#{versaoBean.versaoCarro.valor}"
-						requerid="false" label="Valor" />
-					<p:message for="valor" />
+					<h:outputLabel for="cor" value="Cor: *" />
+					<p:inputText id="cor" required="false"
+						value="#{carroBean.carro.cor}"
+						requerid="false" label="Cor" />
+					<p:message for="cor" />
+						
+					<h:outputLabel for="ano" value="Ano de Fabricação: *" />
+					<p:inputText id="ano" required="false"
+						value="#{carroBean.carro.anoFabricacao}"
+						requerid="false" label="Ano" />
+					<p:message for="ano" />
 
-					<h:outputLabel for="modelo" value="Modelo: * " />
-					<h:selectOneMenu id="modelo" converter="ModeloCarroConverter"
-						value="#{versaoBean.versaoCarro.modeloCarro}"  valueChangeListener="#{versaoBean.filtrarItens}">
+					<h:outputLabel for="fabricante" value="Fabricante: * " />
+					<h:selectOneMenu id="fabricante" converter="FabricanteConverter"
+						 valueChangeListener="#{carroBean.filtrarMarca}">
 						<f:selectItem noSelectionOption="true"
-							itemLabel="Selecione o Modelo" itemValue="-1"/>
-						<f:selectItems value="#{versaoBean.modelos}" var="m"
-							itemLabel="#{m.descricao} #{m.ano}" itemValue="#{m}" />
-							<f:ajax render="itens acessorio" event="valueChange"/>
-					</h:selectOneMenu>
-					<p:message for="modelo" />
-					
-					
-					<h:outputLabel for="situacao" value="Situação: *" />
+							itemLabel="Selecione o fabricante" itemValue="-1"/>
+						<f:selectItems value="#{carroBean.fabricantes}" var="f"
+							itemLabel="#{f.pj.nome}" itemValue="#{f}" />
+							<f:ajax render="marca" event="valueChange"/>
+  					</h:selectOneMenu>
+  					<p:message for="fabricante" />
+  					
+  					<h:outputLabel for="marca" value="Marca: * " />
+					<h:selectOneMenu id="marca" converter="MarcaConverter"
+						 valueChangeListener="#{carroBean.filtrarModelo}">
+						<f:selectItem noSelectionOption="true"
+							itemLabel="Selecione a marca" itemValue="-1"/>
+						<f:selectItems value="#{carroBean.marcas}" var="m"
+							itemLabel="#{m.descricao}" itemValue="#{m}" />
+							<f:ajax render="modelo" event="valueChange"/>
+  					</h:selectOneMenu>
+  					<p:message for="marca" />
+  					
+  					<h:outputLabel for="modelo" value="Modelo: * " />
+					<h:selectOneMenu id="modelo" converter="ModeloCarroConverter"
+						 valueChangeListener="#{carroBean.filtrarVersao}">
+						<f:selectItem noSelectionOption="true"
+							itemLabel="Selecione o modelo" itemValue="-1"/>
+						<f:selectItems value="#{carroBean.modelos}" var="mo"
+							itemLabel="#{mo.descricao} #{mo.ano}" itemValue="#{mo}" />
+							<f:ajax render="versao item acessorio" event="valueChange"/>
+  					</h:selectOneMenu>
+  					<p:message for="modelo" />
+  					
+  					<h:outputLabel for="versao" value="Versão: * " />
+					<h:selectOneMenu id="versao" converter="VersaoConverter"
+						 value="#{carroBean.carro.versao}" >
+						<f:selectItem noSelectionOption="true"
+							itemLabel="Selecione a versão" itemValue="-1"/>
+						<f:selectItems value="#{carroBean.versoes}" var="v"
+							itemLabel="#{v.descricao}" itemValue="#{v}" />
+							<f:ajax render="item acessorio" event="valueChange"/>
+  					</h:selectOneMenu>
+  					<p:message for="versao" />
+  					
+  					<h:outputLabel for="situacao" value="Situação: *" />
   					<h:selectOneMenu id="situacao" value="#{versaoBean.versaoCarro.situacao}" >
   						<f:selectItem itemLabel="Selecione uma opção" itemValue="" />
   						<f:selectItems value="#{versaoBean.situacoes}" />
@@ -75,73 +112,73 @@
 			
 				 <h:panelGrid columns="4" style="margin-bottom:10px" cellpadding="5">  
 				<h:outputText value="Itens: *"/>  
-        				<h:selectManyCheckbox id="itens" converter="ItensConverter"
-        				 value="#{versaoBean.versaoCarro.itens}" layout="pageDirection" columns="1">  
-           				    <f:selectItems value="#{versaoBean.itens}" var="i" 
+        				<h:selectManyCheckbox id="item" converter="ItensConverter"
+        				  layout="pageDirection" columns="1">  
+           				    <f:selectItems value="#{carroBean.itens}" var="i" 
            				      itemLabel="#{i.descricao}" itemValue="#{i}"/>  
        					</h:selectManyCheckbox>
        					
-					<h:outputText value="Acessório: *"  />  
+					<h:outputText value="Acessórios: *"  />  
         				<h:selectManyCheckbox id="acessorio" converter="AcessoriosConverter"
-        				value="#{versaoBean.versaoCarro.acessorios}" layout="pageDirection" columns="1">  
-           				    <f:selectItems value="#{versaoBean.acessorios}" var="a"
+        				 layout="pageDirection" columns="1">  
+           				    <f:selectItems value="#{carroBean.acessorios}" var="a"
            				    itemLabel="#{a.descricao}" itemValue="#{a}"/>
        					</h:selectManyCheckbox>
 				</h:panelGrid> 
 				<p:commandButton value="Consultar" update="form"
-					action="#{versaoBean.consultar}" />	
+					action="#{carroBean.consultar}" />	
 					
 				<p:commandButton value="Novo" update="form" immediate="true"
-					action="#{versaoBean.novo}" />
+					action="#{carroBean.novo}" />
 				<p:commandButton value="Alterar" update="panel"
-					 action="#{versaoBean.alterar}" >
+					 action="#{carroBean.alterar}" >
 					
 					</p:commandButton>
 				<p:commandButton value="Excluir" update="form"
-					action="#{versaoBean.excluir}" > 
+					action="#{carroBean.excluir}" > 
 					<p:confirm header="Confirmação"
 						message="Confirma a exclusão da função selecionada?"
 						icon="ui-icon-alert" />
 				</p:commandButton>
 				<p:commandButton value="Fechar" update="panel"
-					action="#{versaoBean.excluir}" />
+					action="#{carroBean.excluir}" />
 			</p:panel>
-			<p:dataTable  id="TBversao" var="versao" 
-				value="#{versaoBean.listarVersoes}"  paginator="true" rows="5"
+			<p:dataTable  id="TBcarro" var="carro" 
+				value="#{carroBean.carros}"  paginator="true" rows="5"
 				paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
 				rowsPerPageTemplate="5,10,15"
-				selection="#{versaoBean.versaoSelecionada}" selectionMode="single"
-				rowKey="#{versao.codigo}">
+				selection="#{carroBean.carroSelecionado}" selectionMode="single"
+				rowKey="#{carro.codigo}">
 				<f:facet name="header">
-           	 		Versões Carros
+           	 		Carros
         		</f:facet>
 
 				<p:column width="8" style="text-align: center;">
 					<f:facet name="header">
-						<h:outputText value="Codigo" />
+						<h:outputText value="Código" />
 					</f:facet>
-					<h:outputText value="#{versao.codigo}" />
+					<h:outputText value="#{carro.codigo}" />
 				</p:column>
 				<p:column width="8" style="text-align: center;">
 					<f:facet name="header">
-						<h:outputText value="Descrição" />
+						<h:outputText value="Chassi" />
 					</f:facet>
-					<h:outputText value="#{versao.descricao}" />
+					<h:outputText value="#{carro.chassi}" />
 				</p:column>
 
 				<p:column width="8" style="text-align: center;">
 					<f:facet name="header">
-						<h:outputText value="Modelo" />
+						<h:outputText value="Fabricante" />
 					</f:facet>
 					<h:outputText 
-						value="#{versao.modeloCarro.descricao} #{versao.modeloCarro.ano}"/>
+						value="#{carro.versao.modeloCarro.marcaCarro.fabricante.pj.nome}"/>
 				</p:column>
 
 				<p:column width="5" style="text-align: center;">
 					<f:facet name="header">
-						<h:outputText value="Valor" />
+						<h:outputText value="Marca" />
 					</f:facet>
-					<h:outputText value="#{versao.valor}" />
+					<h:outputText value="#{carro.versao.modeloCarro.marcaCarro.descricao}" />
 				</p:column>
 				
 				
@@ -149,7 +186,7 @@
 					<f:facet name="header">
 						<h:outputText value="Itens Série" />
 					</f:facet>
-					<h:outputText value="#{versao.itens}" />
+					<h:outputText value="#{carro.versao.itens}" />
 				</p:column>
 				
 				
@@ -157,7 +194,7 @@
 					<f:facet name="header">
 						<h:outputText value="Acessórios" />
 					</f:facet>
-					<h:outputText value="#{versao.acessorios}" />
+					<h:outputText value="#{carro.versao.acessorios}" />
 				</p:column>
 
 				<p:column width="5" style="text-align: center;">

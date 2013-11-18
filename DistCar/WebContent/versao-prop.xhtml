@@ -51,6 +51,7 @@
 						converterMessage="Digite um número decimal no formato 999.00"
 						value="#{versaoBean.versaoCarro.valor}"
 						requerid="false" label="Valor" />
+						 <f:ajax event="keyup" update="valor" />  
 					<p:message for="valor" />
 					
 					<h:outputLabel for="modelo" value="Modelo: * " />
@@ -76,10 +77,11 @@
 				
 				 <h:panelGrid columns="4" style="margin-bottom:10px" cellpadding="5">  
 				<h:outputText value="Itens: *"/>  
-        				<h:selectManyCheckbox id="itens" converter="ItensConverter"
+        				<h:selectManyCheckbox id="itens" converter="ItensConverter" valueChangeListener="#{versaoBean.somar}"
         				 value="#{versaoBean.versaoCarro.itens}" layout="pageDirection" columns="1">  
            				    <f:selectItems value="#{versaoBean.itens}" var="i" 
            				      itemLabel="#{i.descricao}" itemValue="#{i}"/>  
+           				      <f:ajax render="valor" event="valueChange"/>
        					</h:selectManyCheckbox>
        					
 					<h:outputText value="Acessório: *"  />  

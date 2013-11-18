@@ -59,7 +59,7 @@ public class ControladorCarro {
 		return carroDAO.consultarTodos();
 	}
 	
-	public Carro pesquisarCarro(int codigo) {
+	public Carro pesquisarCarro(Integer codigo) {
 		return carroDAO.consultarPorId(codigo);
 	}
 	
@@ -86,13 +86,18 @@ public class ControladorCarro {
 	}
 	
 
-	public ModeloCarro pesquisarModeloCarro(int codigo) {
+	public ModeloCarro pesquisarModeloCarro(Integer codigo) {
 		return modeloCarroDAO.consultarPorId(codigo);
 	}
 	
 	public List<ModeloCarro> pesquisarModeloCarros(ModeloCarro modeloCarro) {
 		return modeloCarroDAO.pesquisar(modeloCarro);
 	}
+	
+	public List<ModeloCarro> pesquisarModeloPorMarca(Integer codigo) {
+		return modeloCarroDAO.pesquisarModeloPorMarca(codigo);
+	}
+
 	
 	//Versao de carro
 	
@@ -109,7 +114,7 @@ public class ControladorCarro {
 		return versaoCarroDAO.consultarTodos();
 	}
 	
-	public VersaoCarro pesquisarVersaoCodigo(int codigo){
+	public VersaoCarro pesquisarVersaoCodigo(Integer codigo){
 		return versaoCarroDAO.consultarPorId(codigo);
 	}
 	
@@ -117,12 +122,10 @@ public class ControladorCarro {
 		return versaoCarroDAO.pesquisar(versaoCarro);
 	}
 	
-	public List<ItemSerieCarro> listarItensPorModelo(ModeloCarro modelo){
-		return versaoCarroDAO.listarItensPorModelo(modelo);
+	public List<VersaoCarro> pesquisarVersaoPorModelo(Integer codigo){
+		return versaoCarroDAO.pesquisarVersaoPorModelo(codigo);
 	}
-	public List<AcessorioCarro> listarAcessoriosPorModelo(ModeloCarro modelo){
-		return versaoCarroDAO.listarAcessoriosPorModelo(modelo);
-	}
+	
 	// Marca
 	
 	public void inserir(MarcaCarro marcaCarro) {
@@ -139,7 +142,7 @@ public class ControladorCarro {
 	}
 
 
-	public MarcaCarro pesquisarMarcaCodigo(int codigo) {
+	public MarcaCarro pesquisarMarcaCodigo(Integer codigo) {
 		return marcaCarroDAO.consultarPorId(codigo);
 	}
 
@@ -147,7 +150,9 @@ public class ControladorCarro {
 		return marcaCarroDAO.pesquisar(marcaCarro);
 	}
 	
-
+	public List<MarcaCarro> pesquisarMarcaPorFabr(Integer codigo ){
+		return marcaCarroDAO.pesquisarMarcaPorFab(codigo);
+	}
 	
 	//Item de Serie
 	
@@ -165,7 +170,7 @@ public class ControladorCarro {
 	public List<ItemSerieCarro> listarItens(){
 		return itemSerieCarroDAO.consultarTodos();
 	}
-	public ItemSerieCarro pesquisarItemCodigo(int codigo) {
+	public ItemSerieCarro pesquisarItemCodigo(Integer codigo) {
 		return itemSerieCarroDAO.consultarPorId(codigo);
 	}
 	
@@ -176,6 +181,11 @@ public class ControladorCarro {
 	public List<ItemSerieCarro> pesquisarPorModelo(Integer codigo){
 		return itemSerieCarroDAO.pesquisarPorModelo(codigo);
 	}
+	
+	public List<ItemSerieCarro> listarItensPorModelo(ModeloCarro modelo){
+		return itemSerieCarroDAO.listarItensPorModelo(modelo);
+	}
+	
 	//Acessório Carro
 
 	public void inserir(AcessorioCarro acessorioCarro) {
@@ -191,12 +201,15 @@ public class ControladorCarro {
 		return acessorioDAO.consultarTodos();
 	}
 
-	public AcessorioCarro pesquisarAcessorioCarroCodigo(int codigo) {
+	public AcessorioCarro pesquisarAcessorioCarroCodigo(Integer codigo) {
 		return acessorioDAO.consultarPorId(codigo);
 	}
 
 	public List<AcessorioCarro> pesquisarAcessorios(AcessorioCarro acessorio) {
 		return acessorioDAO.pesquisar(acessorio);
+	}
+	public List<AcessorioCarro> listarAcessoriosPorModelo(ModeloCarro modelo){
+		return acessorioDAO.listarAcessoriosPorModelo(modelo);
 	}
 
 }

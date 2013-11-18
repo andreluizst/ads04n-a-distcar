@@ -119,7 +119,7 @@ public interface IFachada {
 	public void salvarCarro(Carro carro);
 	public void removerCarro(Carro carro);
 	public List<Carro> listarCarros();
-	public Carro pesquisarCarroCodigo(int codigo);
+	public Carro pesquisarCarroCodigo(Integer codigo);
 	public List<Carro> consultarCarros(Carro carro);
 		
 	//Marca
@@ -127,42 +127,47 @@ public interface IFachada {
 	public void salvarMarcaCarro(MarcaCarro marcaCarro);
 	public void removerMarcaCarro(MarcaCarro marcaCarro);
 	public List<MarcaCarro> listarMarcasCarros();
-	public MarcaCarro pesquisarMarcasCarroCodigo(int codigo);
+	public MarcaCarro pesquisarMarcasCarroCodigo(Integer codigo);
 	public List<MarcaCarro> consultarMarcasCarros(MarcaCarro marcaCarro);
-	public Fabricante pesquisarFabricanteCodigo(int codigo);
+	public Fabricante pesquisarFabricanteCodigo(Integer codigo);
+	public List<MarcaCarro> pesquisarMarcaPorFabr(Integer codigo);
 	
 	//Modelo
 		
 	public void salvarModeloCarro(ModeloCarro modeloCarro);
 	public void removerModeloCarro(ModeloCarro modeloCarro);
 	public List<ModeloCarro> listarModelosCarros();
-	public ModeloCarro pesquisarModelosCarroCodigo(int codigo);
+	public ModeloCarro pesquisarModelosCarroCodigo(Integer codigo);
 	public List<ModeloCarro> consultarModelosCarros(ModeloCarro modeloCarro);
+	public List<ModeloCarro> pesquisarModeloPorMarca(Integer codigo);
 		
 	//Versao
 		
 	public void salvarVersao(VersaoCarro versaoCarro);
 	public void removerVersao(VersaoCarro versaoCarro);
 	public List<VersaoCarro> listarVersoes();
-	public VersaoCarro pesquisarVersaoCodigo(int codigo);
+	public VersaoCarro pesquisarVersaoCodigo(Integer codigo);
 	public List<VersaoCarro> consultarVersoes(VersaoCarro versaoCarro);
-	public List<ItemSerieCarro> listarItensPorModelo(ModeloCarro modelo);
-	public List<AcessorioCarro> listarAcessoriosPorModelo(ModeloCarro modelo);
-		
+	public List<VersaoCarro> pesquisarVersaoPorModelo(Integer codigo);
+	
+	
+	
 	//Item 
 		
 	public void salvarItemSerie(ItemSerieCarro itemSerieCarro)throws Exception;
 	public void removerItem(ItemSerieCarro itemSerieCarro);
 	public List<ItemSerieCarro> listarItens();
-	public ItemSerieCarro pesquisarItemCodigo(int codigo);
+	public ItemSerieCarro pesquisarItemCodigo(Integer codigo);
 	public List<ItemSerieCarro> consultarItens(ItemSerieCarro itemSerieCarro);
+	public List<ItemSerieCarro> listarItensPorModelo(ModeloCarro modelo);
 		
 	//Acessório
 	
 	public void salvarAcessorio(AcessorioCarro acessorioCarro);
 	public void removerAcessorio(AcessorioCarro acessorioCarro);
 	public List<AcessorioCarro> listarAcessorios();
-	public AcessorioCarro pesquisarAcessorioCodigo(int codigo);
+	public AcessorioCarro pesquisarAcessorioCodigo(Integer codigo);
 	public List<AcessorioCarro> consultarAcessorios(AcessorioCarro acessorioCarro);
+	public List<AcessorioCarro> listarAcessoriosPorModelo(ModeloCarro modelo);
 		
 }

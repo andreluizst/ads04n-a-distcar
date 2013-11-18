@@ -99,9 +99,9 @@ public class AcessorioBean {
 	
 	}
 		
-	public void listar(){
+	/*public void listar(){
 		listaAcessorios = Fachada.obterInstancia().listarAcessorios();
-	}
+	}*/
 		
 	public List<ModeloCarro> listarModelo() {
 		try {
@@ -126,7 +126,7 @@ public class AcessorioBean {
 	}
 	
 	public void consulta(){
-		listar();
+		listarAcessorios();
 	}
 	
 	    public String novo(){
