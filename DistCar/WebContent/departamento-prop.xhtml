@@ -15,8 +15,7 @@
 	<f:view id="viewDepto-prop">
 		
 		<h:form id="frmMensagens">
-			<p:messages id="messages" showDetail="true" autoUpdate="true" closable="true"></p:messages>
-			<p:growl id="growl" showDetail="true" sticky="false" globalOnly="true" />
+			<p:messages id="messages" showDetail="false" autoUpdate="true" closable="true"></p:messages>
 		</h:form>
 		
   		<h:form id="frmPrincipal">
@@ -65,7 +64,7 @@
 
   				<p:commandButton value="Salvar" rendered="#{!deptoBean.somenteLeitura}" 
   						disabled="#{deptoBean.somenteLeitura}" 
-  						update=":frmMensagens:growl" action="#{deptoBean.salvar}"/>
+  						update="panel" action="#{deptoBean.salvar}"/>
   				
   				<p:commandButton value="#{deptoBean.textoBotaoFecharOuCancelar}" 
   								immediate="true" action="departamento" />

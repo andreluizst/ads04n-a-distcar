@@ -15,12 +15,11 @@
 	<f:view id="viewCentro-prop">
 		
 		<h:form id="frmMensagens">
-			<p:messages id="messages" showDetail="true" autoUpdate="true" closable="true"></p:messages>
-			<p:growl id="growl" showDetail="true" sticky="false" globalOnly="true" />
+			<p:messages id="messages" showDetail="false" autoUpdate="true" closable="true"></p:messages>
 		</h:form>
 		
-  		<h:form id="frmCentro">
-  			<p:panel id="panelFuncao" header="DistCar - #{centroBean.tituloOperacao}">
+  		<h:form id="frmPrincipla">
+  			<p:panel id="panel" header="DistCar - #{centroBean.tituloOperacao}">
   				<h:panelGrid columns="2" cellpadding="5">
   					<h:outputLabel for="alias" value="Alias: *"/>
   					<p:inputText id="alias" value="#{centroBean.centro.alias}" lable="Alias"
@@ -136,7 +135,7 @@
 
   				<p:commandButton value="Salvar" rendered="#{!centroBean.somenteLeitura}" 
   						disabled="#{centroBean.somenteLeitura}" 
-  						update=":frmMensagens:growl" action="#{centroBean.salvar}"/>
+  						update="panel" action="#{centroBean.salvar}"/>
   				
   				<p:commandButton value="#{centroBean.textoBotaoFecharOuCancelar}" 
   								immediate="true" action="centro" />

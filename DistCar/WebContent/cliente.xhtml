@@ -15,7 +15,7 @@
 	<f:view id="viewCliente">
 		
 		<h:form id="frmMensagens">
-			<p:messages id="messages" showDetail="true" autoUpdate="true" closable="true"></p:messages>
+			<p:messages id="messages" showDetail="false" autoUpdate="true" closable="true"></p:messages>
 			<p:growl id="growl" showDetail="true" sticky="false" globalOnly="true" />
 		</h:form>
 		
@@ -103,7 +103,7 @@
   						{NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rowsPerPageTemplate="5,10,15"
   						selection="#{clienteBean.clienteSelecionado}" selectionMode="single"
   						rowKey="#{cliente}" emptyMessage="Nenhum cliente encontrado.">
-  				<f:facet name="header">Lista de Funconários</f:facet>
+  				<f:facet name="header">Lista de Clientes</f:facet>
   				<p:column>
   					<f:facet name="header"><h:outputText value="Código"/> </f:facet>
   					<h:outputText value="#{cliente.codigo}"/>

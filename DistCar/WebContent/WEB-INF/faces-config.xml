@@ -39,5 +39,13 @@
 		<converter-id>UFConverter</converter-id>
 		<converter-class>gui.converters.UFConverter</converter-class>
 	</converter>
+	<validator>
+		<validator-id>cpfValidator</validator-id>
+		<validator-class>gui.validators.CPFValidator</validator-class>
+	</validator>
+	<validator>
+		<validator-id>cnpjValidator</validator-id>
+		<validator-class>gui.validators.CNPJValidator</validator-class>
+	</validator>
 
 </faces-config>

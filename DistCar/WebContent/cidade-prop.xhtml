@@ -15,8 +15,7 @@
 	<f:view id="viewCidade-prop">
 		
 		<h:form id="frmMensagens">
-			<p:messages id="messages" showDetail="true" autoUpdate="true" closable="true"></p:messages>
-			<p:growl id="growl" showDetail="true" sticky="false" globalOnly="true" />
+			<p:messages id="messages" showDetail="false" autoUpdate="true" closable="true"></p:messages>
 		</h:form>
 		
   		<h:form id="frmPrincial">
@@ -47,7 +46,7 @@
 
   				<p:commandButton value="Salvar" rendered="#{!cidadeBean.somenteLeitura}" 
   						disabled="#{cidadeBean.somenteLeitura}" 
-  						update=":frmMensagens:growl" action="#{cidadeBean.salvar}"/>
+  						update="frmPrincial" action="#{cidadeBean.salvar}"/>
   				
   				<p:commandButton value="#{cidadeBean.textoBotaoFecharOuCancelar}" 
   								immediate="true" action="cidade" />

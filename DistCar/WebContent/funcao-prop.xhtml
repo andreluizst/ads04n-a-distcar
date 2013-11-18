@@ -13,7 +13,7 @@
 	<f:view id="viewEntrada">
 		
 		<h:form id="frmMensagens">
-			<p:messages id="messages" showDetail="true" autoUpdate="true" closable="true"></p:messages>
+			<p:messages id="messages" showDetail="false" autoUpdate="true" closable="true"></p:messages>
 		</h:form>
 		
   		<h:form id="frmFuncao">
@@ -31,6 +31,7 @@
   								readonly="#{funcaoBean.somenteLeitura}"
   								required="true" requiredMessage="O salário deve ser informado!">
   						<f:validateLongRange minimum="680"></f:validateLongRange>
+  						<f:convertNumber type="currency" currencyCode="BRL"/>
   					</p:inputText>
   					<p:message for="salario"></p:message>
   					

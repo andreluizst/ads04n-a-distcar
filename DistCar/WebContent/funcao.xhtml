@@ -13,7 +13,7 @@
 	<f:view id="viewEntrada">
 		
 		<h:form id="frmMensagens">
-			<p:messages id="messages" showDetail="true" autoUpdate="true" closable="true"></p:messages>
+			<p:messages id="messages" showDetail="false" autoUpdate="true" closable="true"></p:messages>
 			<p:growl id="growl" showDetail="true" sticky="false" globalOnly="true" />
 			
 		</h:form>
@@ -38,8 +38,10 @@
   					<h:inputText id="descricao" value="#{funcaoBean.funcaoDePesquisa.descricao}" required="false" lable="Descrição"/>
   					
   					<h:outputLabel for="salario" value="Salário: "></h:outputLabel>
-  					<p:inputText id="salario" converterMessage="Digite um número decimal no formato 999.00" 
-  								value="#{funcaoBean.funcaoDePesquisa.salario}" dir="rtl" lable="Salário"></p:inputText>
+  					<p:inputText id="salario" converterMessage="Digite um número decimal no formato 9.999,00" 
+  								value="#{funcaoBean.funcaoDePesquisa.salario}" dir="rtl" lable="Salário">
+  						<f:convertNumber currencyCode="BRL" type="currency"/>
+  					</p:inputText>
   					
   					<h:outputLabel for="situacao" value="Situação: "/>
   					<p:selectOneMenu id="situacao" value="#{funcaoBean.funcaoDePesquisa.situacao}" >

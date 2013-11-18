@@ -15,8 +15,7 @@
 	<f:view id="viewEscolaridade-prop">
 		
 		<h:form id="frmMensagens">
-			<p:messages id="messages" showDetail="true" autoUpdate="true" closable="true"></p:messages>
-			<p:growl id="growl" showDetail="true" sticky="false" globalOnly="true" />
+			<p:messages id="messages" showDetail="false" autoUpdate="true" closable="true"></p:messages>
 		</h:form>
 		
   		<h:form id="frmPrincial">
@@ -38,7 +37,7 @@
 
   				<p:commandButton value="Salvar" rendered="#{!escolaridadeBean.somenteLeitura}" 
   						disabled="#{escolaridadeBean.somenteLeitura}" 
-  						update=":frmMensagens:growl" action="#{escolaridadeBean.salvar}"/>
+  						update="panel" action="#{escolaridadeBean.salvar}"/>
   				
   				<p:commandButton value="#{escolaridadeBean.textoBotaoFecharOuCancelar}" 
   								immediate="true" action="escolaridade" />
