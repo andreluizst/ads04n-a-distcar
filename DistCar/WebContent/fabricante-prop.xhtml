@@ -25,6 +25,7 @@
   					
   					<h:outputLabel for="nome" value="Nome/Razão social: *"/>
   					<p:inputText id="nome" value="#{fabricanteBean.fabricante.pj.nome}" lable="Nome"
+  							size="40"
   							readonly="#{fabricanteBean.somenteLeitura}"
   							required="true" requiredMessage="O nome é obrigatório!" />
   					<p:message for="nome" display="default" />
@@ -125,6 +126,20 @@
   								readonly="#{fabricanteBean.somenteLeitura}"
   								value="#{fabricanteBean.fabricante.pj.email}" required="false" lable="E-mail" />
   					<p:message for="email" display="default" />
+
+  					<h:outputLabel for="txtTelefone" value="Telefones: "/>
+  					<h:panelGrid id="grdTelefones" columns="1" cellpadding="2">
+  						<p:inputText id="txtTelefone" size="15" widgetVar="txtTel"  
+  								readonly="#{fabricanteBean.somenteLeitura}" value="#{fabricanteBean.telefone}"
+  								required="false" lable="Telefones" />
+  						<p:selectOneListbox id="lstbxTelefones" 
+  									value="#{fabricanteBean.telefoneSelecionado}" size="15"
+  									valueChangeListener="#{fabricanteBean.telefonesChange}">
+  							<f:selectItems value="#{fabricanteBean.fabricante.pj.telefones}"/>
+  							<f:ajax event="valueChange" render="txtTelefone"/>
+  						</p:selectOneListbox>
+  					</h:panelGrid>
+  					<p:message for="lstbxTelefones" display="default" />
   					
   					<h:outputLabel for="situacao" value="Situação: "/>
   					<p:selectOneMenu id="situacao" value="#{fabricanteBean.fabricante.pj.situacao}"

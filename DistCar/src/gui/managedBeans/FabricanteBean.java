@@ -50,6 +50,8 @@ public class FabricanteBean {
 	private Integer codigoTipoLogradouroSelecionado;
 	private UnidadeFederativa ufSelecionada;
 	private UnidadeFederativa ufPesquisa;
+	private String telefone;
+	private String telefoneSelecionado;
 	
 	
 	public FabricanteBean(){
@@ -59,6 +61,8 @@ public class FabricanteBean {
 	
 	private void inicializar(){
 		novoFabricante();
+		telefone = "";
+		telefoneSelecionado = "";
 		if (lista==null)
 			lista = new ArrayList<Fabricante>();
 		else
@@ -260,6 +264,31 @@ public class FabricanteBean {
 		}
 	}
 	
+	public void telefonesChange(ValueChangeEvent evento){
+		telefone = (String)evento.getNewValue();
+	}
+	
+	public void adicionarTelefone(){
+		fabricante.getPj().getTelefones().add(telefone);
+	}
+	
+	public void excluirTelefone(){
+		fabricante.getPj().getTelefones().remove(telefoneSelecionado);
+	}
+	
+	public void alterarTelefone(){
+		ArrayList<String> lista = (ArrayList<String>)fabricante.getPj().getTelefones();
+		if (lista.size() > 0){
+			for(int i =0;i < lista.size();i++){
+				if (lista.get(i).equals(telefone)){
+					lista.remove(i);
+					lista.add(i, telefone);
+				}
+			}
+			fabricante.getPj().setTelefones(lista);
+		}
+	}
+	
 	// GETs e SETs
 
 	public Fabricante getFabricante() {
@@ -370,7 +399,22 @@ public class FabricanteBean {
 	public List<Cidade> getCidadesPesquisa() {
 		return cidadesPesquisa;
 	}
-	
+
+	public String getTelefone() {
+		return telefone;
+	}
+
+	public void setTelefone(String telefone) {
+		this.telefone = telefone;
+	}
+
+	public String getTelefoneSelecionado() {
+		return telefoneSelecionado;
+	}
+
+	public void setTelefoneSelecionado(String telefoneSelecionado) {
+		this.telefoneSelecionado = telefoneSelecionado;
+	}
 	
 	
 }
