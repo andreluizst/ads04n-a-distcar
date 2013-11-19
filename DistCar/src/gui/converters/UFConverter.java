@@ -40,8 +40,9 @@ public class UFConverter implements Converter {
 		if (objArg == null) 
 	           return null;  
 	    if (objArg instanceof UnidadeFederativa) {  
-	    	UnidadeFederativa obj = (UnidadeFederativa)objArg;  
-	        return obj.getCodigo().toString();  
+	    	UnidadeFederativa obj = (UnidadeFederativa)objArg;
+	    	if (obj.getCodigo() != null)
+	    		return obj.getCodigo().toString();  
 	    }  
 	    else if(objArg instanceof String && ((String)objArg).equalsIgnoreCase("-1")){  
 	        return "-1";  

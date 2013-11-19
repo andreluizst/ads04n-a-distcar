@@ -21,16 +21,13 @@
 		
   		<h:form id="frmFabricante-prop">
   			<p:panel id="panel" header="DistCar - #{fabricanteBean.tituloOperacao}">
-  				<h:panelGrid id="grid" columns="2" cellpadding="5">
-  					<h:outputLabel for="alias" value="Alias: *"/>
-  					<p:inputText id="alias" value="#{fabricanteBean.fabricante.alias}" lable="Alias"
-  								readonly="#{fabricanteBean.somenteLeitura}"
-  								required="true" requiredMessage="Um alias é obrigatório!" />
+  				<h:panelGrid id="grid" columns="3" cellpadding="3">
   					
   					<h:outputLabel for="nome" value="Nome/Razão social: *"/>
   					<p:inputText id="nome" value="#{fabricanteBean.fabricante.pj.nome}" lable="Nome"
   							readonly="#{fabricanteBean.somenteLeitura}"
   							required="true" requiredMessage="O nome é obrigatório!" />
+  					<p:message for="nome" display="default" />
   					
   					<h:outputLabel for="cnpj" value="CNPJ: *"/>
   					<p:inputMask id="cnpj" mask="99.999.999/9999-99" size="20" 
@@ -38,23 +35,26 @@
   							readonly="#{fabricanteBean.somenteLeitura}"
   							required="true" requiredMessage="O preenchimento do campo CNPJ é obrigatório!" >
   					</p:inputMask>
+  					<p:message for="cnpj" display="default" />
   					
   					<h:outputLabel for="lote" value="Lote mínimo: *"/>
   					<p:inputText id="lote"  
-  								value="#{fabricanteBean.fabricante.loteminimo}" lable="Lote mínimo"
+  								value="#{fabricanteBean.fabricante.loteMinimo}" lable="Lote mínimo"
   								readonly="#{fabricanteBean.somenteLeitura}"
   								required="true" requiredMessage="Informe o lote mínimo de fornecimento do fabricante!" />
+  					<p:message for="lote" display="default" />
   					
   					<h:outputLabel for="data" value="Data da abertura: "/>
   					<p:calendar id="data" value="#{fabricanteBean.fabricante.pj.dataAbertura}"
   						effect="explode" pattern="dd/MM/yyyy"
   						readonly="#{fabricanteBean.somenteLeitura}" />
+  					<p:message for="data" display="default" />
   					
   					<h:outputLabel for="inscEst" value="Inscrição estadual: *"/>
   					<p:inputText id="inscEst" value="#{fabricanteBean.fabricante.pj.inscricaoEstadual}"
   								lable="Inscrição estadual" readonly="#{fabricanteBean.somenteLeitura}"
   								required="true" requiredMessage="Informe a inscrição estadual. se não tiver digite: ISENTO"/>
-  					
+  					<p:message for="inscEst" display="default" />
   					
   					<h:outputLabel for="tipoLog" value="Tipo logradouro: *"/>
   					<p:selectOneMenu id="tipoLog" converter="TipoLogradouroConverter"
@@ -65,25 +65,28 @@
   						<f:selectItems value="#{fabricanteBean.tiposLogradouros}" var="tpLog" 
   								itemLabel="#{tpLog.descricao}" itemValue="#{tpLog}" />
   					</p:selectOneMenu>
+  					<p:message for="tipoLog" display="default" />
   					
   					<h:outputLabel for="logradouro" value="Logradouro: *"/>
   					<p:inputText id="logradouro"  
   								value="#{fabricanteBean.fabricante.pj.endereco.logradouro}" lable="logradouro"
   								readonly="#{fabricanteBean.somenteLeitura}"
   								required="true" requiredMessage="Informe um logradouro!" />
+  					<p:message for="logradouro" display="default" />
   					
   					<h:outputLabel for="numero" value="Número: *"/>
   					<p:inputText id="numero"  
-  								value="#{fabricanteBean.fabricante.dadosPJ.endereco.numero}" lable="numero"
+  								value="#{fabricanteBean.fabricante.pj.endereco.numero}" lable="numero"
   								readonly="#{fabricanteBean.somenteLeitura}"
   								required="true" requiredMessage="Informe o número do logradouro!" />
+  					<p:message for="numero" display="default" />
   					
   					<h:outputLabel for="bairro" value="Bairro: *"/>
   					<p:inputText id="bairro"  
-  								value="#{fabricanteBean.fabricante.dadosPJ.endereco.bairro}" lable="Bairro"
+  								value="#{fabricanteBean.fabricante.pj.endereco.bairro}" lable="Bairro"
   								readonly="#{fabricanteBean.somenteLeitura}"
   								required="true" requiredMessage="Informe o bairro!" />
-  				
+  					<p:message for="bairro" display="default" />
   					 
   					<h:outputLabel for="unidadeFederativa" value="UF: *"/>
   					<p:selectOneMenu id="unidadeFederativa" converter="UFConverter" 
@@ -96,7 +99,7 @@
   								itemLabel="#{uf}" itemValue="#{uf}" />
   						<f:ajax render="cbxCidades" event="valueChange"/>
   					</p:selectOneMenu>
-  					
+  					<p:message for="unidadeFederativa" display="default" />
   				
   					<h:outputLabel for="cbxCidades" value="Cidade: *"/>
   					<p:selectOneMenu id="cbxCidades" converter="CidadeConverter" 
@@ -107,6 +110,7 @@
   						<f:selectItems value="#{fabricanteBean.cidades}" var="cid" 
   								itemLabel="#{cid}" itemValue="#{cid}" />
   					</p:selectOneMenu>
+  					<p:message for="cbxCidades" display="default" />
   					
   					<h:outputLabel for="cep" value="CEP: *"/>
   					<p:inputMask id="cep" mask="99999-999" size="12" 
@@ -114,11 +118,13 @@
   							readonly="#{fabricanteBean.somenteLeitura}"
   							required="true" requiredMessage="Informe o CEP!" >
   					</p:inputMask>
+  					<p:message for="cep" display="default" />
   					
   					<h:outputLabel for="email" value="E-mail: "/>
   					<p:inputText id="email"  
   								readonly="#{fabricanteBean.somenteLeitura}"
   								value="#{fabricanteBean.fabricante.pj.email}" required="false" lable="E-mail" />
+  					<p:message for="email" display="default" />
   					
   					<h:outputLabel for="situacao" value="Situação: "/>
   					<p:selectOneMenu id="situacao" value="#{fabricanteBean.fabricante.pj.situacao}"
@@ -126,6 +132,7 @@
   						<f:selectItem noSelectionOption="true" itemLabel="Selecione uma situação" itemValue="" />
   						<f:selectItems value="#{fabricanteBean.situacoes}" />
   					</p:selectOneMenu>
+  					<p:message for="situacao" display="default" />
   					
   				</h:panelGrid>
 
@@ -134,7 +141,7 @@
   						update="grid" action="#{fabricanteBean.salvar}"/>
   				
   				<p:commandButton value="#{fabricanteBean.textoBotaoFecharOuCancelar}" 
-  								immediate="true" action="fabricante.xhtml?faces-redirect=true" />
+  								immediate="true" action="#{fabricanteBean.cancelar}" />
 
   			</p:panel>
     		

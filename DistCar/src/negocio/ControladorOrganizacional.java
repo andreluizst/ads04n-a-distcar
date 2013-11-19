@@ -692,7 +692,7 @@ public class ControladorOrganizacional {
 	}
 	
 	public List<Fabricante> consultarFabricante(Fabricante fabricante) throws Exception{
-		return daoFabricante.pesquisar(fabricante);
+		return daoFabricante.consultar(fabricante);
 	}
 	
 	

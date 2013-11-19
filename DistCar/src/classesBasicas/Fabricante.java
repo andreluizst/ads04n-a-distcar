@@ -16,10 +16,6 @@ public class Fabricante /*extends ObjetoGeral*/ {
 	@JoinColumn(name="codPJ", insertable=true, updatable=true)
 	private PessoaJuridica pj;
 	
-	/*@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
-	@JoinColumn(name="codMarca", insertable=true, updatable=true)
-	private MarcaCarro marcaCarro;*/
-	
 	
 	private Integer loteMinimo;
 	
@@ -76,18 +72,9 @@ public class Fabricante /*extends ObjetoGeral*/ {
 		this.codigo = codigo;
 	}
 
-	/*public MarcaCarro getMarcaCarro() {
-		return marcaCarro;
-	}
-
-	public void setMarcaCarro(MarcaCarro marcaCarro) {
-		this.marcaCarro = marcaCarro;
-	}*/
-
 	@Override
 	public String toString() {
-		return "Fabricante [codigo=" + codigo + ", pj=" + pj + ", marcaCarro="
-				/*+ marcaCarro*/ + ", loteMinimo=" + loteMinimo + "]";
+		return "Fabricante [codigo=" + codigo + ", pj=" + pj + ", loteMinimo=" + loteMinimo + "]";
 	}
 
 	@Override

@@ -27,14 +27,14 @@
                 		</p:submenu>
                 		  
             	    	<p:submenu label="Vendas">
-        	        		<p:menuitem value="Fabricante" url="#" />
-        	        		<p:menuitem value="Marca" url="marca.xhtml?faces-redirect=true" />  
+        	        		<p:menuitem value="Fabricante" action="#{fabricanteBean.carregarPagina}" />
+        	        		<p:menuitem value="Marca" action="marca.xhtml?faces-redirect=true" />  
     	            		<p:menuitem value="Cliente" action="#{clienteBean.carregarPagina}" />  
-	                    	<p:menuitem value="Carro" url="carro.xhtml?faces-redirect=true" />  
-                    		<p:menuitem value="Modelo" url="modelo.xhtml?faces-redirect=true" />
-                    		<p:menuitem value="Versão" url="versao.xhtml?faces-redirect=true" />  
-                	    	<p:menuitem value="Acessórios" url="acessorio.xhtml?faces-redirect=true" />
-            	        	<p:menuitem value="Itens de série" url="item.xhtml?faces-redirect=true" />  
+	                    	<p:menuitem value="Carro" action="carro.xhtml?faces-redirect=true" />  
+                    		<p:menuitem value="Modelo" action="modelo.xhtml?faces-redirect=true" />
+                    		<p:menuitem value="Versão" action="versao.xhtml?faces-redirect=true" />  
+                	    	<p:menuitem value="Acessórios" action="acessorio.xhtml?faces-redirect=true" />
+            	        	<p:menuitem value="Itens de série" action="item.xhtml?faces-redirect=true" />  
         	        	</p:submenu>  
 	            	</p:column>  
   

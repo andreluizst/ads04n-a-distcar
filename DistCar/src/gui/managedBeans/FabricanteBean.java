@@ -10,9 +10,7 @@ import javax.faces.event.ActionEvent;
 import javax.faces.event.ValueChangeEvent;
 
 import classesBasicas.Cidade;
-import classesBasicas.Endereco;
 import classesBasicas.Fabricante;
-import classesBasicas.PessoaJuridica;
 import classesBasicas.Situacao;
 import classesBasicas.TipoLogradouro;
 import classesBasicas.UnidadeFederativa;
@@ -44,10 +42,14 @@ public class FabricanteBean {
 	private Situacao[] situacoes = Situacao.values();
 	private List<TipoLogradouro> tiposLogradouros; 
 	private List<Cidade> cidades;
+	private List<Cidade> cidadesPesquisa;
 	private List<UnidadeFederativa> ufs;
+	private List<UnidadeFederativa> ufsPesquisa;
 	private Integer codigoUfSelecionada;
 	private Integer codigoCidadeSelecionada;
 	private Integer codigoTipoLogradouroSelecionado;
+	private UnidadeFederativa ufSelecionada;
+	private UnidadeFederativa ufPesquisa;
 	
 	
 	public FabricanteBean(){
@@ -62,15 +64,16 @@ public class FabricanteBean {
 		else
 			lista.clear();
 		listaEstaVazia = true;
+		cidadesPesquisa = new ArrayList<Cidade>();
 		iniciarObjParaPesquisa();
 		fabricanteSelecionado = null;
+		ufSelecionada = null;
 		tituloOperacao = FabricanteBean.OP_VISUALIZAR;
 		textoBotaoFecharOuCancelar = FabricanteBean.TXT_BTN_FECHAR;
 		somenteLeitura = true;
 		try{
-			tiposLogradouros = fachada.listarTiposLogradouros();
-			cidades = fachada.listarCidades();
-			ufs = fachada.listarUFs();
+			//cidadesPesquisa = fachada.listarCidades();
+			ufsPesquisa = fachada.listarUFs();
 		}catch(Exception ex){
 			MsgPrimeFaces.exibirMensagemDeErro(ex.getMessage());
 		}
@@ -78,6 +81,8 @@ public class FabricanteBean {
 
 	private void iniciarObjParaPesquisa(){
 		fabricanteParaPesquisa = new Fabricante();
+		ufPesquisa = new UnidadeFederativa();
+		//cidadesPesquisa.clear();
 		/*fabricanteParaPesquisa.setPj(new PessoaJuridica());
 		fabricanteParaPesquisa.getPj().setEndereco(new Endereco());
 		fabricanteParaPesquisa.getPj().getEndereco().setCidade(new Cidade());*/
@@ -88,12 +93,15 @@ public class FabricanteBean {
 		this.fabricante.setPj(obj.getPj());
 		this.fabricante.getPj().setSituacao(obj.getPj().getSituacao());
 		codigoCidadeSelecionada = obj.getPj().getEndereco().getCidade().getCodigo();
-		codigoUfSelecionada = obj.getPj().getEndereco().getCidade().getUnidadeFederativa().getCodigo();
+		//codigoUfSelecionada = obj.getPj().getEndereco().getCidade().getUnidadeFederativa().getCodigo();
+		ufSelecionada = obj.getPj().getEndereco().getCidade().getUnidadeFederativa();
 		codigoTipoLogradouroSelecionado = obj.getPj().getEndereco().getTipoLogradouro().getCodigo();
-		UnidadeFederativa uf = new UnidadeFederativa();
-		uf.setCodigo(codigoUfSelecionada);
+		//UnidadeFederativa uf = new UnidadeFederativa();
+		//uf.setCodigo(codigoUfSelecionada);
 		try{
-		cidades = fachada.consultarCidadesPorUF(uf);
+			tiposLogradouros = fachada.listarTiposLogradouros();
+			cidades = fachada.listarCidades();
+			ufs = fachada.listarUFs();
 		}catch(Exception ex){
 			MsgPrimeFaces.exibirMensagemDeErro("Não foi possível filtrar as cidades pelo estado selecionado!");
 		}
@@ -126,6 +134,7 @@ public class FabricanteBean {
 		codigoCidadeSelecionada = null;//new Cidade();
 		codigoUfSelecionada = null;//new UnidadeFederativa();
 		codigoTipoLogradouroSelecionado = null;
+		ufSelecionada = null;
 	}
 	
 	public void excluir(){
@@ -145,6 +154,7 @@ public class FabricanteBean {
 		lista.clear();
 		listaEstaVazia = true;
 		fabricanteSelecionado = null;
+		ufPesquisa = null;
 		somenteLeitura = true;
 	}
 	
@@ -169,6 +179,11 @@ public class FabricanteBean {
 	
 	public void consultar(){
 		try{
+			if (ufPesquisa != null){
+				if (fabricanteParaPesquisa.getPj().getEndereco().getCidade() == null)
+					fabricanteParaPesquisa.getPj().getEndereco().setCidade(new Cidade());
+				fabricanteParaPesquisa.getPj().getEndereco().getCidade().setUnidadeFederativa(ufPesquisa);
+			}
 			atualizarLista(fachada.consultarFabricante(fabricanteParaPesquisa));
 		}catch(Exception ex){
 			MsgPrimeFaces.exibirMensagemDeErro(ex.getMessage());
@@ -194,6 +209,14 @@ public class FabricanteBean {
 		listaEstaVazia = this.lista.size()>0?false:true;
 	}
 	
+	public String cancelar(){
+		somenteLeitura = true;
+		tiposLogradouros.clear();
+		cidades.clear();
+		ufs.clear();
+		return resourceBundle.getString("linkFabricante");
+	}
+	
 	public void limpar(){
 		iniciarObjParaPesquisa();
 	}
@@ -201,6 +224,22 @@ public class FabricanteBean {
 	public String carregarPagina(){
 		inicializar();
 		return resourceBundle.getString("linkFabricante");//"fabricante.xhtml?faces-redirect=true";
+	}
+	
+	public void filtrarCidadesPesquisa(ValueChangeEvent evento){
+		try{
+			ufPesquisa = (UnidadeFederativa)evento.getNewValue();
+			if (ufPesquisa != null){
+				cidadesPesquisa = fachada.consultarCidadesPorUF(ufPesquisa);
+				if (ufPesquisa.getCodigo() == null || ufPesquisa.getCodigo() <= 0)
+					cidadesPesquisa.clear();
+			}else{
+				cidadesPesquisa.clear();
+				//MsgPrimeFaces.exibirMensagemDeErro("Não foi possível filtar as cidades da UF = null.");
+			}
+		}catch(Exception ex){
+			MsgPrimeFaces.exibirMensagemDeErro("Não foi possível filtar as cidades pela UF!");
+		}
 	}
 	
 	public void filtrarCidades(ValueChangeEvent evento){
@@ -307,6 +346,31 @@ public class FabricanteBean {
 	public List<UnidadeFederativa> getUfs() {
 		return ufs;
 	}
+
+	public List<UnidadeFederativa> getUfsPesquisa() {
+		return ufsPesquisa;
+	}
+
+	public UnidadeFederativa getUfSelecionada() {
+		return ufSelecionada;
+	}
+
+	public void setUfSelecionada(UnidadeFederativa ufSelecionada) {
+		this.ufSelecionada = ufSelecionada;
+	}
+
+	public UnidadeFederativa getUfPesquisa() {
+		return ufPesquisa;
+	}
+
+	public void setUfPesquisa(UnidadeFederativa ufPesquisa) {
+		this.ufPesquisa = ufPesquisa;
+	}
+
+	public List<Cidade> getCidadesPesquisa() {
+		return cidadesPesquisa;
+	}
+	
 	
 	
 }

@@ -40,12 +40,26 @@
   					<h:outputLabel for="alias" value="Nome: "/>
   					<h:inputText id="alias" value="#{fabricanteBean.fabricanteParaPesquisa.pj.nome}" lable="Nome"/>
   					
-  					<h:outputLabel for="cidade" value="Cidade: "/>
-  					<p:inputText id="cidade"  
-  								value="#{fabricanteBean.fabricanteParaPesquisa.pj.endereco.cidade.nome}" lable="Cidade" />
+  					<h:outputLabel for="unidadeFederativa" value="UF: "/>
+  					<p:selectOneMenu id="unidadeFederativa" converter="UFConverter" 
+  								value="#{fabricanteBean.ufPesquisa}" 
+  								valueChangeListener="#{fabricanteBean.filtrarCidadesPesquisa}">
+  						<f:selectItem noSelectionOption="true" itemLabel="Qualquer UF" itemValue="-1" />
+  						<f:selectItems value="#{fabricanteBean.ufsPesquisa}" var="uf" 
+  								itemLabel="#{uf}" itemValue="#{uf}" />
+  						<f:ajax render="cbxCidades" event="valueChange"/>
+  					</p:selectOneMenu>
+  					
+  					<h:outputLabel for="cbxCidades" value="Cidade: "/>
+  					<p:selectOneMenu id="cbxCidades" converter="CidadeConverter" 
+  								value="#{fabricanteBean.fabricanteParaPesquisa.pj.endereco.cidade}">
+  						<f:selectItem noSelectionOption="true" itemLabel="Qualquer cidade" itemValue="-1" />
+  						<f:selectItems value="#{fabricanteBean.cidadesPesquisa}" var="cid" 
+  								itemLabel="#{cid.nome}" itemValue="#{cid}" />
+  					</p:selectOneMenu>
   					
   					<h:outputLabel for="situacao" value="Situação: "/>
-  					<p:selectOneMenu id="situacao" value="#{fabricanteBean.fabricanteParaPesquisa.situacao}" >
+  					<p:selectOneMenu id="situacao" value="#{fabricanteBean.fabricanteParaPesquisa.pj.situacao}" >
   						<f:selectItem itemLabel="Todas as situações" itemValue="" />
   						<f:selectItems value="#{fabricanteBean.situacoes}" />
   					</p:selectOneMenu>
