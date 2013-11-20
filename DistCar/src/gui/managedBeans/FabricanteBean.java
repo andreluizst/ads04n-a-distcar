@@ -52,6 +52,7 @@ public class FabricanteBean {
 	private UnidadeFederativa ufPesquisa;
 	private String telefone;
 	private String telefoneSelecionado;
+	private ArrayList<String> listaOriginalDeTelefones;
 	
 	
 	public FabricanteBean(){
@@ -63,6 +64,7 @@ public class FabricanteBean {
 		novoFabricante();
 		telefone = "";
 		telefoneSelecionado = "";
+		listaOriginalDeTelefones = new ArrayList<String>();
 		if (lista==null)
 			lista = new ArrayList<Fabricante>();
 		else
@@ -102,6 +104,9 @@ public class FabricanteBean {
 		codigoTipoLogradouroSelecionado = obj.getPj().getEndereco().getTipoLogradouro().getCodigo();
 		//UnidadeFederativa uf = new UnidadeFederativa();
 		//uf.setCodigo(codigoUfSelecionada);
+		listaOriginalDeTelefones.clear();
+		if (fabricante.getPj().getTelefones() != null && fabricante.getPj().getTelefones().size() > 0)
+			listaOriginalDeTelefones.addAll(fabricante.getPj().getTelefones());
 		try{
 			tiposLogradouros = fachada.listarTiposLogradouros();
 			cidades = fachada.listarCidades();
@@ -218,6 +223,8 @@ public class FabricanteBean {
 		tiposLogradouros.clear();
 		cidades.clear();
 		ufs.clear();
+		fabricante.getPj().getTelefones().clear();
+		fabricante.getPj().getTelefones().addAll(listaOriginalDeTelefones);
 		return resourceBundle.getString("linkFabricante");
 	}
 	
@@ -270,22 +277,27 @@ public class FabricanteBean {
 	
 	public void adicionarTelefone(){
 		fabricante.getPj().getTelefones().add(telefone);
+		telefoneSelecionado = telefone;
 	}
 	
 	public void excluirTelefone(){
 		fabricante.getPj().getTelefones().remove(telefoneSelecionado);
+		telefone = "";
 	}
 	
 	public void alterarTelefone(){
-		ArrayList<String> lista = (ArrayList<String>)fabricante.getPj().getTelefones();
+		ArrayList<String> lista = new ArrayList<String>();
+		lista.addAll(fabricante.getPj().getTelefones());
 		if (lista.size() > 0){
 			for(int i =0;i < lista.size();i++){
-				if (lista.get(i).equals(telefone)){
+				if (lista.get(i).equals(telefoneSelecionado)){
 					lista.remove(i);
 					lista.add(i, telefone);
 				}
 			}
-			fabricante.getPj().setTelefones(lista);
+			telefoneSelecionado = telefone;
+			fabricante.getPj().getTelefones().clear();
+			fabricante.getPj().getTelefones().addAll(lista);
 		}
 	}
 	

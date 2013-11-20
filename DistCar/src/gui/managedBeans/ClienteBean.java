@@ -66,6 +66,9 @@ public class ClienteBean {
 	private boolean modoDeInclusao;
 	private PessoaFisica pfAux;
 	private PessoaJuridica pjAux;
+	private String telefone;
+	private String telefoneSelecionado;
+	private ArrayList<String> listaOriginalDeTelefones;
 	
 	
 	public ClienteBean(){
@@ -79,6 +82,9 @@ public class ClienteBean {
 			lista = new ArrayList<Cliente>();
 		else
 			lista.clear();
+		telefone = "";
+		telefoneSelecionado = "";
+		listaOriginalDeTelefones = new ArrayList<String>();
 		listaEstaVazia = true;
 		cpfOuCnpjVisible = false;
 		mostrarCamposPJ = false;
@@ -137,6 +143,9 @@ public class ClienteBean {
 			pjAux.setDataAbertura(((PessoaJuridica)cliente.getDadosPessoa()).getDataAbertura());
 			pjAux.setInscricaoEstadual(((PessoaJuridica)cliente.getDadosPessoa()).getInscricaoEstadual());
 		}
+		listaOriginalDeTelefones.clear();
+		if (cliente.getDadosPessoa().getTelefones() != null && cliente.getDadosPessoa().getTelefones().size() > 0)
+			listaOriginalDeTelefones.addAll(cliente.getDadosPessoa().getTelefones());
 		uf.setCodigo(codigoUfSelecionada);
 		try{
 			tiposLogradouros = fachada.listarTiposLogradouros();
@@ -311,6 +320,8 @@ public class ClienteBean {
 		tiposLogradouros.clear();
 		cidades.clear();
 		ufs.clear();
+		cliente.getDadosPessoa().getTelefones().clear();
+		cliente.getDadosPessoa().getTelefones().addAll(listaOriginalDeTelefones);
 		return resourceBundle.getString("linkCliente");
 	}
 	
@@ -392,6 +403,35 @@ public class ClienteBean {
 		}
 	}
 	
+	public void telefonesChange(ValueChangeEvent evento){
+		telefone = (String)evento.getNewValue();
+	}
+	
+	public void adicionarTelefone(){
+		cliente.getDadosPessoa().getTelefones().add(telefone);
+		telefoneSelecionado = telefone;
+	}
+	
+	public void excluirTelefone(){
+		cliente.getDadosPessoa().getTelefones().remove(telefoneSelecionado);
+		telefone = "";
+	}
+	
+	public void alterarTelefone(){
+		ArrayList<String> lista = new ArrayList<String>();
+		lista.addAll(cliente.getDadosPessoa().getTelefones());
+		if (lista.size() > 0){
+			for(int i =0;i < lista.size();i++){
+				if (lista.get(i).equals(telefoneSelecionado)){
+					lista.remove(i);
+					lista.add(i, telefone);
+				}
+			}
+			telefoneSelecionado = telefone;
+			cliente.getDadosPessoa().getTelefones().clear();
+			cliente.getDadosPessoa().getTelefones().addAll(lista);
+		}
+	}
 	
 	
 	// GETs e SETs
@@ -563,6 +603,22 @@ public class ClienteBean {
 
 	public boolean isModoDeInclusao() {
 		return modoDeInclusao;
+	}
+
+	public String getTelefone() {
+		return telefone;
+	}
+
+	public void setTelefone(String telefone) {
+		this.telefone = telefone;
+	}
+
+	public String getTelefoneSelecionado() {
+		return telefoneSelecionado;
+	}
+
+	public void setTelefoneSelecionado(String telefoneSelecionado) {
+		this.telefoneSelecionado = telefoneSelecionado;
 	}
 	
 	
