@@ -26,6 +26,7 @@ public class FabricanteBean {
 	private static final String OP_VISUALIZAR = "Propriedades do Fabricante";
 	private static final String TXT_BTN_CANCELAR = "Cancelar";
 	private static final String TXT_BTN_FECHAR = "Fechar";
+	private static final String MSG_TEL = "<Telefones>";
 	
 	private IFachada fachada;
 	private ResourceBundle resourceBundle = ResourceBundle.getBundle("util.config");
@@ -105,8 +106,12 @@ public class FabricanteBean {
 		//UnidadeFederativa uf = new UnidadeFederativa();
 		//uf.setCodigo(codigoUfSelecionada);
 		listaOriginalDeTelefones.clear();
+		telefone = "";
+		telefoneSelecionado = "";
 		if (fabricante.getPj().getTelefones() != null && fabricante.getPj().getTelefones().size() > 0)
 			listaOriginalDeTelefones.addAll(fabricante.getPj().getTelefones());
+		if (fabricante.getPj().getTelefones().size() == 0)
+			fabricante.getPj().getTelefones().add(MSG_TEL);
 		try{
 			tiposLogradouros = fachada.listarTiposLogradouros();
 			cidades = fachada.listarCidades();
@@ -128,6 +133,8 @@ public class FabricanteBean {
 	
 	public String novo(){
 		novoFabricante();
+		prepararParaExibirDados(fabricante);
+		cidades.clear();
 		tituloOperacao = FabricanteBean.OP_NOVA;
 		textoBotaoFecharOuCancelar = FabricanteBean.TXT_BTN_CANCELAR;
 		somenteLeitura = false;
@@ -169,8 +176,8 @@ public class FabricanteBean {
 	
 	public String salvar(){
 		try{
-			fabricante.getPj().getEndereco().setCidade(fachada.pegarCidadePorId(codigoCidadeSelecionada));
-			fabricante.getPj().getEndereco().setTipoLogradouro(fachada.pegarTipoLogradouroPorId(codigoTipoLogradouroSelecionado));
+			//fabricante.getPj().getEndereco().setCidade(fachada.pegarCidadePorId(codigoCidadeSelecionada));
+			//fabricante.getPj().getEndereco().setTipoLogradouro(fachada.pegarTipoLogradouroPorId(codigoTipoLogradouroSelecionado));
 			fabricante.getPj().getEndereco().setCep(fabricante.getPj().getEndereco().getCep().replace("-", ""));
 			fabricante.getPj().setCnpj(fabricante.getPj().getCnpj().replace(".", "").replace("/", "").replace("-", ""));
 			if (fabricante.getCodigo() == null || fabricante.getCodigo() == 0)
@@ -239,10 +246,10 @@ public class FabricanteBean {
 	
 	public void filtrarCidadesPesquisa(ValueChangeEvent evento){
 		try{
-			ufPesquisa = (UnidadeFederativa)evento.getNewValue();
-			if (ufPesquisa != null){
-				cidadesPesquisa = fachada.consultarCidadesPorUF(ufPesquisa);
-				if (ufPesquisa.getCodigo() == null || ufPesquisa.getCodigo() <= 0)
+			UnidadeFederativa uf = (UnidadeFederativa)evento.getNewValue();
+			if (uf != null){
+				cidadesPesquisa = fachada.consultarCidadesPorUF(uf);
+				if (uf.getCodigo() == null || uf.getCodigo() <= 0)
 					cidadesPesquisa.clear();
 			}else{
 				cidadesPesquisa.clear();
@@ -256,15 +263,17 @@ public class FabricanteBean {
 	public void filtrarCidades(ValueChangeEvent evento){
 		if (!somenteLeitura){
 			try{
-				codigoUfSelecionada = (Integer)evento.getNewValue();
-				UnidadeFederativa uf = new UnidadeFederativa();
-				uf.setCodigo(codigoUfSelecionada);
-				if (codigoUfSelecionada != null){
+				UnidadeFederativa uf = (UnidadeFederativa)evento.getNewValue();
+				if (uf != null){
 					cidades = fachada.consultarCidadesPorUF(uf);
-				}else
-					MsgPrimeFaces.exibirMensagemDeErro("Não foi possível filtar as cidades da UF = null.");
-				if (fabricante.getPj().getEndereco().getCidade().getCodigo() != null && fabricante.getPj().getEndereco().getCidade().getCodigo() > 0)
-					codigoCidadeSelecionada = fabricante.getPj().getEndereco().getCidade().getCodigo();
+					if (uf.getCodigo() == null || uf.getCodigo() <= 0)
+						cidades.clear();
+				}else{
+					cidades.clear();
+					//MsgPrimeFaces.exibirMensagemDeErro("Não foi possível filtar as cidades da UF = null.");
+				}
+				//if (fabricante.getPj().getEndereco().getCidade().getCodigo() != null && fabricante.getPj().getEndereco().getCidade().getCodigo() > 0)
+					//codigoCidadeSelecionada = fabricante.getPj().getEndereco().getCidade().getCodigo();
 			}catch(Exception ex){
 				MsgPrimeFaces.exibirMensagemDeErro("Não foi possível filtar as cidades pela UF!");
 			}
@@ -272,32 +281,45 @@ public class FabricanteBean {
 	}
 	
 	public void telefonesChange(ValueChangeEvent evento){
-		telefone = (String)evento.getNewValue();
+		if (fabricante.getPj().getTelefones().size() > 0 
+				&& fabricante.getPj().getTelefones().get(0).compareTo(MSG_TEL) != 0){
+			telefone = (String)evento.getNewValue();
+		}
 	}
 	
 	public void adicionarTelefone(){
-		fabricante.getPj().getTelefones().add(telefone);
-		telefoneSelecionado = telefone;
+		if (telefone != null && telefone.length() >= 10){
+			if (fabricante.getPj().getTelefones().size() > 0 
+					&& fabricante.getPj().getTelefones().get(0).equals(MSG_TEL)){
+				fabricante.getPj().getTelefones().set(0, telefone);
+			}else
+				fabricante.getPj().getTelefones().add(telefone);
+			//telefoneSelecionado = telefone;
+			telefone = "";
+		}
 	}
 	
 	public void excluirTelefone(){
-		fabricante.getPj().getTelefones().remove(telefoneSelecionado);
-		telefone = "";
+		if (fabricante.getPj().getTelefones().size() > 0 
+				&& fabricante.getPj().getTelefones().get(0).compareTo(MSG_TEL) != 0){
+			fabricante.getPj().getTelefones().remove(telefoneSelecionado);
+			telefone = "";
+		}
+		if (fabricante.getPj().getTelefones().size() == 0)
+			fabricante.getPj().getTelefones().add(MSG_TEL);
 	}
 	
 	public void alterarTelefone(){
-		ArrayList<String> lista = new ArrayList<String>();
-		lista.addAll(fabricante.getPj().getTelefones());
-		if (lista.size() > 0){
-			for(int i =0;i < lista.size();i++){
-				if (lista.get(i).equals(telefoneSelecionado)){
-					lista.remove(i);
-					lista.add(i, telefone);
+		if (fabricante.getPj().getTelefones().size() > 0 
+				&& fabricante.getPj().getTelefones().get(0).compareTo(MSG_TEL) != 0){
+			for(int i =0;i < fabricante.getPj().getTelefones().size();i++){
+				if (fabricante.getPj().getTelefones().get(i).equals(telefoneSelecionado)){
+					fabricante.getPj().getTelefones().set(i, telefone);
+					break;
 				}
 			}
-			telefoneSelecionado = telefone;
-			fabricante.getPj().getTelefones().clear();
-			fabricante.getPj().getTelefones().addAll(lista);
+			//telefoneSelecionado = telefone;
+			telefone = "";
 		}
 	}
 	

@@ -1,7 +1,7 @@
 package classesBasicas;
 
 import java.util.Calendar;
-import java.util.Collection;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -52,7 +52,7 @@ public class Cliente /*extends ObjetoGeral*/{
 	}
 
 	public Cliente(String nome, Endereco endereco,
-			Collection<String> telefones, String email, TipoCliente tipoCliente,
+			List<String> telefones, String email, TipoCliente tipoCliente,
 			Calendar dataUltimaAtualizacao, Situacao situacao) {
 		//super(nome, endereco, telefones, email, dataUltimaAtualizacao, situacao);
 		this.dadosPessoa.setNome(nome);
@@ -67,7 +67,7 @@ public class Cliente /*extends ObjetoGeral*/{
 	}
 
 	public Cliente(String nome, Endereco endereco,
-			Collection<String> telefones, String email, TipoCliente tipoCliente) {
+			List<String> telefones, String email, TipoCliente tipoCliente) {
 		//super(nome, endereco, telefones, email);
 		this.dadosPessoa.setNome(nome);
 		this.dadosPessoa.setEndereco(endereco);

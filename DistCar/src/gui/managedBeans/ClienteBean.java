@@ -31,6 +31,7 @@ public class ClienteBean {
 	private static final String TXT_BTN_FECHAR = "Fechar";
 	private static final String CPF_MASK = "999.999.999-99";
 	private static final String CNPJ_MASK = "99.999.999/9999-99";
+	private static final String MSG_TEL = "<Telefones>";
 	
 	private IFachada fachada;
 	private ResourceBundle resourceBundle = ResourceBundle.getBundle("util.config");
@@ -144,8 +145,12 @@ public class ClienteBean {
 			pjAux.setInscricaoEstadual(((PessoaJuridica)cliente.getDadosPessoa()).getInscricaoEstadual());
 		}
 		listaOriginalDeTelefones.clear();
+		telefone = "";
+		telefoneSelecionado = "";
 		if (cliente.getDadosPessoa().getTelefones() != null && cliente.getDadosPessoa().getTelefones().size() > 0)
 			listaOriginalDeTelefones.addAll(cliente.getDadosPessoa().getTelefones());
+		if (listaOriginalDeTelefones.size() == 0)
+			cliente.getDadosPessoa().getTelefones().add(ClienteBean.MSG_TEL);
 		uf.setCodigo(codigoUfSelecionada);
 		try{
 			tiposLogradouros = fachada.listarTiposLogradouros();
@@ -169,6 +174,7 @@ public class ClienteBean {
 	
 	public String novo(){
 		novoCliente();
+		prepararParaExibirDados(cliente);
 		tituloOperacao = ClienteBean.OP_NOVA;
 		textoBotaoFecharOuCancelar = ClienteBean.TXT_BTN_CANCELAR;
 		somenteLeitura = false;
@@ -318,8 +324,10 @@ public class ClienteBean {
 	public String cancelar(){
 		somenteLeitura = true;
 		tiposLogradouros.clear();
-		cidades.clear();
-		ufs.clear();
+		if (cidades != null)
+			cidades.clear();
+		if (ufs != null)
+			ufs.clear();
 		cliente.getDadosPessoa().getTelefones().clear();
 		cliente.getDadosPessoa().getTelefones().addAll(listaOriginalDeTelefones);
 		return resourceBundle.getString("linkCliente");
@@ -404,32 +412,45 @@ public class ClienteBean {
 	}
 	
 	public void telefonesChange(ValueChangeEvent evento){
-		telefone = (String)evento.getNewValue();
+		if (cliente.getDadosPessoa().getTelefones().size() > 0 
+				&& cliente.getDadosPessoa().getTelefones().get(0).compareTo(MSG_TEL) != 0){
+			telefone = (String)evento.getNewValue();
+		}
 	}
 	
 	public void adicionarTelefone(){
-		cliente.getDadosPessoa().getTelefones().add(telefone);
-		telefoneSelecionado = telefone;
+		if (telefone != null && telefone.length() >= 10){
+			if (cliente.getDadosPessoa().getTelefones().size() > 0 
+					&& cliente.getDadosPessoa().getTelefones().get(0).equals(MSG_TEL)){
+				cliente.getDadosPessoa().getTelefones().set(0, telefone);
+			}else
+				cliente.getDadosPessoa().getTelefones().add(telefone);
+			//telefoneSelecionado = telefone;
+			telefone = "";
+		}
 	}
 	
 	public void excluirTelefone(){
-		cliente.getDadosPessoa().getTelefones().remove(telefoneSelecionado);
-		telefone = "";
+		if (cliente.getDadosPessoa().getTelefones().size() > 0 
+				&& cliente.getDadosPessoa().getTelefones().get(0).compareTo(MSG_TEL) != 0){
+			cliente.getDadosPessoa().getTelefones().remove(telefoneSelecionado);
+			telefone = "";
+		}
+		if (cliente.getDadosPessoa().getTelefones().size() == 0)
+			cliente.getDadosPessoa().getTelefones().add(MSG_TEL);
 	}
 	
 	public void alterarTelefone(){
-		ArrayList<String> lista = new ArrayList<String>();
-		lista.addAll(cliente.getDadosPessoa().getTelefones());
-		if (lista.size() > 0){
-			for(int i =0;i < lista.size();i++){
-				if (lista.get(i).equals(telefoneSelecionado)){
-					lista.remove(i);
-					lista.add(i, telefone);
+		if (cliente.getDadosPessoa().getTelefones().size() > 0 
+				&& cliente.getDadosPessoa().getTelefones().get(0).compareTo(MSG_TEL) != 0){
+			for(int i =0;i < cliente.getDadosPessoa().getTelefones().size();i++){
+				if (cliente.getDadosPessoa().getTelefones().get(i).equals(telefoneSelecionado)){
+					cliente.getDadosPessoa().getTelefones().set(i, telefone);
+					break;
 				}
 			}
-			telefoneSelecionado = telefone;
-			cliente.getDadosPessoa().getTelefones().clear();
-			cliente.getDadosPessoa().getTelefones().addAll(lista);
+			//telefoneSelecionado = telefone;
+			telefone = "";
 		}
 	}
 	

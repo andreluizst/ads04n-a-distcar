@@ -1,7 +1,8 @@
 package classesBasicas;
 
+import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Collection;
+import java.util.List;
 
 import javax.persistence.*;
 
@@ -19,7 +20,7 @@ public abstract class Pessoa  extends ObjetoGeral {
 	private Endereco endereco;
 	
 	@ElementCollection
-	private Collection<String> telefones;
+	private List<String> telefones;
 	
 	private String email;
 	
@@ -27,11 +28,13 @@ public abstract class Pessoa  extends ObjetoGeral {
 	public Pessoa() {
 		super();
 		endereco = new Endereco();
+		telefones = new ArrayList<String>();
 	}
 	
 	public Pessoa(Calendar dataUltimaAtualizacao, Situacao situacao) {
 		super(dataUltimaAtualizacao, situacao);
-		// TODO Auto-generated constructor stub
+		endereco = new Endereco();
+		telefones = new ArrayList<String>();
 	}
 	public Pessoa(Integer codigo, Calendar dataUltimaAtualizacao,
 			Situacao situacao) {
@@ -39,7 +42,7 @@ public abstract class Pessoa  extends ObjetoGeral {
 		// TODO Auto-generated constructor stub
 	}
 	
-	public Pessoa(String nome, Endereco endereco, Collection<String> telefones,
+	public Pessoa(String nome, Endereco endereco, List<String> telefones,
 			String email) {
 		super();
 		this.nome = nome;
@@ -48,7 +51,7 @@ public abstract class Pessoa  extends ObjetoGeral {
 		this.email = email;
 	}
 	
-	public Pessoa(String nome, Endereco endereco, Collection<String> telefones,
+	public Pessoa(String nome, Endereco endereco, List<String> telefones,
 			String email, Calendar dataUltimaAtualizacao,
 			Situacao situacao) {
 		super();
@@ -73,10 +76,10 @@ public abstract class Pessoa  extends ObjetoGeral {
 	public void setEndereco(Endereco endereco) {
 		this.endereco = endereco;
 	}
-	public Collection<String> getTelefones() {
+	public List<String> getTelefones() {
 		return telefones;
 	}
-	public void setTelefones(Collection<String> telefones) {
+	public void setTelefones(List<String> telefones) {
 		this.telefones = telefones;
 	}
 	public String getEmail() {

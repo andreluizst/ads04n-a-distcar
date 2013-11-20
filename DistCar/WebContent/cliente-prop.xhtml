@@ -164,7 +164,7 @@
   					<p:message for="cep" display="default" />
   					
   					<h:outputLabel for="email" value="E-mail: "/>
-  					<p:inputText id="email"  
+  					<p:inputText id="email" size="40"  
   								readonly="#{clienteBean.somenteLeitura}"
   								value="#{clienteBean.cliente.dadosPessoa.email}" required="false" lable="E-mail" />
   					<p:message for="email" display="default" />
@@ -172,19 +172,25 @@
   					<h:outputLabel for="txtTelefone" value="Telefones: "/>
   					<h:panelGrid id="grdTelefones" columns="1">
   						<f:facet name="header">
-  							<h:panelGrid columns="3" cellpadding="2">
+  							<h:panelGrid id="grdBtnsFone" columns="3" cellpadding="2">
   								<p:commandButton actionListener="#{clienteBean.adicionarTelefone}"
-  										update="grdTelefones" id="btnNovoTel" icon="ui-icon-plus" 
-  										title="Adicionar telefone"
-  										disabled="#{clienteBean.somenteLeitura}"/>
+  										id="btnNovoTel" icon="ui-icon-plus" 
+  										title="Adicionar telefone" immediate="true" ajax="true"
+  										disabled="#{clienteBean.somenteLeitura}">
+  									<f:ajax render="grdTelefones" execute="txtTelefone"/>
+  								</p:commandButton>
   								<p:commandButton actionListener="#{clienteBean.alterarTelefone}" 
-  										update="grdTelefones" id="btnAlterarTel" icon="ui-icon-pencil"
-  										title="alterar telefone selecionado"
-  										disabled="#{clienteBean.somenteLeitura}"/>
+  										id="btnAlterarTel" icon="ui-icon-pencil"
+  										title="alterar telefone selecionado" immediate="true" ajax="true"
+  										disabled="#{clienteBean.somenteLeitura}">
+  									<f:ajax render="grdTelefones" execute="txtTelefone"/>	
+  								</p:commandButton>
   								<p:commandButton actionListener="#{clienteBean.excluirTelefone}" 
-  										update="grdTelefones" id="btnExcluirTel" icon="ui-icon-trash" 
-  										title="excluir telefone selecionado"
-  										disabled="#{clienteBean.somenteLeitura}"/> 
+  										id="btnExcluirTel" icon="ui-icon-trash" 
+  										title="excluir telefone selecionado" immediate="true" ajax="true"
+  										disabled="#{clienteBean.somenteLeitura}">
+  									<f:ajax render="lstbxTelefones txtTelefone" execute="txtTelefone"/>
+  								</p:commandButton> 
   							</h:panelGrid>
   						</f:facet>
   						<p:inputText id="txtTelefone" size="15" widgetVar="txtTel"  
@@ -214,7 +220,7 @@
   						disabled="#{clienteBean.somenteLeitura}" update="grid" action="#{clienteBean.salvar}"/>
   				
   				<p:commandButton value="#{clienteBean.textoBotaoFecharOuCancelar}" 
-  								immediate="true" action="cliente.xhtml?faces-redirect=true" />
+  								immediate="true" action="#{clienteBean.cancelar}" />
 
   			</p:panel>
     		

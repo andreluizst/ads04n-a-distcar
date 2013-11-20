@@ -680,7 +680,16 @@ public class ControladorOrganizacional {
 	}
 	
 	public void excluirFabricante(Fabricante fabricante) throws Exception{
-		daoFabricante.remover(fabricante);
+		EntityTransaction et = entityManager.getTransaction();
+		try{
+			et.begin();
+			daoFabricante.removerSemTratamento(fabricante);
+			daoPJ.removerSemTratamento(fabricante.getPj());
+			et.commit();
+		}catch(Exception ex){
+			et.rollback();
+			MsgPrimeFaces.exibirMensagemDeErro(ex.getMessage());
+		}
 	}
 	
 	public List<Fabricante> listarFabricantes() throws Exception{
