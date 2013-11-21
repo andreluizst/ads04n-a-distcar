@@ -6,6 +6,9 @@ import javax.persistence.*;
 
 import seguranca.Usuario;
 
+//@NamedQuery(name="Gestor.tornarFuncionarioEmGestor", 
+	//	query="insert into Gestor(codigo, codTipoGerencia) values(:codigo, :codigoTipoGerencia")
+
 @Entity
 public class Gestor extends Funcionario {
 

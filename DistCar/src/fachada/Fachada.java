@@ -193,8 +193,11 @@ public class Fachada implements IFachada {
 	//*******************************  G E S T O R  *****************************************
 	@Override
 	public void salvarGestor(Gestor gestor) throws Exception{
-		if (ctrlOrg.gestorExiste(gestor))
+		if (ctrlOrg.gestorExiste(gestor)){
+			//if (ctrlOrg.funcionarioExiste(gestor))
+				//ctrlOrg.tornarFuncionarioEmGestor(gestor);
 			ctrlOrg.alterarGestor(gestor);
+		}
 		else
 			ctrlOrg.inserirGestor(gestor);
 	}
@@ -235,7 +238,7 @@ public class Fachada implements IFachada {
 	
 	@Override
 	public List<TipoGerencia> consultarTipoGerencia(TipoGerencia tipoGerencia) throws Exception{
-		return ctrlOrg.listarTiposGerencia();
+		return ctrlOrg.consultarTipoGerencia(tipoGerencia);
 	}
 	
 	@Override

@@ -33,6 +33,7 @@
   								required="true" requiredMessage="O valor de gratificação de ser informado!"
   								lable="Valor da gratificação">
   						<f:validateDoubleRange minimum="500.00" maximum="1999.99"/>
+  						<f:convertNumber minFractionDigits="2"/>
   					</p:inputText>
   					<p:message for="valGratificacao"/>
   					

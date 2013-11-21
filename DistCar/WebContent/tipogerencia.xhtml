@@ -37,7 +37,8 @@
   					
   					<h:outputLabel for="valGratificacao" value="Valor da gratificação: "></h:outputLabel>
   					<p:inputText id="valGratificacao" converterMessage="Digite um número decimal no formato 999.00" 
-  								value="#{tipoGerenciaBean.tipoGerenciaParaPesquisa.valorGratificacao}" dir="rtl" lable="Salário"></p:inputText>
+  								value="#{tipoGerenciaBean.tipoGerenciaParaPesquisa.valorGratificacao}" dir="rtl" lable="Salário">
+  					</p:inputText>
   					
   					<h:outputLabel for="situacao" value="Situação: "/>
   					<p:selectOneMenu id="situacao" value="#{tipoGerenciaBean.tipoGerenciaParaPesquisa.situacao}" >
@@ -80,7 +81,9 @@
   				</p:column>
   				<p:column>
   					<f:facet name="header"><h:outputText value="Gratificação"/> </f:facet>
-  					<h:outputText dir="rtl" value="#{tipoGerencia.valorGratificacao}"/>
+  					<h:outputText dir="rtl" value="#{tipoGerencia.valorGratificacao}">
+  						<f:convertNumber type="currency" currencyCode="BRL"/>
+  					</h:outputText>
   				</p:column>
   				<p:column>
   					<f:facet name="header"><h:outputText value="Situação"/> </f:facet>

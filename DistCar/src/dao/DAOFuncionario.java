@@ -29,44 +29,63 @@ public class DAOFuncionario extends DAOGenerico<Funcionario> implements
 
 	@Override
 	public List<Funcionario> consultar(Funcionario funcionario) throws Exception {
-		String jpql = "Select f from Funcionario f where f.nome like :nome";
-		String nome = "%";
+		/*String jpql = "Select f from Funcionario f, Funcao fc, Departamento d, escolaridade e"
+				+ " where f.departamento.codigo = d.codigo and f.funcao.codigo = fc.codigo"
+				+ " and f.escolaridade.codigo = e.codigo";*/
+		String jpql = "select f from Funcionario f where f.codigo > 0";
+		//String nome = "%";
 		boolean temCodigo = false;
-		//boolean temNome = false;
+		boolean temNome = false;
 		boolean temCpf = false;
 		boolean temCidade = false;
 		boolean temDepto = false;
 		boolean temFuncao = false;
+		boolean temSituacao = false;
 		if (funcionario.getCodigo() != null && funcionario.getCodigo() > 0){
 			jpql+= " and f.codigo = :codigo";
 			temCodigo = true;
 		}else{
-			if (funcionario.getCpf() != null){
-				jpql+= " and funcionario.cpf like :cpf";
+			if (funcionario.getNome() != null && funcionario.getNome().length() > 0){
+				jpql+= " and f.nome like :nome";
+				temNome = true;
+			}
+			if (funcionario.getCpf() != null && funcionario.getCpf().length() > 0){
+				jpql+= " and f.cpf like :cpf";
 				temCpf = true;
 			}
-			if (funcionario.getDepartamento() != null && funcionario.getDepartamento().getNome() != null){
-				jpql+= " and funcionario.departamento.nome like :nomeDepto";
+			if (funcionario.getDepartamento() != null && funcionario.getDepartamento().getNome() != null
+					&& funcionario.getDepartamento().getNome().length() > 0){
+				jpql+= " and f.departamento.nome like :nomeDepto";
 				temDepto = true;
 			}
 			if (funcionario.getEndereco() != null && funcionario.getEndereco().getCidade() != null
-					&& funcionario.getEndereco().getCidade().getNome() != null){
-				jpql+= " and funcionario.endereco.cidade.nome like :nomeCidade";
+					&& funcionario.getEndereco().getCidade().getNome() != null
+					&& funcionario.getEndereco().getCidade().getNome().length() > 0){
+				jpql+= " and f.endereco.cidade.nome like :nomeCidade";
 				temCidade = true;
 			}
-			if (funcionario.getFuncao() != null && funcionario.getFuncao().getDescricao() != null){
-				jpql+= " and funcionario.funcao.descricao like :nomeFuncao";
+			if (funcionario.getFuncao() != null && funcionario.getFuncao().getDescricao() != null
+					&& funcionario.getFuncao().getDescricao().length() > 0){
+				jpql+= " and f.funcao.descricao like :nomeFuncao";
 				temFuncao = true;
 			}
-			if (funcionario.getDepartamento() != null && funcionario.getDepartamento().getNome() != null){
-				jpql+= " and funcionario.departamento.nome like :nomeDepto";
+			if (funcionario.getDepartamento() != null && funcionario.getDepartamento().getNome() != null
+					&& funcionario.getDepartamento().getNome().length() > 0){
+				jpql+= " and f.departamento.nome like :nomeDepto";
 				temDepto = true;
+			}
+			if (funcionario.getSituacao() != null){
+				jpql+= " and f.situacao = :situacao";
+				temSituacao = true;
 			}
 		}
 		TypedQuery<Funcionario> tqry = entityManager.createQuery(jpql, Funcionario.class);
-		tqry.setParameter("nome", nome);
-		if (temCodigo)
+		if (temCodigo){
 			tqry.setParameter("codigo", funcionario.getCodigo());
+			return tqry.getResultList();
+		}
+		if (temNome)
+			tqry.setParameter("nome", "%" + funcionario.getNome() + "%");
 		if (temCidade)
 			tqry.setParameter("nomeCidade", "%" + funcionario.getEndereco().getCidade().getNome() + "%");
 		if (temFuncao)
@@ -75,6 +94,8 @@ public class DAOFuncionario extends DAOGenerico<Funcionario> implements
 			tqry.setParameter("nomeDepto", "%" + funcionario.getDepartamento().getNome() + "%");
 		if (temCpf)
 			tqry.setParameter("cpf", "%" + funcionario.getCpf() + "%");
+		if (temSituacao)
+			tqry.setParameter("situacao", funcionario.getSituacao());
 		return tqry.getResultList();
 	}
 

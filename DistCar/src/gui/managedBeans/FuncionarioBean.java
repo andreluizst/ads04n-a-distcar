@@ -156,6 +156,7 @@ public class FuncionarioBean {
 		UnidadeFederativa uf = new UnidadeFederativa();
 		uf.setCodigo(codigoUfSelecionada);*/
 		if (obj.getEndereco().getCidade().getUnidadeFederativa() != null 
+				&& obj.getEndereco().getCidade().getUnidadeFederativa().getCodigo() != null
 				&& obj.getEndereco().getCidade().getUnidadeFederativa().getCodigo() > 0)
 			ufSelecionada = obj.getEndereco().getCidade().getUnidadeFederativa();
 		else
@@ -266,7 +267,26 @@ public class FuncionarioBean {
 			funcionario.getEndereco().setCep(funcionario.getEndereco().getCep().replace("-", "").replace(".", ""));
 			if (tipoGerenciaSelecionada != null && tipoGerenciaSelecionada.getCodigo() != null
 					&& tipoGerenciaSelecionada.getCodigo() > 0){
-				Gestor g = (Gestor)funcionario;
+				Gestor g = new Gestor();
+				//g = (Gestor)funcionario; // Dá exceção
+				g.setCodigo(funcionario.getCodigo());
+				g.setNome(funcionario.getNome());
+				g.setCpf(funcionario.getCpf());
+				g.setCpts(funcionario.getCpts());
+				g.setDataAdmissao(funcionario.getDataAdmissao());
+				g.setDataDemissao(funcionario.getDataDemissao());
+				g.setDataNascimento(funcionario.getDataNascimento());
+				g.setDepartamento(funcionario.getDepartamento());
+				g.setEmail(funcionario.getEmail());
+				g.setEndereco(funcionario.getEndereco());
+				g.setEscolaridade(funcionario.getEscolaridade());
+				g.setFuncao(funcionario.getFuncao());
+				g.setOrgaoExpedidor(funcionario.getOrgaoExpedidor());
+				g.setRg(funcionario.getRg());
+				g.setSituacao(funcionario.getSituacao());
+				g.setTelefones(funcionario.getTelefones());
+				g.setUsuario(funcionario.getUsuario());
+					System.out.println(tipoGerenciaSelecionada);
 				g.setTipoGerencia(tipoGerenciaSelecionada);
 				fachada.salvarGestor(g);
 			}else{
@@ -567,6 +587,18 @@ public class FuncionarioBean {
 
 	public void setUfSelecionada(UnidadeFederativa ufSelecionada) {
 		this.ufSelecionada = ufSelecionada;
+	}
+
+	public List<TipoGerencia> getTiposGerencias() {
+		return tiposGerencias;
+	}
+
+	public TipoGerencia getTipoGerenciaSelecionada() {
+		return tipoGerenciaSelecionada;
+	}
+
+	public void setTipoGerenciaSelecionada(TipoGerencia tipoGerenciaSelecionada) {
+		this.tipoGerenciaSelecionada = tipoGerenciaSelecionada;
 	}
 	
 	

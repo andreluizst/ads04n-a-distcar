@@ -12,5 +12,6 @@ public interface IDAOGestor extends IDAOGenerico<Gestor> {
 	Gestor pesquisarCodigoGestor(Integer codigo);
 	void removerGestor(Integer codigo);*/
 	public List<Gestor> pesquisarGestor(Gestor g);
+	public void tornarFuncionarioEmGestor(Gestor gestor) throws Exception;
 
 }

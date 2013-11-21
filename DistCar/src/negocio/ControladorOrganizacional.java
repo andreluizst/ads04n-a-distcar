@@ -362,15 +362,18 @@ public class ControladorOrganizacional {
 		if (gestor.getSituacao() == null)
 			gestor.setSituacao(Situacao.ATIVO);
 		// TODO Auto-generated method stub
-		if(	gestor.getCodigo()==null||gestor.getCodigo().equals("")||
-				gestor.getNome()==null||gestor.getNome().equals("")||
+		/*if(gestor.getNome()==null||gestor.getNome().equals("")||
 						gestor.getSituacao()==null||gestor.getSituacao().equals("")||
-								gestor.getDataUltimaAtualizacao()==null||gestor.getDataUltimaAtualizacao().equals(""))
-				{
-					throw new NegocioExceptionGestor ("Campos inválidos");
-				}
+								gestor.getDataUltimaAtualizacao()==null||gestor.getDataUltimaAtualizacao().equals("")){
+			throw new Exception("Campos inválidos");
+		}*/
 				
 		daoGestor.inserir(gestor);
+	}
+	
+	public void tornarFuncionarioEmGestor(Gestor gestor) throws Exception{
+		daoGestor.tornarFuncionarioEmGestor(gestor);
+		//daoGestor.alterar(gestor);
 	}
 	
 	public void alterarGestor (Gestor gestor) throws Exception {
@@ -378,20 +381,20 @@ public class ControladorOrganizacional {
 		if (gestor.getSituacao() == null)
 			gestor.setSituacao(Situacao.ATIVO);
 		
-		if(	gestor.getCodigo()==null||gestor.getCodigo().equals("")||
+		/*if(	gestor.getCodigo()==null||gestor.getCodigo().equals("")||
 				gestor.getNome()==null||gestor.getNome().equals("")||
 						gestor.getSituacao()==null||gestor.getSituacao().equals("")||
 								gestor.getDataUltimaAtualizacao()==null||gestor.getDataUltimaAtualizacao().equals(""))
 				{
-					throw new NegocioExceptionGestor ("Campos inválidos");
+					throw new Exception("Campos inválidos");
 				}
 				
 		Gestor g = daoGestor.consultarPorId(gestor.getCodigo());
 		if(g==null){
 			throw new NegocioExceptionGestor("Gestor não cadastrado");
-		}
+		}*/
 		
-		daoGestor.alterar(g);
+		daoGestor.alterar(gestor);
 	}
 
 

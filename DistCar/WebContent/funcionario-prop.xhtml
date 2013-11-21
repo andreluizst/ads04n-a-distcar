@@ -117,8 +117,8 @@
   								value="#{funcionarioBean.tipoGerenciaSelecionada}"
   								required="false" readonly="#{funcionarioBean.somenteLeitura}"
   								disabled="#{funcionarioBean.somenteLeitura}" >
-  						<f:selectItem noSelectionOption="true" itemLabel="NENHUMA" itemValue="-1" />
-  						<f:selectItems value="#{funcionarioBean.tipoGerencias}" var="tpGerencia" 
+  						<f:selectItem noSelectionOption="true" itemLabel="NENHUM" itemValue="-1" />
+  						<f:selectItems value="#{funcionarioBean.tiposGerencias}" var="tpGerencia" 
   									itemLabel="#{tpGerencia}" itemValue="#{tpGerencia}"/>
   					</p:selectOneMenu>
   					<p:message for="cbxTipoGerencia" display="default" />

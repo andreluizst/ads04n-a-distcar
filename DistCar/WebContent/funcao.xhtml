@@ -40,7 +40,7 @@
   					<h:outputLabel for="salario" value="Salário: "></h:outputLabel>
   					<p:inputText id="salario" converterMessage="Digite um número decimal no formato 9.999,00" 
   								value="#{funcaoBean.funcaoDePesquisa.salario}" dir="rtl" lable="Salário">
-  						<f:convertNumber currencyCode="BRL" type="currency"/>
+  						<f:convertNumber minFractionDigits="2"/>
   					</p:inputText>
   					
   					<h:outputLabel for="situacao" value="Situação: "/>
@@ -90,7 +90,6 @@
   				<p:column>
   					<f:facet name="header"><h:outputText value="Situação"/> </f:facet>
   					<h:outputText value="#{funcao.situacao}"/>
-  						
   				</p:column>
   				<p:column>
   					<f:facet name="header"><h:outputText value="Última atualização"/> </f:facet>
