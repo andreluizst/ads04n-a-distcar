@@ -70,7 +70,7 @@
    				<p:commandButton id="btnAlterar" disabled="#{fabricanteBean.listaEstaVazia}" 
    						value="Alterar" update="tbLista" action="#{fabricanteBean.alterar}" />
    				<p:commandButton id="btnExcluir" disabled="#{fabricanteBean.listaEstaVazia}" 
-   						value="Excluir" update="tbLista,btnAlterar,btnExcluir,btnDetalhe"
+   						value="Excluir" update="frmPrincipal"
    						actionListener="#{fabricanteBean.excluir}">
    					<p:confirm header="Confirmação" 
    							message="Confirma a exclusão do fabricante selecionado?"

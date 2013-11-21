@@ -6,6 +6,7 @@ import gui.MsgPrimeFaces;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ResourceBundle;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -29,8 +30,10 @@ public class FuncionarioBean {
 	private static final String OP_VISUALIZAR = "Propriedades do Funcionário";
 	private static final String TXT_BTN_CANCELAR = "Cancelar";
 	private static final String TXT_BTN_FECHAR = "Fechar";
+	private static final String MSG_TEL = "<Telefones>";
 	
 	private IFachada fachada;
+	private ResourceBundle resourceBundle = ResourceBundle.getBundle("util.config");
 	
 	private Funcionario funcionario;
 	private Funcionario funcionarioParaPesquisa;
@@ -42,7 +45,9 @@ public class FuncionarioBean {
 	private String tituloOperacao;
 	private List<TipoLogradouro> tiposLogradouros; 
 	private List<Cidade> cidades;
+	private List<Cidade> cidadesPesquisa;
 	private List<UnidadeFederativa> ufs;
+	private List<UnidadeFederativa> ufsPesquisa;
 	private List<Departamento> departamentos;
 	private List<Funcao> funcoes;
 	private List<Escolaridade> escolaridades;
@@ -54,6 +59,9 @@ public class FuncionarioBean {
 	private Integer codigoCidadeSelecionada;
 	private Integer codigoDepartamentoSelecionado;
 	private Integer codigoEscolaridadeSelecionada;
+	private String telefone;
+	private String telefoneSelecionado;
+	private ArrayList<String> listaOriginalDeTelefones;
 	
 	
 	
@@ -64,16 +72,14 @@ public class FuncionarioBean {
 	
 	private void inicializarObjParaPesquisa(){
 		funcionarioParaPesquisa = new Funcionario();
-		/*funcionarioParaPesquisa.setDepartamento(new Departamento());
-		funcionarioParaPesquisa.setFuncao(new Funcao());
-		funcionarioParaPesquisa.setEscolaridade(new Escolaridade());
-		funcionarioParaPesquisa.setEndereco(new Endereco());
-		funcionarioParaPesquisa.getEndereco().setTipoLogradouro(new TipoLogradouro());
-		funcionarioParaPesquisa.getEndereco().setCidade(new Cidade());*/
+		
 	}
 	
 	private void inicializar(){
 		novoFuncionario();
+		telefone = "";
+		telefoneSelecionado = "";
+		listaOriginalDeTelefones = new ArrayList<String>();
 		if (lista==null)
 			lista = new ArrayList<Funcionario>();
 		else
@@ -124,8 +130,9 @@ public class FuncionarioBean {
 		else
 			codigoEscolaridadeSelecionada = null;
 		if (obj.getEndereco() != null){
-			if (obj.getEndereco().getTipoLogradouro() != null && 
-					obj.getEndereco().getTipoLogradouro().getCodigo() > 0)
+			if (obj.getEndereco().getTipoLogradouro() != null 
+					&& obj.getEndereco().getTipoLogradouro().getCodigo() != null
+					&& obj.getEndereco().getTipoLogradouro().getCodigo() > 0)
 				codigoTipoLogradouroSelecionado = obj.getEndereco().getTipoLogradouro().getCodigo();
 			else
 				codigoTipoLogradouroSelecionado = null;
@@ -146,6 +153,13 @@ public class FuncionarioBean {
 		}catch(Exception ex){
 			MsgPrimeFaces.exibirMensagemDeErro("Não foi possível filtrar as cidades pelo estado selecionado!");
 		}
+		listaOriginalDeTelefones.clear();
+		telefone = "";
+		telefoneSelecionado = "";
+		if (funcionario.getTelefones() != null && funcionario.getTelefones().size() > 0)
+			listaOriginalDeTelefones.addAll(funcionario.getTelefones());
+		if (funcionario.getTelefones().size() == 0)
+			funcionario.getTelefones().add(MSG_TEL);
 	}
 	
 	public String alterar(){
@@ -155,25 +169,21 @@ public class FuncionarioBean {
 		tituloOperacao = FuncionarioBean.OP_ALTERAR;
 		textoBotaoFecharOuCancelar = FuncionarioBean.TXT_BTN_CANCELAR;
 		somenteLeitura = false;
-		return "funcionario-prop";
+		return resourceBundle.getString("linkFuncionarioProp");
 	}
 	
 	public String novo(){
 		novoFuncionario();
+		prepararParaExibirDados(funcionario);
+		cidades.clear();
 		tituloOperacao = FuncionarioBean.OP_NOVA;
 		textoBotaoFecharOuCancelar = FuncionarioBean.TXT_BTN_CANCELAR;
 		somenteLeitura = false;
-		return "funcionario-prop";
+		return resourceBundle.getString("linkFuncionarioProp");
 	}
 	
 	private void novoFuncionario(){
 		funcionario = new Funcionario();
-		/*funcionario.setDepartamento(new Departamento());
-		funcionario.setFuncao(new Funcao());
-		funcionario.setEscolaridade(new Escolaridade());
-		funcionario.setEndereco(new Endereco());
-		funcionario.getEndereco().setTipoLogradouro(new TipoLogradouro());
-		funcionario.getEndereco().setCidade(new Cidade());*/
 		codigoCidadeSelecionada = null;
 		codigoEscolaridadeSelecionada = null;
 		codigoTipoLogradouroSelecionado = null;
@@ -234,7 +244,7 @@ public class FuncionarioBean {
 			MsgPrimeFaces.exibirMensagemInfomativa("Funcionário salvo com sucesso!");
 			novoFuncionario();
 			somenteLeitura = true;
-			return "funcionario";
+			return resourceBundle.getString("linkFuncionario");
 		}catch(Exception ex){
 			MsgPrimeFaces.exibirMensagemDeErro(ex.getMessage());
 		}
@@ -256,7 +266,7 @@ public class FuncionarioBean {
 		tituloOperacao = FuncionarioBean.OP_VISUALIZAR;
 		textoBotaoFecharOuCancelar = FuncionarioBean.TXT_BTN_FECHAR;
 		somenteLeitura = true;
-		return "funcionario-prop";
+		return resourceBundle.getString("linkFuncionarioProp");
 	}
 	
 	private void atualizarLista(List<Funcionario> lista) {
@@ -272,27 +282,97 @@ public class FuncionarioBean {
 		situacaoSelecionada = null;
 	}
 	
+	public String cancelar(){
+		somenteLeitura = true;
+		tiposLogradouros.clear();
+		cidades.clear();
+		ufs.clear();
+		funcionario.getTelefones().clear();
+		funcionario.getTelefones().addAll(listaOriginalDeTelefones);
+		return resourceBundle.getString("linkFuncionario");
+	}
+	
 	public String carregarPagina(){
 		inicializar();
-		return "funcionario.xhtml?faces-redirect=true";
+		return resourceBundle.getString("linkFuncionario");
+	}
+	
+	public void filtrarCidadesPesquisa(ValueChangeEvent evento){
+		try{
+			UnidadeFederativa uf = (UnidadeFederativa)evento.getNewValue();
+			if (uf != null){
+				cidadesPesquisa = fachada.consultarCidadesPorUF(uf);
+				if (uf.getCodigo() == null || uf.getCodigo() <= 0)
+					cidadesPesquisa.clear();
+			}else{
+				cidadesPesquisa.clear();
+				//MsgPrimeFaces.exibirMensagemDeErro("Não foi possível filtar as cidades da UF = null.");
+			}
+		}catch(Exception ex){
+			MsgPrimeFaces.exibirMensagemDeErro("Não foi possível filtar as cidades pela UF!");
+		}
 	}
 	
 	public void filtrarCidades(ValueChangeEvent evento){
 		if (!somenteLeitura){
 			try{
-				codigoUfSelecionada = (Integer)evento.getNewValue();
-				UnidadeFederativa uf = new UnidadeFederativa();
-				uf.setCodigo(codigoUfSelecionada);
-				if (codigoUfSelecionada != null){
+				UnidadeFederativa uf = (UnidadeFederativa)evento.getNewValue();
+				if (uf != null){
 					cidades = fachada.consultarCidadesPorUF(uf);
-				}else
-					MsgPrimeFaces.exibirMensagemDeErro("Não foi possível filtar as cidades da UF = null.");
-				if (funcionario.getEndereco() != null && funcionario.getEndereco().getCidade().getCodigo() != null
-						&& funcionario.getEndereco().getCidade().getCodigo() > 0)
-					codigoCidadeSelecionada = funcionario.getEndereco().getCidade().getCodigo();
+					if (uf.getCodigo() == null || uf.getCodigo() <= 0)
+						cidades.clear();
+				}else{
+					cidades.clear();
+					//MsgPrimeFaces.exibirMensagemDeErro("Não foi possível filtar as cidades da UF = null.");
+				}
+				//if (fabricante.getPj().getEndereco().getCidade().getCodigo() != null && fabricante.getPj().getEndereco().getCidade().getCodigo() > 0)
+					//codigoCidadeSelecionada = fabricante.getPj().getEndereco().getCidade().getCodigo();
 			}catch(Exception ex){
 				MsgPrimeFaces.exibirMensagemDeErro("Não foi possível filtar as cidades pela UF!");
 			}
+		}
+	}
+	
+	public void telefonesChange(ValueChangeEvent evento){
+		if (funcionario.getTelefones().size() > 0 
+				&& funcionario.getTelefones().get(0).compareTo(MSG_TEL) != 0){
+			telefone = (String)evento.getNewValue();
+		}
+	}
+	
+	public void adicionarTelefone(){
+		if (telefone != null && telefone.length() >= 10){
+			if (funcionario.getTelefones().size() > 0 
+					&& funcionario.getTelefones().get(0).equals(MSG_TEL)){
+				funcionario.getTelefones().set(0, telefone);
+			}else
+				funcionario.getTelefones().add(telefone);
+			//telefoneSelecionado = telefone;
+			telefone = "";
+		}
+	}
+	
+	public void excluirTelefone(){
+		if (funcionario.getTelefones().size() > 0 
+				&& funcionario.getTelefones().get(0).compareTo(MSG_TEL) != 0){
+			funcionario.getTelefones().remove(telefoneSelecionado);
+			telefone = "";
+		}
+		if (funcionario.getTelefones().size() == 0)
+			funcionario.getTelefones().add(MSG_TEL);
+	}
+	
+	public void alterarTelefone(){
+		if (funcionario.getTelefones().size() > 0 
+				&& funcionario.getTelefones().get(0).compareTo(MSG_TEL) != 0){
+			for(int i =0;i < funcionario.getTelefones().size();i++){
+				if (funcionario.getTelefones().get(i).equals(telefoneSelecionado)){
+					funcionario.getTelefones().set(i, telefone);
+					break;
+				}
+			}
+			//telefoneSelecionado = telefone;
+			telefone = "";
 		}
 	}
 	
@@ -428,6 +508,26 @@ public class FuncionarioBean {
 
 	public List<Escolaridade> getEscolaridades() {
 		return escolaridades;
+	}
+
+	public List<UnidadeFederativa> getUfsPesquisa() {
+		return ufsPesquisa;
+	}
+
+	public String getTelefone() {
+		return telefone;
+	}
+
+	public void setTelefone(String telefone) {
+		this.telefone = telefone;
+	}
+
+	public String getTelefoneSelecionado() {
+		return telefoneSelecionado;
+	}
+
+	public void setTelefoneSelecionado(String telefoneSelecionado) {
+		this.telefoneSelecionado = telefoneSelecionado;
 	}
 	
 	

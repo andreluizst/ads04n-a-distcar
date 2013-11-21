@@ -89,10 +89,6 @@ public class FabricanteBean {
 	private void iniciarObjParaPesquisa(){
 		fabricanteParaPesquisa = new Fabricante();
 		ufPesquisa = new UnidadeFederativa();
-		//cidadesPesquisa.clear();
-		/*fabricanteParaPesquisa.setPj(new PessoaJuridica());
-		fabricanteParaPesquisa.getPj().setEndereco(new Endereco());
-		fabricanteParaPesquisa.getPj().getEndereco().setCidade(new Cidade());*/
 	}
 
 	private void prepararParaExibirDados(Fabricante obj){
@@ -143,10 +139,6 @@ public class FabricanteBean {
 	
 	private void novoFabricante(){
 		fabricante = new Fabricante();
-		/*fabricante.setPj(new PessoaJuridica());
-		fabricante.getPj().setEndereco(new Endereco());
-		fabricante.getPj().getEndereco().setTipoLogradouro(new TipoLogradouro());
-		fabricante.getPj().getEndereco().setCidade(new Cidade());*/
 		codigoCidadeSelecionada = null;//new Cidade();
 		codigoUfSelecionada = null;//new UnidadeFederativa();
 		codigoTipoLogradouroSelecionado = null;
