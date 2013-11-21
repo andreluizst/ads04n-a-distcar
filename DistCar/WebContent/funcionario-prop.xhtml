@@ -112,6 +112,17 @@
   					</p:selectOneMenu>
   					<p:message for="cbxFuncao" display="default" />
   					
+  					<h:outputLabel for="cbxTipoGerencia" value="Tipo de gerência: "/>
+  					<p:selectOneMenu id="cbxTipoGerencia" converter="TipoGerenciaConverter" 
+  								value="#{funcionarioBean.tipoGerenciaSelecionada}"
+  								required="false" readonly="#{funcionarioBean.somenteLeitura}"
+  								disabled="#{funcionarioBean.somenteLeitura}" >
+  						<f:selectItem noSelectionOption="true" itemLabel="NENHUMA" itemValue="-1" />
+  						<f:selectItems value="#{funcionarioBean.tipoGerencias}" var="tpGerencia" 
+  									itemLabel="#{tpGerencia}" itemValue="#{tpGerencia}"/>
+  					</p:selectOneMenu>
+  					<p:message for="cbxTipoGerencia" display="default" />
+  					
   					<h:outputLabel for="tipoLog" value="Tipo logradouro: *"/>
   					<p:selectOneMenu id="tipoLog" converter="TipoLogradouroConverter"
   									value="#{funcionarioBean.funcionario.endereco.tipoLogradouro}"

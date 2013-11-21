@@ -55,6 +55,10 @@
 		<converter-id>FuncaoConverter</converter-id>
 		<converter-class>gui.converters.FuncaoConverter</converter-class>
 	</converter>
+	<converter>
+		<converter-id>TipoGerenciaConverter</converter-id>
+		<converter-class>gui.converters.TipoGerenciaConverter</converter-class>
+	</converter>
 	<validator>
 		<validator-id>cpfValidator</validator-id>
 		<validator-class>gui.validators.CPFValidator</validator-class>

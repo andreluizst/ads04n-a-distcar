@@ -152,8 +152,13 @@ public class Fachada implements IFachada {
 	}
 	
 	@Override
-	public List<Funcionario> consultarFuncionario(Funcionario funcaionario) throws Exception{
-		return ctrlOrg.pesquisarFuncionario(funcaionario);
+	public List<Funcionario> consultarFuncionario(Funcionario funcionario) throws Exception{
+		return ctrlOrg.consultarFuncionario(funcionario);
+	}
+	
+	@Override
+	public Funcionario pegarFuncionarioPorId(Integer codigo) throws Exception{
+		return ctrlOrg.pegarFuncionarioPorId(codigo);
 	}
 	
 	//**************************  D E P A R T A M E N T O  **********************************
@@ -236,6 +241,11 @@ public class Fachada implements IFachada {
 	@Override
 	public List<TipoGerencia> listarTiposGerencia() throws Exception{
 		return ctrlOrg.listarTiposGerencia();
+	}
+	
+	@Override
+	public TipoGerencia pegarTipoGerenciaPorId(Integer codigo) throws Exception{
+		return ctrlOrg.pegarTipoGerenciaPorId(codigo);
 	}
 	
 	//*********************  T I P O   L O G R A D O U R O  **********************************

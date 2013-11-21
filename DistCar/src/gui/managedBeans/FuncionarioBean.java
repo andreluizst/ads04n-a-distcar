@@ -18,7 +18,9 @@ import classesBasicas.Departamento;
 import classesBasicas.Escolaridade;
 import classesBasicas.Funcao;
 import classesBasicas.Funcionario;
+import classesBasicas.Gestor;
 import classesBasicas.Situacao;
+import classesBasicas.TipoGerencia;
 import classesBasicas.TipoLogradouro;
 import classesBasicas.UnidadeFederativa;
 
@@ -40,6 +42,8 @@ public class FuncionarioBean {
 	private List<Funcionario> lista;
 	private Funcionario funcionarioSelecionado;
 	private Situacao situacaoSelecionada;
+	private TipoGerencia tipoGerenciaSelecionada;
+	private List<TipoGerencia> tiposGerencias;
 	private Situacao[] situacoes = Situacao.values();
 	private boolean listaEstaVazia;
 	private String tituloOperacao;
@@ -105,6 +109,7 @@ public class FuncionarioBean {
 			departamentos = fachada.listarDepartamentos();
 			funcoes = fachada.listarFuncoes();
 			escolaridades = fachada.listarEscolaridades();
+			tiposGerencias = fachada.listarTiposGerencia();
 		}catch(Exception ex){
 			MsgPrimeFaces.exibirMensagemDeErro(ex.getMessage());
 		}
@@ -159,12 +164,18 @@ public class FuncionarioBean {
 			tiposLogradouros = fachada.listarTiposLogradouros();
 			ufs = fachada.listarUFs();
 			cidades = fachada.listarCidades();
+			departamentos = fachada.listarDepartamentos();
+			funcoes = fachada.listarFuncoes();
+			escolaridades = fachada.listarEscolaridades();
+			tiposGerencias = fachada.listarTiposGerencia();
 		}catch(Exception ex){
 			MsgPrimeFaces.exibirMensagemDeErro("Não foi possível filtrar as cidades pelo estado selecionado!");
 		}
 		listaOriginalDeTelefones.clear();
 		telefone = "";
 		telefoneSelecionado = "";
+		if (funcionario instanceof Gestor)
+			tipoGerenciaSelecionada = ((Gestor)funcionario).getTipoGerencia();
 		if (funcionario.getTelefones() != null && funcionario.getTelefones().size() > 0)
 			listaOriginalDeTelefones.addAll(funcionario.getTelefones());
 		if (funcionario.getTelefones().size() == 0)
@@ -194,6 +205,7 @@ public class FuncionarioBean {
 	private void novoFuncionario(){
 		funcionario = new Funcionario();
 		ufSelecionada = null;
+		tipoGerenciaSelecionada = new TipoGerencia();
 		/*codigoCidadeSelecionada = null;
 		codigoEscolaridadeSelecionada = null;
 		codigoTipoLogradouroSelecionado = null;
@@ -252,7 +264,14 @@ public class FuncionarioBean {
 			funcionario.setUsuario(null);
 			funcionario.setCpf(funcionario.getCpf().replace(".", "").replace("-", ""));
 			funcionario.getEndereco().setCep(funcionario.getEndereco().getCep().replace("-", "").replace(".", ""));
-			fachada.salvarFuncionario(funcionario);
+			if (tipoGerenciaSelecionada != null && tipoGerenciaSelecionada.getCodigo() != null
+					&& tipoGerenciaSelecionada.getCodigo() > 0){
+				Gestor g = (Gestor)funcionario;
+				g.setTipoGerencia(tipoGerenciaSelecionada);
+				fachada.salvarGestor(g);
+			}else{
+				fachada.salvarFuncionario(funcionario);
+			}
 			MsgPrimeFaces.exibirMensagemInfomativa("Funcionário salvo com sucesso!");
 			novoFuncionario();
 			somenteLeitura = true;

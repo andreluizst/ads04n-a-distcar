@@ -336,6 +336,10 @@ public class ControladorOrganizacional {
 		return daoFuncionario.pesquisar(funcionario);
 	}
 	
+	public List<Funcionario> consultarFuncionario(Funcionario funcionario) throws Exception{
+		return daoFuncionario.consultar(funcionario);
+	}
+	
 	public Funcionario pegarFuncionarioPorId(Integer codigo) throws Exception{
 		return daoFuncionario.consultarPorId(codigo);
 	}

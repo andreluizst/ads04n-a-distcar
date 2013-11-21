@@ -35,6 +35,7 @@ public interface IFachada {
 	public void salvarFuncionario(Funcionario funcionario) throws Exception;
 	public void excluirFuncionario(Funcionario funcaionario) throws Exception;
 	public List<Funcionario> consultarFuncionario(Funcionario funcaionario) throws Exception;
+	public Funcionario pegarFuncionarioPorId(Integer codigo) throws Exception;
 	
 	//**************************  D E P A R T A M E N T O  **********************************
 	public void salvarDepartamento(Departamento depto) throws Exception;
@@ -55,6 +56,7 @@ public interface IFachada {
 	public void excluirTipoGerencia(TipoGerencia tipoGerencia) throws Exception;
 	public List<TipoGerencia> consultarTipoGerencia(TipoGerencia tipoGerencia) throws Exception;
 	public List<TipoGerencia> listarTiposGerencia() throws Exception;
+	public TipoGerencia pegarTipoGerenciaPorId(Integer codigo) throws Exception;
 	
 	
 	//******************  T I P O S   L O G R A D O U R O S  *********************************
