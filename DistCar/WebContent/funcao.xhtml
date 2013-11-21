@@ -51,10 +51,11 @@
   					
   				</h:panelGrid>
 				
-				<p:commandButton id="btnNovo" value="Novo"    update="panelFuncao" action="#{funcaoBean.novo}"/>
+				<p:commandButton id="btnNovo" value="Novo"    update="tbFuncoes,panelFuncao" action="#{funcaoBean.novo}"/>
    				<p:commandButton id="btnAlterar" disabled="#{funcaoBean.listaEstaVazia}" value="Alterar" 
-   						update="panelFuncao" action="#{funcaoBean.alterar}" />
-   				<p:commandButton id="btnExcluir" disabled="#{funcaoBean.listaEstaVazia}" value="Excluir" update="tbFuncoes" actionListener="#{funcaoBean.excluir}">
+   						update="tbFuncoes,panelFuncao" action="#{funcaoBean.alterar}" />
+   				<p:commandButton id="btnExcluir" disabled="#{funcaoBean.listaEstaVazia}" value="Excluir" 
+   						update="tbFuncoes,panelFuncao" actionListener="#{funcaoBean.excluir}">
    					<p:confirm header="Confirmação" 
    							message="Confirma a exclusão da função selecionada?"
    							icon="ui-icon-alert" />  
@@ -82,11 +83,14 @@
   				</p:column>
   				<p:column>
   					<f:facet name="header"><h:outputText value="Salário"/> </f:facet>
-  					<h:outputText dir="rtl" value="#{funcao.salario}"/>
+  					<h:outputText dir="ltr" value="#{funcao.salario}">
+  						<f:convertNumber currencyCode="BRL" type="currency"/>
+  					</h:outputText>
   				</p:column>
   				<p:column>
   					<f:facet name="header"><h:outputText value="Situação"/> </f:facet>
   					<h:outputText value="#{funcao.situacao}"/>
+  						
   				</p:column>
   				<p:column>
   					<f:facet name="header"><h:outputText value="Última atualização"/> </f:facet>

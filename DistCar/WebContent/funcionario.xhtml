@@ -61,7 +61,7 @@
    				<p:commandButton disabled="#{funcionarioBean.listaEstaVazia}" value="Alterar" 
    								update="panelPesquisa" action="#{funcionarioBean.alterar}" />
    				<p:commandButton disabled="#{funcionarioBean.listaEstaVazia}" value="Excluir" 
-   								update="tbLista" actionListener="#{funcionarioBean.excluir}">
+   								update="tbLista,panelPesquisa" actionListener="#{funcionarioBean.excluir}">
    					<p:confirm header="Confirmação" 
    							message="Confirma a exclusão do funcionário selecionado?"
    							icon="ui-icon-alert" />  

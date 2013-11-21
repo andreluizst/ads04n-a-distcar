@@ -53,12 +53,13 @@ public class FuncionarioBean {
 	private List<Escolaridade> escolaridades;
 	private String textoBotaoFecharOuCancelar;
 	private boolean somenteLeitura;
-	private Integer codigoTipoLogradouroSelecionado;
-	private Integer codigoFuncaoSelecionada;
-	private Integer codigoUfSelecionada;
-	private Integer codigoCidadeSelecionada;
-	private Integer codigoDepartamentoSelecionado;
-	private Integer codigoEscolaridadeSelecionada;
+	//private Integer codigoTipoLogradouroSelecionado;
+	//private Integer codigoFuncaoSelecionada;
+	//private Integer codigoUfSelecionada;
+	//private Integer codigoCidadeSelecionada;
+	//private Integer codigoDepartamentoSelecionado;
+	//private Integer codigoEscolaridadeSelecionada;
+	private UnidadeFederativa ufSelecionada;
 	private String telefone;
 	private String telefoneSelecionado;
 	private ArrayList<String> listaOriginalDeTelefones;
@@ -90,12 +91,13 @@ public class FuncionarioBean {
 		tituloOperacao = FuncionarioBean.OP_VISUALIZAR;
 		textoBotaoFecharOuCancelar = FuncionarioBean.TXT_BTN_FECHAR;
 		somenteLeitura = true;
-		codigoCidadeSelecionada = null;
+		/*codigoCidadeSelecionada = null;
 		codigoEscolaridadeSelecionada = null;
 		codigoTipoLogradouroSelecionado = null;
 		codigoDepartamentoSelecionado = null;
 		codigoUfSelecionada = null;
-		codigoFuncaoSelecionada = null;
+		codigoFuncaoSelecionada = null;*/
+		ufSelecionada = null;
 		try{
 			tiposLogradouros = fachada.listarTiposLogradouros();
 			cidades = fachada.listarCidades();
@@ -110,7 +112,7 @@ public class FuncionarioBean {
 
 	private void prepararParaExibirDados(Funcionario obj){
 		funcionario = obj;
-		funcionario.setEscolaridade(obj.getEscolaridade());
+		/*funcionario.setEscolaridade(obj.getEscolaridade());
 		funcionario.setDepartamento(obj.getDepartamento());
 		funcionario.setSituacao(obj.getSituacao());
 		funcionario.setFuncao(obj.getFuncao());
@@ -147,9 +149,16 @@ public class FuncionarioBean {
 				codigoUfSelecionada = null;
 		}
 		UnidadeFederativa uf = new UnidadeFederativa();
-		uf.setCodigo(codigoUfSelecionada);
+		uf.setCodigo(codigoUfSelecionada);*/
+		if (obj.getEndereco().getCidade().getUnidadeFederativa() != null 
+				&& obj.getEndereco().getCidade().getUnidadeFederativa().getCodigo() > 0)
+			ufSelecionada = obj.getEndereco().getCidade().getUnidadeFederativa();
+		else
+			ufSelecionada = null;
 		try{
-			cidades = fachada.consultarCidadesPorUF(uf);
+			tiposLogradouros = fachada.listarTiposLogradouros();
+			ufs = fachada.listarUFs();
+			cidades = fachada.listarCidades();
 		}catch(Exception ex){
 			MsgPrimeFaces.exibirMensagemDeErro("Não foi possível filtrar as cidades pelo estado selecionado!");
 		}
@@ -184,12 +193,13 @@ public class FuncionarioBean {
 	
 	private void novoFuncionario(){
 		funcionario = new Funcionario();
-		codigoCidadeSelecionada = null;
+		ufSelecionada = null;
+		/*codigoCidadeSelecionada = null;
 		codigoEscolaridadeSelecionada = null;
 		codigoTipoLogradouroSelecionado = null;
 		codigoDepartamentoSelecionado = null;
 		codigoUfSelecionada = null;
-		codigoFuncaoSelecionada = null;
+		codigoFuncaoSelecionada = null;*/
 	}
 	
 	public void excluir(){
@@ -214,6 +224,7 @@ public class FuncionarioBean {
 	
 	public String salvar(){
 		try{
+			/*
 			//funcionario.getOrgaoExpedidor()
 			if (codigoDepartamentoSelecionado == null)
 				funcionario.setDepartamento(null);
@@ -235,6 +246,7 @@ public class FuncionarioBean {
 				funcionario.getEndereco().getCidade().setCodigo(null);
 			else
 				funcionario.getEndereco().setCidade(fachada.pegarCidadePorId(codigoCidadeSelecionada));
+			*/
 			if (funcionario.getCodigo() == null || funcionario.getCodigo() == 0)
 				funcionario.setCodigo(null);
 			funcionario.setUsuario(null);
@@ -454,7 +466,7 @@ public class FuncionarioBean {
 	public List<Funcao> getFuncoes() {
 		return funcoes;
 	}
-
+	/*
 	public Integer getCodigoTipoLogradouroSelecionado() {
 		return codigoTipoLogradouroSelecionado;
 	}
@@ -505,7 +517,7 @@ public class FuncionarioBean {
 	public void setCodigoUfSelecionada(Integer codigoUfSelecionada) {
 		this.codigoUfSelecionada = codigoUfSelecionada;
 	}
-
+	*/
 	public List<Escolaridade> getEscolaridades() {
 		return escolaridades;
 	}
@@ -528,6 +540,14 @@ public class FuncionarioBean {
 
 	public void setTelefoneSelecionado(String telefoneSelecionado) {
 		this.telefoneSelecionado = telefoneSelecionado;
+	}
+
+	public UnidadeFederativa getUfSelecionada() {
+		return ufSelecionada;
+	}
+
+	public void setUfSelecionada(UnidadeFederativa ufSelecionada) {
+		this.ufSelecionada = ufSelecionada;
 	}
 	
 	
