@@ -114,7 +114,7 @@
   					
   					<h:outputLabel for="cbxTipoGerencia" value="Tipo de gerência: "/>
   					<p:selectOneMenu id="cbxTipoGerencia" converter="TipoGerenciaConverter" 
-  								value="#{funcionarioBean.tipoGerenciaSelecionada}"
+  								value="#{funcionarioBean.funcionario.tipoGerencia}"
   								required="false" readonly="#{funcionarioBean.somenteLeitura}"
   								disabled="#{funcionarioBean.somenteLeitura}" >
   						<f:selectItem noSelectionOption="true" itemLabel="NENHUM" itemValue="-1" />

@@ -9,7 +9,7 @@ import javax.faces.event.ActionEvent;
 
 import classesBasicas.Centro;
 import classesBasicas.Departamento;
-import classesBasicas.Gestor;
+import classesBasicas.Funcionario;
 import classesBasicas.Situacao;
 import fachada.Fachada;
 import fachada.IFachada;
@@ -39,7 +39,7 @@ public class DeptoBean {
 	private boolean somenteLeitura;
 	private List<Centro> centros;
 	private List<Departamento> deptosSuperiores;
-	private List<Gestor> gestores;
+	private List<Funcionario> gestores;
 	private boolean temGestores;
 	private boolean temCentros;
 	private boolean temDeptosSuperiores;
@@ -57,7 +57,7 @@ public class DeptoBean {
 	private void inicializarObjParaPesquisa(){
 		departamentoParaPesquisa = new Departamento();
 		departamentoParaPesquisa.setDepartamentoSuperior(new Departamento());
-		departamentoParaPesquisa.setGestor(new Gestor());
+		departamentoParaPesquisa.setGestor(new Funcionario());
 		departamentoParaPesquisa.setCentro(new Centro());
 	}
 	
@@ -79,7 +79,7 @@ public class DeptoBean {
 		try{
 			centros = fachada.listarCentros();
 			deptosSuperiores = fachada.listarDepartamentos();
-			gestores = fachada.listarGestores();
+			gestores = fachada.listarFuncionariosGestores();
 			temGestores = gestores.size()>0?true:false;
 			temCentros = centros.size()>0?true:false;
 			temDeptosSuperiores = deptosSuperiores.size()>0?true:false;
@@ -131,7 +131,8 @@ public class DeptoBean {
 		departamento.setNome("Digite um nome aqui");
 		departamento.setDepartamentoSuperior(new Departamento());
 		departamento.setCentro(new Centro());
-		departamento.setGestor(new Gestor());
+		departamento.setGestor(new Funcionario());
+		codigoCentroSelecionado = null;
 	}
 	
 	public void excluir(){
@@ -170,7 +171,7 @@ public class DeptoBean {
 			if (codigoGestorSelecionado ==null){
 				departamento.setGestor(null);
 			}else{
-				departamento.setGestor(fachada.pegarGestorPorId(codigoGestorSelecionado));
+				departamento.setGestor(fachada.pegarFuncionarioPorId(codigoGestorSelecionado));
 			}
 			
 			if (departamento.getCodigo() == null || departamento.getCodigo() == 0)
@@ -287,7 +288,7 @@ public class DeptoBean {
 		return deptosSuperiores;
 	}
 
-	public List<Gestor> getGestores() {
+	public List<Funcionario> getGestores() {
 		return gestores;
 	}
 

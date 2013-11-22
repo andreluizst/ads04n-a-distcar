@@ -25,7 +25,7 @@ public class Departamento extends ObjetoGeral {
 	
 	@OneToOne(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
 	@JoinColumn(name="codGestor", insertable=true, updatable=true)
-	private Gestor gestor;
+	private Funcionario gestor;
 	
 	@ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
 	@JoinColumn(name="codCentro", insertable=true, updatable=true, nullable=false)
@@ -40,7 +40,7 @@ public class Departamento extends ObjetoGeral {
 	}
 	
 	public Departamento(String nome, Departamento departamentoSuperior,
-			Gestor gestor, Centro centro) {
+			Funcionario gestor, Centro centro) {
 		super();
 		this.nome = nome;
 		this.departamentoSuperior = departamentoSuperior;
@@ -81,11 +81,11 @@ public class Departamento extends ObjetoGeral {
 		this.departamentoSuperior = departamentoSuperior;
 	}
 	
-	public Gestor getGestor() {
+	public Funcionario getGestor() {
 		return gestor;
 	}
 	
-	public void setGestor(Gestor gestor) {
+	public void setGestor(Funcionario gestor) {
 		this.gestor = gestor;
 	}
 

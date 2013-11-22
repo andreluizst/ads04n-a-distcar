@@ -24,6 +24,8 @@ public class Usuario extends ObjetoGeral {
 	@Enumerated(EnumType.STRING)
 	private SituacaoSenha situacaoSenha;
 	
+	private TipoUsuario tipo;
+	
 	// Um usuário pode ter vários perfis e um perfil pode conter vários usuários
 	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinTable(name="perfil_usuario", 
@@ -61,4 +63,12 @@ public class Usuario extends ObjetoGeral {
 	public void setListaPerfis(List<Perfil> listaPerfis) {
 		this.listaPerfis = listaPerfis;
 	}
+	public TipoUsuario getTipo() {
+		return tipo;
+	}
+	public void setTipo(TipoUsuario tipo) {
+		this.tipo = tipo;
+	}
+	
+	
 }

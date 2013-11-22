@@ -16,7 +16,6 @@ import classesBasicas.Escolaridade;
 import classesBasicas.Fabricante;
 import classesBasicas.Funcao;
 import classesBasicas.Funcionario;
-import classesBasicas.Gestor;
 import classesBasicas.PessoaJuridica;
 import classesBasicas.Situacao;
 import classesBasicas.TipoGerencia;
@@ -30,7 +29,6 @@ import dao.DAOEscolaridade;
 import dao.DAOFabricante;
 import dao.DAOFuncao;
 import dao.DAOFuncionario;
-import dao.DAOGestor;
 import dao.DAOPessoaJuridica;
 import dao.DAOTipoGerencia;
 import dao.DAOTipoLogradouro;
@@ -43,7 +41,6 @@ import dao.IDAOEscolaridade;
 import dao.IDAOFabricante;
 import dao.IDAOFuncao;
 import dao.IDAOFuncionario;
-import dao.IDAOGestor;
 import dao.IDAOPessoaJuridica;
 import dao.IDAOTipoGerencia;
 import dao.IDAOTipoLogradouro;
@@ -51,7 +48,6 @@ import dao.IDAOUnidadeFederativa;
 import erro.NegocioExceptionDepartamento;
 import erro.NegocioExceptionFuncao;
 import erro.NegocioExceptionFuncionario;
-import erro.NegocioExceptionGestor;
 import gui.MsgPrimeFaces;
 
 public class ControladorOrganizacional {
@@ -60,7 +56,6 @@ public class ControladorOrganizacional {
 	private IDAOFuncao daoFuncao;
 	private IDAOFuncionario daoFuncionario;
 	private IDAOCentro daoCentro;
-	private IDAOGestor daoGestor;
 	private IDAOTipoGerencia daoTipoGerencia;
 	private IDAODepartamento daoDepto;
 	private IDAOPessoaJuridica daoPJ;
@@ -101,7 +96,6 @@ public class ControladorOrganizacional {
 		daoEscolaridade = new DAOEscolaridade(entityManager);
 		daoCentro = new DAOCentro(entityManager);
 		daoDepto = new DAODepartamento(entityManager);
-		daoGestor = new DAOGestor(entityManager);
 		daoPJ = new DAOPessoaJuridica(entityManager);
 		daoTipoLogradouro = new DAOTipoLogradouro(entityManager);
 		daoCidade = new DAOCidade(entityManager);
@@ -340,85 +334,14 @@ public class ControladorOrganizacional {
 		return daoFuncionario.consultar(funcionario);
 	}
 	
+	public List<Funcionario> listarFuncionariosGestores() throws Exception{
+		return daoFuncionario.listarFuncionariosGestores();
+	}
+	
 	public Funcionario pegarFuncionarioPorId(Integer codigo) throws Exception{
 		return daoFuncionario.consultarPorId(codigo);
 	}
 	
-	
-	//*********************************  G E S T O R  *******************************************
-	public boolean gestorExiste(Gestor obj) throws Exception{
-		Gestor outroObj = null;
-		if (obj.getCodigo() == null)
-			return false;
-		outroObj = daoGestor.consultarPorId(obj.getCodigo());
-		if (outroObj != null)
-			if (outroObj.getCodigo() == obj.getCodigo())
-				return true;
-		return false;
-	}
-	
-	public void inserirGestor (Gestor gestor) throws Exception {
-		gestor.setDataUltimaAtualizacao(Calendar.getInstance());
-		if (gestor.getSituacao() == null)
-			gestor.setSituacao(Situacao.ATIVO);
-		// TODO Auto-generated method stub
-		/*if(gestor.getNome()==null||gestor.getNome().equals("")||
-						gestor.getSituacao()==null||gestor.getSituacao().equals("")||
-								gestor.getDataUltimaAtualizacao()==null||gestor.getDataUltimaAtualizacao().equals("")){
-			throw new Exception("Campos inválidos");
-		}*/
-				
-		daoGestor.inserir(gestor);
-	}
-	
-	public void tornarFuncionarioEmGestor(Gestor gestor) throws Exception{
-		daoGestor.tornarFuncionarioEmGestor(gestor);
-		//daoGestor.alterar(gestor);
-	}
-	
-	public void alterarGestor (Gestor gestor) throws Exception {
-		gestor.setDataUltimaAtualizacao(Calendar.getInstance());
-		if (gestor.getSituacao() == null)
-			gestor.setSituacao(Situacao.ATIVO);
-		
-		/*if(	gestor.getCodigo()==null||gestor.getCodigo().equals("")||
-				gestor.getNome()==null||gestor.getNome().equals("")||
-						gestor.getSituacao()==null||gestor.getSituacao().equals("")||
-								gestor.getDataUltimaAtualizacao()==null||gestor.getDataUltimaAtualizacao().equals(""))
-				{
-					throw new Exception("Campos inválidos");
-				}
-				
-		Gestor g = daoGestor.consultarPorId(gestor.getCodigo());
-		if(g==null){
-			throw new NegocioExceptionGestor("Gestor não cadastrado");
-		}*/
-		
-		daoGestor.alterar(gestor);
-	}
-
-
-	public void removerGestor(Gestor gestor) throws Exception {
-		// TODO Auto-generated method stub
-		Gestor g = daoGestor.consultarPorId(gestor.getCodigo());
-		if(g==null){
-			throw new NegocioExceptionGestor("Gestor não encontrado!");
-		}
-		daoGestor.remover(g);
-	}
-
-	public List<Gestor> pesquisarGestor(Gestor gestor) throws Exception{
-		// TODO Auto-generated method stub
-		return null;
-	}
-	
-	public List<Gestor> listarGestores(){
-		return daoGestor.consultarTodos();
-	}
-	
-	public Gestor pegarGestorPorId(Integer codigo) throws Exception {
-		return daoGestor.consultarPorId(codigo);
-	}
 	
 	//*********************************  C E N T R O  *********************************************
 	public boolean centroExiste(Centro centro) throws Exception{

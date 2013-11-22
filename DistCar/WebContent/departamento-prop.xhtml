@@ -48,7 +48,7 @@
   					<p:selectOneMenu id="cbxDeptoSup" value="#{deptoBean.codigoDeptoSuperiorSelecionado}"
   									readonly="#{deptoBean.somenteLeitura}"
   									disabled="#{!deptoBean.temDeptosSuperiores}">
-  						<f:selectItem itemLabel="Selecione um departamento" itemValue="#{null}" />
+  						<f:selectItem itemLabel="Selecione um departamento superior" itemValue="#{null}" />
   						<f:selectItems value="#{deptoBean.deptosSuperiores}" var="deptoSup" 
   									itemLabel="#{deptoSup}" itemValue="#{deptoSup.codigo}"/>
   					</p:selectOneMenu>

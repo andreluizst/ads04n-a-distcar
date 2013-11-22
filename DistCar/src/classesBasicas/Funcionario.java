@@ -35,6 +35,10 @@ public class Funcionario extends PessoaFisica {
 	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
 	@JoinColumn(name="codEescolaridade", insertable=true, updatable=true)
 	private Escolaridade escolaridade;
+	
+	@ManyToOne(fetch=FetchType.EAGER, cascade = CascadeType.PERSIST)
+	@JoinColumn(name="codTipoGerencia", insertable=true, updatable=true)
+	private TipoGerencia tipoGerencia;
 
 	
 	//**** CONSTRUTORES ****
@@ -103,6 +107,16 @@ public class Funcionario extends PessoaFisica {
 		this.escolaridade = escolaridade;
 	}
 	
+	public TipoGerencia getTipoGerencia() {
+		return tipoGerencia;
+	}
+
+	public void setTipoGerencia(TipoGerencia tipoGerencia) {
+		this.tipoGerencia = tipoGerencia;
+	}
+	
+	
+
 	@Override
 	public String toString(){
 		return getNome() + ", " + getCpf();

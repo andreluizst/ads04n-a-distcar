@@ -99,4 +99,11 @@ public class DAOFuncionario extends DAOGenerico<Funcionario> implements
 		return tqry.getResultList();
 	}
 
+	@Override
+	public List<Funcionario> listarFuncionariosGestores() throws Exception {
+		String jpql = "select f from Funcionario f where f.tipoGerencia is not null";
+		TypedQuery<Funcionario> tqry = entityManager.createQuery(jpql, Funcionario.class);
+		return tqry.getResultList();
+	}
+
 }

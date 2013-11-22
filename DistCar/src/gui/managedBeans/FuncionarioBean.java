@@ -18,7 +18,6 @@ import classesBasicas.Departamento;
 import classesBasicas.Escolaridade;
 import classesBasicas.Funcao;
 import classesBasicas.Funcionario;
-import classesBasicas.Gestor;
 import classesBasicas.Situacao;
 import classesBasicas.TipoGerencia;
 import classesBasicas.TipoLogradouro;
@@ -57,12 +56,6 @@ public class FuncionarioBean {
 	private List<Escolaridade> escolaridades;
 	private String textoBotaoFecharOuCancelar;
 	private boolean somenteLeitura;
-	//private Integer codigoTipoLogradouroSelecionado;
-	//private Integer codigoFuncaoSelecionada;
-	//private Integer codigoUfSelecionada;
-	//private Integer codigoCidadeSelecionada;
-	//private Integer codigoDepartamentoSelecionado;
-	//private Integer codigoEscolaridadeSelecionada;
 	private UnidadeFederativa ufSelecionada;
 	private String telefone;
 	private String telefoneSelecionado;
@@ -95,12 +88,6 @@ public class FuncionarioBean {
 		tituloOperacao = FuncionarioBean.OP_VISUALIZAR;
 		textoBotaoFecharOuCancelar = FuncionarioBean.TXT_BTN_FECHAR;
 		somenteLeitura = true;
-		/*codigoCidadeSelecionada = null;
-		codigoEscolaridadeSelecionada = null;
-		codigoTipoLogradouroSelecionado = null;
-		codigoDepartamentoSelecionado = null;
-		codigoUfSelecionada = null;
-		codigoFuncaoSelecionada = null;*/
 		ufSelecionada = null;
 		try{
 			tiposLogradouros = fachada.listarTiposLogradouros();
@@ -117,44 +104,6 @@ public class FuncionarioBean {
 
 	private void prepararParaExibirDados(Funcionario obj){
 		funcionario = obj;
-		/*funcionario.setEscolaridade(obj.getEscolaridade());
-		funcionario.setDepartamento(obj.getDepartamento());
-		funcionario.setSituacao(obj.getSituacao());
-		funcionario.setFuncao(obj.getFuncao());
-		funcionario.setEndereco(obj.getEndereco());
-		if (obj.getFuncao() != null && obj.getFuncao().getCodigo() != null)
-			codigoFuncaoSelecionada = obj.getFuncao().getCodigo();
-		else
-			codigoFuncaoSelecionada = null;
-		if (obj.getDepartamento() != null && obj.getDepartamento().getCodigo() != null
-				&& obj.getDepartamento().getCodigo() > 0)
-			codigoDepartamentoSelecionado = obj.getDepartamento().getCodigo();
-		else
-			codigoDepartamentoSelecionado = null;
-		if (obj.getEscolaridade() != null && obj.getEscolaridade().getCodigo() != null &&
-				obj.getEscolaridade().getCodigo() > 0)
-			codigoEscolaridadeSelecionada = obj.getEscolaridade().getCodigo();
-		else
-			codigoEscolaridadeSelecionada = null;
-		if (obj.getEndereco() != null){
-			if (obj.getEndereco().getTipoLogradouro() != null 
-					&& obj.getEndereco().getTipoLogradouro().getCodigo() != null
-					&& obj.getEndereco().getTipoLogradouro().getCodigo() > 0)
-				codigoTipoLogradouroSelecionado = obj.getEndereco().getTipoLogradouro().getCodigo();
-			else
-				codigoTipoLogradouroSelecionado = null;
-			if (obj.getEndereco().getCidade() != null && obj.getEndereco().getCidade().getCodigo() > 0)
-				codigoCidadeSelecionada = obj.getEndereco().getCidade().getCodigo();
-			else
-				codigoCidadeSelecionada = null;
-			if (obj.getEndereco().getCidade().getUnidadeFederativa() != null 
-					&& obj.getEndereco().getCidade().getUnidadeFederativa().getCodigo() > 0)
-				codigoUfSelecionada = obj.getEndereco().getCidade().getUnidadeFederativa().getCodigo();
-			else
-				codigoUfSelecionada = null;
-		}
-		UnidadeFederativa uf = new UnidadeFederativa();
-		uf.setCodigo(codigoUfSelecionada);*/
 		if (obj.getEndereco().getCidade().getUnidadeFederativa() != null 
 				&& obj.getEndereco().getCidade().getUnidadeFederativa().getCodigo() != null
 				&& obj.getEndereco().getCidade().getUnidadeFederativa().getCodigo() > 0)
@@ -175,8 +124,6 @@ public class FuncionarioBean {
 		listaOriginalDeTelefones.clear();
 		telefone = "";
 		telefoneSelecionado = "";
-		if (funcionario instanceof Gestor)
-			tipoGerenciaSelecionada = ((Gestor)funcionario).getTipoGerencia();
 		if (funcionario.getTelefones() != null && funcionario.getTelefones().size() > 0)
 			listaOriginalDeTelefones.addAll(funcionario.getTelefones());
 		if (funcionario.getTelefones().size() == 0)
@@ -207,12 +154,6 @@ public class FuncionarioBean {
 		funcionario = new Funcionario();
 		ufSelecionada = null;
 		tipoGerenciaSelecionada = new TipoGerencia();
-		/*codigoCidadeSelecionada = null;
-		codigoEscolaridadeSelecionada = null;
-		codigoTipoLogradouroSelecionado = null;
-		codigoDepartamentoSelecionado = null;
-		codigoUfSelecionada = null;
-		codigoFuncaoSelecionada = null;*/
 	}
 	
 	public void excluir(){
@@ -237,61 +178,16 @@ public class FuncionarioBean {
 	
 	public String salvar(){
 		try{
-			/*
-			//funcionario.getOrgaoExpedidor()
-			if (codigoDepartamentoSelecionado == null)
-				funcionario.setDepartamento(null);
-			else
-				funcionario.setDepartamento(fachada.pegarDepartamentoPorId(codigoDepartamentoSelecionado));
-			if (codigoFuncaoSelecionada == null)
-				funcionario.setFuncao(null);
-			else
-				funcionario.setFuncao(fachada.pegarFuncaoPorId(codigoFuncaoSelecionada));
-			if (codigoEscolaridadeSelecionada == null)
-				funcionario.setEscolaridade(null);
-			else
-				funcionario.setEscolaridade(fachada.pegarEscolaridadePorId(codigoEscolaridadeSelecionada));
-			if (codigoTipoLogradouroSelecionado == null)
-				funcionario.getEndereco().getTipoLogradouro().setCodigo(null);
-			else
-				funcionario.getEndereco().setTipoLogradouro(fachada.pegarTipoLogradouroPorId(codigoTipoLogradouroSelecionado));
-			if (codigoCidadeSelecionada == null)
-				funcionario.getEndereco().getCidade().setCodigo(null);
-			else
-				funcionario.getEndereco().setCidade(fachada.pegarCidadePorId(codigoCidadeSelecionada));
-			*/
 			if (funcionario.getCodigo() == null || funcionario.getCodigo() == 0)
 				funcionario.setCodigo(null);
 			funcionario.setUsuario(null);
 			funcionario.setCpf(funcionario.getCpf().replace(".", "").replace("-", ""));
 			funcionario.getEndereco().setCep(funcionario.getEndereco().getCep().replace("-", "").replace(".", ""));
-			if (tipoGerenciaSelecionada != null && tipoGerenciaSelecionada.getCodigo() != null
-					&& tipoGerenciaSelecionada.getCodigo() > 0){
-				Gestor g = new Gestor();
-				//g = (Gestor)funcionario; // Dá exceção
-				g.setCodigo(funcionario.getCodigo());
-				g.setNome(funcionario.getNome());
-				g.setCpf(funcionario.getCpf());
-				g.setCpts(funcionario.getCpts());
-				g.setDataAdmissao(funcionario.getDataAdmissao());
-				g.setDataDemissao(funcionario.getDataDemissao());
-				g.setDataNascimento(funcionario.getDataNascimento());
-				g.setDepartamento(funcionario.getDepartamento());
-				g.setEmail(funcionario.getEmail());
-				g.setEndereco(funcionario.getEndereco());
-				g.setEscolaridade(funcionario.getEscolaridade());
-				g.setFuncao(funcionario.getFuncao());
-				g.setOrgaoExpedidor(funcionario.getOrgaoExpedidor());
-				g.setRg(funcionario.getRg());
-				g.setSituacao(funcionario.getSituacao());
-				g.setTelefones(funcionario.getTelefones());
-				g.setUsuario(funcionario.getUsuario());
-					System.out.println(tipoGerenciaSelecionada);
-				g.setTipoGerencia(tipoGerenciaSelecionada);
-				fachada.salvarGestor(g);
-			}else{
-				fachada.salvarFuncionario(funcionario);
-			}
+
+			
+			
+			
+			fachada.salvarFuncionario(funcionario);
 			MsgPrimeFaces.exibirMensagemInfomativa("Funcionário salvo com sucesso!");
 			novoFuncionario();
 			somenteLeitura = true;
@@ -505,58 +401,7 @@ public class FuncionarioBean {
 	public List<Funcao> getFuncoes() {
 		return funcoes;
 	}
-	/*
-	public Integer getCodigoTipoLogradouroSelecionado() {
-		return codigoTipoLogradouroSelecionado;
-	}
 
-	public void setCodigoTipoLogradouroSelecionado(
-			Integer codigoTipoLogradouroSelecionado) {
-		this.codigoTipoLogradouroSelecionado = codigoTipoLogradouroSelecionado;
-	}
-
-	public Integer getCodigoFuncaoSelecionada() {
-		return codigoFuncaoSelecionada;
-	}
-
-	public void setCodigoFuncaoSelecionada(Integer codigoFuncaoSelecionada) {
-		this.codigoFuncaoSelecionada = codigoFuncaoSelecionada;
-	}
-
-	public Integer getCodigoCidadeSelecionada() {
-		return codigoCidadeSelecionada;
-	}
-
-	public void setCodigoCidadeSelecionada(Integer codigoCidadeSelecionada) {
-		this.codigoCidadeSelecionada = codigoCidadeSelecionada;
-	}
-
-	public Integer getCodigoDepartamentoSelecionado() {
-		return codigoDepartamentoSelecionado;
-	}
-
-	public void setCodigoDepartamentoSelecionado(
-			Integer codigoDepartamentoSelecionado) {
-		this.codigoDepartamentoSelecionado = codigoDepartamentoSelecionado;
-	}
-
-	public Integer getCodigoEscolaridadeSelecionada() {
-		return codigoEscolaridadeSelecionada;
-	}
-
-	public void setCodigoEscolaridadeSelecionada(
-			Integer codigoEscolaridadeSelecionada) {
-		this.codigoEscolaridadeSelecionada = codigoEscolaridadeSelecionada;
-	}
-
-	public Integer getCodigoUfSelecionada() {
-		return codigoUfSelecionada;
-	}
-
-	public void setCodigoUfSelecionada(Integer codigoUfSelecionada) {
-		this.codigoUfSelecionada = codigoUfSelecionada;
-	}
-	*/
 	public List<Escolaridade> getEscolaridades() {
 		return escolaridades;
 	}

@@ -107,7 +107,7 @@
   				<p:column>
   					<f:facet name="header"><h:outputText value="Última atualização"/> </f:facet>
   					<h:outputText value="#{depto.dataUltimaAtualizacao.time}">
-  						<f:convertDateTime pattern="dd/MM/yyyy"/>
+  						<f:convertDateTime type="both" timeStyle="short"  />
   					</h:outputText>
   				</p:column>
   				

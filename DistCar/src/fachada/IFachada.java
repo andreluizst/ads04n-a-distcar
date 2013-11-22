@@ -2,17 +2,13 @@ package fachada;
 
 import java.util.List;
 
-
-
-/*import classesBasicas.Carro;
-import classesBasicas.Funcao;
-import classesBasicas.ItemSerieCarro;
-import classesBasicas.ModeloCarro;
-import classesBasicas.VersaoCarro;
-*/
+import seguranca.LoginInvalidoException;
+import seguranca.Usuario;
 import classesBasicas.*;
 
 public interface IFachada {
+	public Usuario efetuarLogin(String login, String senha) throws LoginInvalidoException;
+	
 	//***********************************************************************************
 	//************************* O R G A N I Z A C I O N A L *****************************
 	//***********************************************************************************
@@ -35,6 +31,7 @@ public interface IFachada {
 	public void salvarFuncionario(Funcionario funcionario) throws Exception;
 	public void excluirFuncionario(Funcionario funcaionario) throws Exception;
 	public List<Funcionario> consultarFuncionario(Funcionario funcaionario) throws Exception;
+	public List<Funcionario> listarFuncionariosGestores() throws Exception;
 	public Funcionario pegarFuncionarioPorId(Integer codigo) throws Exception;
 	
 	//**************************  D E P A R T A M E N T O  **********************************
@@ -43,13 +40,6 @@ public interface IFachada {
 	public List<Departamento> consultarDepartamento(Departamento depto) throws Exception;
 	public List<Departamento> listarDepartamentos() throws Exception;
 	public Departamento pegarDepartamentoPorId(Integer codigo) throws Exception;
-	
-	//*******************************  G E S T O R  *****************************************
-	public void salvarGestor(Gestor gestor) throws Exception;
-	public void excluirGestor(Gestor gestor) throws Exception;
-	public List<Gestor> consultarGestor(Gestor gestor) throws Exception;
-	public List<Gestor> listarGestores() throws Exception;
-	public Gestor pegarGestorPorId(Integer codigo) throws Exception;
 	
 	//************************  T I P O   G E R E N C I A  **********************************
 	public void salvarTipoGerencia(TipoGerencia tipoGerencia) throws Exception;

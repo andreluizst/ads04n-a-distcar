@@ -2,6 +2,8 @@ package fachada;
 
 import java.util.List;
 
+import seguranca.LoginInvalidoException;
+import seguranca.Usuario;
 import negocio.ControladorCarro;
 import negocio.ControladorOrganizacional;
 import classesBasicas.AcessorioCarro;
@@ -14,7 +16,6 @@ import classesBasicas.Escolaridade;
 import classesBasicas.Fabricante;
 import classesBasicas.Funcao;
 import classesBasicas.Funcionario;
-import classesBasicas.Gestor;
 import classesBasicas.ItemSerieCarro;
 import classesBasicas.MarcaCarro;
 import classesBasicas.ModeloCarro;
@@ -157,6 +158,11 @@ public class Fachada implements IFachada {
 	}
 	
 	@Override
+	public List<Funcionario> listarFuncionariosGestores() throws Exception{
+		return ctrlOrg.listarFuncionariosGestores();
+	}
+	
+	@Override
 	public Funcionario pegarFuncionarioPorId(Integer codigo) throws Exception{
 		return ctrlOrg.pegarFuncionarioPorId(codigo);
 	}
@@ -190,37 +196,6 @@ public class Fachada implements IFachada {
 		return ctrlOrg.pegarDepartamentoPorId(codigo);
 	}
 	
-	//*******************************  G E S T O R  *****************************************
-	@Override
-	public void salvarGestor(Gestor gestor) throws Exception{
-		if (ctrlOrg.gestorExiste(gestor)){
-			//if (ctrlOrg.funcionarioExiste(gestor))
-				//ctrlOrg.tornarFuncionarioEmGestor(gestor);
-			ctrlOrg.alterarGestor(gestor);
-		}
-		else
-			ctrlOrg.inserirGestor(gestor);
-	}
-	
-	@Override
-	public void excluirGestor(Gestor gestor) throws Exception{
-		ctrlOrg.removerGestor(gestor);
-	}
-	
-	@Override
-	public List<Gestor> consultarGestor(Gestor gestor) throws Exception{
-		return ctrlOrg.pesquisarGestor(gestor);
-	}
-	
-	@Override
-	public List<Gestor> listarGestores() throws Exception{
-		return ctrlOrg.listarGestores();
-	}
-	
-	@Override
-	public Gestor pegarGestorPorId(Integer codigo) throws Exception {
-		return ctrlOrg.pegarGestorPorId(codigo);
-	}
 	
 	//************************  T I P O   G E R E N C I A  **********************************
 	@Override
@@ -586,6 +561,13 @@ public class Fachada implements IFachada {
 	@Override
 	public List<AcessorioCarro> listarAcessoriosPorModelo(ModeloCarro modelo) {
 		return this.controladorCarro.listarAcessoriosPorModelo(modelo);
+	}
+
+	@Override
+	public Usuario efetuarLogin(String login, String senha)
+			throws LoginInvalidoException {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	
