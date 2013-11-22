@@ -73,7 +73,8 @@
   			<p:dataTable id="tbCentros" var="centro" value="#{centroBean.lista}" paginator="true" rows="5"
   						paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks}
   						{NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rowsPerPageTemplate="5,10,15"
-  						selection="#{centroBean.centroSelecionado}" selectionMode="single" rowKey="#{centro}">
+  						selection="#{centroBean.centroSelecionado}" selectionMode="single" rowKey="#{centro}"
+  						emptyMessage="Nenhum centro encontrado">
   				<f:facet name="header">Lista de Centros</f:facet>
   				<p:column>
   					<f:facet name="header"><h:outputText value="Código"/> </f:facet>

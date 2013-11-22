@@ -73,7 +73,8 @@
   			<p:dataTable id="tbLista" var="cidade" value="#{cidadeBean.lista}" paginator="true" rows="5"
   						paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks}
   						{NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rowsPerPageTemplate="5,10,15"
-  						selection="#{cidadeBean.cidadeSelecionada}" selectionMode="single" rowKey="#{cidade}">
+  						selection="#{cidadeBean.cidadeSelecionada}" selectionMode="single" rowKey="#{cidade}"
+  						emptyMessage="Nenhuma cidade encontrada">
   				<f:facet name="header">Lista de Cidades</f:facet>
   				<p:column>
   					<f:facet name="header"><h:outputText value="Código"/> </f:facet>

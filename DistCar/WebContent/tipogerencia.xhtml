@@ -69,7 +69,7 @@
   						paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks}
   						{NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rowsPerPageTemplate="5,10,15"
   						selection="#{tipoGerenciaBean.tipoGerenciaSelecionada}" selectionMode="single"
-  						rowKey="#{tipoGerencia}">
+  						rowKey="#{tipoGerencia}" emptyMessage="Nenhum tipo de gerência foi encontrado">
   				<f:facet name="header">Lista de Tipos de Gerências</f:facet>
   				<p:column>
   					<f:facet name="header"><h:outputText value="Código"/> </f:facet>

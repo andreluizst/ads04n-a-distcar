@@ -77,7 +77,8 @@
   			<p:dataTable id="tbLista" var="funcionario" value="#{funcionarioBean.lista}" paginator="true" rows="5"
   						paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks}
   						{NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rowsPerPageTemplate="5,10,15"
-  						selection="#{funcionarioBean.funcionarioSelecionado}" selectionMode="single" rowKey="#{funcionario}">
+  						selection="#{funcionarioBean.funcionarioSelecionado}" selectionMode="single" 
+  						rowKey="#{funcionario}" emptyMessage="Nenhum funcionário encontrado">
   				<f:facet name="header">Lista de Funconários</f:facet>
   				<p:column>
   					<f:facet name="header"><h:outputText value="Código"/> </f:facet>

@@ -384,7 +384,7 @@ public class ControladorOrganizacional {
 	}
 	
 	public List<Centro> consultarCentro(Centro centro) throws Exception{
-		return daoCentro.pesquisar(centro);
+		return daoCentro.consultar(centro);
 	}
 	
 	public List<Centro> listarCentros() throws Exception{

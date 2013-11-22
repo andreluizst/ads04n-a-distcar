@@ -70,7 +70,8 @@
   			<p:dataTable id="tbLista" var="escolaridade" value="#{escolaridadeBean.lista}" paginator="true" rows="5"
   						paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks}
   						{NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rowsPerPageTemplate="5,10,15"
-  						selection="#{escolaridadeBean.escolaridadeSelecionada}" selectionMode="single" rowKey="#{escolaridade}">
+  						selection="#{escolaridadeBean.escolaridadeSelecionada}" selectionMode="single"
+  						rowKey="#{escolaridade}" emptyMessage="Nenhuma escolaridade encontrada">
   				<f:facet name="header">Lista de Escolaridades</f:facet>
   				<p:column>
   					<f:facet name="header"><h:outputText value="Código"/> </f:facet>

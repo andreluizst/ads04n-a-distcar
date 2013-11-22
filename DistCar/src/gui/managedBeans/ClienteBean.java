@@ -164,6 +164,8 @@ public class ClienteBean {
 	public String alterar(){
 		if (listaEstaVazia)
 			return null;
+		if (clienteSelecionado == null)
+			return null;
 		prepararParaExibirDados(clienteSelecionado);
 		tituloOperacao = ClienteBean.OP_ALTERAR;
 		textoBotaoFecharOuCancelar = ClienteBean.TXT_BTN_CANCELAR;
@@ -197,6 +199,8 @@ public class ClienteBean {
 	
 	public void excluir(){
 		if (listaEstaVazia)
+			return;
+		if (clienteSelecionado == null)
 			return;
 		try{
 			cliente = clienteSelecionado;
@@ -303,6 +307,8 @@ public class ClienteBean {
 	
 	public String visualizar(){
 		if (listaEstaVazia)
+			return null;
+		if (clienteSelecionado == null)
 			return null;
 		prepararParaExibirDados(clienteSelecionado);
 		tituloOperacao = ClienteBean.OP_VISUALIZAR;

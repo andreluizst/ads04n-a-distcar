@@ -71,7 +71,8 @@
   			<p:dataTable id="tbFuncoes" var="funcao" value="#{funcaoBean.funcoes}" paginator="true" rows="5"
   						paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks}
   						{NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rowsPerPageTemplate="5,10,15"
-  						selection="#{funcaoBean.funcaoSelecionada}" selectionMode="single" rowKey="#{funcao}">
+  						selection="#{funcaoBean.funcaoSelecionada}" selectionMode="single" rowKey="#{funcao}"
+  						emptyMessage="Nenhuma função encontrada">
   				<f:facet name="header">Lista de Funções</f:facet>
   				<p:column>
   					<f:facet name="header"><h:outputText value="Código"/> </f:facet>

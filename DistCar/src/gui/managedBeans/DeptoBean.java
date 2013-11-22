@@ -2,6 +2,7 @@ package gui.managedBeans;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ResourceBundle;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -26,6 +27,7 @@ public class DeptoBean {
 	private static final String TXT_BTN_FECHAR = "Fechar";
 	
 	private IFachada fachada;
+	private ResourceBundle resourceBundle = ResourceBundle.getBundle("util.config");
 	
 	private Departamento departamento;
 	private Departamento departamentoParaPesquisa;
@@ -106,24 +108,37 @@ public class DeptoBean {
 			codigoCentroSelecionado = obj.getCentro().getCodigo();
 		else
 			codigoCentroSelecionado = null;
+		try{
+			centros = fachada.listarCentros();
+			deptosSuperiores = fachada.listarDepartamentos();
+			gestores = fachada.listarFuncionariosGestores();
+			temGestores = gestores.size()>0?true:false;
+			temCentros = centros.size()>0?true:false;
+			temDeptosSuperiores = deptosSuperiores.size()>0?true:false;
+		}catch(Exception ex){
+			MsgPrimeFaces.exibirMensagemDeErro(ex.getMessage());
+		}
 	}
 	
 	public String alterar(){
 		if (listaEstaVazia)
 			return null;
+		if (departamentoSelecionado == null)
+			return null;
 		prepararParaExibirDados(departamentoSelecionado);
 		tituloOperacao = DeptoBean.OP_ALTERAR;
 		textoBotaoFecharOuCancelar = DeptoBean.TXT_BTN_CANCELAR;
 		somenteLeitura = false;
-		return "departamento-prop";
+		return resourceBundle.getString("linkDepartamentoProp");//"departamento-prop";
 	}
 	
 	public String novo(){
 		novoDepartamento();
+		prepararParaExibirDados(departamento);
 		tituloOperacao = DeptoBean.OP_NOVA;
 		textoBotaoFecharOuCancelar = DeptoBean.TXT_BTN_CANCELAR;
 		somenteLeitura = false;
-		return "departamento-prop";
+		return resourceBundle.getString("linkDepartamentoProp");//"departamento-prop";
 	}
 	
 	private void novoDepartamento(){
@@ -137,6 +152,8 @@ public class DeptoBean {
 	
 	public void excluir(){
 		if (listaEstaVazia)
+			return;
+		if (departamentoSelecionado == null)
 			return;
 		try{
 			departamento = departamentoSelecionado;
@@ -180,7 +197,7 @@ public class DeptoBean {
 			MsgPrimeFaces.exibirMensagemInfomativa("Departamento salvo com sucesso!");
 			novoDepartamento();
 			somenteLeitura = true;
-			return "departamento";
+			return resourceBundle.getString("linkDepartamento");//"departamento";
 		}catch(Exception ex){
 			MsgPrimeFaces.exibirMensagemDeErro(ex.getMessage());
 		}
@@ -198,11 +215,13 @@ public class DeptoBean {
 	public String visualizar(){
 		if (listaEstaVazia)
 			return null;
+		if (departamentoSelecionado == null)
+			return null;
 		prepararParaExibirDados(departamentoSelecionado);
 		tituloOperacao = DeptoBean.OP_VISUALIZAR;
 		textoBotaoFecharOuCancelar = DeptoBean.TXT_BTN_FECHAR;
 		somenteLeitura = true;
-		return "departamento-prop";
+		return resourceBundle.getString("linkDepartamentoProp");//"departamento-prop";
 	}
 	
 
@@ -221,7 +240,7 @@ public class DeptoBean {
 	
 	public String carregarPagina(){
 		inicializar();
-		return "departamento.xhtml?faces-redirect=true";
+		return resourceBundle.getString("linkDepartamento");//"departamento.xhtml?faces-redirect=true";
 	}
 
 	public Departamento getDepartamento() {

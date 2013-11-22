@@ -6,6 +6,7 @@ import gui.MsgPrimeFaces;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ResourceBundle;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -31,6 +32,7 @@ public class CentroBean {
 	private static final String TXT_BTN_FECHAR = "Fechar";
 	
 	private IFachada fachada;
+	private ResourceBundle resourceBundle = ResourceBundle.getBundle("util.config");
 	
 	private Centro centro;
 	private Centro centroParaPesquisa;
@@ -108,11 +110,13 @@ public class CentroBean {
 	public String alterar(){
 		if (listaEstaVazia)
 			return null;
+		if (centroSelecionado == null)
+			return null;
 		prepararParaExibirDados(centroSelecionado);
 		tituloOperacao = CentroBean.OP_ALTERAR;
 		textoBotaoFecharOuCancelar = CentroBean.TXT_BTN_CANCELAR;
 		somenteLeitura = false;
-		return "centro-prop";
+		return resourceBundle.getString("linkCentroProp");//"centro-prop";
 	}
 	
 	public String novo(){
@@ -120,7 +124,7 @@ public class CentroBean {
 		tituloOperacao = CentroBean.OP_NOVA;
 		textoBotaoFecharOuCancelar = CentroBean.TXT_BTN_CANCELAR;
 		somenteLeitura = false;
-		return "centro-prop";
+		return resourceBundle.getString("linkCentroProp");//"centro-prop";
 	}
 	
 	private void novoCentro(){
@@ -138,6 +142,8 @@ public class CentroBean {
 	
 	public void excluir(){
 		if (listaEstaVazia)
+			return;
+		if (centroSelecionado == null)
 			return;
 		try{
 			centro = centroSelecionado;
@@ -168,7 +174,7 @@ public class CentroBean {
 			MsgPrimeFaces.exibirMensagemInfomativa("Centro salvo com sucesso!");
 			novoCentro();
 			somenteLeitura = true;
-			return "centro";
+			return resourceBundle.getString("linkCentro");//"centro";
 		}catch(Exception ex){
 			MsgPrimeFaces.exibirMensagemDeErro(ex.getMessage());
 		}
@@ -186,11 +192,13 @@ public class CentroBean {
 	public String visualizar(){
 		if (listaEstaVazia)
 			return null;
+		if (centroSelecionado == null)
+			return null;
 		prepararParaExibirDados(centroSelecionado);
 		tituloOperacao = CentroBean.OP_VISUALIZAR;
 		textoBotaoFecharOuCancelar = CentroBean.TXT_BTN_FECHAR;
 		somenteLeitura = true;
-		return "centro-prop";
+		return resourceBundle.getString("linkCentroProp");//"centro-prop";
 	}
 	
 
@@ -209,7 +217,7 @@ public class CentroBean {
 	
 	public String carregarPagina(){
 		inicializar();
-		return "centro.xhtml?faces-redirect=true";
+		return resourceBundle.getString("linkCentro");//"centro.xhtml?faces-redirect=true";
 	}
 
 	public Centro getCentro() {
