@@ -534,7 +534,7 @@ public class Fachada implements IFachada {
 	//Acessorio
 	
 	@Override
-	public void salvarAcessorio(AcessorioCarro acessorioCarro) {
+	public void salvarAcessorio(AcessorioCarro acessorioCarro)throws Exception {
 		this.controladorCarro.inserir(acessorioCarro);
 	}
 

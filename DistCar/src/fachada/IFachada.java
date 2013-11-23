@@ -155,7 +155,7 @@ public interface IFachada {
 		
 	//Acessório
 	
-	public void salvarAcessorio(AcessorioCarro acessorioCarro);
+	public void salvarAcessorio(AcessorioCarro acessorioCarro) throws Exception;
 	public void removerAcessorio(AcessorioCarro acessorioCarro);
 	public List<AcessorioCarro> listarAcessorios();
 	public AcessorioCarro pesquisarAcessorioCodigo(Integer codigo);
