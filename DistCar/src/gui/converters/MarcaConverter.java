@@ -4,6 +4,7 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
+
 import classesBasicas.MarcaCarro;
 import fachada.Fachada;
 
@@ -11,23 +12,28 @@ import fachada.Fachada;
 public class MarcaConverter implements Converter {
 	
 	 public Object getAsObject(FacesContext context, UIComponent component, String value)  {     
-            if (value == null)   
-                return null;  
-            Integer id = new Integer(value);              
-            return Fachada.obterInstancia().pesquisarMarcasCarroCodigo(id);  
-    }  
+		 MarcaCarro marca = null;
+			if (value == null)
+				return null;
+			Integer codigo = new Integer(value);
+			if (codigo == -1)
+				return null;
+				marca = Fachada.obterInstancia().pesquisarMarcasCarroCodigo(codigo);
+			return marca; 
+		}
   
     public String getAsString(FacesContext context, UIComponent componente, Object value) {  
         
-        if (value == null) 
-            return null;  
-        if (value instanceof MarcaCarro) {  
-            MarcaCarro aux = (MarcaCarro) value;  
-            return aux.getCodigo().toString();  
-        }  
-        else if(value instanceof String && ((String)value).equalsIgnoreCase("-1")){  
-            return "-1";  
-        }
-		return null; 
+    	if (value == null) 
+	           return null;  
+	    if (value instanceof MarcaCarro) {  
+	        MarcaCarro marca = (MarcaCarro)value; 
+	        if (marca.getCodigo() != null)
+	        	return marca.getCodigo().toString();  
+	    }  
+	    else if(value instanceof String && ((String)value).equalsIgnoreCase("-1")){  
+	        return "-1";  
+	    }
+		return null;
     } 	
 }
