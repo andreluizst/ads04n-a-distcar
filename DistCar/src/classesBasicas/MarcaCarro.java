@@ -8,7 +8,7 @@ public class MarcaCarro extends ObjetoGeral {
 	
 	@Column(unique=true)
 	private String descricao;
-	@ManyToOne
+	@ManyToOne(fetch=FetchType.EAGER)
 	private Fabricante fabricante;
 	
 	public String getDescricao() {

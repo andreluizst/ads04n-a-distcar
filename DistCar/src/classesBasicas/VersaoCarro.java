@@ -2,7 +2,9 @@ package classesBasicas;
 
 
 import java.util.List;
+
 import javax.persistence.*;
+
 
 
 @Entity
@@ -11,7 +13,7 @@ public class VersaoCarro extends ObjetoGeral {
 	private double valor;
 	@Column(unique=true)
 	private String descricao;
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.EAGER)
 	private ModeloCarro modeloCarro;
 	@ManyToMany
 	private List<AcessorioCarro> acessorios;

@@ -11,9 +11,17 @@ public class ModeloCarro extends ObjetoGeral {
 	private String descricao;
 	@Column(length=10, nullable=false)
 	private Integer ano;
-	@ManyToOne
+	@ManyToOne(fetch=FetchType.EAGER)
 	private MarcaCarro marcaCarro;
+	private Integer valor;
 	
+	
+	public Integer getValor() {
+		return valor;
+	}
+	public void setValor(Integer valor) {
+		this.valor = valor;
+	}
 	public String getDescricao() {
 		return descricao;
 	}
@@ -41,6 +49,7 @@ public class ModeloCarro extends ObjetoGeral {
 				+ ((descricao == null) ? 0 : descricao.hashCode());
 		result = prime * result
 				+ ((marcaCarro == null) ? 0 : marcaCarro.hashCode());
+		result = prime * result + ((valor == null) ? 0 : valor.hashCode());
 		return result;
 	}
 	@Override
@@ -67,21 +76,28 @@ public class ModeloCarro extends ObjetoGeral {
 				return false;
 		} else if (!marcaCarro.equals(other.marcaCarro))
 			return false;
+		if (valor == null) {
+			if (other.valor != null)
+				return false;
+		} else if (!valor.equals(other.valor))
+			return false;
 		return true;
 	}
 	@Override
 	public String toString() {
 		return "ModeloCarro [descricao=" + descricao + ", ano=" + ano
-				+ ", marcaCarro=" + marcaCarro + "]";
+				+ ", marcaCarro=" + marcaCarro + ", valor=" + valor + "]";
 	}
-	public ModeloCarro(String descricao, Integer ano, MarcaCarro marcaCarro) {
+	public ModeloCarro() {
+		super();
+	}
+	public ModeloCarro(String descricao, Integer ano, MarcaCarro marcaCarro,
+			Integer valor) {
 		super();
 		this.descricao = descricao;
 		this.ano = ano;
 		this.marcaCarro = marcaCarro;
-	}
-	public ModeloCarro() {
-		super();
+		this.valor = valor;
 	}
 	
 	
