@@ -69,16 +69,23 @@ public class ControladorCarro {
 
 	
 	//Modelo Carro
-	public void inserir(ModeloCarro modeloCarro) {
-		modeloCarroDAO.inserir(modeloCarro);
+	public void inserir(ModeloCarro modelo) throws Exception {
+		if(modeloCarroDAO.pesquisarModeloDescAno(modelo)!=null &&
+				modeloCarroDAO.pesquisarModeloDescAno(modelo).getCodigo()!=modelo.getCodigo()){
+			throw new Exception("Modelo já cadastrado");
+		}
+		modeloCarroDAO.inserir(modelo);
 	}
 
-	public void alterar(ModeloCarro modeloCarro) {
-		modeloCarroDAO.alterar(modeloCarro);
+	public void alterar(ModeloCarro modelo) {
+		modeloCarroDAO.alterar(modelo);
 	}
 
-	public void remover(ModeloCarro modeloCarro) {
-		modeloCarroDAO.remover(modeloCarro);
+	public void remover(ModeloCarro modelo) throws Exception {
+		if(modeloCarroDAO.consultarPorId(modelo.getCodigo())==null){
+			throw new Exception("Modelo não encontrado");
+		}
+		modeloCarroDAO.remover(modelo);
 	}
 	
 	public List<ModeloCarro> listarModelos() {
@@ -90,8 +97,8 @@ public class ControladorCarro {
 		return modeloCarroDAO.consultarPorId(codigo);
 	}
 	
-	public List<ModeloCarro> pesquisarModeloCarros(ModeloCarro modeloCarro) {
-		return modeloCarroDAO.pesquisar(modeloCarro);
+	public List<ModeloCarro> pesquisarModeloCarros(ModeloCarro modelo) throws Exception {
+		return modeloCarroDAO.consultar(modelo);
 	}
 	
 	public List<ModeloCarro> pesquisarModeloPorMarca(Integer codigo) {
@@ -118,8 +125,8 @@ public class ControladorCarro {
 		return versaoCarroDAO.consultarPorId(codigo);
 	}
 	
-	public List<VersaoCarro> pesquisarVersoes(VersaoCarro versaoCarro) {
-		return versaoCarroDAO.pesquisar(versaoCarro);
+	public List<VersaoCarro> pesquisarVersoes(VersaoCarro versao) throws Exception {
+		return versaoCarroDAO.consultar(versao);
 	}
 	
 	public List<VersaoCarro> pesquisarVersaoPorModelo(Integer codigo){
@@ -128,12 +135,19 @@ public class ControladorCarro {
 	
 	// Marca
 	
-	public void inserir(MarcaCarro marcaCarro) {
+	public void inserir(MarcaCarro marcaCarro) throws Exception {
+		if(marcaCarroDAO.pesquisarMarcaDesc(marcaCarro)!=null &&
+				marcaCarroDAO.pesquisarMarcaDesc(marcaCarro).getCodigo()!= marcaCarro.getCodigo()){
+			throw new Exception("Marca já cadastrada");
+		}
 		marcaCarroDAO.inserir(marcaCarro);
 		
 	}
 	
-	public void removerMarca(MarcaCarro marcaCarro) {
+	public void removerMarca(MarcaCarro marcaCarro) throws Exception {
+		if(marcaCarroDAO.pesquisarMarcaPorFab(marcaCarro.getCodigo())==null){
+			throw new Exception("Marca não cadastrada");
+		}
 		marcaCarroDAO.remover(marcaCarro);
 	}
 
@@ -146,8 +160,8 @@ public class ControladorCarro {
 		return marcaCarroDAO.consultarPorId(codigo);
 	}
 
-	public List<MarcaCarro> pesquisarMarcas(MarcaCarro marcaCarro) {
-		return marcaCarroDAO.pesquisar(marcaCarro);
+	public List<MarcaCarro> pesquisarMarcas(MarcaCarro marcaCarro) throws Exception {
+		return marcaCarroDAO.consultar(marcaCarro);
 	}
 	
 	public List<MarcaCarro> pesquisarMarcaPorFabr(Integer codigo ){
@@ -156,15 +170,26 @@ public class ControladorCarro {
 	
 	//Item de Serie
 	
-	public void inserir(ItemSerieCarro itemSerieCarro) {
-		itemSerieCarroDAO.inserir(itemSerieCarro);
+	public void inserir(ItemSerieCarro itemSerieCarro) throws Exception {
+		if(itemSerieCarroDAO.pesquisarItemDescModelo(itemSerieCarro)!=null &&
+				itemSerieCarroDAO.pesquisarItemDescModelo(itemSerieCarro).getCodigo()!=itemSerieCarro.getCodigo()){
+			throw new Exception("Item série cadastrado!");
+		}
+		else{
+			itemSerieCarroDAO.inserir(itemSerieCarro);
+		}	
 	}
 	
 	public void alterar(ItemSerieCarro itemSerieCarro) {
 		itemSerieCarroDAO.alterar(itemSerieCarro);
 	}
-	public void remover(ItemSerieCarro itemSerieCarro) {
-		itemSerieCarroDAO.remover(itemSerieCarro);
+	public void remover(ItemSerieCarro itemSerieCarro) throws Exception {
+		if(itemSerieCarroDAO.consultarPorId(itemSerieCarro.getCodigo())==null){
+			throw new Exception("Item de série não cadastrado!");
+		}
+		{
+			itemSerieCarroDAO.remover(itemSerieCarro);
+		}
 	}
 	
 	public List<ItemSerieCarro> listarItens(){
@@ -174,8 +199,8 @@ public class ControladorCarro {
 		return itemSerieCarroDAO.consultarPorId(codigo);
 	}
 	
-	public List<ItemSerieCarro> pesquisarItens(ItemSerieCarro itemSerieCarro){
-		return itemSerieCarroDAO.pesquisar(itemSerieCarro);
+	public List<ItemSerieCarro> pesquisarItens(ItemSerieCarro itemSerieCarro) throws Exception{
+		return itemSerieCarroDAO.consultar(itemSerieCarro);
 	}
 	
 	public List<ItemSerieCarro> pesquisarPorModelo(Integer codigo){
@@ -188,12 +213,21 @@ public class ControladorCarro {
 	
 	//Acessório Carro
 
-	public void inserir(AcessorioCarro acessorioCarro) {
-		acessorioDAO.inserir(acessorioCarro);
+	public void inserir(AcessorioCarro acessorioCarro) throws Exception {
 		
+		if(acessorioDAO.pesquisarAcessorioDescModelo(acessorioCarro)!=null && 
+				acessorioDAO.pesquisarAcessorioDescModelo(acessorioCarro).getCodigo()!=acessorioCarro.getCodigo()){
+			 throw new Exception("Acessório já cadastrado");
+		}
+		else{
+			acessorioDAO.inserir(acessorioCarro);
+		}
 	}
 	
-	public void removerAcessorio(AcessorioCarro acessorio) {
+	public void removerAcessorio(AcessorioCarro acessorio) throws Exception {
+		if(acessorioDAO.consultarPorId(acessorio.getCodigo())==null){
+			throw new Exception("Acessório não cadastrado.");
+		}
 		acessorioDAO.remover(acessorio);
 	}
 
@@ -205,8 +239,8 @@ public class ControladorCarro {
 		return acessorioDAO.consultarPorId(codigo);
 	}
 
-	public List<AcessorioCarro> pesquisarAcessorios(AcessorioCarro acessorio) {
-		return acessorioDAO.pesquisar(acessorio);
+	public List<AcessorioCarro> pesquisarAcessorios(AcessorioCarro acessorio) throws Exception {
+		return acessorioDAO.consultar(acessorio);
 	}
 	public List<AcessorioCarro> listarAcessoriosPorModelo(ModeloCarro modelo){
 		return acessorioDAO.listarAcessoriosPorModelo(modelo);
