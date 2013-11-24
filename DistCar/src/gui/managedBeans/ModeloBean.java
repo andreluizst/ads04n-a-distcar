@@ -87,13 +87,21 @@ public class ModeloBean {
 		init();
 	}
 	
-	public String salvar() throws Exception {
+	public String salvar(){
 		modelo.setDataUltimaAtualizacao(Calendar.getInstance());
 		System.out.println(modelo);
-		Fachada.obterInstancia().salvarModeloCarro(modelo);
-		MsgPrimeFaces.exibirMensagemInfomativa("Versão de carro salvo com sucesso!");
-		init();
-		return "modelo";
+		try {
+			Fachada.obterInstancia().salvarModeloCarro(modelo);
+			MsgPrimeFaces.exibirMensagemInfomativa("Versão de carro salvo com sucesso!");
+			init();
+			return "modelo";
+		} catch (Exception ex) {
+			// TODO Auto-generated catch block
+			ex.printStackTrace();
+			MsgPrimeFaces.exibirMensagemDeErro(ex.getMessage());
+			init();
+		}
+		return null;
 	}
 		
 	public List<ModeloCarro> listarModelo() {
@@ -110,17 +118,25 @@ public class ModeloBean {
 		return marcas = Fachada.obterInstancia().listarMarcasCarros();
 	}
 
-	public void excluir(){
-		if(modeloSelecionado==null){
-			MsgPrimeFaces.exibirMensagemInfomativa("Selecione um modelo de carro para exclusão!");
-		}
-		else{
-		Fachada.obterInstancia().removerModeloCarro(modeloSelecionado);
-		MsgPrimeFaces.exibirMensagemInfomativa("Modelo excluído com sucesso!");
-		consulta();
+	public void excluir() {
+		if (modeloSelecionado == null) {
+			MsgPrimeFaces
+					.exibirMensagemInfomativa("Selecione um modelo de carro para exclusão!");
+		} else {
+			try {
+				Fachada.obterInstancia().removerModeloCarro(modeloSelecionado);
+				MsgPrimeFaces
+						.exibirMensagemInfomativa("Modelo excluído com sucesso!");
+				consulta();
+			} catch (Exception ex) {
+				// TODO Auto-generated catch block
+				ex.printStackTrace();
+				MsgPrimeFaces.exibirMensagemDeErro(ex.getMessage());
+				consulta();
+			}
 		}
 	}
-	
+
 	public void consulta(){
 		listarModelo();
 	}
@@ -137,7 +153,7 @@ public class ModeloBean {
 	    	}
 	    	else{
 	    	modelo = Fachada.obterInstancia().pesquisarModelosCarroCodigo(modeloSelecionado.getCodigo());
-	    	//modelo.setModeloCarro(Fachada.obterInstancia().pesquisarModelosCarroCodigo(versaoSelecionada.getModeloCarro().getCodigo()));
+	    	modelo.setMarcaCarro(Fachada.obterInstancia().pesquisarMarcasCarroCodigo(modeloSelecionado.getMarcaCarro().getCodigo()));
 	    	return "modelo-prop";
 	    	}
 	    }
@@ -149,7 +165,12 @@ public class ModeloBean {
 	    }  
 	    
 	    public String consultar(){
-		 	 modelos = Fachada.obterInstancia().consultarModelosCarros(modelo);
+		 	 try {
+				modelos = Fachada.obterInstancia().consultarModelosCarros(modelo);
+			} catch (Exception ex) {
+				// TODO Auto-generated catch block
+				ex.printStackTrace();
+			}
 			 modelo= new ModeloCarro();  
 			 return  "modelo";
 	    }

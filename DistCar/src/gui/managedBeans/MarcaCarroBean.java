@@ -89,13 +89,22 @@ public class MarcaCarroBean {
 		return listaMarcasCarros;
 	}
 
-	public String salvar() throws Exception {
+	public String salvar() {
 
 		marcaCarro.setDataUltimaAtualizacao(Calendar.getInstance());
-		Fachada.obterInstancia().salvarMarcaCarro(marcaCarro);
-		MsgPrimeFaces.exibirMensagemInfomativa("Marca salva com sucesso!");
-		init();
-		return "marca";
+		try {
+			Fachada.obterInstancia().salvarMarcaCarro(marcaCarro);
+			MsgPrimeFaces.exibirMensagemInfomativa("Marca salva com sucesso!");
+			init();
+			return "marca";
+		} catch (Exception ex) {
+			// TODO Auto-generated catch block
+			ex.printStackTrace();
+			MsgPrimeFaces.exibirMensagemDeErro(ex.getMessage());
+			listarMarcasCarros();
+		}
+		return null;
+		
 	}
 
 	public void listar() {
@@ -117,10 +126,17 @@ public class MarcaCarroBean {
 			MsgPrimeFaces
 					.exibirMensagemInfomativa("Selecione um acessório para exclusão!");
 		} else {
-			Fachada.obterInstancia().removerMarcaCarro(marcaSelecionada);
-			MsgPrimeFaces
-					.exibirMensagemInfomativa("Marca removida com sucesso!");
-			consulta();
+			try {
+				Fachada.obterInstancia().removerMarcaCarro(marcaSelecionada);
+				MsgPrimeFaces
+				.exibirMensagemInfomativa("Marca removida com sucesso!");
+				consulta();
+			} catch (Exception ex) {
+				// TODO Auto-generated catch block
+				ex.printStackTrace();
+				MsgPrimeFaces.exibirMensagemDeErro(ex.getMessage());
+			}
+			
 		}
 	}
 
@@ -140,7 +156,7 @@ public class MarcaCarroBean {
 			return "marca";
 		} else {
 			marcaCarro = Fachada.obterInstancia().pesquisarMarcasCarroCodigo(marcaSelecionada.getCodigo());
-			//marcaCarro.setFabricante(Fachada.obterInstancia().consultarFabricantePorId(marcaSelecionada.getFabricante().getCodigo()));
+			marcaCarro.setFabricante(Fachada.obterInstancia().consultarFabricantePorId(marcaSelecionada.getFabricante().getCodigo()));
 			return "marca-prop";
 		}
 	}
@@ -152,8 +168,14 @@ public class MarcaCarroBean {
 	}
 
 	public String consultar() {
-		listaMarcasCarros = Fachada.obterInstancia().consultarMarcasCarros(marcaCarro);
-		marcaCarro = new MarcaCarro();
-		return "marca";
+		try {
+			listaMarcasCarros = Fachada.obterInstancia().consultarMarcasCarros(marcaCarro);
+			marcaCarro = new MarcaCarro();
+			return "marca";
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
 	}
 }

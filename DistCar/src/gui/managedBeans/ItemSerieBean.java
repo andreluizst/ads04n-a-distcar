@@ -3,9 +3,11 @@ package gui.managedBeans;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+
 import classesBasicas.ItemSerieCarro;
 import classesBasicas.ModeloCarro;
 import classesBasicas.Situacao;
@@ -112,8 +114,8 @@ public class ItemSerieBean {
 		itemSerieCarro = new ItemSerieCarro();
 		itemSerieCarro.setModelo(new ModeloCarro());
 		listarModelo();
-		data = Calendar.getInstance().getTime();
 		listarItens();
+		listarModelo();
 	}
 
 	private List<ItemSerieCarro> listarItens() {  
@@ -121,14 +123,21 @@ public class ItemSerieBean {
       return listaItens;
       } 
 	
-	public String salvar() throws Exception {
+	public String salvar(){
 		
 		itemSerieCarro.setDataUltimaAtualizacao(Calendar.getInstance());
-		Fachada.obterInstancia().salvarItemSerie(itemSerieCarro);
-		MsgPrimeFaces.exibirMensagemInfomativa("Item Séria salvo com sucesso!");
-		init();
-		return "item";
-	
+		try {
+			Fachada.obterInstancia().salvarItemSerie(itemSerieCarro);
+			MsgPrimeFaces.exibirMensagemInfomativa("Item Séria salvo com sucesso!");
+			init();
+			return "item";
+		} catch (Exception ex) {
+			// TODO Auto-generated catch block
+			ex.printStackTrace();
+			MsgPrimeFaces.exibirMensagemDeErro(ex.getMessage());
+			listarItens();
+		}
+		return null;
 	}
 		
 	public void listar(){
@@ -151,9 +160,16 @@ public class ItemSerieBean {
 			MsgPrimeFaces.exibirMensagemInfomativa("Selecione um item para exclusão!");
 		}
 		else{
-		Fachada.obterInstancia().removerItem(itemSelecionado);
-		MsgPrimeFaces.exibirMensagemInfomativa("Item Excluído com sucesso!");
-		consulta();
+		try {
+			Fachada.obterInstancia().removerItem(itemSelecionado);
+			MsgPrimeFaces.exibirMensagemInfomativa("Item Excluído com sucesso!");
+			consulta();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			MsgPrimeFaces.exibirMensagemDeErro("Item não encontrado!");
+		}
+		
 		}
 	}
 	
@@ -175,7 +191,7 @@ public class ItemSerieBean {
 	        FacesContext.getCurrentInstance().addMessage(null, msg);  
 	    } */
 	    public String novo(){
-	    	itemSerieCarro = new ItemSerieCarro();
+	    	init();
 			return "item-prop";
 		}           
 	    
@@ -186,7 +202,7 @@ public class ItemSerieBean {
 	    	}
 	    	else{
 	    	itemSerieCarro = Fachada.obterInstancia().pesquisarItemCodigo(itemSelecionado.getCodigo());
-	    	//itemSerieCarro.setModelo(Fachada.obterInstancia().pesquisarModelosCarroCodigo(itemSelecionado.getModelo().getCodigo()));
+	    	itemSerieCarro.setModelo(Fachada.obterInstancia().pesquisarModelosCarroCodigo(itemSelecionado.getModelo().getCodigo()));
 	    	return "item-prop";
 	    	}
 	    }
@@ -199,9 +215,16 @@ public class ItemSerieBean {
 	    
 	    public String consultar(){
 	  
-		 	 listaItens = Fachada.obterInstancia().consultarItens(itemSerieCarro);
-			 itemSerieCarro = new ItemSerieCarro();  
-			 return  "item";
+		 	 try {
+				listaItens = Fachada.obterInstancia().consultarItens(itemSerieCarro);
+				 itemSerieCarro = new ItemSerieCarro();  
+				 return  "item";
+			} catch (Exception ex) {
+				// TODO Auto-generated catch block
+				ex.printStackTrace();
+				MsgPrimeFaces.exibirMensagemInfomativa(ex.getMessage());
+			}
+			return null;
 	    }
 	    
 }

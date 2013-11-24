@@ -1,6 +1,5 @@
 package gui.managedBeans;
 
-import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -11,7 +10,9 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.event.ValueChangeEvent;
 
 import classesBasicas.AcessorioCarro;
+import classesBasicas.Fabricante;
 import classesBasicas.ItemSerieCarro;
+import classesBasicas.MarcaCarro;
 import classesBasicas.ModeloCarro;
 import classesBasicas.Situacao;
 import classesBasicas.VersaoCarro;
@@ -32,8 +33,44 @@ public class VersaoBean {
 	private List<ItemSerieCarro> itens;
     private List<ItemSerieCarro> itensSelecionados;
     private List<AcessorioCarro> acessoriosSelecionados;
+    private List<Fabricante> fabricantes;
+    private List<MarcaCarro> marcas;
+    private Integer fabricante;
+    private Integer marca;
     
-    
+  
+	public Integer getMarca() {
+		return marca;
+	}
+
+	public void setMarca(Integer marca) {
+		this.marca = marca;
+	}
+
+	public Integer getFabricante() {
+		return fabricante;
+	}
+
+	public void setFabricante(Integer fabricante) {
+		this.fabricante = fabricante;
+	}
+
+	public List<MarcaCarro> getMarcas() {
+		return marcas;
+	}
+
+	public void setMarcas(List<MarcaCarro> marcas) {
+		this.marcas = marcas;
+	}
+
+	public List<Fabricante> getFabricantes() {
+		return fabricantes;
+	}
+
+	public void setFabricantes(List<Fabricante> fabricantes) {
+		this.fabricantes = fabricantes;
+	}
+
 	public VersaoCarro getVersaoCarro() {
 		return versaoCarro;
 	}
@@ -118,15 +155,16 @@ public class VersaoBean {
 	@PostConstruct
 	public void init() {
 		versaoCarro = new VersaoCarro();
-		listarModelo();
+		versaoCarro.setModeloCarro(new ModeloCarro());
 		listarVersoes();
 		itens=null;
 		acessorios=null;
 		versaoSelecionada=null;
-	}
-
-	public void novo(ActionEvent actionEvent) {
-		init();
+		listarFabricantes();
+		marcas =null;
+		situacaoSelecionada=null;
+		modelos=null;
+		
 	}
 
 	private List<VersaoCarro> listarVersoes() {  
@@ -136,7 +174,6 @@ public class VersaoBean {
 	
 	public String salvar() throws Exception {
 		versaoCarro.setDataUltimaAtualizacao(Calendar.getInstance());
-		System.out.println(versaoCarro);
 		Fachada.obterInstancia().salvarVersao(versaoCarro);
 		MsgPrimeFaces.exibirMensagemInfomativa("Versão de carro salvo com sucesso!");
 		init();
@@ -148,7 +185,17 @@ public class VersaoBean {
 	public void listar(){
 		listarVersoes = Fachada.obterInstancia().listarVersoes();
 	}
-		
+	
+	private List<Fabricante> listarFabricantes(){  
+	      try {
+			fabricantes = Fachada.obterInstancia().listarFabricantes();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	      return fabricantes;
+	} 
+	
 	public List<ModeloCarro> listarModelo() {
 		try {
 			modelos = Fachada.obterInstancia().listarModelosCarros();
@@ -182,7 +229,7 @@ public class VersaoBean {
 			return "versao-prop";
 		}           
 	    
-	    public String alterar(){
+	    public String alterar() throws Exception{
 	    	if (versaoSelecionada==null){
 	    		MsgPrimeFaces.exibirMensagemInfomativa("Selecione uma versão de carro para alterar!");
 	    		return "versao";
@@ -190,10 +237,14 @@ public class VersaoBean {
 	    	else{
 	    	itens = Fachada.obterInstancia().listarItensPorModelo(Fachada.obterInstancia().pesquisarModelosCarroCodigo(versaoSelecionada.getModeloCarro().getCodigo()));
 			acessorios = Fachada.obterInstancia().listarAcessoriosPorModelo(Fachada.obterInstancia().pesquisarModelosCarroCodigo(versaoSelecionada.getModeloCarro().getCodigo()));
+			marcas = Fachada.obterInstancia().pesquisarMarcaPorFabr(versaoSelecionada.getModeloCarro().getMarcaCarro().getCodigo());
+			modelos = Fachada.obterInstancia().pesquisarModeloPorMarca(versaoSelecionada.getModeloCarro().getCodigo());
 			versaoCarro = Fachada.obterInstancia().pesquisarVersaoCodigo(versaoSelecionada.getCodigo());
+			versaoCarro.setModeloCarro(Fachada.obterInstancia().pesquisarModelosCarroCodigo(versaoSelecionada.getModeloCarro().getCodigo()));
+			//fabricante = versaoSelecionada.getModeloCarro().getMarcaCarro().getFabricante().getCodigo();
+			//marca = versaoSelecionada.getModeloCarro().getMarcaCarro().getCodigo();
 	    	//itens = versaoCarro.getItens();
 	    	//acessorios = versaoCarro.getAcessorios();
-	    	versaoCarro.setModeloCarro(Fachada.obterInstancia().pesquisarModelosCarroCodigo(versaoSelecionada.getModeloCarro().getCodigo()));
 	    	return "versao-prop";
 	    	}
 	    }
@@ -206,7 +257,12 @@ public class VersaoBean {
 	    
 	    public String consultar(){
 	    	
-		 	 listarVersoes = Fachada.obterInstancia().consultarVersoes(versaoCarro);
+		 	 try {
+				listarVersoes = Fachada.obterInstancia().consultarVersoes(versaoCarro);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			 versaoCarro= new VersaoCarro();  
 			 return  "versao";
 	    }
@@ -228,19 +284,43 @@ public class VersaoBean {
 				itens = Fachada.obterInstancia().listarItensPorModelo(Fachada.obterInstancia().pesquisarModelosCarroCodigo(versaoCarro.getModeloCarro().getCodigo()));
 				acessorios = Fachada.obterInstancia().listarAcessoriosPorModelo(Fachada.obterInstancia().pesquisarModelosCarroCodigo(versaoCarro.getModeloCarro().getCodigo()));
 	    	}catch(Exception ex){
-				MsgPrimeFaces.exibirMensagemDeAviso("Não foi possível filtar itens por modelo, selecione um modelo válido");
-				itens=null;
-				acessorios=null;
+	    		versaoSelecionada=null;
+	    		itens=null;
+	    		acessorios=null;
+				init();
 			}
 	    }
 	    
+		@SuppressWarnings("unchecked")
 		public void somar(ValueChangeEvent evento){
 	    	List<ItemSerieCarro> i = new ArrayList<>();
-			double soma =versaoCarro.getValor();
+			double soma = 0;
 	    	i = (List<ItemSerieCarro>) evento.getNewValue();
 	    	for(ItemSerieCarro is :i){
 	    		soma = soma + is.getValorItemSerie();
 	    	}
 	    	versaoCarro.setValor(soma);
 	    }   
+		
+		  public void filtrarMarca(ValueChangeEvent evento){
+		    	
+		    	try{
+		    		Fabricante fab = new Fabricante();
+		    		fab = (Fabricante) evento.getNewValue();
+					marcas = Fachada.obterInstancia().pesquisarMarcaPorFabr(fab.getCodigo());
+		    	}catch(Exception ex){
+					init();	
+				}
+		    }
+		    
+		    public void filtrarModelo(ValueChangeEvent evento){
+		    	
+		    	try{
+		    		MarcaCarro ma = new MarcaCarro();
+		    		ma = (MarcaCarro) evento.getNewValue();
+					modelos = Fachada.obterInstancia().pesquisarModeloPorMarca(ma.getCodigo());		
+		    	}catch(Exception ex){
+		    		init();
+				}
+		    }
 }

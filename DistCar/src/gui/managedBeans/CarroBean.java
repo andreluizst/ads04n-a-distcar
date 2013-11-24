@@ -133,12 +133,7 @@ public class CarroBean {
 		listarCarros();
 		itens=null;
 		acessorios=null;
-		try {
-			listarFabricantes();
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		listarFabricantes();
 	}
 
 	public void novo(ActionEvent actionEvent) {
@@ -150,8 +145,13 @@ public class CarroBean {
       return carros;
       } 
 	
-	private List<Fabricante> listarFabricantes() throws Exception {  
-	      fabricantes = Fachada.obterInstancia().listarFabricantes();
+	private List<Fabricante> listarFabricantes(){  
+	      try {
+			fabricantes = Fachada.obterInstancia().listarFabricantes();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	      return fabricantes;
 	} 
 	

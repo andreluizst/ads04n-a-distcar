@@ -1,12 +1,13 @@
 package gui.managedBeans;
 
-import java.awt.event.ActionEvent;
+
 import java.util.Calendar;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+
 import classesBasicas.AcessorioCarro;
 import classesBasicas.ModeloCarro;
 import classesBasicas.Situacao;
@@ -72,16 +73,12 @@ public class AcessorioBean {
 	public void setSituacoes(Situacao[] situacoes) {
 		this.situacoes = situacoes;
 	}
-
 	@PostConstruct
 	public void init() {
 		acessorioCarro = new AcessorioCarro();
+		acessorioCarro.setModelo(new ModeloCarro());
 		listarModelo();
 		listarAcessorios();
-	}
-
-	public void novo(ActionEvent actionEvent) {
-		init();
 	}
 
 	private List<AcessorioCarro> listarAcessorios() {  
@@ -89,14 +86,20 @@ public class AcessorioBean {
       return listaAcessorios;
       } 
 	
-	public String salvar() throws Exception {
+	public String salvar()  {
 		
 		acessorioCarro.setDataUltimaAtualizacao(Calendar.getInstance());
-		Fachada.obterInstancia().salvarAcessorio(acessorioCarro);
-		MsgPrimeFaces.exibirMensagemInfomativa("Acessório salvo com sucesso!");
-		init();
-		return "acessorio";
-	
+		try {
+			Fachada.obterInstancia().salvarAcessorio(acessorioCarro);
+			MsgPrimeFaces.exibirMensagemInfomativa("Acessório salvo com sucesso!");
+			init();
+			return "acessorio";
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			MsgPrimeFaces.exibirMensagemDeErro(ex.getMessage());
+			listarAcessorios();
+		}
+		return null;
 	}
 		
 	/*public void listar(){
@@ -114,14 +117,21 @@ public class AcessorioBean {
 	}
 
 
-	public void excluir(){
-		if(acessorioSelecionado==null){
-			MsgPrimeFaces.exibirMensagemInfomativa("Selecione um acessório para exclusão!");
-		}
-		else{
-		Fachada.obterInstancia().removerAcessorio(acessorioSelecionado);
-		MsgPrimeFaces.exibirMensagemInfomativa("Acessório Excluído com sucesso!");
-		consulta();
+	public void excluir() {
+		if (acessorioSelecionado == null) {
+			MsgPrimeFaces
+					.exibirMensagemInfomativa("Selecione um acessório para exclusão!");
+		} else {
+			try {
+				Fachada.obterInstancia().removerAcessorio(acessorioSelecionado);
+				MsgPrimeFaces
+						.exibirMensagemInfomativa("Acessório Excluído com sucesso!");
+				consulta();
+			} catch (Exception ex) {
+				// TODO Auto-generated catch block
+				// ex.printStackTrace();
+				MsgPrimeFaces.exibirMensagemDeErro(ex.getMessage());
+			}
 		}
 	}
 	
@@ -130,7 +140,7 @@ public class AcessorioBean {
 	}
 	
 	    public String novo(){
-	    	acessorioCarro = new AcessorioCarro();
+	    	init();
 			return "acessorio-prop";
 		}           
 	    
@@ -141,7 +151,7 @@ public class AcessorioBean {
 	    	}
 	    	else{
 	    	acessorioCarro = Fachada.obterInstancia().pesquisarAcessorioCodigo(acessorioSelecionado.getCodigo());
-	    	//acessorioCarro.setModelo(Fachada.obterInstancia().pesquisarModelosCarroCodigo(acessorioSelecionado.getModelo().getCodigo()));
+	    	acessorioCarro.setModelo(Fachada.obterInstancia().pesquisarModelosCarroCodigo(acessorioSelecionado.getModelo().getCodigo()));
 	    	return "acessorio-prop";
 	    	}
 	    }
@@ -153,10 +163,16 @@ public class AcessorioBean {
 	    }  
 	    
 	    public String consultar(){
-	    	
-		 	 listaAcessorios = Fachada.obterInstancia().consultarAcessorios(acessorioCarro);
-			 acessorioCarro= new AcessorioCarro();  
-			 return  "acessorio";
+		 	 try {
+				listaAcessorios = Fachada.obterInstancia().consultarAcessorios(acessorioCarro);
+				 acessorioCarro= new AcessorioCarro();  
+				 return  "acessorio";
+			} catch (Exception ex) {
+				// TODO Auto-generated catch block
+				ex.printStackTrace();
+				MsgPrimeFaces.exibirMensagemInfomativa(ex.getMessage());
+			}
+			return null;
 	    }
 	    
 
