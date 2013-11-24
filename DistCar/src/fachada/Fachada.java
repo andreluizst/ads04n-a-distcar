@@ -399,12 +399,12 @@ public class Fachada implements IFachada {
 	//Marca
 	
 	@Override
-	public void salvarMarcaCarro(MarcaCarro marcaCarro) {
+	public void salvarMarcaCarro(MarcaCarro marcaCarro) throws Exception {
 		this.controladorCarro.inserir(marcaCarro);
 	}
 
 	@Override
-	public void removerMarcaCarro(MarcaCarro marcaCarro) {
+	public void removerMarcaCarro(MarcaCarro marcaCarro) throws Exception {
 		this.controladorCarro.removerMarca(marcaCarro);
 	}
 
@@ -419,25 +419,22 @@ public class Fachada implements IFachada {
 	}
 
 	@Override
-	public List<MarcaCarro> consultarMarcasCarros(MarcaCarro marcaCarro) {
+	public List<MarcaCarro> consultarMarcasCarros(MarcaCarro marcaCarro) throws Exception {
 		return this.controladorCarro.pesquisarMarcas(marcaCarro);
 	}
 	
-	public Fabricante pesquisarFabricanteCodigo(Integer codigo){
-		return this.pesquisarFabricanteCodigo(codigo);
-	}
 
 	//Modelo
 	
 	@Override
-	public void salvarModeloCarro(ModeloCarro modeloCarro) {
-		this.controladorCarro.inserir(modeloCarro);
+	public void salvarModeloCarro(ModeloCarro modelo) throws Exception {
+		this.controladorCarro.inserir(modelo);
 		
 	}
 
 	@Override
-	public void removerModeloCarro(ModeloCarro modeloCarro) {
-		this.controladorCarro.remover(modeloCarro);;
+	public void removerModeloCarro(ModeloCarro modelo) throws Exception {
+		this.controladorCarro.remover(modelo);
 	}
 
 	@Override
@@ -451,8 +448,8 @@ public class Fachada implements IFachada {
 	}
 
 	@Override
-	public List<ModeloCarro> consultarModelosCarros(ModeloCarro modeloCarro) {
-		return this.controladorCarro.pesquisarModeloCarros(modeloCarro);
+	public List<ModeloCarro> consultarModelosCarros(ModeloCarro modelo) throws Exception {
+		return this.controladorCarro.pesquisarModeloCarros(modelo);
 	}
 
 	@Override
@@ -490,7 +487,7 @@ public class Fachada implements IFachada {
 	}
 
 	@Override
-	public List<VersaoCarro> consultarVersoes(VersaoCarro versaoCarro) {
+	public List<VersaoCarro> consultarVersoes(VersaoCarro versaoCarro) throws Exception {
 		return this.controladorCarro.pesquisarVersoes(versaoCarro);
 	}
 	
@@ -507,7 +504,7 @@ public class Fachada implements IFachada {
 	}
 
 	@Override
-	public void removerItem(ItemSerieCarro itemSerieCarro) {
+	public void removerItem(ItemSerieCarro itemSerieCarro) throws Exception {
 		this.controladorCarro.remover(itemSerieCarro);
 	}
 
@@ -522,7 +519,7 @@ public class Fachada implements IFachada {
 	}
 
 	@Override
-	public List<ItemSerieCarro> consultarItens(ItemSerieCarro itemSerieCarro) {
+	public List<ItemSerieCarro> consultarItens(ItemSerieCarro itemSerieCarro) throws Exception {
 		return this.controladorCarro.pesquisarItens(itemSerieCarro);
 	}
 
@@ -539,7 +536,7 @@ public class Fachada implements IFachada {
 	}
 
 	@Override
-	public void removerAcessorio(AcessorioCarro acessorioCarro) {
+	public void removerAcessorio(AcessorioCarro acessorioCarro) throws Exception {
 		this.controladorCarro.removerAcessorio(acessorioCarro);
 	}
 
@@ -554,7 +551,7 @@ public class Fachada implements IFachada {
 	}
 
 	@Override
-	public List<AcessorioCarro> consultarAcessorios(AcessorioCarro acessorioCarro) {
+	public List<AcessorioCarro> consultarAcessorios(AcessorioCarro acessorioCarro) throws Exception {
 		return this.controladorCarro.pesquisarAcessorios(acessorioCarro);
 	}
 
