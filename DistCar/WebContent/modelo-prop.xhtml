@@ -11,13 +11,11 @@
 	<f:view id="View">
 	<h:form id="frmMensagens">
 			<p:messages id="messages" showDetail="true" autoUpdate="true" closable="true"></p:messages>
-			<p:growl id="growl" showDetail="true" sticky="false" globalOnly="true" />
+	
 		</h:form>
 		<h:form id="form">
 
-			<p:growl id="messages" showDetail="true" />
-
-			<p:confirmDialog id="dlgMsg" global="true" showEffect="fade"
+				<p:confirmDialog id="dlgMsg" global="true" showEffect="fade"
 				hideEffect="explode">
 				<p:commandButton value="Sim" type="button"
 					styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
@@ -38,40 +36,43 @@
 					</h:panelGrid>
 				</f:facet>
 				
-				<h:panelGrid columns="3" cellpadding="5">
+				<h:panelGrid columns="2" cellpadding="5">
 
 					<h:outputLabel for="descricao" value="Descricão: *" />
 					<p:inputText id="descricao"
-						value="#{modeloBean.modelo.descricao}"  required="false"
-						label="Descricão" requiredMessage="Nome obrigatório: *" />
-					<p:message for="descricao" />
+						value="#{modeloBean.modelo.descricao}"  required="true"
+						label="Descricão" requiredMessage="Descrição: * Campo obrigatório" />
 					
 						<h:outputLabel for="ano" value="Ano *" />
-					<p:inputText id="ano"
-						value="#{modeloBean.modelo.ano}"  required="false"
-						label="ano" requiredMessage="Nome obrigatório: *" />
-					<p:message for="ano" />
+					<p:inputText id="ano" maxlength="4"
+						value="#{modeloBean.modelo.ano}"  required="true"
+						label="ano" requiredMessage="Ano: * Campo obrigatório" />
+						
+						<h:outputLabel for="valor" value="Valor: *" />
+					<p:inputText id="valor" required="false"
+						converterMessage="Digite um número decimal no formato 999.00"
+						value="#{modeloBean.modelo.valor}"
+						requerid="false" label="Valor" />
 					
 					<h:outputLabel for="marca" value="Marcas: *"/>
-  					<h:selectOneMenu id="marca" converter="MarcaConverter"
+  					<p:selectOneMenu id="marca" converter="MarcaConverter"
+  							required="true" requiredMessage="Marcas: * Campo Obrigatório"
   							value="#{modeloBean.modelo.marcaCarro}">
   						<f:selectItem noSelectionOption="true" 
   								itemLabel="Selecione uma marca" itemValue="-1"/>
   						<f:selectItems value="#{modeloBean.marcas}" var="mc"
   								itemLabel="#{mc.descricao}" />
-  					</h:selectOneMenu>
-					<p:message for="marca" />
+  					</p:selectOneMenu>
 	
-					
 					<h:outputLabel for="situacao" value="Situação: *"/>
-  					<h:selectOneMenu id="situacao" value="#{modeloBean.modelo.situacao}" >
+  					<p:selectOneMenu id="situacao" value="#{modeloBean.modelo.situacao}"
+  					required="true" requiredMessage="Situação: * Campo Obrigatório" >
   						<f:selectItem itemLabel="Selecione uma opção" itemValue="" />
   						<f:selectItems value="#{modeloBean.situacoes}" />
-  					</h:selectOneMenu>
-					<p:message for="situacao" />
+  					</p:selectOneMenu>
 				</h:panelGrid> 
 				
-				<p:commandButton value="Salvar"  update=":frmMensagens:growl" action="#{modeloBean.salvar}" />
+				<p:commandButton value="Salvar"  update="form" action="#{modeloBean.salvar}" />
    				<p:commandButton value="Cancelar" update="form" immediate="true" action="#{modeloBean.cancelar}" />
 			
 					</p:panel>

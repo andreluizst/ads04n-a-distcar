@@ -38,19 +38,23 @@
 					</h:panelGrid>
 				</f:facet>
 				
-				<h:panelGrid columns="3" cellpadding="5">
+				<h:panelGrid columns="2" cellpadding="5">
 
 					<h:outputLabel for="descricao" value="Descricão: *" />
 					<p:inputText id="descricao"
 						value="#{modeloBean.modelo.descricao}"  required="false"
 						label="Descricão" requiredMessage="Nome obrigatório: *" />
-					<p:message for="descricao" />
 					
 						<h:outputLabel for="ano" value="Ano *" />
-					<p:inputText id="ano"
+					<p:inputText id="ano" maxlength="4"
 						value="#{modeloBean.modelo.ano}"  required="false"
 						label="ano" requiredMessage="Nome obrigatório: *" />
-					<p:message for="ano" />
+					
+					<h:outputLabel for="valor" value="Valor: *" />
+					<p:inputText id="valor" required="false"
+						converterMessage="Digite um número decimal no formato 999.00"
+						value="#{modeloBean.modelo.valor}"
+						requerid="false" label="Valor" />
 					
 					<h:outputLabel for="marca" value="Marca: *"/>
   					<h:selectOneMenu id="marca" converter="MarcaConverter"
@@ -60,7 +64,6 @@
   						<f:selectItems value="#{modeloBean.marcas}" var="mc"
   								itemLabel="#{mc.descricao}" />
   					</h:selectOneMenu>
-					<p:message for="marca" />
 	
 					
 					<h:outputLabel for="situacao" value="Situação: *"/>
@@ -68,7 +71,6 @@
   						<f:selectItem itemLabel="Selecione uma opção" itemValue="" />
   						<f:selectItems value="#{modeloBean.situacoes}" />
   					</h:selectOneMenu>
-					<p:message for="situacao" />
 				</h:panelGrid> 
 				
 				
@@ -77,7 +79,7 @@
 				
 				<p:commandButton value="Novo" update="form" immediate="true"
 					action="#{modeloBean.novo}" />
-				<p:commandButton value="Alterar" update="panel"
+				<p:commandButton value="Alterar" update="form"
 					action="#{modeloBean.alterar}"  />
 				<p:commandButton value="Excluir" update="form"
 					action="#{modeloBean.excluir}" >

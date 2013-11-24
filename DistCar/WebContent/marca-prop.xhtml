@@ -11,11 +11,10 @@
 	<f:view id="View">
 	<h:form id="frmMensagens">
 			<p:messages id="messages" showDetail="true" autoUpdate="true" closable="true"></p:messages>
-			<p:growl id="growl" showDetail="true" sticky="false" globalOnly="true" />
+
 		</h:form>
 		<h:form id="form">
 
-			<p:growl id="messages" showDetail="true" />
 
 			<p:confirmDialog id="dlgMsg" global="true" showEffect="fade"
 				hideEffect="explode">
@@ -38,36 +37,35 @@
 					</h:panelGrid>
 				</f:facet>
 				
-				<h:panelGrid columns="3" cellpadding="5">
+				<h:panelGrid columns="2" cellpadding="5">
 
 					<h:outputLabel for="descricao" value="Descricão: *" />
 					<p:inputText id="descricao"
-						value="#{marcaCarroBean.marcaCarro.descricao}"  required="false"
-						label="Descricão" requiredMessage="Nome obrigatório: *" />
-					<p:message for="descricao" />
-						
-
-						<h:outputLabel for="fabricante" value="Fabricante * " />
-					<h:selectOneMenu id="modelo" converter="FabricanteConverter"
-						value="#{marcaCarroBean.marcaCarro.fabricante}" >
+						value="#{marcaCarroBean.marcaCarro.descricao}"  required="true" 
+						label="Descricão" requiredMessage="Descrição: * Campo Obrigatório" />
+					
+					<h:outputLabel for="fabricante" value="Fabricante * " />
+					<p:selectOneMenu id="fabricante" converter="FabricanteConverter"
+						value="#{marcaCarroBean.marcaCarro.fabricante}" required="true"
+						requiredMessage="Fabricante: * Campo Obrigatório">
 						<f:selectItem noSelectionOption="true"
 							itemLabel="Selecione o fabricante" itemValue="-1"/>
 						<f:selectItems value="#{marcaCarroBean.fabricanteCarros}" var="f"
 							itemLabel="#{f.pj.nome}" itemValue="#{f}" />
-					</h:selectOneMenu>
-					<p:message for="modelo" />
+					</p:selectOneMenu>
 					
 					<h:outputLabel for="situacao" value="Situação: "/>
-  					<p:selectOneMenu id="situacao" value="#{marcaCarroBean.marcaCarro.situacao}" >
+  					<p:selectOneMenu id="situacao" value="#{marcaCarroBean.marcaCarro.situacao}"
+  					required="true" requiredMessage="Situação: * Campo Obrigatório" >
   						<f:selectItem itemLabel="Selecione uma opção" itemValue="" />
   						<f:selectItems value="#{marcaCarroBean.situacoes}" />
   					</p:selectOneMenu>
-					<p:message for="situacao" />
+
 				</h:panelGrid> 
 				
-				<p:commandButton value="Salvar"  update=":frmMensagens:growl" action="#{marcaCarroBean.salvar}" />
-   				<p:commandButton value="Cancelar" update="form" immediate="true" action="#{marcaCarroBean.cancelar}" />
-</p:panel>
+				<p:commandButton value="Salvar"  update="form" action="#{marcaCarroBean.salvar}" />
+   				<p:commandButton value="Cancelar" immediate="true" action="#{marcaCarroBean.cancelar}" />
+			</p:panel>
  			</h:form>
  			</f:view>
 </h:body>

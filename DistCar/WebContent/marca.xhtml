@@ -11,11 +11,10 @@
 	<f:view id="View">
 	<h:form id="frmMensagens">
 			<p:messages id="messages" showDetail="true" autoUpdate="true" closable="true"></p:messages>
-			<p:growl id="growl" showDetail="true" sticky="false" globalOnly="true" />
 		</h:form>
 		<h:form id="form">
 
-			<p:growl id="messages" showDetail="true" />
+		
 
 			<p:confirmDialog id="dlgMsg" global="true" showEffect="fade"
 				hideEffect="explode">
@@ -38,34 +37,31 @@
 					</h:panelGrid>
 				</f:facet>
 				
-				<h:panelGrid columns="3" cellpadding="5">
+				<h:panelGrid columns="2" cellpadding="5">
 
 					<h:outputLabel for="descricao" value="Descricão: *" />
 					<p:inputText id="descricao"
-						value="#{marcaCarroBean.marcaCarro.descricao}"  required="false"
-						label="Descricão" requiredMessage="Nome obrigatório: *" />
-					<p:message for="descricao" />
-						
+						value="#{marcaCarroBean.marcaCarro.descricao}" 
+						label="Descricão"/>
 
-						<h:outputLabel for="fabricante" value="Fabricante * " />
-					<h:selectOneMenu id="fabricante" converter="FabricanteConverter"
-						value="#{marcaCarroBean.marcaCarro.fabricante}" >
+					<h:outputLabel for="fabricante" value="Fabricante * " />
+					<p:selectOneMenu id="fabricante" converter="FabricanteConverter"
+						value="#{marcaCarroBean.marcaCarro.fabricante}">
 						<f:selectItem noSelectionOption="true"
 							itemLabel="Selecione o fabricante" itemValue="-1"/>
 						<f:selectItems value="#{marcaCarroBean.fabricanteCarros}" var="f"
 							itemLabel="#{f.pj.nome}" itemValue="#{f}" />
-					</h:selectOneMenu>
-					<p:message for="fabricante" />
+					</p:selectOneMenu>
+
 					
 					<h:outputLabel for="situacao" value="Situação: "/>
   					<p:selectOneMenu id="situacao" value="#{marcaCarroBean.marcaCarro.situacao}" >
   						<f:selectItem itemLabel="Selecione uma opção" itemValue="" />
   						<f:selectItems value="#{marcaCarroBean.situacoes}" />
   					</p:selectOneMenu>
-					<p:message for="situacao" />
+					
 				</h:panelGrid> 
-				
-				
+
 			<p:commandButton value="Consultar" update="form"
 					action="#{marcaCarroBean.consultar}" />	
 				
@@ -98,19 +94,20 @@
 					</f:facet>
 					<h:outputText value="#{marca.codigo}" />
 				</p:column>
+				
 				<p:column width="8" style="text-align: center;">
 					<f:facet name="header">
-						<h:outputText value="Descrição" />
-					</f:facet>
-					<h:outputText value="#{marca.descricao}" />
-				</p:column>
-
-				<p:column width="8" style="text-align: center;">
-					<f:facet name="header">
-						<h:outputText value="Fabricante" />
+						<h:outputText value="Fabricantes" />
 					</f:facet>
 					<h:outputText 
 						value="#{marca.fabricante.pj.nome}"/>
+				</p:column>
+				
+				<p:column width="8" style="text-align: center;">
+					<f:facet name="header">
+						<h:outputText value="Marcas" />
+					</f:facet>
+					<h:outputText value="#{marca.descricao}" />
 				</p:column>
 
 				<p:column width="5" style="text-align: center;">

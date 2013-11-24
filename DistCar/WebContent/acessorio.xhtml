@@ -5,7 +5,7 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:p="http://primefaces.org/ui">
 <h:head>
-	<title>Acessório_de_Carro</title>
+	<title>Acessórios Carro</title>
 </h:head>
 <h:body>
 	<f:view id="View">
@@ -77,7 +77,7 @@
 				
 				<p:commandButton value="Novo" update="form" immediate="true"
 					action="#{acessorioBean.novo}" />
-				<p:commandButton value="Alterar" update="panel"
+				<p:commandButton value="Alterar" update="form"
 					action="#{acessorioBean.alterar}"  />
 				<p:commandButton value="Excluir" update="form"
 					action="#{acessorioBean.excluir}" >
@@ -85,7 +85,7 @@
 						message="Confirma a exclusão da função selecionada?"
 						icon="ui-icon-alert" />
 				</p:commandButton>
-				<p:commandButton value="Fechar" update="panel"
+				<p:commandButton value="Fechar" update="form"
 					action="#{acessorioBean.excluir}" />
 			</p:panel>
 			<p:dataTable  id="TBacessorio" var="acessorio" 
