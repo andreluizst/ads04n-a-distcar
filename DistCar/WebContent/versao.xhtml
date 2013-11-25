@@ -11,11 +11,8 @@
 	<f:view id="View">
 	<h:form id="frmMensagens">
 			<p:messages id="messages" showDetail="true" autoUpdate="true" closable="true"></p:messages>
-			<p:growl id="growl" showDetail="true" sticky="false" globalOnly="true" />
 		</h:form>
 		<h:form id="form">
-
-			<p:growl id="messages" showDetail="true" />
 
 			<p:confirmDialog id="dlgMsg" global="true" showEffect="fade"
 				hideEffect="explode">
@@ -46,7 +43,7 @@
 						label="Descricão" requiredMessage="Nome obrigatório: *" />
 
 						
-					<h:outputLabel for="valor" value="Valor: *" />
+					<h:outputLabel for="valor" value="Valor Versão: *" />
 					<p:inputText id="valor" required="false"
 						converterMessage="Digite um número decimal no formato 999.00"
 						value="#{versaoBean.versaoCarro.valor}"
@@ -94,15 +91,15 @@
 			
 				 <h:panelGrid columns="4" style="margin-bottom:10px" cellpadding="5">  
 				<h:outputText value="Itens: *"/>  
-        				<p:selectManyCheckbox id="itens" converter="ItensConverter"
-        				 value="#{versaoBean.versaoCarro.itens}" layout="pageDirection" columns="1">  
+        				<p:selectManyCheckbox id="itens" converter="ItensConverter" 
+        				 value="#{versaoBean.versaoCarro.itens}" layout="pageDirection" columns="2">  
            				    <f:selectItems value="#{versaoBean.itens}" var="i" 
            				      itemLabel="#{i.descricao}" itemValue="#{i}"/>  
        					</p:selectManyCheckbox>
        					
 					<h:outputText value="Acessório: *"  />  
         				<p:selectManyCheckbox id="acessorio" converter="AcessoriosConverter"
-        				value="#{versaoBean.versaoCarro.acessorios}" layout="pageDirection" columns="1">  
+        				value="#{versaoBean.versaoCarro.acessorios}" layout="pageDirection" columns="2">  
            				    <f:selectItems value="#{versaoBean.acessorios}" var="a"
            				    itemLabel="#{a.descricao}" itemValue="#{a}"/>
        					</p:selectManyCheckbox>
@@ -163,18 +160,19 @@
 				</p:column>
 				<p:column width="8" style="text-align: center;">
 					<f:facet name="header">
+						<h:outputText value="Valor Modelo" />
+					</f:facet>
+					<h:outputText 
+						value="#{versao.modeloCarro.valor}"/>
+				</p:column>
+				<p:column width="8" style="text-align: center;">
+					<f:facet name="header">
 						<h:outputText value="Descrição" />
 					</f:facet>
 					<h:outputText value="#{versao.descricao}" />
 				</p:column>
-				<p:column width="5" style="text-align: center;">
-					<f:facet name="header">
-						<h:outputText value="Valor" />
-					</f:facet>
-					<h:outputText value="#{versao.valor}" />
-				</p:column>
-				
-				
+
+
 				<p:column width="5" style="text-align: center;">
 					<f:facet name="header">
 						<h:outputText value="Itens Série" />
@@ -188,6 +186,13 @@
 						<h:outputText value="Acessórios" />
 					</f:facet>
 					<h:outputText value="#{versao.acessorios}" />
+				</p:column>
+				
+				<p:column width="5" style="text-align: center;">
+					<f:facet name="header">
+						<h:outputText value="Valor versão" />
+					</f:facet>
+					<h:outputText value="#{versao.valor}" />
 				</p:column>
 
 				<p:column width="5" style="text-align: center;">

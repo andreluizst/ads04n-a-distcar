@@ -106,6 +106,15 @@
 					</f:facet>
 					<h:outputText value="#{modelo.codigo}" />
 				</p:column>
+				
+				<p:column width="8" style="text-align: center;">
+					<f:facet name="header">
+						<h:outputText value="Marca" />
+					</f:facet>
+					<h:outputText 
+						value="#{modelo.marcaCarro}"/>
+				</p:column>
+				
 				<p:column width="8" style="text-align: center;">
 					<f:facet name="header">
 						<h:outputText value="Descrição" />
@@ -115,10 +124,10 @@
 
 				<p:column width="8" style="text-align: center;">
 					<f:facet name="header">
-						<h:outputText value="Marca" />
+						<h:outputText value="Valor" />
 					</f:facet>
 					<h:outputText 
-						value="#{modelo.marcaCarro}"/>
+						value="#{modelo.valor}"/>
 				</p:column>
 
 				<p:column width="5" style="text-align: center;">

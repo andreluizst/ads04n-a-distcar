@@ -39,22 +39,16 @@
 				
 				<h:panelGrid columns="2" cellpadding="5">
 
+				
 					<h:outputLabel for="descricao" value="Descricão: *" />
 					<p:inputText id="descricao"
 						value="#{versaoBean.versaoCarro.descricao}"  required="true"
-						requiredMessage="Descricação: * Campo Obrigatório"
-						label="Descricão" />
+						label="Descricão" requiredMessage="Descricação: obrigatório: *" />
 
-						
-					<h:outputLabel for="valor"  value="Valor: *"  />
-					<p:inputText id="valor" 
-					value="#{versaoBean.versaoCarro.valor}" required="true" requiredMessage="Valor: * Campo Obrigatório"
-					converterMessage="Digite um número decimal no formato 999.00"
-					 label="Valor" />
+				
 
 					<h:outputLabel for="fabricante" value="Fabricante: * " />
 					<p:selectOneMenu id="fabricante" converter="FabricanteConverter"
-					required="false" requiredMessage="Fabricante: * Campo Obrigatório" 
 						 valueChangeListener="#{versaoBean.filtrarMarca}">
 						<f:selectItem noSelectionOption="true"
 							itemLabel="Selecione o fabricante" itemValue="-1"/>
@@ -66,8 +60,8 @@
   					
   					<h:outputLabel for="marca" value="Marca: * " />
 					<p:selectOneMenu id="marca" converter="MarcaConverter"
-					required="false" requiredMessage="Marca: * Campo Obrigatório"
-						 valueChangeListener="#{versaoBean.filtrarModelo}">
+						 valueChangeListener="#{versaoBean.filtrarModelo}"
+						  >
 						<f:selectItem noSelectionOption="true"
 							itemLabel="Selecione a marca" itemValue="-1"/>
 						<f:selectItems value="#{versaoBean.marcas}" var="m"
@@ -76,42 +70,60 @@
   					</p:selectOneMenu>
   	
 
-					<p:outputLabel for="modelo" value="Modelo: * " />
+					<h:outputLabel for="modelo" value="Modelo: * " />
 					<p:selectOneMenu id="modelo" converter="ModeloCarroConverter"
-					required="false" requiredMessage="Modelo: * Campo Obrigatório"
 						value="#{versaoBean.versaoCarro.modeloCarro}"  valueChangeListener="#{versaoBean.filtrarItens}">
 						<f:selectItem noSelectionOption="true"
 							itemLabel="Selecione o Modelo" itemValue="-1"/>
 						<f:selectItems value="#{versaoBean.modelos}" var="m"
 							itemLabel="#{m.descricao} #{m.ano}" itemValue="#{m}" />
-							<f:ajax render="itens acessorio situacao" event="valueChange"/>
+							<f:ajax render="itens acessorio situacao valor" event="valueChange"/>
 					</p:selectOneMenu>
+					
+							
+					<h:outputLabel for="valor" value="Valor Modelo: *" />
+					<p:inputText id="valor" disabled="true"
+						converterMessage="Digite um número decimal no formato 999.00"
+						value="#{versaoBean.versaoCarro.valor}"
+						label="Valor" />
 
 					<h:outputLabel for="situacao" value="Situação: *" />
-  					<p:selectOneMenu id="situacao" value="#{versaoBean.versaoCarro.situacao}"  
-  					required="true" requiredMessage="Situação * Campo Obrigatório">
+  					<p:selectOneMenu id="situacao" value="#{versaoBean.versaoCarro.situacao}" >
   						<f:selectItem itemLabel="Selecione uma opção" itemValue="" />
   						<f:selectItems value="#{versaoBean.situacoes}" />
   					</p:selectOneMenu>
 				</h:panelGrid> 
-
+			
 				 <h:panelGrid columns="4" style="margin-bottom:10px" cellpadding="5">  
 				<h:outputText value="Itens: *"/>  
-        				<h:selectManyCheckbox id="itens" converter="ItensConverter" valueChangeListener="#{versaoBean.somar}"
-        				 value="#{versaoBean.versaoCarro.itens}" layout="pageDirection" columns="1">  
+        				<p:selectManyCheckbox id="itens" converter="ItensConverter" valueChangeListener="#{versaoBean.somar}"
+        				 value="#{versaoBean.versaoCarro.itens}" layout="pageDirection" columns="2">  
            				    <f:selectItems value="#{versaoBean.itens}" var="i" 
-           				      itemLabel="#{i.descricao}" itemValue="#{i}"/>  
-           				      <f:ajax render="valor" event="valueChange"/>
-       					</h:selectManyCheckbox>
+           				      itemLabel="#{i.descricao}" itemValue="#{i}"/> 
+           				      <f:ajax render="valoritens"  event="valueChange"/> 
+       					</p:selectManyCheckbox>
        					
 					<h:outputText value="Acessório: *"  />  
-        				<h:selectManyCheckbox id="acessorio" converter="AcessoriosConverter"
-        				value="#{versaoBean.versaoCarro.acessorios}" layout="pageDirection" columns="1">  
+        				<p:selectManyCheckbox id="acessorio" converter="AcessoriosConverter" valueChangeListener="#{versaoBean.somar}"
+        				value="#{versaoBean.versaoCarro.acessorios}" layout="pageDirection" columns="2">  
            				    <f:selectItems value="#{versaoBean.acessorios}" var="a"
            				    itemLabel="#{a.descricao}" itemValue="#{a}"/>
-       					</h:selectManyCheckbox>
-				</h:panelGrid> 
-				
+           				    <f:ajax render="valoracessorios"  event="valueChange"/>
+       					</p:selectManyCheckbox>
+       					
+       				
+       				<h:outputLabel for="valor"  value="Valor Itens: *"  />
+					<p:inputText id="valoritens" disabled="true"
+					value="#{versaoBean.valoritens}" required="true" requiredMessage="Valor: * Campo Obrigatório"
+					converterMessage="Digite um número decimal no formato 999.00"
+					 label="Valor" />			
+       							
+       				<h:outputLabel for="valor"  value="Valor Acessórios *"  />
+					<p:inputText id="valoracessorios" disabled="true"
+					value="#{versaoBean.valoracessorios}" required="true" requiredMessage="Valor: * Campo Obrigatório"
+					converterMessage="Digite um número decimal no formato 999.00"
+					 label="Valor" />
+				</h:panelGrid>
 				<p:commandButton value="Salvar"  update="form" action="#{versaoBean.salvar}" />
    				<p:commandButton value="Cancelar" update="form" immediate="true" action="#{versaoBean.cancelar}" />
 </p:panel>
