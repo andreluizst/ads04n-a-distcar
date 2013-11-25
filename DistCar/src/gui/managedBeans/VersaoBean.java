@@ -37,14 +37,23 @@ public class VersaoBean {
     private List<MarcaCarro> marcas;
     private Integer fabricante;
     private Integer marca;
-    private double valor;
+    private double valoritens;
+    private double valoracessorios;
 
-	public double getValor() {
-		return valor;
+	public double getValoritens() {
+		return valoritens;
 	}
 
-	public void setValor(double valor) {
-		this.valor = valor;
+	public void setValoritens(double valoritens) {
+		this.valoritens = valoritens;
+	}
+
+	public double getValoracessorios() {
+		return valoracessorios;
+	}
+
+	public void setValoracessorios(double valoracessorios) {
+		this.valoracessorios = valoracessorios;
 	}
 
 	public Integer getMarca() {
@@ -172,7 +181,8 @@ public class VersaoBean {
 		marcas =null;
 		situacaoSelecionada=null;
 		modelos=null;
-		valor=0;
+		valoracessorios=0;
+		valoritens=0;
 	}
 
 	private List<VersaoCarro> listarVersoes() {  
@@ -184,7 +194,7 @@ public class VersaoBean {
 		versaoCarro.setDataUltimaAtualizacao(Calendar.getInstance());
 		
 		try {
-			versaoCarro.setValor(versaoCarro.getValor()+valor);
+			versaoCarro.setValor(versaoCarro.getValor()+valoracessorios+valoritens);
 			Fachada.obterInstancia().salvarVersao(versaoCarro);
 			MsgPrimeFaces.exibirMensagemInfomativa("Versão de carro salvo com sucesso!");
 			init();
@@ -303,7 +313,7 @@ public class VersaoBean {
 	    		ModeloCarro mo = new ModeloCarro();
 	    		mo = (ModeloCarro) evento.getNewValue();
 	    		versaoCarro.setModeloCarro(mo);
-	    		valor = mo.getValor();
+	    		versaoCarro.setValor(mo.getValor());
 				itens = Fachada.obterInstancia().listarItensPorModelo(Fachada.obterInstancia().pesquisarModelosCarroCodigo(versaoCarro.getModeloCarro().getCodigo()));
 				acessorios = Fachada.obterInstancia().listarAcessoriosPorModelo(Fachada.obterInstancia().pesquisarModelosCarroCodigo(versaoCarro.getModeloCarro().getCodigo()));
 	    	}catch(Exception ex){
@@ -318,22 +328,21 @@ public class VersaoBean {
 		public void somar(ValueChangeEvent evento){
 	    	List<ItemSerieCarro> i = new ArrayList<>();
 	    	List<AcessorioCarro> a = new ArrayList<>();
-	    	double soma = 0;
-	   
-	    	if(evento.getNewValue().getClass()==ItemSerieCarro.class){
-	    	 	i = (List<ItemSerieCarro>) evento.getNewValue();
-	    	for(ItemSerieCarro is :i){
-		    		soma= soma + is.getValorItemSerie();
+	    	double somaI = 0;
+	    	double somaA=0;
+	    	try {
+	    		i = (List<ItemSerieCarro>) evento.getNewValue();
+	    			for(ItemSerieCarro is :i)
+		    		somaI= somaI + is.getValorItemSerie();
+			} catch (Exception e) {
+				// TODO: handle exception
+				a = (List<AcessorioCarro>) evento.getNewValue();
+		    	for(AcessorioCarro as : a){
+		    		somaA= somaA + as.getValor();
+		    	}
 	    	}
-	    	}
-	    	else{
-	    	a = (List<AcessorioCarro>) evento.getNewValue();
-	    
-	    	for(AcessorioCarro as : a){
-	    		soma= soma + as.getValor();
-	    	}
-	    	}
-	    	versaoCarro.setValor(soma);
+	    	valoracessorios = somaA;
+	    	valoritens = somaI;
 	    }   
 		
 		  public void filtrarMarca(ValueChangeEvent evento){
