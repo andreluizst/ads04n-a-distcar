@@ -37,8 +37,16 @@ public class VersaoBean {
     private List<MarcaCarro> marcas;
     private Integer fabricante;
     private Integer marca;
-    
-  
+    private double valor;
+
+	public double getValor() {
+		return valor;
+	}
+
+	public void setValor(double valor) {
+		this.valor = valor;
+	}
+
 	public Integer getMarca() {
 		return marca;
 	}
@@ -164,7 +172,7 @@ public class VersaoBean {
 		marcas =null;
 		situacaoSelecionada=null;
 		modelos=null;
-		
+		valor=0;
 	}
 
 	private List<VersaoCarro> listarVersoes() {  
@@ -172,14 +180,25 @@ public class VersaoBean {
       return listarVersoes;
       } 
 	
-	public String salvar() throws Exception {
+	public String salvar() {
 		versaoCarro.setDataUltimaAtualizacao(Calendar.getInstance());
-		Fachada.obterInstancia().salvarVersao(versaoCarro);
-		MsgPrimeFaces.exibirMensagemInfomativa("Versão de carro salvo com sucesso!");
-		init();
-		itens=null;
-		acessorios=null;
-		return "versao";
+		
+		try {
+			versaoCarro.setValor(versaoCarro.getValor()+valor);
+			Fachada.obterInstancia().salvarVersao(versaoCarro);
+			MsgPrimeFaces.exibirMensagemInfomativa("Versão de carro salvo com sucesso!");
+			init();
+			itens=null;
+			acessorios=null;
+			return "versao";
+			
+		} catch (Exception ex) {
+			// TODO Auto-generated catch block
+			ex.printStackTrace();
+			MsgPrimeFaces.exibirMensagemDeErro(ex.getMessage());
+			listarVersoes();
+		}
+		return null;
 	}
 		
 	public void listar(){
@@ -241,6 +260,7 @@ public class VersaoBean {
 			modelos = Fachada.obterInstancia().pesquisarModeloPorMarca(versaoSelecionada.getModeloCarro().getCodigo());
 			versaoCarro = Fachada.obterInstancia().pesquisarVersaoCodigo(versaoSelecionada.getCodigo());
 			versaoCarro.setModeloCarro(Fachada.obterInstancia().pesquisarModelosCarroCodigo(versaoSelecionada.getModeloCarro().getCodigo()));
+			versaoCarro.setValor(versaoCarro.getModeloCarro().getValor());
 			//fabricante = versaoSelecionada.getModeloCarro().getMarcaCarro().getFabricante().getCodigo();
 			//marca = versaoSelecionada.getModeloCarro().getMarcaCarro().getCodigo();
 	    	//itens = versaoCarro.getItens();
@@ -280,7 +300,10 @@ public class VersaoBean {
 	    public void filtrarItens(ValueChangeEvent evento){
 	    	
 	    	try{
-	    		versaoCarro.setModeloCarro((ModeloCarro) evento.getNewValue());
+	    		ModeloCarro mo = new ModeloCarro();
+	    		mo = (ModeloCarro) evento.getNewValue();
+	    		versaoCarro.setModeloCarro(mo);
+	    		valor = mo.getValor();
 				itens = Fachada.obterInstancia().listarItensPorModelo(Fachada.obterInstancia().pesquisarModelosCarroCodigo(versaoCarro.getModeloCarro().getCodigo()));
 				acessorios = Fachada.obterInstancia().listarAcessoriosPorModelo(Fachada.obterInstancia().pesquisarModelosCarroCodigo(versaoCarro.getModeloCarro().getCodigo()));
 	    	}catch(Exception ex){
@@ -294,10 +317,21 @@ public class VersaoBean {
 		@SuppressWarnings("unchecked")
 		public void somar(ValueChangeEvent evento){
 	    	List<ItemSerieCarro> i = new ArrayList<>();
-			double soma = 0;
-	    	i = (List<ItemSerieCarro>) evento.getNewValue();
+	    	List<AcessorioCarro> a = new ArrayList<>();
+	    	double soma = 0;
+	   
+	    	if(evento.getNewValue().getClass()==ItemSerieCarro.class){
+	    	 	i = (List<ItemSerieCarro>) evento.getNewValue();
 	    	for(ItemSerieCarro is :i){
-	    		soma = soma + is.getValorItemSerie();
+		    		soma= soma + is.getValorItemSerie();
+	    	}
+	    	}
+	    	else{
+	    	a = (List<AcessorioCarro>) evento.getNewValue();
+	    
+	    	for(AcessorioCarro as : a){
+	    		soma= soma + as.getValor();
+	    	}
 	    	}
 	    	versaoCarro.setValor(soma);
 	    }   
@@ -318,7 +352,7 @@ public class VersaoBean {
 		    	try{
 		    		MarcaCarro ma = new MarcaCarro();
 		    		ma = (MarcaCarro) evento.getNewValue();
-					modelos = Fachada.obterInstancia().pesquisarModeloPorMarca(ma.getCodigo());		
+					modelos = Fachada.obterInstancia().pesquisarModeloPorMarca(ma.getCodigo());	
 		    	}catch(Exception ex){
 		    		init();
 				}
