@@ -7,18 +7,21 @@
 	xmlns:p="http://primefaces.org/ui"
 >
 
-<h:head><title>Função jsp pf</title> </h:head>
+<h:head><title>Função</title> </h:head>
 <h:outputStylesheet name="styles-PSC.css" library="css"></h:outputStylesheet>
-<h:body>
+<h:body onload="#{funcaoBean.exibirMensagemPendente}">
 	<f:view id="viewEntrada">
 		
 		<h:form id="frmMensagens">
-			<p:messages id="messages" showDetail="false" autoUpdate="true" closable="true"></p:messages>
-			<p:growl id="growl" showDetail="true" sticky="false" globalOnly="true" />
+			<p:messages id="messages" showDetail="true" autoUpdate="true" closable="true"></p:messages>
+			
 			
 		</h:form>
 		
   		<h:form id="frmFuncao">
+  			
+  			<p:growl id="growl" showDetail="true" sticky="false" globalOnly="true" autoUpdate="true"/>
+  			
   			<p:confirmDialog id="dlgMsg" global="true" showEffect="fade" hideEffect="explode">  
         		<p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check"/>  
         		<p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close"/>       
@@ -27,7 +30,7 @@
   			<p:panel id="panelFuncao" header="DistCar - Função">
   				<f:facet name="header">
   					<h:panelGrid columns="2">
-  						<p:commandLink action="index.xhtml?faces-redirect=true">
+  						<p:commandLink action="#{funcaoBean.voltarParaPaginaPrincipal}">
   							<p:graphicImage value="/resources/images/home-02.jpg" height="35px" width="35px" />
   						</p:commandLink>
   						<h:outputText value="DisctCar 1.0 - Função" />
@@ -51,9 +54,9 @@
   					
   				</h:panelGrid>
 				
-				<p:commandButton id="btnNovo" value="Novo"    update="tbFuncoes,panelFuncao" action="#{funcaoBean.novo}"/>
+				<p:commandButton id="btnNovo" value="Novo"    update="dlgMsg,tbFuncoes,panelFuncao" action="#{funcaoBean.novo}"/>
    				<p:commandButton id="btnAlterar" disabled="#{funcaoBean.listaEstaVazia}" value="Alterar" 
-   						update="tbFuncoes,panelFuncao" action="#{funcaoBean.alterar}" />
+   						update="frmFuncao" action="#{funcaoBean.alterar}" />
    				<p:commandButton id="btnExcluir" disabled="#{funcaoBean.listaEstaVazia}" value="Excluir" 
    						update="tbFuncoes,panelFuncao" actionListener="#{funcaoBean.excluir}">
    					<p:confirm header="Confirmação" 

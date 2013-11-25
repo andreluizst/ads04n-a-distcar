@@ -43,4 +43,33 @@ public class MsgPrimeFaces {
     	FacesContext.getCurrentInstance().addMessage(
     			"FALHA", new FacesMessage(FacesMessage.SEVERITY_FATAL, titulo, mensagem));
     }
+    
+    public static FacesMessage criarMsgInfo(String mensagem){
+    	return new FacesMessage(FacesMessage.SEVERITY_INFO,"Informação", mensagem);
+    }
+    
+    public static FacesMessage criarMsgErro(String mensagem){
+    	return new FacesMessage(FacesMessage.SEVERITY_ERROR,"Erro", mensagem);
+    }
+    
+    public static FacesMessage criarMsgAviso(String mensagem){
+    	return new FacesMessage(FacesMessage.SEVERITY_WARN,"Informação", mensagem);
+    }
+    
+    public static FacesMessage criarMsgFalha(String mensagem){
+    	return new FacesMessage(FacesMessage.SEVERITY_FATAL,"FALHA", mensagem);
+    }
+    
+    public static void exibirMensagem(FacesMessage facesMessage){
+    	if (facesMessage.getSeverity() == FacesMessage.SEVERITY_INFO)
+    		FacesContext.getCurrentInstance().addMessage("Informação", facesMessage);
+    	if (facesMessage.getSeverity() == FacesMessage.SEVERITY_WARN)
+    		FacesContext.getCurrentInstance().addMessage("Aviso", facesMessage);
+    	if (facesMessage.getSeverity() == FacesMessage.SEVERITY_FATAL)
+    		FacesContext.getCurrentInstance().addMessage("FALHA", facesMessage);
+    	if (facesMessage.getSeverity() == FacesMessage.SEVERITY_ERROR)
+    		FacesContext.getCurrentInstance().addMessage("Erro", facesMessage);
+    	
+    }
+    
 }

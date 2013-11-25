@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.event.ActionEvent;
@@ -54,6 +55,7 @@ public class FabricanteBean {
 	private String telefone;
 	private String telefoneSelecionado;
 	private ArrayList<String> listaOriginalDeTelefones;
+	private FacesMessage msgPendente;
 	
 	
 	public FabricanteBean(){
@@ -175,7 +177,8 @@ public class FabricanteBean {
 			if (fabricante.getCodigo() == null || fabricante.getCodigo() == 0)
 				fabricante.setCodigo(null);
 			fachada.salvarFabricante(fabricante);
-			MsgPrimeFaces.exibirMensagemInfomativa("Fabricante salvo com sucesso!");
+			//MsgPrimeFaces.exibirMensagemInfomativa("Fabricante salvo com sucesso!");
+			msgPendente = MsgPrimeFaces.criarMsgInfo("Fabricante salvo com sucesso!");
 			novoFabricante();
 			somenteLeitura = true;
 			return resourceBundle.getString("linkFabricante");//"fabricante";
@@ -183,6 +186,14 @@ public class FabricanteBean {
 			MsgPrimeFaces.exibirMensagemDeErro(ex.getMessage());
 		}
 		return null;
+	}
+	
+	public String getExibirMensagemPendente(){
+		if (msgPendente != null){
+			MsgPrimeFaces.exibirMensagem(msgPendente);
+			msgPendente = null;
+		}
+		return "";
 	}
 	
 	public void consultar(){
@@ -234,6 +245,10 @@ public class FabricanteBean {
 	public String carregarPagina(){
 		inicializar();
 		return resourceBundle.getString("linkFabricante");//"fabricante.xhtml?faces-redirect=true";
+	}
+	
+	public String voltarParaPaginaPrincipal(){
+		return resourceBundle.getString("linkHome");
 	}
 	
 	public void filtrarCidadesPesquisa(ValueChangeEvent evento){

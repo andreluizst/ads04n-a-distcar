@@ -260,8 +260,8 @@ public class ControladorOrganizacional {
 		daoDepto.remover(departamento);
 	}
 
-	public List<Departamento> pesquisarDepartamento(Departamento departamento) throws NegocioExceptionDepartamento {
-		return daoDepto.pesquisar(departamento);
+	public List<Departamento> pesquisarDepartamento(Departamento departamento) throws Exception {
+		return daoDepto.consultar(departamento);
 	}
 	
 	public List<Departamento> listarDepartamentos(){

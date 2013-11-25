@@ -50,6 +50,7 @@ public class FuncaoBean {
 	private String tituloOperacao;
 	private String textoBotaoFecharOuCancelar;
 	private boolean somenteLeitura;
+	private FacesMessage msgPendente;
 	
 	
 	
@@ -59,6 +60,7 @@ public class FuncaoBean {
 	}
 	
 	private void inicializar(){
+		msgPendente = null;
 		novaFuncao();
 		if (lista==null)
 			lista = new ArrayList<Funcao>();
@@ -121,6 +123,7 @@ public class FuncaoBean {
 			funcao = funcaoSelecionada;
 			fachada.excluirFuncao(funcao);
 			MsgPrimeFaces.exibirMensagemInfomativa("Função " + funcaoSelecionada.getDescricao() + " excluida com sucesso!");
+			//msgPendente = MsgPrimeFaces.criarMsgInfo("Função " + funcaoSelecionada.getDescricao() + " excluida com sucesso!");
 			novaFuncao();
 			listarAjax();
 		}catch(Exception ex){
@@ -139,29 +142,32 @@ public class FuncaoBean {
 	public void limpar(){
 		funcaoDePesquisa = new Funcao();
 		situacaoSelecionada = null;
+		//MsgPrimeFaces.exibirMensagemInfomativa("Filtros limpos!");
+		//FacesContext context = FacesContext.getCurrentInstance();  
+        //context.addMessage(null, new FacesMessage("Successful", "Hello growl")); 
 	}
 	
-	
-	public void salvarAjax(ActionEvent actionEvent){
-		try{
-			Fachada.obterInstancia().salvarFuncao(funcao);
-			novaFuncao();
-			MsgPrimeFaces.exibirMensagemInfomativa("Função salva com sucesso!");
-		}catch(Exception ex){
-			MsgPrimeFaces.exibirMensagemDeErro(ex.getMessage());
-		}
-	}
 	
 	public String salvar(){
 		try{
 			Fachada.obterInstancia().salvarFuncao(funcao);
-			MsgPrimeFaces.exibirMensagemInfomativa("Função salva com sucesso!");
 			novaFuncao();
+			//A próxima linha não surte efeito retornando funcao.xhtml?faces-redirect=true
+			//MsgPrimeFaces.exibirMensagemInfomativa("Função salva com sucesso!");
+			msgPendente = MsgPrimeFaces.criarMsgInfo("Função salva com sucesso!");
 			return resourceBundle.getString("linkFuncao");//"funcao";
 		}catch(Exception ex){
 			MsgPrimeFaces.exibirMensagemDeErro(ex.getMessage());
 		}
 		return null;
+	}
+	
+	public String getExibirMensagemPendente(){
+		if (msgPendente != null){
+			MsgPrimeFaces.exibirMensagem(msgPendente);
+			msgPendente = null;
+		}
+		return "";
 	}
 	
 	public void consultar(){
@@ -251,6 +257,10 @@ public class FuncaoBean {
 	public String carregarPagina(){
 		inicializar();
 		return resourceBundle.getString("linkFuncao");//"funcao.xhtml?faces-redirect=true";
+	}
+	
+	public String voltarParaPaginaPrincipal(){
+		return resourceBundle.getString("linkHome");
 	}
 
 

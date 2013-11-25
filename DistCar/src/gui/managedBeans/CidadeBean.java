@@ -6,7 +6,9 @@ import gui.MsgPrimeFaces;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ResourceBundle;
 
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.event.ActionEvent;
@@ -26,6 +28,7 @@ public class CidadeBean {
 	private static final String TXT_BTN_FECHAR = "Fechar";
 	
 	private IFachada fachada;
+	private ResourceBundle rb = ResourceBundle.getBundle("util.config");
 	
 	private Cidade cidade;
 	private Cidade cidadeParaPesquisa;
@@ -39,6 +42,7 @@ public class CidadeBean {
 	private Integer codigoUfSelecionada;
 	private String textoBotaoFecharOuCancelar;
 	private boolean somenteLeitura;
+	private FacesMessage msgPendente;
 	
 	
 	
@@ -82,19 +86,22 @@ public class CidadeBean {
 	public String alterar(){
 		if (listaEstaVazia)
 			return null;
+		if (cidadeSelecionada == null)
+			return null;
 		prepararParaExibirDados(cidadeSelecionada);
 		tituloOperacao = CidadeBean.OP_ALTERAR;
 		textoBotaoFecharOuCancelar = CidadeBean.TXT_BTN_CANCELAR;
 		somenteLeitura = false;
-		return "cidade-prop";
+		return rb.getString("linkCidadeProp");//"cidade-prop";
 	}
 	
 	public String novo(){
 		novaCidade();
+		prepararParaExibirDados(cidade);
 		tituloOperacao = CidadeBean.OP_NOVA;
 		textoBotaoFecharOuCancelar = CidadeBean.TXT_BTN_CANCELAR;
 		somenteLeitura = false;
-		return "cidade-prop";
+		return rb.getString("linkCidadeProp");//"cidade-prop";
 	}
 	
 	private void novaCidade(){
@@ -105,6 +112,8 @@ public class CidadeBean {
 	
 	public void excluir(){
 		if (listaEstaVazia)
+			return;
+		if (cidadeSelecionada == null)
 			return;
 		try{
 			cidade = cidadeSelecionada;
@@ -129,14 +138,23 @@ public class CidadeBean {
 			if (cidade.getCodigo() == null || cidade.getCodigo() == 0)
 				cidade.setCodigo(null);
 			fachada.salvarCidade(cidade);
-			MsgPrimeFaces.exibirMensagemInfomativa("Cidade salva com sucesso!");
+			//MsgPrimeFaces.exibirMensagemInfomativa("Cidade salva com sucesso!");
+			msgPendente = MsgPrimeFaces.criarMsgInfo("Cidade salva com sucesso!");
 			novaCidade();
 			somenteLeitura = true;
-			return "cidade";
+			return rb.getString("linkCidade");//"cidade";
 		}catch(Exception ex){
 			MsgPrimeFaces.exibirMensagemDeErro(ex.getMessage());
 		}
 		return null;
+	}
+	
+	public String getExibirMensagemPendente(){
+		if (msgPendente != null){
+			MsgPrimeFaces.exibirMensagem(msgPendente);
+			msgPendente = null;
+		}
+		return "";
 	}
 	
 	public void consultar(){
@@ -150,11 +168,13 @@ public class CidadeBean {
 	public String visualizar(){
 		if (listaEstaVazia)
 			return null;
+		if (cidadeSelecionada == null)
+			return null;
 		prepararParaExibirDados(cidadeSelecionada);
 		tituloOperacao = CidadeBean.OP_VISUALIZAR;
 		textoBotaoFecharOuCancelar = CidadeBean.TXT_BTN_FECHAR;
 		somenteLeitura = true;
-		return "cidade-prop";
+		return rb.getString("linkCidadeProp");//"cidade-prop";
 	}
 	
 
@@ -171,9 +191,18 @@ public class CidadeBean {
 		situacaoSelecionada = null;
 	}
 	
+	public String cancelar(){
+		cidade = null;
+		return rb.getString("linkCidade");
+	}
+	
 	public String carregarPagina(){
 		inicializar();
-		return "cidade.xhtml?faces-redirect=true";
+		return rb.getString("linkCidade");//"cidade.xhtml?faces-redirect=true";
+	}
+	
+	public String voltarParaPaginaPrincipal(){
+		return rb.getString("linkHome");
 	}
 	
 	//*** GETs e SETs

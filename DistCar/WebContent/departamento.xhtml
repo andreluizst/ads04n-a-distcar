@@ -12,11 +12,11 @@
 	<h:outputStylesheet name="styles-PSC.css" library="css"></h:outputStylesheet>
 </h:head>
 	
-<h:body>
+<h:body onload="#{deptoBean.exibirMensagemPendente}">
 	<f:view id="viewDepto">
 		
 		<h:form id="frmMensagens">
-			<p:messages id="messages" showDetail="false" autoUpdate="true" closable="true"></p:messages>
+			<p:messages id="messages" showDetail="true" autoUpdate="true" closable="true"></p:messages>
 			<p:growl id="growl" showDetail="true" sticky="false" globalOnly="true" />
 			
 		</h:form>
@@ -30,7 +30,7 @@
   			<p:panel id="panelPesquisa" header="DistCar - Departamento">
   				<f:facet name="header">
   					<h:panelGrid columns="2">
-  						<p:commandLink action="index.xhtml?faces-redirect=true">
+  						<p:commandLink action="#{deptoBean.voltarParaPaginaPrincipal}">
   							<p:graphicImage value="/resources/images/home-02.jpg" height="35px" width="35px" />
   						</p:commandLink>
   						<h:outputText value="DisctCar 1.0 - Departamento" />
@@ -41,10 +41,11 @@
   					<h:inputText id="nome" value="#{deptoBean.departamentoParaPesquisa.nome}" lable="Nome"/>
   					
   					<h:outputLabel for="cbxDeptoSup" value="Depto/centro (superior): "/>
-  					<p:selectOneMenu id="cbxDeptoSup" value="#{deptoBean.departamentoParaPesquisa.departamentoSuperior.codigo}">
-  						<f:selectItem itemLabel="Todos os departamentos" itemValue="" />
+  					<p:selectOneMenu id="cbxDeptoSup" converter="DepartamentoConverter"
+  							value="#{deptoBean.departamentoParaPesquisa.departamentoSuperior}">
+  						<f:selectItem itemLabel="Todos os departamentos" itemValue="-1" />
   						<f:selectItems value="#{deptoBean.deptosSuperiores}" var="deptoSup" 
-  									itemLabel="#{deptoSup}" itemValue="#{deptoSup.codigo}"/>
+  									itemLabel="#{deptoSup}" itemValue="#{deptoSup}"/>
   					</p:selectOneMenu>
   					
   					<h:outputLabel for="situacao" value="Situação: "/>

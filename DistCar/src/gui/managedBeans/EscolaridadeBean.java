@@ -2,7 +2,9 @@ package gui.managedBeans;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ResourceBundle;
 
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.event.ActionEvent;
@@ -23,6 +25,8 @@ public class EscolaridadeBean {
 	private static final String TXT_BTN_FECHAR = "Fechar";
 	
 	private IFachada fachada;
+	private ResourceBundle rb = ResourceBundle.getBundle("util.config");
+	private String home = rb.getString("linkHome");
 	
 	private Escolaridade escolaridade;
 	private Escolaridade escolaridadeParaPesquisa;
@@ -34,7 +38,7 @@ public class EscolaridadeBean {
 	private String tituloOperacao;
 	private String textoBotaoFecharOuCancelar;
 	private boolean somenteLeitura;
-	
+	private FacesMessage msgPendente;
 	
 	
 	public EscolaridadeBean(){
@@ -44,6 +48,7 @@ public class EscolaridadeBean {
 	
 	private void inicializar(){
 		novaEscolaridade();
+		msgPendente = null;
 		if (lista==null)
 			lista = new ArrayList<Escolaridade>();
 		else
@@ -67,11 +72,13 @@ public class EscolaridadeBean {
 	public String alterar(){
 		if (listaEstaVazia)
 			return null;
+		if (escolaridadeSelecionada == null)
+			return null;
 		prepararParaExibirDados(escolaridadeSelecionada);
 		tituloOperacao = EscolaridadeBean.OP_ALTERAR;
 		textoBotaoFecharOuCancelar = EscolaridadeBean.TXT_BTN_CANCELAR;
 		somenteLeitura = false;
-		return "escolaridade-prop";
+		return rb.getString("linkEscolaridadeProp");//"escolaridade-prop";
 	}
 	
 	public String novo(){
@@ -79,7 +86,7 @@ public class EscolaridadeBean {
 		tituloOperacao = EscolaridadeBean.OP_NOVA;
 		textoBotaoFecharOuCancelar = EscolaridadeBean.TXT_BTN_CANCELAR;
 		somenteLeitura = false;
-		return "escolaridade-prop";
+		return rb.getString("linkEscolaridadeProp");//"escolaridade-prop";
 	}
 	
 	private void novaEscolaridade(){
@@ -89,6 +96,8 @@ public class EscolaridadeBean {
 	
 	public void excluir(){
 		if (listaEstaVazia)
+			return;
+		if (escolaridadeSelecionada == null)
 			return;
 		try{
 			escolaridade = escolaridadeSelecionada;
@@ -112,14 +121,23 @@ public class EscolaridadeBean {
 			if (escolaridade.getCodigo() == null || escolaridade.getCodigo() == 0)
 				escolaridade.setCodigo(null);
 			fachada.salvarEscolaridade(escolaridade);
-			MsgPrimeFaces.exibirMensagemInfomativa("Escolaridade salva com sucesso!");
+			//MsgPrimeFaces.exibirMensagemInfomativa("Escolaridade salva com sucesso!");
 			novaEscolaridade();
 			somenteLeitura = true;
-			return "escolaridade";
+			msgPendente = MsgPrimeFaces.criarMsgInfo("Escolaridade salva com sucesso!");
+			return rb.getString("linkEscolaridade");//"escolaridade";
 		}catch(Exception ex){
 			MsgPrimeFaces.exibirMensagemDeErro(ex.getMessage());
 		}
 		return null;
+	}
+	
+	public String getExibirMensagemPendente(){
+		if (msgPendente != null){
+			MsgPrimeFaces.exibirMensagem(msgPendente);
+			msgPendente = null;
+		}
+		return "";
 	}
 	
 	public void consultar(){
@@ -133,11 +151,13 @@ public class EscolaridadeBean {
 	public String visualizar(){
 		if (listaEstaVazia)
 			return null;
+		if (escolaridadeSelecionada == null)
+			return null;
 		prepararParaExibirDados(escolaridadeSelecionada);
 		tituloOperacao = EscolaridadeBean.OP_VISUALIZAR;
 		textoBotaoFecharOuCancelar = EscolaridadeBean.TXT_BTN_FECHAR;
 		somenteLeitura = true;
-		return "escolaridade-prop";
+		return rb.getString("linkEscolaridadeProp");//"escolaridade-prop";
 	}
 	
 
@@ -156,7 +176,11 @@ public class EscolaridadeBean {
 	
 	public String carregarPagina(){
 		inicializar();
-		return "escolaridade.xhtml?faces-redirect=true";
+		return rb.getString("linkEscolaridade");//"escolaridade.xhtml?faces-redirect=true";
+	}
+	
+	public String voltarParaPaginaPrincipal(){
+		return rb.getString("linkHome");
 	}
 	
 	
@@ -216,6 +240,12 @@ public class EscolaridadeBean {
 
 	public boolean isSomenteLeitura() {
 		return somenteLeitura;
-	}	
+	}
+
+	public String getHome() {
+		return home;
+	}
+	
+	
 	
 }

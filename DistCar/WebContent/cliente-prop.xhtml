@@ -46,6 +46,7 @@
   							value="#{clienteBean.pjAux.cnpj}" lable="CNPJ"
 	  						required="#{clienteBean.mostrarCamposPJ}" requiredMessage="O preenchimento do campo CNPJ é obrigatório!" 
 	  						rendered="#{clienteBean.mostrarCamposPJ}">
+	  					<f:validator validatorId="cnpjValidator"/>
   					</p:inputMask>
   					<p:message for="cnpj" display="default" rendered="#{clienteBean.mostrarCamposPJ}" />
 
@@ -70,6 +71,7 @@
   							readonly="#{clienteBean.somenteLeitura}"
   							required="#{clienteBean.mostrarCamposPF}" requiredMessage="Informe o CPF!"
   							rendered="#{clienteBean.mostrarCamposPF}">
+  						<f:validator validatorId="cpfValidator"/>
   					</p:inputMask>
 	  				<p:message for="cpf" display="default" rendered="#{clienteBean.mostrarCamposPF}" />
 

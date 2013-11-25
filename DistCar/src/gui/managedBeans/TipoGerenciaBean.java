@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.event.ActionEvent;
@@ -37,6 +38,7 @@ public class TipoGerenciaBean {
 	private String tituloOperacao;
 	private String textoBotaoFecharOuCancelar;
 	private boolean somenteLeitura;
+	private FacesMessage msgPendente;
 	
 	
 	
@@ -116,7 +118,8 @@ public class TipoGerenciaBean {
 			if (tipoGerencia.getCodigo() == null || tipoGerencia.getCodigo() == 0)
 				tipoGerencia.setCodigo(null);
 			fachada.salvarTipoGerencia(tipoGerencia);
-			MsgPrimeFaces.exibirMensagemInfomativa("Tipo de gerência salva com sucesso!");
+			//MsgPrimeFaces.exibirMensagemInfomativa("Tipo de gerência salva com sucesso!");
+			msgPendente = MsgPrimeFaces.criarMsgInfo("Tipo de gerência salva com sucesso!");
 			novoTipoGerencia();
 			somenteLeitura = true;
 			return resourceBundle.getString("linkTipoGerencia");//"tipogerencia";
@@ -124,6 +127,14 @@ public class TipoGerenciaBean {
 			MsgPrimeFaces.exibirMensagemDeErro(ex.getMessage());
 		}
 		return null;
+	}
+	
+	public String getExibirMensagemPendente(){
+		if (msgPendente != null){
+			MsgPrimeFaces.exibirMensagem(msgPendente);
+			msgPendente = null;
+		}
+		return "";
 	}
 	
 	public String cancelar(){
@@ -165,6 +176,10 @@ public class TipoGerenciaBean {
 	public String carregarPagina(){
 		inicializar();
 		return resourceBundle.getString("linkTipoGerencia");//"tipogerencia.xhtml?faces-redirect=true";
+	}
+	
+	public String voltarParaPaginaPrincipal(){
+		return resourceBundle.getString("linkHome");
 	}
 	
 	

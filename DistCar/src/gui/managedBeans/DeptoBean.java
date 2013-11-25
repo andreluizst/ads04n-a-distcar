@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.event.ActionEvent;
@@ -48,6 +49,7 @@ public class DeptoBean {
 	private Integer codigoDeptoSuperiorSelecionado;
 	private Integer codigoGestorSelecionado;
 	private Integer codigoCentroSelecionado;
+	private FacesMessage msgPendente;
 	
 	
 	
@@ -58,9 +60,9 @@ public class DeptoBean {
 	
 	private void inicializarObjParaPesquisa(){
 		departamentoParaPesquisa = new Departamento();
-		departamentoParaPesquisa.setDepartamentoSuperior(new Departamento());
-		departamentoParaPesquisa.setGestor(new Funcionario());
-		departamentoParaPesquisa.setCentro(new Centro());
+		//departamentoParaPesquisa.setDepartamentoSuperior(new Departamento());
+		//departamentoParaPesquisa.setGestor(new Funcionario());
+		//departamentoParaPesquisa.setCentro(new Centro());
 	}
 	
 	private void inicializar(){
@@ -194,7 +196,8 @@ public class DeptoBean {
 			if (departamento.getCodigo() == null || departamento.getCodigo() == 0)
 				departamento.setCodigo(null);
 			fachada.salvarDepartamento(departamento);
-			MsgPrimeFaces.exibirMensagemInfomativa("Departamento salvo com sucesso!");
+			//MsgPrimeFaces.exibirMensagemInfomativa("Departamento salvo com sucesso!");
+			msgPendente = MsgPrimeFaces.criarMsgInfo("Departamento salvo com sucesso!");
 			novoDepartamento();
 			somenteLeitura = true;
 			return resourceBundle.getString("linkDepartamento");//"departamento";
@@ -204,10 +207,19 @@ public class DeptoBean {
 		return null;
 	}
 	
+	public String getExibirMensagemPendente(){
+		if (msgPendente != null){
+			MsgPrimeFaces.exibirMensagem(msgPendente);
+			msgPendente = null;
+		}
+		return "";
+	}
+	
 	public void consultar(){
 		try{
 			atualizarLista(fachada.consultarDepartamento(departamentoParaPesquisa));
 		}catch(Exception ex){
+			//System.out.println(ex.getStackTrace());
 			MsgPrimeFaces.exibirMensagemDeErro(ex.getMessage());
 		}
 	}
@@ -242,7 +254,14 @@ public class DeptoBean {
 		inicializar();
 		return resourceBundle.getString("linkDepartamento");//"departamento.xhtml?faces-redirect=true";
 	}
-
+	
+	public String voltarParaPaginaPrincipal(){
+		return resourceBundle.getString("linkHome");
+	}
+	
+	
+	// GETs e SETs
+	
 	public Departamento getDepartamento() {
 		return departamento;
 	}

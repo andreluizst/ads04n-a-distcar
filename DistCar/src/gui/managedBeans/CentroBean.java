@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.event.ActionEvent;
@@ -54,6 +55,7 @@ public class CentroBean {
 	
 	private String textoBotaoFecharOuCancelar;
 	private boolean somenteLeitura;
+	private FacesMessage msgPendente;
 	
 	
 	
@@ -171,7 +173,8 @@ public class CentroBean {
 			if (centro.getCodigo() == null || centro.getCodigo() == 0)
 				centro.setCodigo(null);
 			fachada.salvarCentro(centro);
-			MsgPrimeFaces.exibirMensagemInfomativa("Centro salvo com sucesso!");
+			//MsgPrimeFaces.exibirMensagemInfomativa("Centro salvo com sucesso!");
+			msgPendente = MsgPrimeFaces.criarMsgInfo("Centro salvo com sucesso!");
 			novoCentro();
 			somenteLeitura = true;
 			return resourceBundle.getString("linkCentro");//"centro";
@@ -179,6 +182,14 @@ public class CentroBean {
 			MsgPrimeFaces.exibirMensagemDeErro(ex.getMessage());
 		}
 		return null;
+	}
+	
+	public String getExibirMensagemPendente(){
+		if (msgPendente != null){
+			MsgPrimeFaces.exibirMensagem(msgPendente);
+			msgPendente = null;
+		}
+		return "";
 	}
 	
 	public void consultar(){
@@ -219,6 +230,14 @@ public class CentroBean {
 		inicializar();
 		return resourceBundle.getString("linkCentro");//"centro.xhtml?faces-redirect=true";
 	}
+	
+	public String voltarParaPaginaPrincipal(){
+		return resourceBundle.getString("linkHome");
+	}
+	
+	
+	
+	// GETs e SETs
 
 	public Centro getCentro() {
 		return centro;

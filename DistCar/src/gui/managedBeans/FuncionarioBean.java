@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.event.ActionEvent;
@@ -60,6 +61,7 @@ public class FuncionarioBean {
 	private String telefone;
 	private String telefoneSelecionado;
 	private ArrayList<String> listaOriginalDeTelefones;
+	private FacesMessage msgPendente;
 	
 	
 	
@@ -183,12 +185,9 @@ public class FuncionarioBean {
 			funcionario.setUsuario(null);
 			funcionario.setCpf(funcionario.getCpf().replace(".", "").replace("-", ""));
 			funcionario.getEndereco().setCep(funcionario.getEndereco().getCep().replace("-", "").replace(".", ""));
-
-			
-			
-			
 			fachada.salvarFuncionario(funcionario);
-			MsgPrimeFaces.exibirMensagemInfomativa("Funcionário salvo com sucesso!");
+			//MsgPrimeFaces.exibirMensagemInfomativa("Funcionário salvo com sucesso!");
+			msgPendente = MsgPrimeFaces.criarMsgInfo("Funcionário salvo com sucesso!");
 			novoFuncionario();
 			somenteLeitura = true;
 			return resourceBundle.getString("linkFuncionario");
@@ -196,6 +195,14 @@ public class FuncionarioBean {
 			MsgPrimeFaces.exibirMensagemDeErro(ex.getMessage());
 		}
 		return null;
+	}
+	
+	public String getExibirMensagemPendente(){
+		if (msgPendente != null){
+			MsgPrimeFaces.exibirMensagem(msgPendente);
+			msgPendente = null;
+		}
+		return "";
 	}
 	
 	public void consultar(){
@@ -242,6 +249,10 @@ public class FuncionarioBean {
 	public String carregarPagina(){
 		inicializar();
 		return resourceBundle.getString("linkFuncionario");
+	}
+	
+	public String voltarParaPaginaPrincipal(){
+		return resourceBundle.getString("linkHome");
 	}
 	
 	public void filtrarCidadesPesquisa(ValueChangeEvent evento){
