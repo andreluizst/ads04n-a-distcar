@@ -85,7 +85,7 @@
 					<p:inputText id="valor" disabled="true"
 						converterMessage="Digite um número decimal no formato 999.00"
 						value="#{versaoBean.versaoCarro.valor}"
-						label="Valor" />
+						label="Valor"/>
 
 					<h:outputLabel for="situacao" value="Situação: *" />
   					<p:selectOneMenu id="situacao" value="#{versaoBean.versaoCarro.situacao}" >
@@ -100,7 +100,7 @@
         				 value="#{versaoBean.versaoCarro.itens}" layout="pageDirection" columns="2">  
            				    <f:selectItems value="#{versaoBean.itens}" var="i" 
            				      itemLabel="#{i.descricao}" itemValue="#{i}"/> 
-           				      <f:ajax render="valoritens"  event="valueChange"/> 
+           				      <f:ajax render="valorItens"  event="valueChange"/> 
        					</p:selectManyCheckbox>
        					
 					<h:outputText value="Acessório: *"  />  
@@ -110,19 +110,9 @@
            				    itemLabel="#{a.descricao}" itemValue="#{a}"/>
            				    <f:ajax render="valoracessorios"  event="valueChange"/>
        					</p:selectManyCheckbox>
-       					
-       				
-       				<h:outputLabel for="valor"  value="Valor Itens: *"  />
-					<p:inputText id="valoritens" disabled="true"
-					value="#{versaoBean.valoritens}" required="true" requiredMessage="Valor: * Campo Obrigatório"
-					converterMessage="Digite um número decimal no formato 999.00"
-					 label="Valor" />			
-       							
-       				<h:outputLabel for="valor"  value="Valor Acessórios *"  />
-					<p:inputText id="valoracessorios" disabled="true"
-					value="#{versaoBean.valoracessorios}" required="true" requiredMessage="Valor: * Campo Obrigatório"
-					converterMessage="Digite um número decimal no formato 999.00"
-					 label="Valor" />
+
+       				<h:inputHidden id="valorItens" value="#{versaoBean.valorItens}" />
+					<h:inputHidden id="valoracessorios" value="#{versaoBean.valorAcessorios}" />
 				</h:panelGrid>
 				<p:commandButton value="Salvar"  update="form" action="#{versaoBean.salvar}" />
    				<p:commandButton value="Cancelar" update="form" immediate="true" action="#{versaoBean.cancelar}" />
