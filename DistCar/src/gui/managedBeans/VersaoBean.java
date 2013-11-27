@@ -37,23 +37,24 @@ public class VersaoBean {
     private List<MarcaCarro> marcas;
     private Integer fabricante;
     private Integer marca;
-    private double valoritens;
-    private double valoracessorios;
+    private double valorItens;
+    private double valorAcessorios;
 
-	public double getValoritens() {
-		return valoritens;
+
+	public double getValorItens() {
+		return valorItens;
 	}
 
-	public void setValoritens(double valoritens) {
-		this.valoritens = valoritens;
+	public void setValorItens(double valorItens) {
+		this.valorItens = valorItens;
 	}
 
-	public double getValoracessorios() {
-		return valoracessorios;
+	public double getValorAcessorios() {
+		return valorAcessorios;
 	}
 
-	public void setValoracessorios(double valoracessorios) {
-		this.valoracessorios = valoracessorios;
+	public void setValorAcessorios(double valorAcessorios) {
+		this.valorAcessorios = valorAcessorios;
 	}
 
 	public Integer getMarca() {
@@ -181,8 +182,7 @@ public class VersaoBean {
 		marcas =null;
 		situacaoSelecionada=null;
 		modelos=null;
-		valoracessorios=0;
-		valoritens=0;
+		valorAcessorios=0;
 	}
 
 	private List<VersaoCarro> listarVersoes() {  
@@ -191,10 +191,12 @@ public class VersaoBean {
       } 
 	
 	public String salvar() {
+		
 		versaoCarro.setDataUltimaAtualizacao(Calendar.getInstance());
 		
-		try {
-			versaoCarro.setValor(versaoCarro.getValor()+valoracessorios+valoritens);
+		try {			
+			
+			versaoCarro.setValor(versaoCarro.getValor()+valorAcessorios+valorItens);
 			Fachada.obterInstancia().salvarVersao(versaoCarro);
 			MsgPrimeFaces.exibirMensagemInfomativa("Versão de carro salvo com sucesso!");
 			init();
@@ -205,6 +207,7 @@ public class VersaoBean {
 		} catch (Exception ex) {
 			// TODO Auto-generated catch block
 			ex.printStackTrace();
+			versaoCarro.setValor(versaoCarro.getValor()-valorAcessorios-valorItens);
 			MsgPrimeFaces.exibirMensagemDeErro(ex.getMessage());
 			listarVersoes();
 		}
@@ -341,8 +344,8 @@ public class VersaoBean {
 		    		somaA= somaA + as.getValor();
 		    	}
 	    	}
-	    	valoracessorios = somaA;
-	    	valoritens = somaI;
+	    	valorItens = somaI;
+	    	valorAcessorios = somaA;
 	    }   
 		
 		  public void filtrarMarca(ValueChangeEvent evento){

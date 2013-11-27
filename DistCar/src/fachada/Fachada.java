@@ -467,7 +467,7 @@ public class Fachada implements IFachada {
 	//Versao
 	
 	@Override
-	public void salvarVersao(VersaoCarro versaoCarro) {
+	public void salvarVersao(VersaoCarro versaoCarro) throws Exception {
 		this.controladorCarro.inserir(versaoCarro);
 	}
 

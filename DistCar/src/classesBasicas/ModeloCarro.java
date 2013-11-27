@@ -13,13 +13,14 @@ public class ModeloCarro extends ObjetoGeral {
 	private Integer ano;
 	@ManyToOne(fetch=FetchType.EAGER)
 	private MarcaCarro marcaCarro;
-	private Integer valor;
+	private Double valor;
 	
 	
-	public Integer getValor() {
+	
+	public Double getValor() {
 		return valor;
 	}
-	public void setValor(Integer valor) {
+	public void setValor(Double valor) {
 		this.valor = valor;
 	}
 	public String getDescricao() {
@@ -83,22 +84,22 @@ public class ModeloCarro extends ObjetoGeral {
 			return false;
 		return true;
 	}
-	@Override
-	public String toString() {
-		return "ModeloCarro [descricao=" + descricao + ", ano=" + ano
-				+ ", marcaCarro=" + marcaCarro + ", valor=" + valor + "]";
-	}
 	public ModeloCarro() {
 		super();
 	}
 	public ModeloCarro(String descricao, Integer ano, MarcaCarro marcaCarro,
-			Integer valor) {
+			Double valor) {
 		super();
 		this.descricao = descricao;
 		this.ano = ano;
 		this.marcaCarro = marcaCarro;
 		this.valor = valor;
 	}
-	
+	@Override
+	public String toString() {
+		return "ModeloCarro [descricao=" + descricao + ", ano=" + ano
+				+ ", marcaCarro=" + marcaCarro + ", valor=" + valor + "]";
+	}
+
 	
 }

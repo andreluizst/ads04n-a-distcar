@@ -134,7 +134,7 @@ public interface IFachada {
 		
 	//Versao
 		
-	public void salvarVersao(VersaoCarro versaoCarro);
+	public void salvarVersao(VersaoCarro versaoCarro) throws Exception;
 	public void removerVersao(VersaoCarro versaoCarro);
 	public List<VersaoCarro> listarVersoes();
 	public VersaoCarro pesquisarVersaoCodigo(Integer codigo);

@@ -2,6 +2,7 @@ package dao;
 
 import java.util.List;
 
+import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
 import classesBasicas.VersaoCarro;
 
@@ -63,4 +64,15 @@ public class DAOVersaoCarro extends DAOGenerico<VersaoCarro> implements IDAOVers
 		return tqry.getResultList();
 	}
 
+	@Override
+	public VersaoCarro pesquisarVersaoDesc(VersaoCarro versao) {
+		try {
+			TypedQuery<VersaoCarro> query = entityManager.createQuery("from VersaoCarro v where v.descricao = :descricao",VersaoCarro.class);
+			query.setParameter("descricao", versao.getDescricao());
+			return query.getSingleResult();
+	} catch (NoResultException e) {
+		//e.printStackTrace();
+			return null;
+		}
+	}
 }

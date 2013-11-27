@@ -1,6 +1,5 @@
 package gui.managedBeans;
 
-import java.awt.event.ActionEvent;
 import java.util.Calendar;
 import java.util.List;
 
@@ -11,11 +10,13 @@ import javax.faces.event.ValueChangeEvent;
 
 import classesBasicas.AcessorioCarro;
 import classesBasicas.Carro;
+import classesBasicas.Centro;
 import classesBasicas.Fabricante;
 import classesBasicas.ItemSerieCarro;
 import classesBasicas.MarcaCarro;
 import classesBasicas.ModeloCarro;
 import classesBasicas.Situacao;
+import classesBasicas.Status;
 import classesBasicas.VersaoCarro;
 import fachada.Fachada;
 import gui.MsgPrimeFaces;
@@ -36,8 +37,35 @@ public class CarroBean {
 	private List<VersaoCarro> versoes;
 	private List<ItemSerieCarro> itens;
 	private List<AcessorioCarro> acessorios;
-
+	private Carro statusSelecionada;
+	private Status[] status = Status.values();
+	private List<Centro> centros;
 	
+	
+	public List<Centro> getCentros() {
+		return centros;
+	}
+
+	public void setCentros(List<Centro> centros) {
+		this.centros = centros;
+	}
+
+	public Carro getStatusSelecionada() {
+		return statusSelecionada;
+	}
+
+	public void setStatusSelecionada(Carro statusSelecionada) {
+		this.statusSelecionada = statusSelecionada;
+	}
+
+	public Status[] getStatus() {
+		return status;
+	}
+
+	public void setStatus(Status[] status) {
+		this.status = status;
+	}
+
 	public List<ItemSerieCarro> getItens() {
 		return itens;
 	}
@@ -129,21 +157,32 @@ public class CarroBean {
 	@PostConstruct
 	public void init() {
 		carro = new Carro();
-		listarModelo();
 		listarCarros();
+		listarFabricantes();
+		listarCentros();
 		itens=null;
 		acessorios=null;
-		listarFabricantes();
-	}
-
-	public void novo(ActionEvent actionEvent) {
-		init();
+		situacaoSelecionada=null;
+		statusSelecionada=null;
+		modelos=null;
+		marcas=null;
+		versoes=null;
+		
 	}
 
 	private List<Carro> listarCarros() {  
       carros = Fachada.obterInstancia().listarCarros();
       return carros;
       } 
+	private List<Centro>listarCentros(){
+		try {
+			centros = Fachada.obterInstancia().listarCentros();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return centros;
+	}
 	
 	private List<Fabricante> listarFabricantes(){  
 	      try {
@@ -236,6 +275,7 @@ public class CarroBean {
 				marcas = Fachada.obterInstancia().pesquisarMarcaPorFabr(fab.getCodigo());
 	    	}catch(Exception ex){
 				MsgPrimeFaces.exibirMensagemDeAviso("Não foi possível filtar itens por modelo, selecione um modelo válido");
+				init();
 			}
 	    }
 	    
@@ -247,6 +287,11 @@ public class CarroBean {
 				modelos = Fachada.obterInstancia().pesquisarModeloPorMarca(ma.getCodigo());		
 	    	}catch(Exception ex){
 				MsgPrimeFaces.exibirMensagemDeAviso("Não foi possível filtar itens por modelo, selecione um modelo válido");
+				modelos=null;
+				versoes=null;
+				itens=null;
+				acessorios=null;
+				carro = new Carro();
 			}
 	    }
 	    
@@ -256,12 +301,27 @@ public class CarroBean {
 	    		ModeloCarro mc = new ModeloCarro();
 	    		mc = (ModeloCarro) evento.getNewValue();
 				versoes = Fachada.obterInstancia().pesquisarVersaoPorModelo(mc.getCodigo());
-				acessorios = Fachada.obterInstancia().listarAcessoriosPorModelo(Fachada.obterInstancia().pesquisarModelosCarroCodigo(mc.getCodigo()));
-				itens = Fachada.obterInstancia().listarItensPorModelo(Fachada.obterInstancia().pesquisarModelosCarroCodigo(mc.getCodigo()));
+	    	}catch(Exception ex){
+				MsgPrimeFaces.exibirMensagemDeAviso("Não foi possível filtar itens por modelo, selecione um modelo válido");
+				versoes=null;
+				itens=null;
+				acessorios=null;
+				carro = new Carro();
+			}
+	    }
+	    	public void filtrarItensAces(ValueChangeEvent evento){
+	    	
+	    	try{
+	    		VersaoCarro vc = new VersaoCarro();
+	    		vc = (VersaoCarro) evento.getNewValue();
+				itens=Fachada.obterInstancia().pesquisarVersaoCodigo(vc.getCodigo()).getItens();
+				acessorios =Fachada.obterInstancia().pesquisarVersaoCodigo(vc.getCodigo()).getAcessorios();
+				carro.setValorCarro(vc.getValor());
 	    	}catch(Exception ex){
 				MsgPrimeFaces.exibirMensagemDeAviso("Não foi possível filtar itens por modelo, selecione um modelo válido");
 				itens=null;
 				acessorios=null;
+				carro = new Carro();
 			}
 	    }
 }

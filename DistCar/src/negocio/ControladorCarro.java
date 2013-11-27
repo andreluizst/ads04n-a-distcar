@@ -108,8 +108,12 @@ public class ControladorCarro {
 	
 	//Versao de carro
 	
-	public void inserir(VersaoCarro versaoCarro) {
-		versaoCarroDAO.inserir(versaoCarro);
+	public void inserir(VersaoCarro versao) throws Exception {
+		if(versaoCarroDAO.pesquisarVersaoDesc(versao)!=null &&
+				versaoCarroDAO.pesquisarVersaoDesc(versao).getCodigo()!=versao.getCodigo()){
+			throw new Exception("Versão já cadastrada");
+		}
+		versaoCarroDAO.inserir(versao);
 	}
 	public void alterar(VersaoCarro versaoCarro) {
 		versaoCarroDAO.alterar(versaoCarro);

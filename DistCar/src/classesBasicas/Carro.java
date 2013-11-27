@@ -3,6 +3,8 @@ package classesBasicas;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.ManyToOne;
 
 @Entity
@@ -16,7 +18,24 @@ public class Carro extends ObjetoGeral {
 	private Integer anoFabricacao;
 	@ManyToOne
 	private VersaoCarro versao;
-	private Double valorCarro;
+	private double valorCarro;
+	@ManyToOne
+	private Centro centro;
+	@Enumerated(EnumType.STRING)
+	private Status status;
+
+	public Centro getCentro() {
+		return centro;
+	}
+	public void setCentro(Centro centro) {
+		this.centro = centro;
+	}
+	public Status getStatus() {
+		return status;
+	}
+	public void setStatus(Status status) {
+		this.status = status;
+	}
 	public String getChassi() {
 		return chassi;
 	}
@@ -47,16 +66,22 @@ public class Carro extends ObjetoGeral {
 	public void setValorCarro(Double valorCarro) {
 		this.valorCarro = valorCarro;
 	}
+	public void setValorCarro(double valorCarro) {
+		this.valorCarro = valorCarro;
+	}
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = super.hashCode();
 		result = prime * result
 				+ ((anoFabricacao == null) ? 0 : anoFabricacao.hashCode());
+		result = prime * result + ((centro == null) ? 0 : centro.hashCode());
 		result = prime * result + ((chassi == null) ? 0 : chassi.hashCode());
 		result = prime * result + ((cor == null) ? 0 : cor.hashCode());
-		result = prime * result
-				+ ((valorCarro == null) ? 0 : valorCarro.hashCode());
+		result = prime * result + ((status == null) ? 0 : status.hashCode());
+		long temp;
+		temp = Double.doubleToLongBits(valorCarro);
+		result = prime * result + (int) (temp ^ (temp >>> 32));
 		result = prime * result + ((versao == null) ? 0 : versao.hashCode());
 		return result;
 	}
@@ -74,6 +99,11 @@ public class Carro extends ObjetoGeral {
 				return false;
 		} else if (!anoFabricacao.equals(other.anoFabricacao))
 			return false;
+		if (centro == null) {
+			if (other.centro != null)
+				return false;
+		} else if (!centro.equals(other.centro))
+			return false;
 		if (chassi == null) {
 			if (other.chassi != null)
 				return false;
@@ -84,10 +114,10 @@ public class Carro extends ObjetoGeral {
 				return false;
 		} else if (!cor.equals(other.cor))
 			return false;
-		if (valorCarro == null) {
-			if (other.valorCarro != null)
-				return false;
-		} else if (!valorCarro.equals(other.valorCarro))
+		if (status != other.status)
+			return false;
+		if (Double.doubleToLongBits(valorCarro) != Double
+				.doubleToLongBits(other.valorCarro))
 			return false;
 		if (versao == null) {
 			if (other.versao != null)
@@ -96,23 +126,26 @@ public class Carro extends ObjetoGeral {
 			return false;
 		return true;
 	}
-	public Carro() {
-		super();
-	}
 	public Carro(String chassi, String cor, Integer anoFabricacao,
-			VersaoCarro versao, Double valorCarro) {
+			VersaoCarro versao, double valorCarro, Centro centro, Status status) {
 		super();
 		this.chassi = chassi;
 		this.cor = cor;
 		this.anoFabricacao = anoFabricacao;
 		this.versao = versao;
 		this.valorCarro = valorCarro;
+		this.centro = centro;
+		this.status = status;
+	}
+	public Carro() {
+		super();
 	}
 	@Override
 	public String toString() {
 		return "Carro [chassi=" + chassi + ", cor=" + cor + ", anoFabricacao="
 				+ anoFabricacao + ", versao=" + versao + ", valorCarro="
-				+ valorCarro + "]";
+				+ valorCarro + ", centro=" + centro + ", status=" + status
+				+ "]";
 	}
 	
 }

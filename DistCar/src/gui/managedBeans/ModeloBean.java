@@ -79,6 +79,7 @@ public class ModeloBean {
 	@PostConstruct
 	public void init() {
 		modelo = new ModeloCarro();
+		modelo.setValor(0.0);
 		listarModelo();
 		listarMarcas();
 	}
@@ -142,7 +143,7 @@ public class ModeloBean {
 	}
 	
 	    public String novo(){
-	    	modelo = new ModeloCarro();
+	    	init();
 			return "modelo-prop";
 		}           
 	    

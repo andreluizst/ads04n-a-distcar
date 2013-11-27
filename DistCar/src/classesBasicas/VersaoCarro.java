@@ -5,6 +5,9 @@ import java.util.List;
 
 import javax.persistence.*;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
 
 
 @Entity
@@ -15,7 +18,8 @@ public class VersaoCarro extends ObjetoGeral {
 	private String descricao;
 	@ManyToOne(fetch = FetchType.EAGER)
 	private ModeloCarro modeloCarro;
-	@ManyToMany
+	@ManyToMany(fetch = FetchType.LAZY)
+	@Fetch(FetchMode.SUBSELECT)
 	private List<AcessorioCarro> acessorios;
 	@ManyToMany
 	private List<ItemSerieCarro> itens;

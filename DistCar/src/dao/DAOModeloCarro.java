@@ -35,6 +35,7 @@ public class DAOModeloCarro extends DAOGenerico<ModeloCarro> implements IDAOMode
 		boolean temAno = false;
 		boolean temMarca = false;
 		boolean temSituacao = false;
+		boolean temValor = false;
 		if (modelo.getDescricao() != null && modelo.getDescricao().length() > 0)
 			descricao = "%" + modelo.getDescricao() + "%";
 		if (modelo.getMarcaCarro()!=null && modelo.getMarcaCarro().getCodigo()!= null && modelo.getMarcaCarro().getCodigo()>0){
@@ -49,10 +50,16 @@ public class DAOModeloCarro extends DAOGenerico<ModeloCarro> implements IDAOMode
 			jpql+= " and m.ano = :ano";
 			temAno = true;
 		}
+		if (modelo.getValor()>0){
+			jpql+= " and m.valor = :valor";
+			temValor = true;
+		}
 		TypedQuery<ModeloCarro> tqry = entityManager.createQuery(jpql, ModeloCarro.class);
 		tqry.setParameter("descricao", descricao);
 		if(temAno)
 			tqry.setParameter("ano", modelo.getAno());
+		if(temValor)
+			tqry.setParameter("valor", modelo.getValor());
 		if (temMarca)
 			tqry.setParameter("marca", modelo.getMarcaCarro().getCodigo());
 		if (temSituacao)
