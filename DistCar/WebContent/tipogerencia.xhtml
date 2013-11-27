@@ -4,11 +4,16 @@
 	xmlns="http://www.w3.org/1999/xhtml" 
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui"
 >
 
 <h:head><title>Tipo Gerência</title> </h:head>
 <h:outputStylesheet name="styles-PSC.css" library="css"></h:outputStylesheet>
+
+<ui:composition template="templates/template-geral.xhtml">
+<ui:define name="principal">
+
 <h:body onload="#{tipoGerenciaBean.exibirMensagemPendente}">
 	<f:view id="viewTipoGerencia">
 		
@@ -23,14 +28,6 @@
     		</p:confirmDialog>
   		
   			<p:panel id="panelPesquisa" header="DistCar - Tipo Gerência">
-  				<f:facet name="header">
-  					<h:panelGrid columns="2">
-  						<p:commandLink action="#{tipoGerenciaBean.voltarParaPaginaPrincipal}">
-  							<p:graphicImage value="/resources/images/home-02.jpg" height="35px" width="35px" />
-  						</p:commandLink>
-  						<h:outputText value="DisctCar 1.0 - Tipo Gerência" />
-  					</h:panelGrid>
-  				</f:facet>
   				<h:panelGrid columns="2" cellpadding="5">
   					<h:outputLabel for="descricao" value="Descrição: "/>
   					<h:inputText id="descricao" value="#{tipoGerenciaBean.tipoGerenciaParaPesquisa.descricao}" lable="Descrição"/>
@@ -105,4 +102,8 @@
  	</f:view>
  	
 </h:body>
+
+</ui:define>
+</ui:composition>
+
 </html>

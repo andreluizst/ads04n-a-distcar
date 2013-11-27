@@ -4,6 +4,7 @@
 	xmlns="http://www.w3.org/1999/xhtml" 
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui"
 >
 <h:head>
@@ -11,7 +12,10 @@
 	<title>DistCar 1.0 - Escolaridade</title>
 	<h:outputStylesheet name="styles-PSC.css" library="css"></h:outputStylesheet>
 </h:head>
-	
+
+<ui:composition template="templates/template-geral.xhtml">
+<ui:define name="principal">
+
 <h:body onload="#{escolaridadeBean.exibirMensagemPendente}">
 	<f:view id="viewEscolaridade">
 		
@@ -28,14 +32,6 @@
     		</p:confirmDialog>
   		
   			<p:panel id="panelPesquisa" header="DistCar - Escolaridade">
-  				<f:facet name="header">
-  					<h:panelGrid columns="2">
-  						<p:commandLink action="#{escolaridadeBean.voltarParaPaginaPrincipal}">
-  							<p:graphicImage value="/resources/images/home-02.jpg" height="35px" width="35px" />
-  						</p:commandLink>
-  						<h:outputText value="DisctCar 1.0 - Escolaridade" />
-  					</h:panelGrid>
-  				</f:facet>
   				<h:panelGrid columns="2" cellpadding="5">
   					<h:outputLabel for="descricao" value="Descrição: "/>
   					<h:inputText id="descricao" value="#{escolaridadeBean.escolaridadeParaPesquisa.descricao}" lable="Descrição"/>
@@ -103,4 +99,8 @@
   		</h:form>
 	</f:view>
 </h:body>
+
+</ui:define>
+</ui:composition>
+
 </html>
