@@ -1,37 +1,46 @@
 package classesBasicas;
 
+
+import java.io.Serializable;
+
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 
 @Entity
-public class MovimentacaoItem {
+public class MovimentacaoItem implements Serializable {
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
 	
 	@EmbeddedId
-	private NumeroMovimentoCarroPK numeroMovimentoCarroPK;
+	private MovimentoCarroPK movimentoCarroPK;
 
 	public MovimentacaoItem() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public MovimentacaoItem(NumeroMovimentoCarroPK numeroMovimentoCarroPK) {
+	public MovimentacaoItem(MovimentoCarroPK movimentoCarroPK) {
 		super();
-		this.numeroMovimentoCarroPK = numeroMovimentoCarroPK;
+		this.movimentoCarroPK = movimentoCarroPK;
 	}
 
-	public NumeroMovimentoCarroPK getNumeroMovimentoCarroPK() {
-		return numeroMovimentoCarroPK;
+	public MovimentoCarroPK getNumeroMovimentoCarroPK() {
+		return movimentoCarroPK;
 	}
 
 	public void setNumeroMovimentoCarroPK(
-			NumeroMovimentoCarroPK numeroMovimentoCarroPK) {
-		this.numeroMovimentoCarroPK = numeroMovimentoCarroPK;
+			MovimentoCarroPK movimentoCarroPK) {
+		this.movimentoCarroPK = movimentoCarroPK;
 	}
 
 	@Override
 	public String toString() {
 		return "MovimentacaoItem [numeroMovimentoCarroPK="
-				+ numeroMovimentoCarroPK + "]";
+				+ movimentoCarroPK + "]";
 	}
 	
 	
