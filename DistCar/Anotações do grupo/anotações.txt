@@ -1,3 +1,11 @@
+28/11/2013
+- André:	Felipe, o acesso através de login foi habilitado e o arquivo index.xhtml agora é 
+			a tela de autenticação de usuário e a página principal é home.xhtml. Como vc não está usando
+			o ResourceBundle nas suas classes ManagedBean, terá que alterar os nomes dos arquivos na unha msm.
+
+
+
+
 Ontem, dia 24/10/2013, em sala de aula Francisco pediu para criar uma tela (XHTML) para cadastramento de 
 uma classe básica simples no projeto. A inclusão de função está OK.
 

@@ -1,5 +1,7 @@
 package gui.managedBeans;
 
+import java.util.ResourceBundle;
+
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
@@ -9,6 +11,7 @@ import seguranca.TipoUsuario;
 import seguranca.Usuario;
 import seguranca.Perfil;
 import fachada.Fachada;
+import gui.MsgPrimeFaces;
 
 @ManagedBean
 @ViewScoped
@@ -16,6 +19,7 @@ public class UsuarioBean {
 
 	private Usuario usuario = new Usuario();
 	private String senhaRepetida;
+	private ResourceBundle rb = ResourceBundle.getBundle("util.config");
 
 	public String salvarUsuario() {
 		if (!usuario.getSenhaAtual().equals(senhaRepetida)) {
@@ -23,10 +27,14 @@ public class UsuarioBean {
 					new FacesMessage("Repetição de senha não confere"));
 			return null;
 		} else {
-			//Fachada.obterInstancia().inserirUsuario(usuario);
+			try{
+				Fachada.obterInstancia().inserirUsuario(usuario);
+			}catch(Exception ex){
+				MsgPrimeFaces.exibirMensagemDeErro(ex.getMessage());
+			}
 			FacesContext.getCurrentInstance().addMessage(null,
 					new FacesMessage("Usuário cadastrado com sucesso!"));			
-			return "/index.xhtml?faces-redirect=true";
+			return rb.getString("linkIndex");
 		}
 	}
 	

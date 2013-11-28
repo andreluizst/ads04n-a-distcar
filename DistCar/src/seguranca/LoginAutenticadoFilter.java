@@ -21,7 +21,7 @@ import javax.servlet.http.HttpSession;
 public class LoginAutenticadoFilter implements Filter {
 
 	private static final String[] arquivosEscape = { "javax.faces.resource",
-			"index.xhtml", "index2.xhtml", "novo-usuario.xhtml", "*.xhtml" };
+			"index.xhtml", "novo-usuario.xhtml"};
 
 	public void destroy() {
 		// TODO Auto-generated method stub
@@ -36,9 +36,9 @@ public class LoginAutenticadoFilter implements Filter {
 		HttpSession sessao = req.getSession();
 		
 		// Retirar a linha abaixo,  para começar a usar o filtro 
-		chain.doFilter(request, response);
+		//chain.doFilter(request, response);
 		
-		/*
+		
 		if (verificaPaginaInicial(request)) {
 			chain.doFilter(request, response);
 		} else {
@@ -56,7 +56,7 @@ public class LoginAutenticadoFilter implements Filter {
 
 			}
 		}
-		*/
+		
 	}
 
 	public void init(FilterConfig fConfig) throws ServletException {

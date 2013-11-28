@@ -78,8 +78,8 @@ public class EntityManagerFilter implements Filter {
 
 	public void init(FilterConfig fConfig) throws ServletException {
 		destroy();
-		theEntityManagerFactory = Persistence
-				.createEntityManagerFactory(Parametros.UNIT_PERSISTENCE_NAME);
+		theEntityManagerFactory = Parametros.EMF_Default;
+				//Persistence.createEntityManagerFactory(Parametros.UNIT_PERSISTENCE_NAME);
 	}
 
 	public void destroy() {

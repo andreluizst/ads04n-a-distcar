@@ -6,60 +6,43 @@
 	xmlns:p="http://primefaces.org/ui">
 <h:head>
 	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
-	<title>Dist car 1.0</title>
+	<title>DistCar 1.0</title>
 	<h:outputStylesheet name="styles-PSC.css" library="css"></h:outputStylesheet>
 </h:head>
 <h:body>
-	<f:view>
-		<h:form>  
-    		<p:megaMenu autoDisplay="false" widgetVar="menu">  
-        		<p:submenu label="Cadastro" icon="ui-icon-contact">  
-            		<p:column>  
-                		<p:submenu label="Organizacional">  
-                    		<p:menuitem value="Função" action="#{funcaoBean.carregarPagina}" />  
-	                	    <p:menuitem value="Funcionário" action="#{funcionarioBean.carregarPagina}" />
-                		    <p:menuitem value="Escolaridade" action="#{escolaridadeBean.carregarPagina}" />
-                		    <p:menuitem value="Cidades" action="#{cidadeBean.carregarPagina}" />
-            		        <p:menuitem value="Tipo gerencia" action="#{tipoGerenciaBean.carregarPagina}" />
-        		            <p:menuitem value="Centro" action="#{centroBean.carregarPagina}" />
-		                    <p:menuitem value="Departamento" action="#{deptoBean.carregarPagina}" />
-                		</p:submenu>
-                		  
-            	    	<p:submenu label="Vendas">
-        	        		<p:menuitem value="Fabricante" action="#{fabricanteBean.carregarPagina}" />
-        	        		<p:menuitem value="Marca" action="marca.xhtml?faces-redirect=true" />  
-    	            		<p:menuitem value="Cliente" action="#{clienteBean.carregarPagina}" />  
-	                    	<p:menuitem value="Carro" action="carro.xhtml?faces-redirect=true" />  
-                    		<p:menuitem value="Modelo" action="modelo.xhtml?faces-redirect=true" />
-                    		<p:menuitem value="Versão" action="versao.xhtml?faces-redirect=true" />  
-                	    	<p:menuitem value="Acessórios" action="acessorio.xhtml?faces-redirect=true" />
-            	        	<p:menuitem value="Itens de série" action="item.xhtml?faces-redirect=true" />  
-        	        	</p:submenu>  
-	            	</p:column>  
-  
-            		<p:column>  
-                		<strong>Carros</strong>  
-            		    <p:graphicImage value="/resources/images/Bugatti-Azul.jpg" width="200"/>  
-        		    </p:column>  
-    		    </p:submenu>  
-  	
-		        <p:submenu label="Movimentação" icon="ui-icon-transferthick-e-w">  
-    	        	<p:column>  
-	                	<p:submenu label="Movimentação">  
-                    		<p:menuitem value="Entre lojas" url="#" />  
-                    		<p:menuitem value="Pedido de venda" url="#" />
-                	    	<p:menuitem value="Nota fiscal de saída" url="#" />  
-            	    	</p:submenu>  
-        	    	</p:column>  
-    	    	</p:submenu>  
-  
-    	    	<p:menuitem value="Sair" url="#" icon="ui-icon-close" />  
-	    	</p:megaMenu>  
-  
-		</h:form>
-		
-		<p:graphicImage width="100%" height="80%" value="resources/images/Bugatti-Azul.jpg"></p:graphicImage>
-		
-	</f:view>
+	<h:form>
+		<p:growl></p:growl>
+		<p:dialog header="DistCar - Distribuidora de Carros" widgetVar="dlg"
+			showEffect="slide" width="450" modal="true" visible="true"
+			resizable="false" closable="false" draggable="true">
+			<h:panelGrid columns="2" width="350">
+				<p:column>
+					<h:outputText value="Login:"></h:outputText>
+				</p:column>
+				<p:column>
+					<p:inputText id="login" value="#{loginBean.login}" tabindex="1"
+						requiredMessage="Preencha o login" required="true"
+						autocomplete="false"></p:inputText>
+				</p:column>
+				<p:column>
+					<h:outputText value="Senha:"></h:outputText>:</p:column>
+				<p:column>
+					<p:password id="senha" value="#{loginBean.senha}" tabindex="2"
+						requiredMessage="Preencha a senha" required="true"
+						autocomplete="false"></p:password>
+				</p:column>
+				<f:facet name="footer">
+					<p:commandButton value="Limpar" tabindex="3" ajax="false"
+						type="reset"></p:commandButton>
+					<p:commandButton value="Logar" tabindex="3" ajax="false"
+						action="#{loginBean.efetuarLogin2}"></p:commandButton>
+					<br></br>
+					<br></br>
+					<p:commandLink value="Novo Usuário" immediate="true" action="/novo-usuario.xhtml"></p:commandLink>
+				</f:facet>
+			</h:panelGrid>
+		</p:dialog>
+	</h:form>
+	<p:graphicImage width="100%" height="80%" value="resources/images/Carro.jpg"/>
 </h:body>
 </html>

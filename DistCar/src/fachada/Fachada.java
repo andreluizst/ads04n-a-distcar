@@ -561,10 +561,14 @@ public class Fachada implements IFachada {
 	}
 
 	@Override
-	public Usuario efetuarLogin(String login, String senha)
-			throws LoginInvalidoException {
-		// TODO Auto-generated method stub
-		return null;
+	public Usuario efetuarLogin(String login, String senha)	throws LoginInvalidoException {
+		return ctrlOrg.efetuarLogin(login, senha);
+	}
+
+	@Override
+	public void inserirUsuario(Usuario usuario) throws Exception {
+		ctrlOrg.inserirUsuario(usuario);
+		
 	}
 
 	

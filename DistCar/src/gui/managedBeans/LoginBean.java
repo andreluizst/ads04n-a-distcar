@@ -1,5 +1,7 @@
 package gui.managedBeans;
 
+import java.util.ResourceBundle;
+
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -18,6 +20,7 @@ public class LoginBean {
 	private String senha;
 	private Usuario usuarioLogado;
 	private IFachada fachada = Fachada.obterInstancia();
+	private ResourceBundle rb = ResourceBundle.getBundle("util.config");
 	
 	public String efetuarLogin(){
 		try {
@@ -25,38 +28,44 @@ public class LoginBean {
 		} catch (LoginInvalidoException e) {
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Login/Senha inexistente"));
 		}
-		return "/index.xhtml?faces-redirect=true";
+		return rb.getString("linkIndex");
 	}
 	
 	public String efetuarLogin2(){
 		try {
 			usuarioLogado = fachada.efetuarLogin(login, senha);
-			return "/home.xhtml?faces-redirect=true";	
+			login = "";
+			senha = "";
+			return rb.getString("linkHome");	
 		} catch (LoginInvalidoException e) {
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Login/Senha inexistente"));
 		}
-		return "/index.xhtml?faces-redirect=true";
+		return rb.getString("linkIndex");
 	}
 	
 	public String efetuarLogoff(){
 		usuarioLogado = null;
-		return "/index.xhtml?faces-redirect=true";
+		return rb.getString("linkIndex");
 	}
 	public String getLogin() {
 		return login;
 	}
+	
 	public void setLogin(String login) {
 		this.login = login;
 	}
+	
 	public String getSenha() {
 		return senha;
 	}
 	public void setSenha(String senha) {
 		this.senha = senha;
 	}
+	
 	public Usuario getUsuarioLogado() {
 		return usuarioLogado;
 	}
+	
 	public void setUsuarioLogado(Usuario usuarioLogado) {
 		this.usuarioLogado = usuarioLogado;
 	}

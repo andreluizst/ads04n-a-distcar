@@ -8,6 +8,7 @@ import classesBasicas.*;
 
 public interface IFachada {
 	public Usuario efetuarLogin(String login, String senha) throws LoginInvalidoException;
+	public void inserirUsuario(Usuario usuario) throws Exception;
 	
 	//***********************************************************************************
 	//************************* O R G A N I Z A C I O N A L *****************************

@@ -37,7 +37,7 @@ public class Usuario extends ObjetoGeral {
 		return login;
 	}
 	public void setLogin(String login) {
-		this.login = login;
+		this.login = login.toLowerCase();
 	}
 	public String getSenhaAtual() {
 		return senhaAtual;

@@ -7,6 +7,9 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 
+import seguranca.LoginInvalidoException;
+import seguranca.SituacaoSenha;
+import seguranca.Usuario;
 import util.Parametros;
 import classesBasicas.Centro;
 import classesBasicas.Cidade;
@@ -33,6 +36,7 @@ import dao.DAOPessoaJuridica;
 import dao.DAOTipoGerencia;
 import dao.DAOTipoLogradouro;
 import dao.DAOUnidadeFederativa;
+import dao.DAOUsuario;
 import dao.IDAOCentro;
 import dao.IDAOCidade;
 import dao.IDAOCliente;
@@ -45,6 +49,7 @@ import dao.IDAOPessoaJuridica;
 import dao.IDAOTipoGerencia;
 import dao.IDAOTipoLogradouro;
 import dao.IDAOUnidadeFederativa;
+import dao.IDAOUsuario;
 import erro.NegocioExceptionDepartamento;
 import erro.NegocioExceptionFuncao;
 import erro.NegocioExceptionFuncionario;
@@ -65,6 +70,7 @@ public class ControladorOrganizacional {
 	private IDAOEscolaridade daoEscolaridade;
 	private IDAOFabricante daoFabricante;
 	private IDAOCliente daoCliente;
+	private IDAOUsuario daoUsuario;
 	
 	public ControladorOrganizacional(){
 		emf = Parametros.EMF_Default;
@@ -79,18 +85,20 @@ public class ControladorOrganizacional {
 	}
 	
 	private void inicializarDAO(){
-		/*daoFuncao = new DAOFuncao();
+		daoFuncao = new DAOFuncao();
 		daoFuncionario = new DAOFuncionario();
 		daoEscolaridade = new DAOEscolaridade();
 		daoCentro = new DAOCentro();
 		daoDepto = new DAODepartamento();
-		daoGestor = new DAOGestor();
 		daoPJ = new DAOPessoaJuridica();
 		daoTipoLogradouro = new DAOTipoLogradouro();
 		daoCidade = new DAOCidade();
 		daoUF = new DAOUnidadeFederativa();
 		daoTipoGerencia = new DAOTipoGerencia();
-		*/
+		daoFabricante = new DAOFabricante();
+		daoCliente = new DAOCliente();
+		daoUsuario = new DAOUsuario();
+		/*
 		daoFuncao = new DAOFuncao(entityManager);
 		daoFuncionario = new DAOFuncionario(entityManager);
 		daoEscolaridade = new DAOEscolaridade(entityManager);
@@ -103,8 +111,32 @@ public class ControladorOrganizacional {
 		daoTipoGerencia = new DAOTipoGerencia(entityManager);
 		daoFabricante = new DAOFabricante(entityManager);
 		daoCliente = new DAOCliente(entityManager);
+		daoUsuario = new DAOUsuario(entityManager);
+		*/
 	}
 	
+	// ***************************  U S U Á R I O  **************************************
+	public Usuario efetuarLogin(String login, String senha) throws LoginInvalidoException {
+		Usuario obj = null;
+		try{
+			obj = daoUsuario.pegarUsuarioPeloLogin(login);
+		}catch(Exception ex){
+			throw new LoginInvalidoException("Erro ao tendar localizar usuário pelo login!");
+		}
+		if (obj == null)
+			throw new LoginInvalidoException("Login inválido!");
+		if (!obj.getSenhaAtual().equals(senha))
+			throw new LoginInvalidoException("Senha inválida!");
+		return obj;
+	}
+	
+	public void inserirUsuario(Usuario usuario) throws Exception{
+		usuario.setDataUltimaAtualizacao(Calendar.getInstance());
+		usuario.setSituacaoSenha(SituacaoSenha.ATIVA);
+		if (usuario.getSituacao() == null)
+			usuario.setSituacao(Situacao.ATIVO);
+		daoUsuario.inserir(usuario);
+	}
 	
 	//*****************************  F U N Ç Ã O  *****************************************
 	public boolean funcaoExiste(Funcao funcao) throws Exception{
