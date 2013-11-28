@@ -5,6 +5,7 @@ import java.util.List;
 import seguranca.LoginInvalidoException;
 import seguranca.Usuario;
 import negocio.ControladorCarro;
+import negocio.ControladorMovimentacao;
 import negocio.ControladorOrganizacional;
 import classesBasicas.AcessorioCarro;
 import classesBasicas.Carro;
@@ -19,6 +20,7 @@ import classesBasicas.Funcionario;
 import classesBasicas.ItemSerieCarro;
 import classesBasicas.MarcaCarro;
 import classesBasicas.ModeloCarro;
+import classesBasicas.Movimentacao;
 import classesBasicas.PessoaJuridica;
 import classesBasicas.TipoGerencia;
 import classesBasicas.TipoLogradouro;
@@ -29,10 +31,12 @@ public class Fachada implements IFachada {
 	private static Fachada instancia;
 	private ControladorOrganizacional ctrlOrg;
 	private ControladorCarro controladorCarro;
+	private ControladorMovimentacao ctrlMovimentacao;
 	
 	private Fachada(){
 		ctrlOrg = new ControladorOrganizacional();
 		this.controladorCarro = new ControladorCarro();
+		ctrlMovimentacao = new ControladorMovimentacao();
 	}
 	
 	public static Fachada obterInstancia(){
@@ -559,6 +563,8 @@ public class Fachada implements IFachada {
 	public List<AcessorioCarro> listarAcessoriosPorModelo(ModeloCarro modelo) {
 		return this.controladorCarro.listarAcessoriosPorModelo(modelo);
 	}
+	
+	// ***************************  U S U Á R I O  *******************************
 
 	@Override
 	public Usuario efetuarLogin(String login, String senha)	throws LoginInvalidoException {
@@ -570,6 +576,31 @@ public class Fachada implements IFachada {
 		ctrlOrg.inserirUsuario(usuario);
 		
 	}
+	
+
+	
+	//*************************  M O V I M E N T A Ç Ã O  *******************************
+
+	@Override
+	public void salvarMovimentacao(Movimentacao movimentacao) throws Exception {
+		if (ctrlMovimentacao.movimentacaoExiste(movimentacao))
+			ctrlMovimentacao.alterarMovimentacao(movimentacao);
+		else
+			ctrlMovimentacao.inserirMovimentacao(movimentacao);
+	}
+
+	@Override
+	public void excluirMovimentacao(Movimentacao movimentacao) throws Exception {
+		ctrlMovimentacao.excluirMovimentacao(movimentacao);
+	}
+
+	@Override
+	public List<Movimentacao> consultarMovimentacao(Movimentacao movimentacao)
+			throws Exception {
+		return ctrlMovimentacao.consultarMovimentacao(movimentacao);
+	}
+	
+	
 
 	
 }

@@ -102,11 +102,6 @@ public interface IFachada {
 	
 	
 	
-	//***********************************************************************************
-	//*************************  M O V I M E N T A Ç Ã O  *******************************
-	//***********************************************************************************
-	
-	
 	//Carro
 	
 	public void salvarCarro(Carro carro);
@@ -161,5 +156,14 @@ public interface IFachada {
 	public AcessorioCarro pesquisarAcessorioCodigo(Integer codigo);
 	public List<AcessorioCarro> consultarAcessorios(AcessorioCarro acessorioCarro) throws Exception;
 	public List<AcessorioCarro> listarAcessoriosPorModelo(ModeloCarro modelo);
+	
+	
+	//***********************************************************************************
+	//*************************  M O V I M E N T A Ç Ã O  *******************************
+	//***********************************************************************************
+	public void salvarMovimentacao(Movimentacao movimentacao) throws Exception;
+	public void excluirMovimentacao(Movimentacao movimentacao) throws Exception;
+	public List<Movimentacao> consultarMovimentacao(Movimentacao movimentacao) throws Exception;
+	
 		
 }

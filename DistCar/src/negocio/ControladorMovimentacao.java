@@ -3,9 +3,17 @@ package negocio;
 
 import java.util.List;
 
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+
+import util.Parametros;
+import classesBasicas.Funcao;
+import classesBasicas.Movimentacao;
 import classesBasicas.NotaFiscal;
 import classesBasicas.Pedido;
+import dao.DAOMovimentacao;
 import dao.DAONotaFiscal;
+import dao.IDAOMovimentacao;
 import dao.INotaFiscalDAO;
 import dao.IPedidoDAO;
 import dao.DAOPedido;
@@ -14,108 +22,58 @@ import erro.NegocioExceptionPedido;
 
 
 public class ControladorMovimentacao {
+	private EntityManagerFactory emf;
+	private EntityManager entityManager;
+	private IDAOMovimentacao daoMovimentacao;
+	//private ControladorCarro ctrlCarro;
+
 	
-private IPedidoDAO pedidoDAO;
-private INotaFiscalDAO notaFiscalDAO;
-
-public ControladorMovimentacao() {
-
-	super();
-		
-	this.pedidoDAO = new DAOPedido();	
-	this.notaFiscalDAO = new DAONotaFiscal();	
-	
-	}
-
-public void inserirPedido(Pedido pedido) throws NegocioExceptionPedido {
-	// TODO Auto-generated method stub
-	if(		pedido.getCodigo()==null||pedido.getCodigo().equals("")||
-			pedido.getNumeroPedido()==null||pedido.getNumeroPedido().equals("")||
-			pedido.getDataCompra()==null||pedido.getDataCompra().equals("")||
-			pedido.getDataUltimaAtualizacao()==null||pedido.getDataUltimaAtualizacao().equals(""))
-			{
-				throw new NegocioExceptionPedido("Campos inválidos");
-			}
-			
-	pedidoDAO.inserir(pedido);
-}
-
-public void alterarPedido(Pedido pedido) throws NegocioExceptionPedido {
-	// TODO Auto-generated method stub
-	if(		pedido.getCodigo()==null||pedido.getCodigo().equals("")||
-			pedido.getNumeroPedido()==null||pedido.getNumeroPedido().equals("")||
-			pedido.getDataCompra()==null||pedido.getDataCompra().equals("")||
-			pedido.getDataUltimaAtualizacao()==null||pedido.getDataUltimaAtualizacao().equals(""))
-			{
-				throw new NegocioExceptionPedido("Campos inválidos");
-			}
-			
-	Pedido p = pedidoDAO.consultarPorId(pedido.getCodigo());
-	if(p==null){
-		throw new NegocioExceptionPedido("Pedido não cadastrado");
+	public ControladorMovimentacao() {
+		emf = Parametros.EMF_Default;
+		entityManager = emf.createEntityManager();
+		inicializarDAO();
+		//ctrlCarro = new ControladorCarro();
 	}
 	
-	pedidoDAO.inserir(p);
-
-}
-
-public void removerPedido(Pedido pedido) throws NegocioExceptionPedido {
-	// TODO Auto-generated method stub
-	Pedido p = pedidoDAO.consultarPorId(pedido.getCodigo());
-	if(p==null){
-		throw new NegocioExceptionPedido("Pedido não encontrado!");
-	}
-	pedidoDAO.remover(p);
-}
-
-public List<Pedido> pesquisarPedido(Pedido pedido) throws NegocioExceptionPedido {
-	// TODO Auto-generated method stub
-	return null;
-}
-
-public void inserirNotaFiscal(NotaFiscal notaFiscal) throws NegocioExceptionNotaFiscal {
-	// TODO Auto-generated method stub
-	if(		notaFiscal.getCodigo()==null||notaFiscal.getCodigo().equals("")||
-			notaFiscal.getNumeroPedido()==null||notaFiscal.getNumeroPedido().equals("")||
-			notaFiscal.getDataCompra()==null||notaFiscal.getDataCompra().equals("")||
-			notaFiscal.getDataUltimaAtualizacao()==null||notaFiscal.getDataUltimaAtualizacao().equals(""))
-			{
-				throw new NegocioExceptionNotaFiscal("Campos inválidos");
-			}
-			
-	notaFiscalDAO.inserir(notaFiscal);
-}
-
-public void alterarNotaFiscal(NotaFiscal notaFiscal) throws NegocioExceptionNotaFiscal {
-	// TODO Auto-generated method stub
-	if(		notaFiscal.getCodigo()==null||notaFiscal.getCodigo().equals("")||
-			notaFiscal.getNumeroPedido()==null||notaFiscal.getNumeroPedido().equals("")||
-			notaFiscal.getDataCompra()==null||notaFiscal.getDataCompra().equals("")||
-			notaFiscal.getDataUltimaAtualizacao()==null||notaFiscal.getDataUltimaAtualizacao().equals(""))
-			{
-				throw new NegocioExceptionNotaFiscal("Campos inválidos");
-			}
-	/*NotaFiscal nf = notaFiscalDAO.pesquisarNumeroNotaFiscal(notaFiscal.getNumeroNotaFiscal());
-	
-	if(nf==null){
-		throw new NegocioExceptionNotaFiscal("Nota Fiscal não cadastrada");
+	public ControladorMovimentacao(EntityManagerFactory emf){
+		this.emf = emf;
+		this.entityManager = emf.createEntityManager();
+		inicializarDAO();
+		//ctrlCarro = new ControladorCarro();
 	}
 	
-	notaFiscalDAO.inserir(nf);*/
-}
-
-public void removerNotaFiscal(NotaFiscal notaFiscal) throws NegocioExceptionNotaFiscal {
-	// TODO Auto-generated method stub
-	/*NotaFiscal nf = notaFiscalDAO.pesquisarNumeroNotaFiscal(notaFiscal.getNumeroNotaFiscal());
-	if(nf==null){
-		throw new NegocioExceptionNotaFiscal("Nota Fiscal não cadastrada");
+	private void inicializarDAO(){
+		daoMovimentacao = new DAOMovimentacao();
 	}
-	notaFiscalDAO.remover(nf);*/
-}
+	
+	
+	public boolean movimentacaoExiste(Movimentacao movimentacao) throws Exception{
+		Movimentacao obj = null;
+		if (movimentacao.getNumero() == null)
+			return false;
+		obj = daoMovimentacao.consultarPorId(movimentacao.getNumero());
+		if (obj != null)
+			if (obj.getNumero() == movimentacao.getNumero())
+				return true;
+		return false;
+	}
+	
+	public void inserirMovimentacao(Movimentacao movimentacao) throws Exception{
+		daoMovimentacao.inserirSemTratamento(movimentacao);
+	}
+	
+	public void alterarMovimentacao(Movimentacao movimentacao) throws Exception{
+		daoMovimentacao.alterarSemTratamento(movimentacao);
+	}
+	
+	public void excluirMovimentacao(Movimentacao movimentacao) throws Exception{
+		daoMovimentacao.removerSemTratamento(movimentacao);
+	}
+	
+	public List<Movimentacao> consultarMovimentacao(Movimentacao movimentacao) throws Exception{
+		return daoMovimentacao.consultar(movimentacao);
+	}
 
-public List<NotaFiscal> pesquisarNotaFiscal(NotaFiscal notaFiscal) throws NegocioExceptionNotaFiscal {
-	// TODO Auto-generated method stub
-	return null;
-}
+
 
 }

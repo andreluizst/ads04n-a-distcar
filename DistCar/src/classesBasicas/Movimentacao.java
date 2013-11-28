@@ -1,6 +1,7 @@
 package classesBasicas;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -13,6 +14,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -46,7 +48,11 @@ public class Movimentacao {
 	@Enumerated(EnumType.STRING)
 	@Column(nullable=false, length=10)
 	private SituacaoMovimentacao situacao;
-
+	
+	@OneToMany(mappedBy="movimentoCarroPK.movimentacao", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	private List<MovimentacaoItem> itens;
+	
+	
 	public Movimentacao() {
 		super();
 		// TODO Auto-generated constructor stub
@@ -145,6 +151,14 @@ public class Movimentacao {
 		this.situacao = situacao;
 	}
 
+	public List<MovimentacaoItem> getItens() {
+		return itens;
+	}
+
+	public void setItens(List<MovimentacaoItem> itens) {
+		this.itens = itens;
+	}
+
 	@Override
 	public String toString() {
 		return "Movimentacao [numero=" + numero + ", notaFiscal=" + notaFiscal
@@ -152,7 +166,7 @@ public class Movimentacao {
 				+ ", tipoMovimentacao=" + tipoMovimentacao
 				+ ", dataMovimentacao=" + dataMovimentacao
 				+ ", dataUltimaAtualizacao=" + dataUltimaAtualizacao
-				+ ", situacao=" + situacao + "]";
+				+ ", situacao=" + situacao + ", itens=" + itens + "]";
 	}
 
 	@Override
@@ -170,6 +184,7 @@ public class Movimentacao {
 				* result
 				+ ((dataUltimaAtualizacao == null) ? 0 : dataUltimaAtualizacao
 						.hashCode());
+		result = prime * result + ((itens == null) ? 0 : itens.hashCode());
 		result = prime * result
 				+ ((notaFiscal == null) ? 0 : notaFiscal.hashCode());
 		result = prime * result + ((numero == null) ? 0 : numero.hashCode());
@@ -187,7 +202,7 @@ public class Movimentacao {
 			return true;
 		if (obj == null)
 			return false;
-		if (!(obj instanceof Movimentacao))
+		if (getClass() != obj.getClass())
 			return false;
 		Movimentacao other = (Movimentacao) obj;
 		if (ctoDestino == null) {
@@ -210,6 +225,11 @@ public class Movimentacao {
 				return false;
 		} else if (!dataUltimaAtualizacao.equals(other.dataUltimaAtualizacao))
 			return false;
+		if (itens == null) {
+			if (other.itens != null)
+				return false;
+		} else if (!itens.equals(other.itens))
+			return false;
 		if (notaFiscal == null) {
 			if (other.notaFiscal != null)
 				return false;
@@ -226,10 +246,6 @@ public class Movimentacao {
 			return false;
 		return true;
 	}
-	
-	
-	
-	
 	
 	
 }
