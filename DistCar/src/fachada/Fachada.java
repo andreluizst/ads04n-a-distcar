@@ -1,5 +1,6 @@
 package fachada;
 
+import java.util.Date;
 import java.util.List;
 
 import seguranca.LoginInvalidoException;
@@ -598,6 +599,12 @@ public class Fachada implements IFachada {
 	public List<Movimentacao> consultarMovimentacao(Movimentacao movimentacao)
 			throws Exception {
 		return ctrlMovimentacao.consultarMovimentacao(movimentacao);
+	}
+
+	@Override
+	public List<Movimentacao> consultarMovimentacao(Movimentacao movimentacao,
+			Date dataFinal) throws Exception {
+		return ctrlMovimentacao.consultarMovimentacao(movimentacao, dataFinal);
 	}
 	
 	

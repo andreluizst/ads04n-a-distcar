@@ -1,21 +1,19 @@
 package gui.managedBeans;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
-import javax.faces.event.ActionEvent;
 
 import classesBasicas.Centro;
-import classesBasicas.Cidade;
-import classesBasicas.Fabricante;
 import classesBasicas.Movimentacao;
 import classesBasicas.MovimentacaoItem;
 import classesBasicas.SituacaoMovimentacao;
-import classesBasicas.UnidadeFederativa;
 import fachada.Fachada;
 import fachada.IFachada;
 import gui.MsgPrimeFaces;
@@ -40,6 +38,7 @@ public class MovimentacaoBean {
 	private boolean somenteLeitura;
 	private FacesMessage msgPendente;
 	private Movimentacao movimentacaoParaPesquisa;
+	private Date dataFinalPesquisa;
 	private Movimentacao movimentacaoSelecionada;
 	private Movimentacao movimentacao;
 	private List<Movimentacao> lista;
@@ -57,6 +56,7 @@ public class MovimentacaoBean {
 	
 	private void inicializar(){
 		novaMovimentacao();
+		iniciarObjParaPesquisa();
 		if (lista==null)
 			lista = new ArrayList<Movimentacao>();
 		else
@@ -75,6 +75,8 @@ public class MovimentacaoBean {
 
 	private void iniciarObjParaPesquisa(){
 		movimentacaoParaPesquisa = new Movimentacao();
+		movimentacaoParaPesquisa.setDataMovimentacao(Calendar.getInstance().getTime());
+		dataFinalPesquisa = Calendar.getInstance().getTime();
 	}
 
 	private void prepararParaExibirDados(Movimentacao obj){
@@ -145,7 +147,7 @@ public class MovimentacaoBean {
 	
 	public void consultar(){
 		try{
-			atualizarLista(fachada.consultarMovimentacao(movimentacaoParaPesquisa));
+			atualizarLista(fachada.consultarMovimentacao(movimentacaoParaPesquisa, dataFinalPesquisa));
 		}catch(Exception ex){
 			MsgPrimeFaces.exibirMensagemDeErro(ex.getMessage());
 		}
@@ -184,4 +186,73 @@ public class MovimentacaoBean {
 		inicializar();
 		return resourceBundle.getString("linkMovimentacao");
 	}
+	
+	
+	// GETs e SETs
+
+	public Movimentacao getMovimentacaoParaPesquisa() {
+		return movimentacaoParaPesquisa;
+	}
+
+	public void setMovimentacaoParaPesquisa(Movimentacao movimentacaoParaPesquisa) {
+		this.movimentacaoParaPesquisa = movimentacaoParaPesquisa;
+	}
+
+	public Date getDataFinalPesquisa() {
+		return dataFinalPesquisa;
+	}
+
+	public void setDataFinalPesquisa(Date dataFinalPesquisa) {
+		this.dataFinalPesquisa = dataFinalPesquisa;
+	}
+
+	public Movimentacao getMovimentacaoSelecionada() {
+		return movimentacaoSelecionada;
+	}
+
+	public void setMovimentacaoSelecionada(Movimentacao movimentacaoSelecionada) {
+		this.movimentacaoSelecionada = movimentacaoSelecionada;
+	}
+
+	public Movimentacao getMovimentacao() {
+		return movimentacao;
+	}
+
+	public void setMovimentacao(Movimentacao movimentacao) {
+		this.movimentacao = movimentacao;
+	}
+
+	public boolean isListaEstaVazia() {
+		return listaEstaVazia;
+	}
+
+	public String getTituloOperacao() {
+		return tituloOperacao;
+	}
+
+	public String getTextoBotaoFecharOuCancelar() {
+		return textoBotaoFecharOuCancelar;
+	}
+
+	public boolean isSomenteLeitura() {
+		return somenteLeitura;
+	}
+
+	public List<Movimentacao> getLista() {
+		return lista;
+	}
+
+	public List<Centro> getCentrosPesquisa() {
+		return centrosPesquisa;
+	}
+
+	public List<Centro> getCentros() {
+		return centros;
+	}
+
+	public SituacaoMovimentacao[] getSituacoes() {
+		return situacoes;
+	}
+	
+	
 }

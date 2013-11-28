@@ -42,9 +42,9 @@ public class DAOMovimentacao extends DAOGenerico<Movimentacao> implements
 					&& movimentacao.getCtoDestino().getCodigo() != null
 					&& movimentacao.getCtoDestino().getCodigo() > 0){
 				if (temParametros)
-					jpql+= " and m.ctoDestino = :codigoCentroDestino";
+					jpql+= " and m.ctoDestino.codigo = :codigoCentroDestino";
 				else{
-					jpql+= " where m.ctoDestino = :codigoCentroDestino";
+					jpql+= " where m.ctoDestino.codigo = :codigoCentroDestino";
 					temParametros = true;
 				}
 				temCentroDestino = true;
@@ -53,9 +53,9 @@ public class DAOMovimentacao extends DAOGenerico<Movimentacao> implements
 					&& movimentacao.getCtoOrigem().getCodigo() != null
 					&& movimentacao.getCtoOrigem().getCodigo() > 0){
 				if (temParametros)
-					jpql+= " and m.ctoOrigem = :codigoCentroOrigem";
+					jpql+= " and m.ctoOrigem.codigo = :codigoCentroOrigem";
 				else{
-					jpql+= " where m.ctoOrigem = :codigoCentroOrigem";
+					jpql+= " where m.ctoOrigem.codigo = :codigoCentroOrigem";
 					temParametros = true;
 				}
 				temCentroOrigem = true;
@@ -64,9 +64,9 @@ public class DAOMovimentacao extends DAOGenerico<Movimentacao> implements
 				if (dataFinal == null)
 					dataFinal = movimentacao.getDataMovimentacao();
 				if (temParametros)
-					jpql+= " and (m.dataMovimentacao >= :dataInicial and m.dataMovimentaca <= :dataFinal)";
+					jpql+= " and (m.dataMovimentacao >= :dataInicial and m.dataMovimentacao <= :dataFinal)";
 				else{
-					jpql+= " where (m.dataMovimentacao >= :dataInicial and m.dataMovimentaca <= :dataFinal)";
+					jpql+= " where (m.dataMovimentacao >= :dataInicial and m.dataMovimentacao <= :dataFinal)";
 					temParametros = true;
 				}
 				temData = true;

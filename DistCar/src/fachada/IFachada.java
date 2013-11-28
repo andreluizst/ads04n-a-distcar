@@ -1,5 +1,6 @@
 package fachada;
 
+import java.util.Date;
 import java.util.List;
 
 import seguranca.LoginInvalidoException;
@@ -164,6 +165,8 @@ public interface IFachada {
 	public void salvarMovimentacao(Movimentacao movimentacao) throws Exception;
 	public void excluirMovimentacao(Movimentacao movimentacao) throws Exception;
 	public List<Movimentacao> consultarMovimentacao(Movimentacao movimentacao) throws Exception;
+	public List<Movimentacao> consultarMovimentacao(Movimentacao movimentacao,
+			Date dataFinal) throws Exception;
 	
 		
 }

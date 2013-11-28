@@ -1,6 +1,7 @@
 package negocio;
 
 
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -74,6 +75,9 @@ public class ControladorMovimentacao {
 		return daoMovimentacao.consultar(movimentacao);
 	}
 
-
+	public List<Movimentacao> consultarMovimentacao(Movimentacao movimentacao,
+			Date dataFinal) throws Exception{
+		return daoMovimentacao.consultar(movimentacao, dataFinal);
+	}
 
 }
