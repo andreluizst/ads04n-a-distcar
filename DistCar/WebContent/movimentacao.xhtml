@@ -37,6 +37,13 @@
   					<h:outputLabel for="numero" value="Número: "/>
   					<h:inputText id="numero" value="#{movimentacaoBean.movimentacaoParaPesquisa.numero}" lable="Número"/>
   					
+  					<h:outputLabel for="cbxTipoMovimentacao" value="Tipo de movimentação: "/>
+  					<p:selectOneMenu id="cbxTipoMovimentacao" 
+  							value="#{movimentacaoBean.movimentacaoParaPesquisa.tipoMovimentacao}" >
+  						<f:selectItem itemLabel="Todos os tipos de movimentação" itemValue="" />
+  						<f:selectItems value="#{movimentacaoBean.tiposDeMovimentacoes}" />
+  					</p:selectOneMenu>
+  					
   					<h:outputLabel for="cbxCentroOrigem" value="Centro de origem: "/>
   					<p:selectOneMenu id="cbxCentroOrigem" converter="CentroConverter"
   							value="#{movimentacaoBean.movimentacaoParaPesquisa.ctoOrigem}">
@@ -93,7 +100,7 @@
   						paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks}
   						{NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rowsPerPageTemplate="5,10,15"
   						selection="#{movimentacaoBean.movimentacaoSelecionada}" selectionMode="single" 
-  						rowKey="#{movimentacao}"
+  						rowKey="#{movimentacao}" resizableColumns="true" liveResize="true"
   						emptyMessage="Nenhum registro de movimentação encontrado">
   				<f:facet name="header">Lista de Movimentações</f:facet>
   				<p:column>

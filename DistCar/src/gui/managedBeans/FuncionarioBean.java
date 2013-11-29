@@ -135,6 +135,8 @@ public class FuncionarioBean {
 	public String alterar(){
 		if (listaEstaVazia)
 			return null;
+		if (funcionarioSelecionado == null)
+			return null;
 		prepararParaExibirDados(funcionarioSelecionado);
 		tituloOperacao = FuncionarioBean.OP_ALTERAR;
 		textoBotaoFecharOuCancelar = FuncionarioBean.TXT_BTN_CANCELAR;
@@ -160,6 +162,8 @@ public class FuncionarioBean {
 	
 	public void excluir(){
 		if (listaEstaVazia)
+			return;
+		if (funcionarioSelecionado == null)
 			return;
 		try{
 			funcionario = funcionarioSelecionado;
@@ -215,6 +219,8 @@ public class FuncionarioBean {
 	
 	public String visualizar(){
 		if (listaEstaVazia)
+			return null;
+		if (funcionarioSelecionado == null)
 			return null;
 		prepararParaExibirDados(funcionarioSelecionado);
 		tituloOperacao = FuncionarioBean.OP_VISUALIZAR;

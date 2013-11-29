@@ -122,6 +122,8 @@ public class FabricanteBean {
 	public String alterar(){
 		if (listaEstaVazia)
 			return null;
+		if (fabricanteSelecionado == null)
+			return null;
 		prepararParaExibirDados(fabricanteSelecionado);
 		tituloOperacao = FabricanteBean.OP_ALTERAR;
 		textoBotaoFecharOuCancelar = FabricanteBean.TXT_BTN_CANCELAR;
@@ -149,6 +151,8 @@ public class FabricanteBean {
 	
 	public void excluir(){
 		if (listaEstaVazia)
+			return;
+		if (fabricanteSelecionado == null)
 			return;
 		try{
 			fabricante = fabricanteSelecionado;
@@ -211,6 +215,8 @@ public class FabricanteBean {
 	
 	public String visualizar(){
 		if (listaEstaVazia)
+			return null;
+		if (fabricanteSelecionado == null)
 			return null;
 		prepararParaExibirDados(fabricanteSelecionado);
 		tituloOperacao = FabricanteBean.OP_VISUALIZAR;

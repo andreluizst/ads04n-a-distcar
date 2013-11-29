@@ -193,6 +193,7 @@ public class CidadeBean {
 	
 	public String cancelar(){
 		cidade = null;
+		somenteLeitura = true;
 		return rb.getString("linkCidade");
 	}
 	

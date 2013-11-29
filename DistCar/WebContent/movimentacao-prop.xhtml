@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html 
+	xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+>
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+	<title>DistCar 1.0 - Movimentação</title>
+	<h:outputStylesheet name="styles-PSC.css" library="css"></h:outputStylesheet>
+</h:head>
+<h:body>
+	<f:view id="viewMovimentacao-prop">
+		
+		<h:form id="frmMensagens">
+			<p:messages id="messages" showDetail="false" autoUpdate="true" closable="true"></p:messages>
+		</h:form>
+		
+  		<h:form id="frmPrincipal">
+  			<p:panel id="panel" header="DistCar - #{movimentacaoBean.tituloOperacao}">
+  				<h:panelGrid columns="3" cellpadding="2">
+  					<h:outputLabel for="numero" value="Número: "/>
+  					<p:inputText id="numero" value="#{movimentacaoBean.movimentacao.numero}" lable="Número"
+  							required="false" readonly="true"/>
+  					<p:message for="numero" display="default" />
+  					
+  					<h:outputLabel for="cbxTipoMovimentacao" value="Tipo de movimentação: *"/>
+  					<p:selectOneMenu id="cbxTipoMovimentacao" 
+  							value="#{movimentacaoBean.movimentacao.tipoMovimentacao}"
+  							readonly="#{movimentacaoBean.somenteLeitura}"
+  							disabled="#{movimentacaoBean.somenteLeitura}"
+  							required="true" requiredMessage="Informe um tipo de movimentação!"
+  							valueChangeListener="#{movimentacaoBean.mudarTipoMovimentacao}" >
+  						<f:selectItem noSelectionOption="true" 
+  							itemLabel="Selecione um tipo de movimentação" itemValue="#{null}" />
+  						<f:selectItems value="#{movimentacaoBean.tiposDeMovimentacoes}" />
+  						<f:ajax render="panel" event="valueChange"/>
+  					</p:selectOneMenu>
+  					<p:message for="cbxTipoMovimentacao" display="default" />
+  					
+  					<h:outputLabel for="cbxCentroOrigem" value="Centro de origem: *"/>
+  					<p:selectOneMenu id="cbxCentroOrigem" converter="CentroConverter"
+  								value="#{movimentacaoBean.movimentacao.ctoOrigem}"
+  								disabled="#{!movimentacaoBean.temCentros}" 
+  								readonly="#{movimentacaoBean.somenteLeitura}"
+  								required="true" requiredMessage="Informe um centro de origem!">
+  						<f:selectItem noSelectionOption="true" 
+  								itemLabel="Selecione um centro de origem" itemValue="-1" />
+  						<f:selectItems value="#{movimentacaoBean.centros}" var="centroOrig" 
+  									itemLabel="#{centroOrig}" itemValue="#{centroOrig}"/>
+  					</p:selectOneMenu>
+  					<p:message for="cbxCentroOrigem" display="default" />
+					
+					<h:outputLabel for="cbxCentroDestino" value="Centro de destino: *"
+								rendered="#{movimentacaoBean.centroDestinoRequerido}"/>
+  					<p:selectOneMenu id="cbxCentroDestino" converter="CentroConverter"
+  								value="#{movimentacaoBean.movimentacao.ctoDestino}"
+  								disabled="#{!movimentacaoBean.temCentros}" 
+  								readonly="#{movimentacaoBean.somenteLeitura}"
+  								required="#{movimentacaoBean.centroDestinoRequerido}"
+  								requiredMessage="Informe um centro de destino!"
+  								rendered="#{movimentacaoBean.centroDestinoRequerido}" >
+  						<f:selectItem noSelectionOption="true"
+  								itemLabel="Selecione um centro de destino" itemValue="-1" />
+  						<f:selectItems value="#{movimentacaoBean.centros}" var="centroDest" 
+  									itemLabel="#{centroDest}" itemValue="#{centroDest}"/>
+  					</p:selectOneMenu>
+  					<p:message for="cbxCentroDestino" display="default" 
+  								rendered="#{movimentacaoBean.centroDestinoRequerido}"/>
+  					  					
+  					<h:outputLabel for="situacao" value="Situação: "/>
+  					<p:selectOneMenu id="situacao" value="#{movimentacaoBean.movimentacao.situacao}"
+  							readonly="#{movimentacaoBean.somenteLeitura}" >
+  						<f:selectItem noSelectionOption="true" 
+  							itemLabel="Selecione uma situação" itemValue="" />
+  						<f:selectItems value="#{movimentacaoBean.situacoes}" />
+  					</p:selectOneMenu>
+  					<p:message for="situacao" display="default" />
+  					
+  				</h:panelGrid>
+  			</p:panel>
+  			
+  			<p:dataTable id="tbLista" var="item" value="#{movimentacaoBean.movimentacao.itens}"
+  						paginator="true" rows="5"
+  						paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks}
+  						{NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rowsPerPageTemplate="3,6"
+  						selection="#{movimentacaoBean.itemMovimentacaoSelecionada}" selectionMode="single" 
+  						rowKey="#{item}" resizableColumns="true" liveResize="true"
+  						emptyMessage="Nenhum item encontrado">
+  				<f:facet name="header">Itens da movimentação
+  					<p:inputText id="txtChassi" size="15" widgetVar="wgvChassi"  
+  								readonly="#{movimentacaoBean.somenteLeitura}"
+  								value="#{movimentacaoBean.chassi}"
+  								required="false" lable="Chassi" />
+  					<h:panelGrid columns="3" cellpadding="2" bgcolor="green">
+  								<p:commandButton actionListener="#{movimentacaoBean.adicionarItem}"
+  										id="btnNovoItem" icon="ui-icon-plus" 
+  										title="Adicionar item" immediate="true" ajax="true"
+  										disabled="#{movimentacaoBean.somenteLeitura}">
+  									<f:ajax render="tbLista" execute="txtChassi"/>
+  								</p:commandButton>
+  								<p:commandButton actionListener="#{movimentacaoBean.alterarItem}" 
+  										id="btnAlterarItem" icon="ui-icon-pencil"
+  										title="alterar item selecionado" immediate="true" ajax="true"
+  										disabled="#{movimentacaoBean.somenteLeitura}">
+  									<f:ajax render="tbLista" execute="txtChassi"/>
+  								</p:commandButton> 
+  								<p:commandButton actionListener="#{movimentacaoBean.excluirItem}" 
+  										id="btnExcluirItem" icon="ui-icon-trash" 
+  										title="excluir item selecionado" immediate="true" ajax="true"
+  										disabled="#{movimentacaoBean.somenteLeitura}">
+  									<f:ajax render="tbLista" execute="txtChassi"/>
+  								</p:commandButton> 
+  					</h:panelGrid>
+  				</f:facet>
+  				<p:column>
+  					<f:facet name="header"><h:outputText value="Número"/> </f:facet>
+  					<h:outputText value="#{item.movimentacao.numero}"/>
+  				</p:column>
+  				
+  				<p:column>
+  					<f:facet name="header"><h:outputText value="Código carro"/> </f:facet>
+  					<h:outputText value="#{item.carro.codigo}"/>
+  				</p:column>
+  				
+  				<p:column>
+  					<f:facet name="header"><h:outputText value="Chassi carro"/> </f:facet>
+  					<h:outputText value="#{item.carro.chassi}"/>
+  				</p:column>
+  				
+  				<p:column>
+  					<f:facet name="header"><h:outputText value="Descrição"/> </f:facet>
+  					<h:outputText value="#{item.carro}"/>
+  				</p:column>
+  				<f:facet name="footer">  
+  					
+        		</f:facet>
+  			</p:dataTable>
+  			
+    		<p:commandButton value="Salvar" rendered="#{!movimentacaoBean.somenteLeitura}" 
+  						disabled="#{movimentacaoBean.somenteLeitura}" 
+  						update="panel" action="#{movimentacaoBean.salvar}"/>
+  				
+  			<p:commandButton value="#{movimentacaoBean.textoBotaoFecharOuCancelar}" 
+  						immediate="true" action="#{movimentacaoBean.cancelar}" />
+  		</h:form>
+ 	</f:view>
+</h:body>
+</html>

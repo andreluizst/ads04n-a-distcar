@@ -20,7 +20,7 @@
 		
   		<h:form id="frmPrincipal">
   			<p:panel id="panel" header="DistCar - #{deptoBean.tituloOperacao}">
-  				<h:panelGrid columns="2" cellpadding="5">
+  				<h:panelGrid columns="3" cellpadding="5">
   					<h:outputLabel for="nome" value="Nome: *"/>
   					<p:inputText id="nome" value="#{deptoBean.departamento.nome}" lable="Nome"
   							required="true" readonly="#{deptoBean.somenteLeitura}"/>
@@ -34,6 +34,7 @@
   						<f:selectItems value="#{deptoBean.centros}" var="centro" 
   									itemLabel="#{centro}" itemValue="#{centro.codigo}"/>
   					</p:selectOneMenu>
+  					<p:message for="cbxCentro" display="default" />
 					
 					<h:outputLabel for="cbxGestor" value="Gestor: "/>
   					<p:selectOneMenu id="cbxGestor" value="#{deptoBean.codigoGestorSelecionado}"
@@ -43,6 +44,7 @@
   						<f:selectItems value="#{deptoBean.gestores}" var="gestor" 
   									itemLabel="#{gestor.nome}" itemValue="#{gestor.codigo}"/>
   					</p:selectOneMenu>
+  					<p:message for="cbxGestor" display="default" />
   					  					
   					<h:outputLabel for="cbxDeptoSup" value="Depto/centro (superior): "/>
   					<p:selectOneMenu id="cbxDeptoSup" value="#{deptoBean.codigoDeptoSuperiorSelecionado}"
@@ -52,6 +54,7 @@
   						<f:selectItems value="#{deptoBean.deptosSuperiores}" var="deptoSup" 
   									itemLabel="#{deptoSup}" itemValue="#{deptoSup.codigo}"/>
   					</p:selectOneMenu>
+  					<p:message for="cbxDeptoSup" display="default" />
   					
   					<h:outputLabel for="situacao" value="Situação: "/>
   					<p:selectOneMenu id="situacao" value="#{deptoBean.departamento.situacao}"
@@ -59,6 +62,7 @@
   						<f:selectItem noSelectionOption="true" itemLabel="Selecione uma situação" itemValue="" />
   						<f:selectItems value="#{deptoBean.situacoes}" />
   					</p:selectOneMenu>
+  					<p:message for="situacao" display="default" />
   					
   				</h:panelGrid>
 
@@ -67,7 +71,7 @@
   						update="panel" action="#{deptoBean.salvar}"/>
   				
   				<p:commandButton value="#{deptoBean.textoBotaoFecharOuCancelar}" 
-  								immediate="true" action="departamento" />
+  								immediate="true" action="#{deptoBean.cancelar}" />
 
   			</p:panel>
     		

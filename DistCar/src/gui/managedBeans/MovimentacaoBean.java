@@ -9,11 +9,13 @@ import java.util.ResourceBundle;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.event.ValueChangeEvent;
 
 import classesBasicas.Centro;
 import classesBasicas.Movimentacao;
 import classesBasicas.MovimentacaoItem;
 import classesBasicas.SituacaoMovimentacao;
+import classesBasicas.TipoMovimentacao;
 import fachada.Fachada;
 import fachada.IFachada;
 import gui.MsgPrimeFaces;
@@ -40,12 +42,18 @@ public class MovimentacaoBean {
 	private Movimentacao movimentacaoParaPesquisa;
 	private Date dataFinalPesquisa;
 	private Movimentacao movimentacaoSelecionada;
+	private MovimentacaoItem itemMovimentacaoSelecionada;
 	private Movimentacao movimentacao;
 	private List<Movimentacao> lista;
 	private List<MovimentacaoItem> itensDaMovimentacao;
+	//private List<MovimentacaoItem> itensOriginais;
 	private List<Centro> centrosPesquisa;
 	private List<Centro> centros;
 	private SituacaoMovimentacao[] situacoes = SituacaoMovimentacao.values();
+	private TipoMovimentacao[] tiposDeMovimentacoes = TipoMovimentacao.values();
+	private boolean temCentros;
+	private boolean centroDestinoRequerido;
+	private String chassi = "";
 	
 	
 	
@@ -61,6 +69,8 @@ public class MovimentacaoBean {
 			lista = new ArrayList<Movimentacao>();
 		else
 			lista.clear();
+		centroDestinoRequerido = false;
+		temCentros = false;
 		listaEstaVazia = true;
 		listaItemEstaVazia = true;
 		tituloOperacao = MovimentacaoBean.OP_VISUALIZAR;
@@ -81,8 +91,19 @@ public class MovimentacaoBean {
 
 	private void prepararParaExibirDados(Movimentacao obj){
 		this.movimentacao = obj;
+		//itensOriginais = obj.getItens();
+		if (itensDaMovimentacao == null)
+			itensDaMovimentacao = new ArrayList<MovimentacaoItem>();
+		if (obj.getItens() != null && obj.getItens().size() > 0){
+			listaItemEstaVazia = false;
+			itensDaMovimentacao.addAll(obj.getItens());
+		}else{
+			listaItemEstaVazia = true;
+			itensDaMovimentacao.clear();
+		}
 		try{
 			centros = fachada.listarCentros();
+			temCentros = centros != null ? centros.size() > 0 : false;
 		}catch(Exception ex){
 			MsgPrimeFaces.exibirMensagemDeErro("Não foi possível filtrar as cidades pelo estado selecionado!");
 		}
@@ -90,6 +111,8 @@ public class MovimentacaoBean {
 	
 	public String alterar(){
 		if (listaEstaVazia)
+			return null;
+		if (movimentacaoSelecionada == null)
 			return null;
 		prepararParaExibirDados(movimentacaoSelecionada);
 		tituloOperacao = MovimentacaoBean.OP_ALTERAR;
@@ -113,6 +136,8 @@ public class MovimentacaoBean {
 	
 	public void excluir(){
 		if (listaEstaVazia)
+			return;
+		if (movimentacaoSelecionada == null)
 			return;
 		try{
 			movimentacao = movimentacaoSelecionada;
@@ -156,6 +181,8 @@ public class MovimentacaoBean {
 	public String visualizar(){
 		if (listaEstaVazia)
 			return null;
+		if (movimentacaoSelecionada == null)
+			return null;
 		prepararParaExibirDados(movimentacaoSelecionada);
 		tituloOperacao = MovimentacaoBean.OP_VISUALIZAR;
 		textoBotaoFecharOuCancelar = MovimentacaoBean.TXT_BTN_FECHAR;
@@ -187,6 +214,18 @@ public class MovimentacaoBean {
 		return resourceBundle.getString("linkMovimentacao");
 	}
 	
+	public void mudarTipoMovimentacao(ValueChangeEvent obj){
+		TipoMovimentacao tpMov;
+		try{
+			tpMov = (TipoMovimentacao)obj.getNewValue();
+			if (tpMov != null)
+				centroDestinoRequerido = tpMov == TipoMovimentacao.ENTRE_CENTROS?true:false; 
+		}catch(Exception ex){
+			centroDestinoRequerido = false;
+			MsgPrimeFaces.exibirMensagemDeErro(ex.getMessage());
+		}
+	}
+	
 	
 	// GETs e SETs
 
@@ -212,6 +251,15 @@ public class MovimentacaoBean {
 
 	public void setMovimentacaoSelecionada(Movimentacao movimentacaoSelecionada) {
 		this.movimentacaoSelecionada = movimentacaoSelecionada;
+	}
+
+	public MovimentacaoItem getItemMovimentacaoSelecionada() {
+		return itemMovimentacaoSelecionada;
+	}
+
+	public void setItemMovimentacaoSelecionada(
+			MovimentacaoItem itemMovimentacaoSelecionada) {
+		this.itemMovimentacaoSelecionada = itemMovimentacaoSelecionada;
 	}
 
 	public Movimentacao getMovimentacao() {
@@ -252,6 +300,30 @@ public class MovimentacaoBean {
 
 	public SituacaoMovimentacao[] getSituacoes() {
 		return situacoes;
+	}
+
+	public TipoMovimentacao[] getTiposDeMovimentacoes() {
+		return tiposDeMovimentacoes;
+	}
+
+	public boolean isCentroDestinoRequerido() {
+		return centroDestinoRequerido;
+	}
+
+	public boolean isListaItemEstaVazia() {
+		return listaItemEstaVazia;
+	}
+
+	public String getChassi() {
+		return chassi;
+	}
+
+	public void setChassi(String chassi) {
+		this.chassi = chassi;
+	}
+
+	public boolean isTemCentros() {
+		return temCentros;
 	}
 	
 	

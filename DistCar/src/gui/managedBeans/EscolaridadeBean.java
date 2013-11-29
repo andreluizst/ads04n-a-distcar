@@ -174,6 +174,11 @@ public class EscolaridadeBean {
 		situacaoSelecionada = null;
 	}
 	
+	public String cancelar(){
+		somenteLeitura = true;
+		return rb.getString("linkEscolaridade");
+	}
+	
 	public String carregarPagina(){
 		inicializar();
 		return rb.getString("linkEscolaridade");//"escolaridade.xhtml?faces-redirect=true";

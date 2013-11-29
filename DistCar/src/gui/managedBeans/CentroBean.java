@@ -226,6 +226,12 @@ public class CentroBean {
 		situacaoSelecionada = null;
 	}
 	
+	public String cancelar(){
+		somenteLeitura = true;
+		centro = null;
+		return resourceBundle.getString("linkCentro");
+	}
+	
 	public String carregarPagina(){
 		inicializar();
 		return resourceBundle.getString("linkCentro");//"centro.xhtml?faces-redirect=true";

@@ -250,9 +250,14 @@ public class DeptoBean {
 		situacaoSelecionada = null;
 	}
 	
+	public String cancelar(){
+		somenteLeitura = true;
+		return resourceBundle.getString("linkDepartamento");
+	}
+	
 	public String carregarPagina(){
 		inicializar();
-		return resourceBundle.getString("linkDepartamento");//"departamento.xhtml?faces-redirect=true";
+		return resourceBundle.getString("linkDepartamento");
 	}
 	
 	public String voltarParaPaginaPrincipal(){

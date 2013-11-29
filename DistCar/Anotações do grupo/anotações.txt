@@ -1,3 +1,5 @@
+link legal: http://benignosales.wordpress.com/tag/primefaces/
+
 28/11/2013
 - André:	Felipe, o acesso através de login foi habilitado e o arquivo index.xhtml agora é 
 			a tela de autenticação de usuário e a página principal é home.xhtml. Como vc não está usando

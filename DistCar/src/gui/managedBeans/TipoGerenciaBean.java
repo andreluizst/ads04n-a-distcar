@@ -73,6 +73,8 @@ public class TipoGerenciaBean {
 	public String alterar(){
 		if (listaEstaVazia)
 			return null;
+		if (tipoGerenciaSelecionada == null)
+			return null;
 		prepararParaExibirDados(tipoGerenciaSelecionada);
 		tituloOperacao = TipoGerenciaBean.OP_ALTERAR;
 		textoBotaoFecharOuCancelar = TipoGerenciaBean.TXT_BTN_CANCELAR;
@@ -95,6 +97,8 @@ public class TipoGerenciaBean {
 	
 	public void excluir(){
 		if (listaEstaVazia)
+			return;
+		if (tipoGerenciaSelecionada == null)
 			return;
 		try{
 			tipoGerencia = tipoGerenciaSelecionada;
@@ -151,6 +155,8 @@ public class TipoGerenciaBean {
 	
 	public String visualizar(){
 		if (listaEstaVazia)
+			return null;
+		if (tipoGerenciaSelecionada == null)
 			return null;
 		prepararParaExibirDados(tipoGerenciaSelecionada);
 		tituloOperacao = TipoGerenciaBean.OP_VISUALIZAR;

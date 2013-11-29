@@ -96,6 +96,8 @@ public class FuncaoBean {
 	public String alterar(){
 		if (listaEstaVazia)
 			return null;
+		if (funcaoSelecionada == null)
+			return null;
 		prepararParaExibirDados(funcaoSelecionada);
 		tituloOperacao = FuncaoBean.OP_ALTERAR;
 		textoBotaoFecharOuCancelar = FuncaoBean.TXT_BTN_CANCELAR;
@@ -118,6 +120,8 @@ public class FuncaoBean {
 	
 	public void excluir(){
 		if (listaEstaVazia)
+			return;
+		if (funcaoSelecionada == null)
 			return;
 		try{
 			funcao = funcaoSelecionada;
@@ -162,6 +166,12 @@ public class FuncaoBean {
 		return null;
 	}
 	
+	public String cancelar(){
+		somenteLeitura = true;
+		funcao = null;
+		return resourceBundle.getString("linkFuncao");
+	}
+	
 	public String getExibirMensagemPendente(){
 		if (msgPendente != null){
 			MsgPrimeFaces.exibirMensagem(msgPendente);
@@ -180,6 +190,8 @@ public class FuncaoBean {
 	
 	public String visualizar(){
 		if (listaEstaVazia)
+			return null;
+		if (funcaoSelecionada == null)
 			return null;
 		prepararParaExibirDados(funcaoSelecionada);
 		tituloOperacao = FuncaoBean.OP_VISUALIZAR;
