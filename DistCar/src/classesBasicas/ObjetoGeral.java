@@ -56,22 +56,10 @@ public abstract class ObjetoGeral {
 	}
 
 	@Override
-	public String toString() {
-		return "ObjetoGeral [codigo=" + codigo + ", dataUltimaAtualizacao="
-				+ dataUltimaAtualizacao + ", situacao=" + situacao + "]";
-	}
-
-	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((codigo == null) ? 0 : codigo.hashCode());
-		result = prime
-				* result
-				+ ((dataUltimaAtualizacao == null) ? 0 : dataUltimaAtualizacao
-						.hashCode());
-		result = prime * result
-				+ ((situacao == null) ? 0 : situacao.hashCode());
 		return result;
 	}
 
@@ -89,15 +77,10 @@ public abstract class ObjetoGeral {
 				return false;
 		} else if (!codigo.equals(other.codigo))
 			return false;
-		if (dataUltimaAtualizacao == null) {
-			if (other.dataUltimaAtualizacao != null)
-				return false;
-		} else if (!dataUltimaAtualizacao.equals(other.dataUltimaAtualizacao))
-			return false;
-		if (situacao != other.situacao)
-			return false;
 		return true;
 	}
+
+
 	
 	
 	
