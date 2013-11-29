@@ -29,7 +29,7 @@
   								valueChangeListener="#{clienteBean.mudarTipoCliente}" >
   						<f:selectItem noSelectionOption="true" itemLabel="Selecione um tipo" itemValue="#{null}" />
   						<f:selectItems value="#{clienteBean.tiposCliente}" />
-  						<f:ajax render="grid" event="valueChange"/>
+  						<f:ajax render="cbxCentroDestino lblCtodestino" event="valueChange" execute="tipoCliente"/>
   					</p:selectOneMenu>
   					<p:message for="tipoCliente" display="default" />
   					

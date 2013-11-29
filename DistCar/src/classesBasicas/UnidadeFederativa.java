@@ -54,39 +54,5 @@ public class UnidadeFederativa extends ObjetoGeral {
 	public String toString() {
 		return   sigla + " - " + nome;
 	}
-
-
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = super.hashCode();
-		result = prime * result + ((nome == null) ? 0 : nome.hashCode());
-		result = prime * result + ((sigla == null) ? 0 : sigla.hashCode());
-		return result;
-	}
-
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (!super.equals(obj))
-			return false;
-		if (!(obj instanceof UnidadeFederativa))
-			return false;
-		UnidadeFederativa other = (UnidadeFederativa) obj;
-		if (nome == null) {
-			if (other.nome != null)
-				return false;
-		} else if (!nome.equals(other.nome))
-			return false;
-		if (sigla == null) {
-			if (other.sigla != null)
-				return false;
-		} else if (!sigla.equals(other.sigla))
-			return false;
-		return true;
-	}
-	
 	
 }

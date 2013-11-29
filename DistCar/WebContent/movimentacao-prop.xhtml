@@ -20,12 +20,8 @@
 		
   		<h:form id="frmPrincipal">
   			<p:panel id="panel" header="DistCar - #{movimentacaoBean.tituloOperacao}">
-  				<h:panelGrid columns="3" cellpadding="2">
-  					<h:outputLabel for="numero" value="Número: "/>
-  					<p:inputText id="numero" value="#{movimentacaoBean.movimentacao.numero}" lable="Número"
-  							required="false" readonly="true"/>
-  					<p:message for="numero" display="default" />
-  					
+  				<h:panelGrid id="grid" columns="3" cellpadding="2">
+  				
   					<h:outputLabel for="cbxTipoMovimentacao" value="Tipo de movimentação: *"/>
   					<p:selectOneMenu id="cbxTipoMovimentacao" 
   							value="#{movimentacaoBean.movimentacao.tipoMovimentacao}"
@@ -39,8 +35,13 @@
   						<f:ajax render="panel" event="valueChange"/>
   					</p:selectOneMenu>
   					<p:message for="cbxTipoMovimentacao" display="default" />
+  				
+  					<h:outputLabel for="nfNum" value="Nota fiscal: "/>
+  					<p:inputText id="nfNum" value="#{movimentacaoBean.movimentacao.notaFiscal}" lable="Nota fiscal:"
+  							required="false" readonly="#{movimentacaoBean.somenteLeitura}"/>
+  					<p:message for="nfNum" display="default" />
   					
-  					<h:outputLabel for="cbxCentroOrigem" value="Centro de origem: *"/>
+  					<h:outputLabel id="lblCentroOrigem" for="cbxCentroOrigem" value="Centro de origem: *"/>
   					<p:selectOneMenu id="cbxCentroOrigem" converter="CentroConverter"
   								value="#{movimentacaoBean.movimentacao.ctoOrigem}"
   								disabled="#{!movimentacaoBean.temCentros}" 
@@ -53,7 +54,7 @@
   					</p:selectOneMenu>
   					<p:message for="cbxCentroOrigem" display="default" />
 					
-					<h:outputLabel for="cbxCentroDestino" value="Centro de destino: *"
+					<h:outputLabel id="lblCentroDestino" for="cbxCentroDestino" value="Centro de destino: *"
 								rendered="#{movimentacaoBean.centroDestinoRequerido}"/>
   					<p:selectOneMenu id="cbxCentroDestino" converter="CentroConverter"
   								value="#{movimentacaoBean.movimentacao.ctoDestino}"
@@ -88,7 +89,7 @@
   							<h:outputLabel for="txtChassi" value="Chassi: "/>
   							<p:inputText id="txtChassi" size="15" widgetVar="wgvChassi"  
   								readonly="#{movimentacaoBean.somenteLeitura}"
-  								value="#{movimentacaoBean.itemMovimentacao.carro.chassi}"
+  								value="#{movimentacaoBean.itemMovimentacao.movimentoCarroPK.carro.chassi}"
   								required="false" lable="Chassi" />
   							<p:message for="txtChassi" display="tooltip" />
   						</h:panelGrid>
@@ -96,23 +97,11 @@
   							<h:outputLabel for="txtAno" value="Ano: "/>
   							<p:inputText id="txtAno" size="15" widgetVar="wgvAno"  
   								readonly="#{movimentacaoBean.somenteLeitura}"
-  								value="#{movimentacaoBean.itemMovimentacao.carro.anoFabricacao}"
+  								value="#{movimentacaoBean.itemMovimentacao.movimentoCarroPK.carro.anoFabricacao}"
   								required="false" lable="Ano" />
   							<p:message for="txtAno" display="tooltip" />
   						</h:panelGrid>
-  						<h:panelGrid>
-  							<h:outputLabel for="versao" value="Versão: " />
-							<h:selectOneMenu id="versao" converter="VersaoConverter"
-						 			value="#{movimentacaoBean.itemMovimentacao.carro.versao}"
-						 			readonly="#{movimentacaoBean.somenteLeitura}"
-						 			disabled="#{movimentacaoBean.temVersoesDeCarros}">
-								<f:selectItem noSelectionOption="true"
-										itemLabel="Selecione a versão" itemValue="-1"/>
-								<f:selectItems value="#{movimentacaoBean.versoesDeCarros}" var="versaoCarro"
-										itemLabel="#{versaoCarro}" itemValue="#{versaoCarro}" />
-								<p:message for="versao" display="tooltip" />
-  							</h:selectOneMenu>
-  						</h:panelGrid>
+
   					</h:panelGrid>
   					
   					<h:panelGrid columns="3">
@@ -136,7 +125,19 @@
   								</p:commandButton>
   					</h:panelGrid>	 
   			</h:panelGrid>
-  			
+  			<h:panelGrid columns="3">
+  			  				<h:outputLabel for="versao" value="Versão: " />
+							<p:selectOneMenu id="versao" converter="VersaoConverter"  
+						 			value="#{movimentacaoBean.itemMovimentacao.movimentoCarroPK.carro.versao}"
+						 			readonly="#{movimentacaoBean.somenteLeitura}"
+						 			disabled="#{movimentacaoBean.somenteLeitura || !movimentacaoBean.temVersoesDeCarros}">
+								<f:selectItem noSelectionOption="true"
+										itemLabel="Selecione a versão" itemValue="-1"/>
+								<f:selectItems value="#{movimentacaoBean.versoesDeCarros}" var="versaoCarro"
+										itemLabel="#{versaoCarro}" itemValue="#{versaoCarro}" />
+								<p:message for="versao" display="tooltip" />
+  							</p:selectOneMenu>
+  			</h:panelGrid>
   			<p:dataTable id="tbLista" var="item" value="#{movimentacaoBean.movimentacao.itens}"
   						paginator="true" rows="5"
   						paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks}

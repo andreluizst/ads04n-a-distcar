@@ -26,6 +26,7 @@ public class DAOMovimentacao extends DAOGenerico<Movimentacao> implements
 	@Override
 	public List<Movimentacao> consultar(Movimentacao movimentacao, Date dataFinal)
 			throws Exception {
+		try{
 		String jpql = "select m from Movimentacao m join fetch m.itens";
 		boolean temParametros = false;
 		boolean temNumero = false;
@@ -97,6 +98,9 @@ public class DAOMovimentacao extends DAOGenerico<Movimentacao> implements
 		if (temSituacao)
 			tqry.setParameter("situacao", movimentacao.getSituacao());
 		return tqry.getResultList();
+		}catch(Exception ex){
+			throw new Exception("DAOMovimentacao.ERRO: " + ex.getMessage());
+		}
 	}
 
 	@Override

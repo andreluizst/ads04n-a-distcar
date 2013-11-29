@@ -115,8 +115,13 @@ public class MovimentacaoBean {
 		try{
 			centros = fachada.listarCentros();
 			versoesDeCarros = fachada.listarVersoes();
+			if (versoesDeCarros != null){
+				for (VersaoCarro item : versoesDeCarros){
+					item.setComportamentoToString(VersaoCarro.TO_STRING_DESCRICAO_PARA_LISTA);
+				}
+			}
 			temCentros = centros != null ? centros.size() > 0 : false;
-			temVersoesDeCarros = versoesDeCarros != null ? centros.size() > 0 : false;
+			temVersoesDeCarros = versoesDeCarros != null ? versoesDeCarros.size() > 0 : false;
 		}catch(Exception ex){
 			MsgPrimeFaces.exibirMensagemDeErro("Não foi possível filtrar as cidades pelo estado selecionado!");
 		}
@@ -164,12 +169,15 @@ public class MovimentacaoBean {
 	
 	public String salvar(){
 		try{
+			Centro co = fachada.pegarCentroPorId(movimentacao.getCtoOrigem().getCodigo());
+			movimentacao.setCtoOrigem(co);
 			fachada.salvarMovimentacao(movimentacao);
 			msgPendente = MsgPrimeFaces.criarMsgInfo("Movimentação salva com sucesso!");
 			novaMovimentacao();
 			somenteLeitura = true;
 			return resourceBundle.getString("linkMovimentacao");
 		}catch(Exception ex){
+			System.out.println(ex.getStackTrace());
 			MsgPrimeFaces.exibirMensagemDeErro(ex.getMessage());
 		}
 		return null;
@@ -260,11 +268,11 @@ public class MovimentacaoBean {
 					}
 				}
 				for (MovimentacaoItem m : movimentacao.getItens()){
-					if (m.getNumeroMovimentoCarroPK().getCarro().getChassi().equals(c.getChassi()))
+					if (m.getMovimentoCarroPK().getCarro().getChassi().equals(c.getChassi()))
 						throw new Exception("O carro [" + carro.getChassi() + "] informado já existe na lista");
 				}
 				
-				item.getNumeroMovimentoCarroPK().setCarro(c);
+				item.getMovimentoCarroPK().setCarro(c);
 				movimentacaoSelecionada.getItens().add(item);
 			}catch(Exception ex){
 				MsgPrimeFaces.exibirMensagemDeErro(ex.getMessage());

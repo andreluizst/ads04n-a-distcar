@@ -82,9 +82,6 @@ public class Fabricante /*extends ObjetoGeral*/ {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((codigo == null) ? 0 : codigo.hashCode());
-		result = prime * result
-				+ ((loteMinimo == null) ? 0 : loteMinimo.hashCode());
-		result = prime * result + ((pj == null) ? 0 : pj.hashCode());
 		return result;
 	}
 
@@ -94,23 +91,13 @@ public class Fabricante /*extends ObjetoGeral*/ {
 			return true;
 		if (obj == null)
 			return false;
-		if (!(obj instanceof Fabricante))
+		if (getClass() != obj.getClass())
 			return false;
 		Fabricante other = (Fabricante) obj;
 		if (codigo == null) {
 			if (other.codigo != null)
 				return false;
 		} else if (!codigo.equals(other.codigo))
-			return false;
-		if (loteMinimo == null) {
-			if (other.loteMinimo != null)
-				return false;
-		} else if (!loteMinimo.equals(other.loteMinimo))
-			return false;
-		if (pj == null) {
-			if (other.pj != null)
-				return false;
-		} else if (!pj.equals(other.pj))
 			return false;
 		return true;
 	}

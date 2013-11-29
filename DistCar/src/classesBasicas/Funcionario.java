@@ -116,77 +116,9 @@ public class Funcionario extends PessoaFisica {
 	}
 	
 	
-
 	@Override
 	public String toString(){
 		return getNome() + ", " + getCpf();
 	}
-
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = super.hashCode();
-		result = prime * result + ((cpts == null) ? 0 : cpts.hashCode());
-		result = prime * result
-				+ ((dataAdmissao == null) ? 0 : dataAdmissao.hashCode());
-		result = prime * result
-				+ ((dataDemissao == null) ? 0 : dataDemissao.hashCode());
-		result = prime * result
-				+ ((departamento == null) ? 0 : departamento.hashCode());
-		result = prime * result
-				+ ((escolaridade == null) ? 0 : escolaridade.hashCode());
-		result = prime * result + ((funcao == null) ? 0 : funcao.hashCode());
-		result = prime * result + ((usuario == null) ? 0 : usuario.hashCode());
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (!super.equals(obj))
-			return false;
-		if (!(obj instanceof Funcionario))
-			return false;
-		Funcionario other = (Funcionario) obj;
-		if (cpts == null) {
-			if (other.cpts != null)
-				return false;
-		} else if (!cpts.equals(other.cpts))
-			return false;
-		if (dataAdmissao == null) {
-			if (other.dataAdmissao != null)
-				return false;
-		} else if (!dataAdmissao.equals(other.dataAdmissao))
-			return false;
-		if (dataDemissao == null) {
-			if (other.dataDemissao != null)
-				return false;
-		} else if (!dataDemissao.equals(other.dataDemissao))
-			return false;
-		if (departamento == null) {
-			if (other.departamento != null)
-				return false;
-		} else if (!departamento.equals(other.departamento))
-			return false;
-		if (escolaridade == null) {
-			if (other.escolaridade != null)
-				return false;
-		} else if (!escolaridade.equals(other.escolaridade))
-			return false;
-		if (funcao == null) {
-			if (other.funcao != null)
-				return false;
-		} else if (!funcao.equals(other.funcao))
-			return false;
-		if (usuario == null) {
-			if (other.usuario != null)
-				return false;
-		} else if (!usuario.equals(other.usuario))
-			return false;
-		return true;
-	}
-	
-	
 	
 }

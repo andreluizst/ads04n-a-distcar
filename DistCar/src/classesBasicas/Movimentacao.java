@@ -177,26 +177,7 @@ public class Movimentacao {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result
-				+ ((ctoDestino == null) ? 0 : ctoDestino.hashCode());
-		result = prime * result
-				+ ((ctoOrigem == null) ? 0 : ctoOrigem.hashCode());
-		result = prime
-				* result
-				+ ((dataMovimentacao == null) ? 0 : dataMovimentacao.hashCode());
-		result = prime
-				* result
-				+ ((dataUltimaAtualizacao == null) ? 0 : dataUltimaAtualizacao
-						.hashCode());
-		result = prime * result + ((itens == null) ? 0 : itens.hashCode());
-		result = prime * result
-				+ ((notaFiscal == null) ? 0 : notaFiscal.hashCode());
 		result = prime * result + ((numero == null) ? 0 : numero.hashCode());
-		result = prime * result
-				+ ((situacao == null) ? 0 : situacao.hashCode());
-		result = prime
-				* result
-				+ ((tipoMovimentacao == null) ? 0 : tipoMovimentacao.hashCode());
 		return result;
 	}
 
@@ -209,44 +190,10 @@ public class Movimentacao {
 		if (getClass() != obj.getClass())
 			return false;
 		Movimentacao other = (Movimentacao) obj;
-		if (ctoDestino == null) {
-			if (other.ctoDestino != null)
-				return false;
-		} else if (!ctoDestino.equals(other.ctoDestino))
-			return false;
-		if (ctoOrigem == null) {
-			if (other.ctoOrigem != null)
-				return false;
-		} else if (!ctoOrigem.equals(other.ctoOrigem))
-			return false;
-		if (dataMovimentacao == null) {
-			if (other.dataMovimentacao != null)
-				return false;
-		} else if (!dataMovimentacao.equals(other.dataMovimentacao))
-			return false;
-		if (dataUltimaAtualizacao == null) {
-			if (other.dataUltimaAtualizacao != null)
-				return false;
-		} else if (!dataUltimaAtualizacao.equals(other.dataUltimaAtualizacao))
-			return false;
-		if (itens == null) {
-			if (other.itens != null)
-				return false;
-		} else if (!itens.equals(other.itens))
-			return false;
-		if (notaFiscal == null) {
-			if (other.notaFiscal != null)
-				return false;
-		} else if (!notaFiscal.equals(other.notaFiscal))
-			return false;
 		if (numero == null) {
 			if (other.numero != null)
 				return false;
 		} else if (!numero.equals(other.numero))
-			return false;
-		if (situacao != other.situacao)
-			return false;
-		if (tipoMovimentacao != other.tipoMovimentacao)
 			return false;
 		return true;
 	}

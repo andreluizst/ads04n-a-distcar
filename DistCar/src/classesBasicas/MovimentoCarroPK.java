@@ -26,7 +26,8 @@ public class MovimentoCarroPK implements Serializable {
 
 	public MovimentoCarroPK() {
 		super();
-		// TODO Auto-generated constructor stub
+		carro = new Carro();
+		movimentacao = new Movimentacao();
 	}
 
 	public MovimentoCarroPK(Carro carro, Movimentacao movimentacao) {

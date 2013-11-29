@@ -18,30 +18,61 @@ public class MovimentacaoItem implements Serializable {
 	@EmbeddedId
 	private MovimentoCarroPK movimentoCarroPK;
 
+
 	public MovimentacaoItem() {
 		super();
-		// TODO Auto-generated constructor stub
+		movimentoCarroPK = new MovimentoCarroPK();
 	}
 
+
 	public MovimentacaoItem(MovimentoCarroPK movimentoCarroPK) {
-		super();
+		this();
 		this.movimentoCarroPK = movimentoCarroPK;
 	}
 
-	public MovimentoCarroPK getNumeroMovimentoCarroPK() {
+
+	public MovimentoCarroPK getMovimentoCarroPK() {
 		return movimentoCarroPK;
 	}
 
-	public void setNumeroMovimentoCarroPK(
-			MovimentoCarroPK movimentoCarroPK) {
+
+	public void setMovimentoCarroPK(MovimentoCarroPK movimentoCarroPK) {
 		this.movimentoCarroPK = movimentoCarroPK;
 	}
 
+
 	@Override
 	public String toString() {
-		return "MovimentacaoItem [numeroMovimentoCarroPK="
-				+ movimentoCarroPK + "]";
+		return "MovimentacaoItem [movimentoCarroPK=" + movimentoCarroPK + "]";
 	}
-	
+
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime
+				* result
+				+ ((movimentoCarroPK == null) ? 0 : movimentoCarroPK.hashCode());
+		return result;
+	}
+
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		MovimentacaoItem other = (MovimentacaoItem) obj;
+		if (movimentoCarroPK == null) {
+			if (other.movimentoCarroPK != null)
+				return false;
+		} else if (!movimentoCarroPK.equals(other.movimentoCarroPK))
+			return false;
+		return true;
+	}
 	
 }
