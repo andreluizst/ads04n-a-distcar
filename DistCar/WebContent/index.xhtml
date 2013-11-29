@@ -12,7 +12,7 @@
 <h:body>
 	<h:form>
 		<p:growl></p:growl>
-		<p:dialog header="DistCar - Distribuidora de Carros" widgetVar="dlg"
+		<p:dialog header="DistCar 1.0 - Distribuidora de Carros" widgetVar="dlg"
 			showEffect="slide" width="450" modal="true" visible="true"
 			resizable="false" closable="false" draggable="true">
 			<h:panelGrid columns="2" width="350">
@@ -32,10 +32,10 @@
 						autocomplete="false"></p:password>
 				</p:column>
 				<f:facet name="footer">
-					<p:commandButton value="Limpar" tabindex="3" ajax="false"
-						type="reset"></p:commandButton>
 					<p:commandButton value="Logar" tabindex="3" ajax="false"
-						action="#{loginBean.efetuarLogin2}"></p:commandButton>
+						action="#{loginBean.efetuarLogin2}"/>
+					<p:commandButton value="Limpar" tabindex="4" ajax="false"
+						type="reset"/>
 					<br></br>
 					<br></br>
 					<p:commandLink value="Novo Usuário" immediate="true" action="/novo-usuario.xhtml"></p:commandLink>

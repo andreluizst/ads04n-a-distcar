@@ -1,3 +1,9 @@
+29/11/2013
+- André:	Felipe, precisei alterar a classe versaoCarro, mas vc não precisa fazer nenhuma alteração
+			no sistema devido a isso, pois apenas adicionei atributos @Transient para personalizar
+			o método toString() para facilitar o uso dessa classe na movimentação. Criei um novo método
+			no dao carro pq preciso dele na movimentação.
+
 link legal: http://benignosales.wordpress.com/tag/primefaces/
 
 28/11/2013

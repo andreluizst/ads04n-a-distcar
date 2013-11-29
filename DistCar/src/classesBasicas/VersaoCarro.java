@@ -13,6 +13,14 @@ import org.hibernate.annotations.FetchMode;
 @Entity
 public class VersaoCarro extends ObjetoGeral {
 	
+	@Transient
+	public static final int TO_STRING_PADRAO = 0;
+	@Transient
+	public static final int TO_STRING_DESCRICAO_PARA_LISTA = 1;
+	
+	@Transient
+	private int comportamentoToString = TO_STRING_PADRAO;
+	
 	private double valor;
 	@Column(unique=true)
 	private String descricao;
@@ -53,11 +61,25 @@ public class VersaoCarro extends ObjetoGeral {
 	public void setItens(List<ItemSerieCarro> itens) {
 		this.itens = itens;
 	}
+	
+	public int getComportamentoToString() {
+		return comportamentoToString;
+	}
+	
+	public void setComportamentoToString(int comportamentoToString) {
+		this.comportamentoToString = comportamentoToString;
+	}
+	
+	
 	@Override
 	public String toString() {
-		return "VersaoCarro [valor=" + valor + ", descricao=" + descricao
+		String str = "VersaoCarro [valor=" + valor + ", descricao=" + descricao
 				+ ", modeloCarro=" + modeloCarro + ", acessorios=" + acessorios
 				+ ", itens=" + itens + "]";
+		if (comportamentoToString == VersaoCarro.TO_STRING_DESCRICAO_PARA_LISTA)
+			str = modeloCarro.getDescricao() + " " + modeloCarro.getAno() 
+				+ " " + getDescricao() + "[" + acessorios + " + " + itens + "]";
+		return str;
 	}
 	@Override
 	public int hashCode() {

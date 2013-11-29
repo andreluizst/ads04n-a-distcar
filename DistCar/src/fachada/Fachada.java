@@ -400,6 +400,11 @@ public class Fachada implements IFachada {
 	public List<Carro> consultarCarros(Carro carro) {
 		return this.controladorCarro.pesquisarCarros(carro);
 	}
+	
+	@Override
+	public Carro pegarCarroPeloChassi(String chassi) throws Exception{
+		return this.controladorCarro.pegarCarroPeloChassi(chassi);
+	}
 
 	//Marca
 	

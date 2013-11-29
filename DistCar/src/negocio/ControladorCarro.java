@@ -249,5 +249,9 @@ public class ControladorCarro {
 	public List<AcessorioCarro> listarAcessoriosPorModelo(ModeloCarro modelo){
 		return acessorioDAO.listarAcessoriosPorModelo(modelo);
 	}
+	
+	public Carro pegarCarroPeloChassi(String chassi) throws Exception{
+		return carroDAO.pegarCarroPeloChassi(chassi);
+	}
 
 }

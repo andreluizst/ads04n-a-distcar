@@ -25,6 +25,10 @@ public class Movimentacao {
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Integer numero;
 	
+	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+	@JoinColumn(name="numMovimentacaoOrigem", insertable=true, updatable=true, nullable=false)
+	private Movimentacao movimentacaoOrigem;
+	
 	private Integer notaFiscal;
 	
 	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)

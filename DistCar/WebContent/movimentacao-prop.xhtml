@@ -82,19 +82,40 @@
   				</h:panelGrid>
   			</p:panel>
   			
-  			<p:dataTable id="tbLista" var="item" value="#{movimentacaoBean.movimentacao.itens}"
-  						paginator="true" rows="5"
-  						paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks}
-  						{NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rowsPerPageTemplate="3,6"
-  						selection="#{movimentacaoBean.itemMovimentacaoSelecionada}" selectionMode="single" 
-  						rowKey="#{item}" resizableColumns="true" liveResize="true"
-  						emptyMessage="Nenhum item encontrado">
-  				<f:facet name="header">Itens da movimentação
-  					<p:inputText id="txtChassi" size="15" widgetVar="wgvChassi"  
+  			<h:panelGrid columns="2" styleClass="GridSemBorda">
+  					<h:panelGrid id="grdCarroSelecionado" columns="3">
+  						<h:panelGrid columns="3">
+  							<h:outputLabel for="txtChassi" value="Chassi: "/>
+  							<p:inputText id="txtChassi" size="15" widgetVar="wgvChassi"  
   								readonly="#{movimentacaoBean.somenteLeitura}"
-  								value="#{movimentacaoBean.chassi}"
+  								value="#{movimentacaoBean.itemMovimentacao.carro.chassi}"
   								required="false" lable="Chassi" />
-  					<h:panelGrid columns="3" cellpadding="2" bgcolor="green">
+  							<p:message for="txtChassi" display="tooltip" />
+  						</h:panelGrid>
+  						<h:panelGrid columns="3">
+  							<h:outputLabel for="txtAno" value="Ano: "/>
+  							<p:inputText id="txtAno" size="15" widgetVar="wgvAno"  
+  								readonly="#{movimentacaoBean.somenteLeitura}"
+  								value="#{movimentacaoBean.itemMovimentacao.carro.anoFabricacao}"
+  								required="false" lable="Ano" />
+  							<p:message for="txtAno" display="tooltip" />
+  						</h:panelGrid>
+  						<h:panelGrid>
+  							<h:outputLabel for="versao" value="Versão: " />
+							<h:selectOneMenu id="versao" converter="VersaoConverter"
+						 			value="#{movimentacaoBean.itemMovimentacao.carro.versao}"
+						 			readonly="#{movimentacaoBean.somenteLeitura}"
+						 			disabled="#{movimentacaoBean.temVersoesDeCarros}">
+								<f:selectItem noSelectionOption="true"
+										itemLabel="Selecione a versão" itemValue="-1"/>
+								<f:selectItems value="#{movimentacaoBean.versoesDeCarros}" var="versaoCarro"
+										itemLabel="#{versaoCarro}" itemValue="#{versaoCarro}" />
+								<p:message for="versao" display="tooltip" />
+  							</h:selectOneMenu>
+  						</h:panelGrid>
+  					</h:panelGrid>
+  					
+  					<h:panelGrid columns="3">
   								<p:commandButton actionListener="#{movimentacaoBean.adicionarItem}"
   										id="btnNovoItem" icon="ui-icon-plus" 
   										title="Adicionar item" immediate="true" ajax="true"
@@ -112,9 +133,23 @@
   										title="excluir item selecionado" immediate="true" ajax="true"
   										disabled="#{movimentacaoBean.somenteLeitura}">
   									<f:ajax render="tbLista" execute="txtChassi"/>
-  								</p:commandButton> 
-  					</h:panelGrid>
+  								</p:commandButton>
+  					</h:panelGrid>	 
+  			</h:panelGrid>
+  			
+  			<p:dataTable id="tbLista" var="item" value="#{movimentacaoBean.movimentacao.itens}"
+  						paginator="true" rows="5"
+  						paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks}
+  						{NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rowsPerPageTemplate="3,6"
+  						selection="#{movimentacaoBean.itemMovimentacaoSelecionada}" selectionMode="single" 
+  						rowKey="#{item}" resizableColumns="true" liveResize="true"
+  						emptyMessage="Nenhum item encontrado">
+  				
+  				<f:facet name="header"> Itens da movimentação
+  					
   				</f:facet>
+  				
+  				
   				<p:column>
   					<f:facet name="header"><h:outputText value="Número"/> </f:facet>
   					<h:outputText value="#{item.movimentacao.numero}"/>

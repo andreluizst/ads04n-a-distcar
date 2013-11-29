@@ -110,6 +110,7 @@ public interface IFachada {
 	public List<Carro> listarCarros();
 	public Carro pesquisarCarroCodigo(Integer codigo);
 	public List<Carro> consultarCarros(Carro carro);
+	public Carro pegarCarroPeloChassi(String chassi) throws Exception;
 		
 	//Marca
 	

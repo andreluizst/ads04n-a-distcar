@@ -16,5 +16,6 @@ public interface IDAOCarro extends IDAOGenerico<Carro>{
 	public List<Carro> pesquisarCarroPorItemSerie(String descricao);
 	public List<Carro> pesquisarCarroPorAcessorioCarro(AcessorioCarro acessorioCarro);
 	public List<Carro> emitirRelatorio();
+	public Carro pegarCarroPeloChassi(String chassi) throws Exception;
 	
 }

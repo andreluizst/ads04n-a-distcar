@@ -2,6 +2,7 @@ package dao;
 
 import java.util.List;
 
+import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
 
 import classesBasicas.AcessorioCarro;
@@ -51,6 +52,19 @@ public class DAOCarro extends DAOGenerico<Carro> implements IDAOCarro {
 	public List<Carro> emitirRelatorio() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public Carro pegarCarroPeloChassi(String chassi) throws Exception {
+		TypedQuery<Carro> tqry = entityManager.createQuery("from Carro c where c.chassi = :chassi", Carro.class);
+		tqry.setParameter("chassi", chassi);
+		try{
+			return tqry.getSingleResult();
+		}catch(NoResultException re){
+			return null;
+		}catch(Exception ex){
+			throw new Exception(ex.getMessage());
+		}
 	}
 
 }

@@ -11,11 +11,13 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.event.ValueChangeEvent;
 
+import classesBasicas.Carro;
 import classesBasicas.Centro;
 import classesBasicas.Movimentacao;
 import classesBasicas.MovimentacaoItem;
 import classesBasicas.SituacaoMovimentacao;
 import classesBasicas.TipoMovimentacao;
+import classesBasicas.VersaoCarro;
 import fachada.Fachada;
 import fachada.IFachada;
 import gui.MsgPrimeFaces;
@@ -43,17 +45,21 @@ public class MovimentacaoBean {
 	private Date dataFinalPesquisa;
 	private Movimentacao movimentacaoSelecionada;
 	private MovimentacaoItem itemMovimentacaoSelecionada;
+	private MovimentacaoItem itemMovimentacao;
 	private Movimentacao movimentacao;
 	private List<Movimentacao> lista;
 	private List<MovimentacaoItem> itensDaMovimentacao;
 	//private List<MovimentacaoItem> itensOriginais;
 	private List<Centro> centrosPesquisa;
 	private List<Centro> centros;
+	private List<VersaoCarro> versoesDeCarros;
 	private SituacaoMovimentacao[] situacoes = SituacaoMovimentacao.values();
 	private TipoMovimentacao[] tiposDeMovimentacoes = TipoMovimentacao.values();
 	private boolean temCentros;
 	private boolean centroDestinoRequerido;
 	private String chassi = "";
+	private boolean temVersoesDeCarros;
+	private Carro carro;
 	
 	
 	
@@ -63,6 +69,10 @@ public class MovimentacaoBean {
 	}
 	
 	private void inicializar(){
+		movimentacaoSelecionada = null;
+		itemMovimentacaoSelecionada = null;
+		itemMovimentacao = new MovimentacaoItem();
+		carro = new Carro();
 		novaMovimentacao();
 		iniciarObjParaPesquisa();
 		if (lista==null)
@@ -70,6 +80,7 @@ public class MovimentacaoBean {
 		else
 			lista.clear();
 		centroDestinoRequerido = false;
+		temVersoesDeCarros = false;
 		temCentros = false;
 		listaEstaVazia = true;
 		listaItemEstaVazia = true;
@@ -103,7 +114,9 @@ public class MovimentacaoBean {
 		}
 		try{
 			centros = fachada.listarCentros();
+			versoesDeCarros = fachada.listarVersoes();
 			temCentros = centros != null ? centros.size() > 0 : false;
+			temVersoesDeCarros = versoesDeCarros != null ? centros.size() > 0 : false;
 		}catch(Exception ex){
 			MsgPrimeFaces.exibirMensagemDeErro("Não foi possível filtrar as cidades pelo estado selecionado!");
 		}
@@ -202,6 +215,7 @@ public class MovimentacaoBean {
 	public String cancelar(){
 		somenteLeitura = true;
 		centros.clear();
+		versoesDeCarros.clear();
 		return resourceBundle.getString("linkMovimentacao");
 	}
 	
@@ -223,6 +237,38 @@ public class MovimentacaoBean {
 		}catch(Exception ex){
 			centroDestinoRequerido = false;
 			MsgPrimeFaces.exibirMensagemDeErro(ex.getMessage());
+		}
+	}
+	
+	public void adicionarItem(){
+		Carro c = null;
+		//boolean podeAdicionar = false;
+		List<Carro> lista;// = new ArrayList<Carro>();
+		MovimentacaoItem item = new MovimentacaoItem();
+		if (carro.getAnoFabricacao() != null && carro.getChassi() != null
+				&& carro.getChassi().length() > 0 && carro.getVersao() != null
+				&& carro.getVersao().getCodigo() != null && carro.getVersao().getCodigo() > 0){
+			try{
+				c = fachada.pegarCarroPeloChassi(carro.getChassi());
+				if (c != null){
+					if (c.getAnoFabricacao() != carro.getAnoFabricacao() 
+							|| c.getVersao().getCodigo() != carro.getVersao().getCodigo()){
+						carro = c;
+						MsgPrimeFaces.exibirMensagemDeAviso("O carro chassi "+ carro.getChassi()
+								+ " já existe. Os dados do carro informado serão alterado para os"
+								+ " dados já existentes no banco de dados!");
+					}
+				}
+				for (MovimentacaoItem m : movimentacao.getItens()){
+					if (m.getNumeroMovimentoCarroPK().getCarro().getChassi().equals(c.getChassi()))
+						throw new Exception("O carro [" + carro.getChassi() + "] informado já existe na lista");
+				}
+				
+				item.getNumeroMovimentoCarroPK().setCarro(c);
+				movimentacaoSelecionada.getItens().add(item);
+			}catch(Exception ex){
+				MsgPrimeFaces.exibirMensagemDeErro(ex.getMessage());
+			}
 		}
 	}
 	
@@ -324,6 +370,22 @@ public class MovimentacaoBean {
 
 	public boolean isTemCentros() {
 		return temCentros;
+	}
+
+	public boolean isTemVersoesDeCarros() {
+		return temVersoesDeCarros;
+	}
+
+	public List<VersaoCarro> getVersoesDeCarros() {
+		return versoesDeCarros;
+	}
+
+	public MovimentacaoItem getItemMovimentacao() {
+		return itemMovimentacao;
+	}
+
+	public void setItemMovimentacao(MovimentacaoItem itemMovimentacao) {
+		this.itemMovimentacao = itemMovimentacao;
 	}
 	
 	
