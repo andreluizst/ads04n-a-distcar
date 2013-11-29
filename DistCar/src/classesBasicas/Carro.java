@@ -69,63 +69,7 @@ public class Carro extends ObjetoGeral {
 	public void setValorCarro(double valorCarro) {
 		this.valorCarro = valorCarro;
 	}
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = super.hashCode();
-		result = prime * result
-				+ ((anoFabricacao == null) ? 0 : anoFabricacao.hashCode());
-		result = prime * result + ((centro == null) ? 0 : centro.hashCode());
-		result = prime * result + ((chassi == null) ? 0 : chassi.hashCode());
-		result = prime * result + ((cor == null) ? 0 : cor.hashCode());
-		result = prime * result + ((status == null) ? 0 : status.hashCode());
-		long temp;
-		temp = Double.doubleToLongBits(valorCarro);
-		result = prime * result + (int) (temp ^ (temp >>> 32));
-		result = prime * result + ((versao == null) ? 0 : versao.hashCode());
-		return result;
-	}
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (!super.equals(obj))
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Carro other = (Carro) obj;
-		if (anoFabricacao == null) {
-			if (other.anoFabricacao != null)
-				return false;
-		} else if (!anoFabricacao.equals(other.anoFabricacao))
-			return false;
-		if (centro == null) {
-			if (other.centro != null)
-				return false;
-		} else if (!centro.equals(other.centro))
-			return false;
-		if (chassi == null) {
-			if (other.chassi != null)
-				return false;
-		} else if (!chassi.equals(other.chassi))
-			return false;
-		if (cor == null) {
-			if (other.cor != null)
-				return false;
-		} else if (!cor.equals(other.cor))
-			return false;
-		if (status != other.status)
-			return false;
-		if (Double.doubleToLongBits(valorCarro) != Double
-				.doubleToLongBits(other.valorCarro))
-			return false;
-		if (versao == null) {
-			if (other.versao != null)
-				return false;
-		} else if (!versao.equals(other.versao))
-			return false;
-		return true;
-	}
+	
 	public Carro(String chassi, String cor, Integer anoFabricacao,
 			VersaoCarro versao, double valorCarro, Centro centro, Status status) {
 		super();

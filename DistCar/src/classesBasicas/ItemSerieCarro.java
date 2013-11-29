@@ -32,42 +32,7 @@ public class ItemSerieCarro extends ObjetoGeral{
 	public String toString() {
 		return descricao +" "+ valorItemSerie;
 	}
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = super.hashCode();
-		result = prime * result
-				+ ((descricao == null) ? 0 : descricao.hashCode());
-		result = prime * result + ((modelo == null) ? 0 : modelo.hashCode());
-		long temp;
-		temp = Double.doubleToLongBits(valorItemSerie);
-		result = prime * result + (int) (temp ^ (temp >>> 32));
-		return result;
-	}
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (!super.equals(obj))
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		ItemSerieCarro other = (ItemSerieCarro) obj;
-		if (descricao == null) {
-			if (other.descricao != null)
-				return false;
-		} else if (!descricao.equals(other.descricao))
-			return false;
-		if (modelo == null) {
-			if (other.modelo != null)
-				return false;
-		} else if (!modelo.equals(other.modelo))
-			return false;
-		if (Double.doubleToLongBits(valorItemSerie) != Double
-				.doubleToLongBits(other.valorItemSerie))
-			return false;
-		return true;
-	}
+	
 	public ItemSerieCarro(String descricao, double valorItemSerie,
 			ModeloCarro modelo) {
 		super();

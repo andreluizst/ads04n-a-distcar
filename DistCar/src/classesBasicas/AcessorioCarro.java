@@ -29,42 +29,7 @@ public class AcessorioCarro extends ObjetoGeral{
 	public void setModelo(ModeloCarro modelo) {
 		this.modelo = modelo;
 	}
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = super.hashCode();
-		result = prime * result
-				+ ((descricao == null) ? 0 : descricao.hashCode());
-		result = prime * result + ((modelo == null) ? 0 : modelo.hashCode());
-		long temp;
-		temp = Double.doubleToLongBits(valor);
-		result = prime * result + (int) (temp ^ (temp >>> 32));
-		return result;
-	}
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (!super.equals(obj))
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		AcessorioCarro other = (AcessorioCarro) obj;
-		if (descricao == null) {
-			if (other.descricao != null)
-				return false;
-		} else if (!descricao.equals(other.descricao))
-			return false;
-		if (modelo == null) {
-			if (other.modelo != null)
-				return false;
-		} else if (!modelo.equals(other.modelo))
-			return false;
-		if (Double.doubleToLongBits(valor) != Double
-				.doubleToLongBits(other.valor))
-			return false;
-		return true;
-	}
+	
 	public AcessorioCarro() {
 		super();
 	}

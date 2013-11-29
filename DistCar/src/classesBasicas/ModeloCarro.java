@@ -41,49 +41,7 @@ public class ModeloCarro extends ObjetoGeral {
 	public void setMarcaCarro(MarcaCarro marcaCarro) {
 		this.marcaCarro = marcaCarro;
 	}
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = super.hashCode();
-		result = prime * result + ((ano == null) ? 0 : ano.hashCode());
-		result = prime * result
-				+ ((descricao == null) ? 0 : descricao.hashCode());
-		result = prime * result
-				+ ((marcaCarro == null) ? 0 : marcaCarro.hashCode());
-		result = prime * result + ((valor == null) ? 0 : valor.hashCode());
-		return result;
-	}
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (!super.equals(obj))
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		ModeloCarro other = (ModeloCarro) obj;
-		if (ano == null) {
-			if (other.ano != null)
-				return false;
-		} else if (!ano.equals(other.ano))
-			return false;
-		if (descricao == null) {
-			if (other.descricao != null)
-				return false;
-		} else if (!descricao.equals(other.descricao))
-			return false;
-		if (marcaCarro == null) {
-			if (other.marcaCarro != null)
-				return false;
-		} else if (!marcaCarro.equals(other.marcaCarro))
-			return false;
-		if (valor == null) {
-			if (other.valor != null)
-				return false;
-		} else if (!valor.equals(other.valor))
-			return false;
-		return true;
-	}
+	
 	public ModeloCarro() {
 		super();
 	}
