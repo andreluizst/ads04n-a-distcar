@@ -170,11 +170,14 @@ public class MovimentacaoBean {
 	}
 	
 	public String salvar(){
-		Centro co = null;
+		//Centro co = null;
 		try{
-			if (centroOrigemSelecionado.getCodigo() != null && centroOrigemSelecionado.getCodigo() > 0)
-				co = fachada.pegarCentroPorId(centroOrigemSelecionado.getCodigo());
-			movimentacao.setCtoOrigem(co);
+			//if (centroOrigemSelecionado.getCodigo() != null && centroOrigemSelecionado.getCodigo() > 0)
+				//co = fachada.pegarCentroPorId(centroOrigemSelecionado.getCodigo());
+			//movimentacao.setCtoOrigem(co);
+			if (movimentacao.getCtoOrigem().getCodigo() == null
+					|| movimentacao.getCtoOrigem().getCodigo() <= 0)
+				movimentacao.setCtoOrigem(null);
 			if (movimentacao.getTipoMovimentacao() != TipoMovimentacao.ENTRE_CENTROS)
 				movimentacao.setCtoDestino(null);
 			if (movimentacao.getNumero() == null || movimentacao.getNumero() == 0)

@@ -1,6 +1,7 @@
 package negocio;
 
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -8,18 +9,10 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 
 import util.Parametros;
-import classesBasicas.Funcao;
 import classesBasicas.Movimentacao;
-import classesBasicas.NotaFiscal;
-import classesBasicas.Pedido;
+import classesBasicas.SituacaoMovimentacao;
 import dao.DAOMovimentacao;
-import dao.DAONotaFiscal;
 import dao.IDAOMovimentacao;
-import dao.INotaFiscalDAO;
-import dao.IPedidoDAO;
-import dao.DAOPedido;
-import erro.NegocioExceptionNotaFiscal;
-import erro.NegocioExceptionPedido;
 
 
 public class ControladorMovimentacao {
@@ -60,10 +53,17 @@ public class ControladorMovimentacao {
 	}
 	
 	public void inserirMovimentacao(Movimentacao movimentacao) throws Exception{
+		movimentacao.setDataMovimentacao(Calendar.getInstance().getTime());
+		movimentacao.setDataUltimaAtualizacao(Calendar.getInstance().getTime());
+		if (movimentacao.getSituacao() == null)
+			movimentacao.setSituacao(SituacaoMovimentacao.PENDENTE);
 		daoMovimentacao.inserirSemTratamento(movimentacao);
 	}
 	
 	public void alterarMovimentacao(Movimentacao movimentacao) throws Exception{
+		movimentacao.setDataUltimaAtualizacao(Calendar.getInstance().getTime());
+		if (movimentacao.getSituacao() == null)
+			movimentacao.setSituacao(SituacaoMovimentacao.PENDENTE);
 		daoMovimentacao.alterarSemTratamento(movimentacao);
 	}
 	

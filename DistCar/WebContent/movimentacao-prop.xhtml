@@ -43,7 +43,7 @@
   					
   					<h:outputLabel id="lblCentroOrigem" for="cbxCentroOrigem" value="Centro de origem: *"/>
   					<p:selectOneMenu id="cbxCentroOrigem" converter="CentroConverter"
-  								value="#{movimentacaoBean.centroOrigemSelecionado}"
+  								value="#{movimentacaoBean.movimentacao.ctoOrigem}"
   								disabled="#{!movimentacaoBean.temCentros}" 
   								readonly="#{movimentacaoBean.somenteLeitura}"
   								required="true" requiredMessage="Informe um centro de origem!">
