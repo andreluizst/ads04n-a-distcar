@@ -34,7 +34,7 @@ public class DAOPessoaJuridica extends DAOGenerico<PessoaJuridica> implements ID
 			if (pj.getEndereco().getCidade().getUnidadeFederativa().getSigla() != null)
 				jpql+= " and p.endereco.cidade.unidadeFederativa.sigla like :uf";
 		}
-		TypedQuery<PessoaJuridica> tqry = entityManager.createQuery(jpql, PessoaJuridica.class);
+		TypedQuery<PessoaJuridica> tqry = getEntityManager().createQuery(jpql, PessoaJuridica.class);
 		tqry.setParameter("nome", nome);
 		if (pj.getCnpj() != null)
 			tqry.setParameter("cnpj", pj.getCnpj());
@@ -51,7 +51,7 @@ public class DAOPessoaJuridica extends DAOGenerico<PessoaJuridica> implements ID
 	@Override
 	public PessoaJuridica pegarPJ(String cnpj) throws Exception {
 		String jpql = "from PessoaJuridica p where p.cnpj = :cnpj";
-		TypedQuery<PessoaJuridica> tqry = entityManager.createQuery(jpql, PessoaJuridica.class);
+		TypedQuery<PessoaJuridica> tqry = getEntityManager().createQuery(jpql, PessoaJuridica.class);
 		tqry.setParameter("cnpj", cnpj);
 		return tqry.getSingleResult();
 	}

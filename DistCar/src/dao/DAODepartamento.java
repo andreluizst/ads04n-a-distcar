@@ -49,7 +49,7 @@ public class DAODepartamento extends DAOGenerico<Departamento> implements
 			jpql+= " and d.centro.codigo = :codigoCentro";
 			temCentro = true;
 		}
-		TypedQuery<Departamento> tqry = entityManager.createQuery(jpql, Departamento.class);
+		TypedQuery<Departamento> tqry = getEntityManager().createQuery(jpql, Departamento.class);
 		tqry.setParameter("nome", nome);
 		if (temDeptoSuperior)
 			tqry.setParameter("codigoDeptoSuperior", depto.getDepartamentoSuperior().getCodigo());

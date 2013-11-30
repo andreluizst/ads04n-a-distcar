@@ -25,17 +25,17 @@ public class Movimentacao {
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Integer numero;
 	
-	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
-	@JoinColumn(name="numMovimentacaoOrigem", insertable=true, updatable=true, nullable=false)
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name="numMovimentacaoOrigem", insertable=true, updatable=true, nullable=true)
 	private Movimentacao movimentacaoOrigem;
 	
 	private Integer notaFiscal;
 	
-	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name="codCtoOrigem", insertable=true, updatable=true, nullable=false)
 	private Centro ctoOrigem;
 	
-	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name="codCtoDestino", insertable=true, updatable=true)
 	private Centro ctoDestino;
 	

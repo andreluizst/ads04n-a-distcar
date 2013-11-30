@@ -34,7 +34,7 @@ public class DAOPessoaFisica extends DAOGenerico<PessoaFisica> implements IDAOPe
 			if (pf.getEndereco().getCidade().getUnidadeFederativa().getSigla() != null)
 				jpql+= " and p.endereco.cidade.unidadeFederativa.sigla like :uf";
 		}
-		TypedQuery<PessoaFisica> tqry = entityManager.createQuery(jpql, PessoaFisica.class);
+		TypedQuery<PessoaFisica> tqry = getEntityManager().createQuery(jpql, PessoaFisica.class);
 		tqry.setParameter("nome", nome);
 		if (pf.getCpf() != null)
 			tqry.setParameter("cpf", pf.getCpf());

@@ -38,7 +38,7 @@ public class DAOCidade extends DAOGenerico<Cidade> implements IDAOCidade{
 					jpql+= " and c.unidadeFederativa.sigla like :siglaUF";
 			}
 		}
-		TypedQuery<Cidade> tqry = entityManager.createQuery(jpql, Cidade.class);
+		TypedQuery<Cidade> tqry = getEntityManager().createQuery(jpql, Cidade.class);
 		tqry.setParameter("nome", nome);
 		if (cidade.getUnidadeFederativa() != null){
 			if (cidade.getUnidadeFederativa().getCodigo() != null && cidade.getUnidadeFederativa().getCodigo() > 0)

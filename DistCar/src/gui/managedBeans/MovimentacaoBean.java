@@ -60,6 +60,7 @@ public class MovimentacaoBean {
 	private String chassi = "";
 	private boolean temVersoesDeCarros;
 	private Carro carro;
+	private Centro centroOrigemSelecionado;
 	
 	
 	
@@ -69,6 +70,7 @@ public class MovimentacaoBean {
 	}
 	
 	private void inicializar(){
+		centroOrigemSelecionado = new Centro();
 		movimentacaoSelecionada = null;
 		itemMovimentacaoSelecionada = null;
 		itemMovimentacao = new MovimentacaoItem();
@@ -168,16 +170,22 @@ public class MovimentacaoBean {
 	}
 	
 	public String salvar(){
+		Centro co = null;
 		try{
-			Centro co = fachada.pegarCentroPorId(movimentacao.getCtoOrigem().getCodigo());
+			if (centroOrigemSelecionado.getCodigo() != null && centroOrigemSelecionado.getCodigo() > 0)
+				co = fachada.pegarCentroPorId(centroOrigemSelecionado.getCodigo());
 			movimentacao.setCtoOrigem(co);
+			if (movimentacao.getTipoMovimentacao() != TipoMovimentacao.ENTRE_CENTROS)
+				movimentacao.setCtoDestino(null);
+			if (movimentacao.getNumero() == null || movimentacao.getNumero() == 0)
+				movimentacao.setNumero(null);
 			fachada.salvarMovimentacao(movimentacao);
 			msgPendente = MsgPrimeFaces.criarMsgInfo("Movimentação salva com sucesso!");
 			novaMovimentacao();
 			somenteLeitura = true;
 			return resourceBundle.getString("linkMovimentacao");
 		}catch(Exception ex){
-			System.out.println(ex.getStackTrace());
+			ex.printStackTrace();
 			MsgPrimeFaces.exibirMensagemDeErro(ex.getMessage());
 		}
 		return null;
@@ -394,6 +402,14 @@ public class MovimentacaoBean {
 
 	public void setItemMovimentacao(MovimentacaoItem itemMovimentacao) {
 		this.itemMovimentacao = itemMovimentacao;
+	}
+
+	public Centro getCentroOrigemSelecionado() {
+		return centroOrigemSelecionado;
+	}
+
+	public void setCentroOrigemSelecionado(Centro centroOrigemSelecionado) {
+		this.centroOrigemSelecionado = centroOrigemSelecionado;
 	}
 	
 	

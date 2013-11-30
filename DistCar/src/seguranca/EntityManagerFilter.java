@@ -29,7 +29,7 @@ import util.Parametros;
  *      ://fernandofranzini.wordpress.com/2009/09/09/autenticacao-e-autorizacao/
  */
 
-@WebFilter(filterName = "/EntityManagerFilter", urlPatterns = { "*.xhtm" })
+@WebFilter(filterName = "/EntityManagerFilter", urlPatterns = { "*.xhtml" })
 public class EntityManagerFilter implements Filter {
 
 	private static EntityManagerFactory theEntityManagerFactory = null;

@@ -62,7 +62,7 @@ public class DAOFabricante extends DAOGenerico<Fabricante> implements IDAOFabric
 			}
 		}
 		try{
-		TypedQuery<Fabricante> tqry = entityManager.createQuery(jpql, Fabricante.class);
+		TypedQuery<Fabricante> tqry = getEntityManager().createQuery(jpql, Fabricante.class);
 		if (temCodigo){
 			tqry.setParameter("codigo", f.getCodigo());
 			return tqry.getResultList();

@@ -11,7 +11,7 @@ public class DAOCentro extends DAOGenerico<Centro> implements IDAOCentro{
 
 	@Override
 	public List<Centro> pesquisarCentro(Centro centro) {
-		TypedQuery<Centro> tqry = entityManager.createQuery("from Centro c where c.alias like :alias", Centro.class);
+		TypedQuery<Centro> tqry = getEntityManager().createQuery("from Centro c where c.alias like :alias", Centro.class);
 		tqry.setParameter("alias", "%" + centro.getAlias() + "%");
 		return tqry.getResultList();
 	}
@@ -45,7 +45,7 @@ public class DAOCentro extends DAOGenerico<Centro> implements IDAOCentro{
 			jpql+= " and c.situacao = :situacao";
 			temSituacao = true;
 		}
-		TypedQuery<Centro> tqry = entityManager.createQuery(jpql, Centro.class);
+		TypedQuery<Centro> tqry = getEntityManager().createQuery(jpql, Centro.class);
 		tqry.setParameter("alias", alias);
 		if (temCidade)
 			tqry.setParameter("nomeCidade", "%" + centro.getDadosPJ().getEndereco().getCidade().getNome() + "%");

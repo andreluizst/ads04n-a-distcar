@@ -16,6 +16,7 @@ import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
 
+import seguranca.EntityManagerThreads;
 import util.Parametros;
 
 /**
@@ -320,7 +321,8 @@ public abstract class DAOGenerico<Entidade> implements IDAOGenerico<Entidade>{
 	}
 
 	public EntityManager getEntityManager() {
-		return entityManager;
+		return EntityManagerThreads.ENTITY_MANAGERS.get();
+//		return entityManager;
 	}
 
 		

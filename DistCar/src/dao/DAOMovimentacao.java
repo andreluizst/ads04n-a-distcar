@@ -27,7 +27,8 @@ public class DAOMovimentacao extends DAOGenerico<Movimentacao> implements
 	public List<Movimentacao> consultar(Movimentacao movimentacao, Date dataFinal)
 			throws Exception {
 		try{
-		String jpql = "select m from Movimentacao m join fetch m.itens";
+			//String jpql = "select m from Movimentacao m join fetch m.itens";
+		String jpql = "select m from Movimentacao m ";
 		boolean temParametros = false;
 		boolean temNumero = false;
 		boolean temCentroOrigem = false;
@@ -82,7 +83,7 @@ public class DAOMovimentacao extends DAOGenerico<Movimentacao> implements
 				temSituacao = true;
 			}
 		}
-		TypedQuery<Movimentacao> tqry = entityManager.createQuery(jpql, Movimentacao.class);
+		TypedQuery<Movimentacao> tqry = getEntityManager().createQuery(jpql, Movimentacao.class);
 		if (temNumero){
 			tqry.setParameter("numero", movimentacao.getNumero());
 			return tqry.getResultList();

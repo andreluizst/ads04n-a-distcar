@@ -79,7 +79,7 @@ public class DAOFuncionario extends DAOGenerico<Funcionario> implements
 				temSituacao = true;
 			}
 		}
-		TypedQuery<Funcionario> tqry = entityManager.createQuery(jpql, Funcionario.class);
+		TypedQuery<Funcionario> tqry = getEntityManager().createQuery(jpql, Funcionario.class);
 		if (temCodigo){
 			tqry.setParameter("codigo", funcionario.getCodigo());
 			return tqry.getResultList();
@@ -102,7 +102,7 @@ public class DAOFuncionario extends DAOGenerico<Funcionario> implements
 	@Override
 	public List<Funcionario> listarFuncionariosGestores() throws Exception {
 		String jpql = "select f from Funcionario f where f.tipoGerencia is not null";
-		TypedQuery<Funcionario> tqry = entityManager.createQuery(jpql, Funcionario.class);
+		TypedQuery<Funcionario> tqry = getEntityManager().createQuery(jpql, Funcionario.class);
 		return tqry.getResultList();
 	}
 

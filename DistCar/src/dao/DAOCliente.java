@@ -72,7 +72,7 @@ public class DAOCliente extends DAOGenerico<Cliente> implements IDAOCliente {
 			jpql+= " and c.dadosPessoa.situacao = :situacao";
 			temSituacao = true;
 		}
-		TypedQuery<Cliente> tqry = entityManager.createQuery(jpql, Cliente.class);
+		TypedQuery<Cliente> tqry = getEntityManager().createQuery(jpql, Cliente.class);
 		if (cliente.getDadosPessoa().getNome() != null && cliente.getDadosPessoa().getNome().length() > 0)
 				nome = "%" + cliente.getDadosPessoa().getNome() + "%";
 		tqry.setParameter("nome", nome);
