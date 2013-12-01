@@ -1,6 +1,8 @@
 package classesBasicas;
 
 
+import java.util.Calendar;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -55,6 +57,9 @@ public class Carro extends ObjetoGeral {
 		this.anoFabricacao = anoFabricacao;
 	}
 	public VersaoCarro getVersao() {
+		if(versao == null){
+	        versao = new VersaoCarro();
+	    }
 		return versao;
 	}
 	public void setVersao(VersaoCarro versao) {
@@ -63,9 +68,7 @@ public class Carro extends ObjetoGeral {
 	public Double getValorCarro() {
 		return valorCarro;
 	}
-	public void setValorCarro(Double valorCarro) {
-		this.valorCarro = valorCarro;
-	}
+	
 	public void setValorCarro(double valorCarro) {
 		this.valorCarro = valorCarro;
 	}
@@ -83,6 +86,14 @@ public class Carro extends ObjetoGeral {
 	}
 	public Carro() {
 		super();
+		versao = new VersaoCarro();
+	}
+	
+	
+	public Carro(Integer codigo, Calendar dataUltimaAtualizacao,
+			Situacao situacao) {
+		super(codigo, dataUltimaAtualizacao, situacao);
+		versao = new VersaoCarro();
 	}
 	@Override
 	public String toString() {

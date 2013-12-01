@@ -36,6 +36,9 @@ public class ModeloCarro extends ObjetoGeral {
 		this.ano = ano;
 	}
 	public MarcaCarro getMarcaCarro() {
+		if(marcaCarro == null){
+	        marcaCarro = new MarcaCarro();
+	    }
 		return marcaCarro;
 	}
 	public void setMarcaCarro(MarcaCarro marcaCarro) {
@@ -44,6 +47,7 @@ public class ModeloCarro extends ObjetoGeral {
 	
 	public ModeloCarro() {
 		super();
+		this.marcaCarro = new MarcaCarro();
 	}
 	public ModeloCarro(String descricao, Integer ano, MarcaCarro marcaCarro,
 			Double valor) {

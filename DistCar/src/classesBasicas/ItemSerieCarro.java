@@ -1,10 +1,12 @@
 package classesBasicas;
+import java.util.Calendar;
+
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 
 
 @Entity
-public class ItemSerieCarro extends ObjetoGeral{
+public class ItemSerieCarro extends ObjetoGeral implements Cloneable{
 
 	private String descricao;
 	private double valorItemSerie;
@@ -13,6 +15,21 @@ public class ItemSerieCarro extends ObjetoGeral{
 	public String getDescricao() {
 		return descricao;
 	}
+	
+	@Override
+	public ItemSerieCarro clone() throws CloneNotSupportedException {
+		return new ItemSerieCarro(getCodigo(), getDataUltimaAtualizacao(), getSituacao(), descricao, valorItemSerie, modelo);
+	}
+	
+	public ItemSerieCarro(Integer codigo, Calendar dataUltimaAtualizacao,
+			Situacao situacao, String descricao, double valorItemSerie,
+			ModeloCarro modelo) {
+		super(codigo, dataUltimaAtualizacao, situacao);
+		this.descricao = descricao;
+		this.valorItemSerie = valorItemSerie;
+		this.modelo = modelo;
+	}
+
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
 	}
@@ -23,6 +40,9 @@ public class ItemSerieCarro extends ObjetoGeral{
 		this.valorItemSerie = valorItemSerie;
 	}
 	public ModeloCarro getModelo() {
+		if(modelo == null){
+	        modelo = new ModeloCarro();
+	    }
 		return modelo;
 	}
 	public void setModelo(ModeloCarro modelo) {
@@ -42,6 +62,7 @@ public class ItemSerieCarro extends ObjetoGeral{
 	}
 	public ItemSerieCarro() {
 		super();
+		this.modelo = new ModeloCarro();
 	}
 	
 }

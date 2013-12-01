@@ -17,6 +17,9 @@ public class MarcaCarro extends ObjetoGeral {
 		this.descricao = descricao;
 	}
 	public Fabricante getFabricante() {
+		if(fabricante == null){
+	        fabricante = new Fabricante();
+	    }
 		return fabricante;
 	}
 	public void setFabricante(Fabricante fabricante) {
@@ -24,6 +27,7 @@ public class MarcaCarro extends ObjetoGeral {
 	}
 	public MarcaCarro() {
 		super();
+		this.fabricante = new Fabricante();
 	}
 	public MarcaCarro(String descricao, Fabricante fabricante) {
 		super();

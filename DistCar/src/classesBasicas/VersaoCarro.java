@@ -24,7 +24,7 @@ public class VersaoCarro extends ObjetoGeral {
 	private ModeloCarro modeloCarro;
 	@ManyToMany
 	private List<AcessorioCarro> acessorios;
-	@ManyToMany(cascade={ CascadeType.ALL, CascadeType.MERGE }, fetch=FetchType.EAGER)
+	@ManyToMany(fetch=FetchType.EAGER)
 	@JoinTable(name="versaocarro_itemseriecarro",     
     joinColumns = @JoinColumn(name="VersaoCarro_codigo", referencedColumnName="codigo"),     
     inverseJoinColumns = @JoinColumn(name="itens_codigo",referencedColumnName="codigo"))
@@ -42,6 +42,9 @@ public class VersaoCarro extends ObjetoGeral {
 		this.descricao = descricao;
 	}
 	public ModeloCarro getModeloCarro() {
+		if(modeloCarro == null){
+	        modeloCarro = new ModeloCarro();
+	    }
 		return modeloCarro;
 	}
 	public void setModeloCarro(ModeloCarro modeloCarro) {
@@ -82,6 +85,7 @@ public class VersaoCarro extends ObjetoGeral {
 	
 	public VersaoCarro() {
 		super();
+		modeloCarro = new ModeloCarro();
 	}
 	public VersaoCarro(double valor, String descricao, ModeloCarro modeloCarro,
 			List<AcessorioCarro> acessorios, List<ItemSerieCarro> itens) {
