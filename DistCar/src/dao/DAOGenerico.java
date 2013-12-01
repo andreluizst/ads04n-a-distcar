@@ -55,18 +55,21 @@ public abstract class DAOGenerico<Entidade> implements IDAOGenerico<Entidade>{
 	 * @return objeto que foi executado o merge
 	 */
 	public final void alterar(Entidade objeto)  {
-		EntityTransaction tx = getEntityManager().getTransaction();
-		try {
-			tx.begin();
-			 
-			objeto = getEntityManager().merge(objeto);
-			
-			tx.commit();
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-			if (tx != null && tx.isActive()){
-				tx.rollback();
+		EntityManager em = null;
+		em = EntityManagerThreads.ENTITY_MANAGERS.get();
+		if (em != null){
+			em.merge(objeto);
+		}else{
+			EntityTransaction tx = getEntityManager().getTransaction();
+			try {
+				tx.begin();
+				objeto = getEntityManager().merge(objeto);
+				tx.commit();
+			} catch (Exception e) {
+				e.printStackTrace();
+				if (tx != null && tx.isActive()){
+					tx.rollback();
+				}
 			}
 		}
 		
@@ -78,6 +81,11 @@ public abstract class DAOGenerico<Entidade> implements IDAOGenerico<Entidade>{
 	 * @param objeto a ser salvo
 	 */
 	public final void inserir(Entidade objeto) {
+		EntityManager em = null;
+		em = EntityManagerThreads.ENTITY_MANAGERS.get();
+		if (em != null){
+			em.persist(objeto);
+		}else{
 		EntityTransaction tx = getEntityManager().getTransaction();		
 		try {
 			tx.begin();
@@ -89,6 +97,7 @@ public abstract class DAOGenerico<Entidade> implements IDAOGenerico<Entidade>{
 			if (tx != null && tx.isActive()){
 				tx.rollback();
 			}
+		}
 		}
 	}
 	
@@ -117,22 +126,31 @@ public abstract class DAOGenerico<Entidade> implements IDAOGenerico<Entidade>{
 	 *            a ser salvo
 	 */
 	public final void inserirColecao(Collection<Entidade> colecao) {
-		EntityTransaction tx = getEntityManager().getTransaction();
-		try {
-			tx.begin();
-
-			for (Entidade entidade : colecao) {
-				getEntityManager().persist(entidade);	
+		EntityManager em = null;
+		em = EntityManagerThreads.ENTITY_MANAGERS.get();
+		if (em != null){
+			inserirColecaoSemTratamento(colecao);
+		}else{
+			EntityTransaction tx = getEntityManager().getTransaction();
+			try {
+				tx.begin();
+				for (Entidade entidade : colecao) {
+					getEntityManager().persist(entidade);	
+				}
+				tx.commit();
+				System.out.println(classePersistente.getSimpleName() + " salvos com sucesso: " + colecao.size());
+			} catch (Exception e) {
+				e.printStackTrace();
+				if (tx != null && tx.isActive()){
+					tx.rollback();
+				}
 			}
-			
-			tx.commit();
-			
-			System.out.println(classePersistente.getSimpleName() + " salvos com sucesso: " + colecao.size());
-		} catch (Exception e) {
-			e.printStackTrace();
-			if (tx != null && tx.isActive()){
-				tx.rollback();
-			}
+		}
+	}
+	
+	public final void inserirColecaoSemTratamento(Collection<Entidade> colecao) {
+		for (Entidade entidade : colecao) {
+			getEntityManager().persist(entidade);	
 		}
 	}
 
@@ -143,23 +161,25 @@ public abstract class DAOGenerico<Entidade> implements IDAOGenerico<Entidade>{
 	 *            a ser removido
 	 */
 	public final void remover(Entidade objeto) {
-		EntityTransaction tx = getEntityManager().getTransaction();
-		try {
-			tx.begin();
-	
-			refresh(objeto);
-			getEntityManager().remove(objeto);
-			
-			tx.commit();
-			
-			System.out.println(classePersistente.getSimpleName() + " removido com sucesso");
-		} catch (Exception e){
-			e.printStackTrace();
-			if (tx != null && tx.isActive()){
-				tx.rollback();
+		EntityManager em = null;
+		em = EntityManagerThreads.ENTITY_MANAGERS.get();
+		if (em != null){
+			em.remove(objeto);
+		}else{
+			EntityTransaction tx = getEntityManager().getTransaction();
+			try {
+				tx.begin();
+				refresh(objeto);
+				getEntityManager().remove(objeto);
+				tx.commit();
+				System.out.println(classePersistente.getSimpleName() + " removido com sucesso");
+			} catch (Exception e){
+				e.printStackTrace();
+				if (tx != null && tx.isActive()){
+					tx.rollback();
+				}
 			}
 		}
-		
 		
 	}
 
@@ -321,8 +341,12 @@ public abstract class DAOGenerico<Entidade> implements IDAOGenerico<Entidade>{
 	}
 
 	public EntityManager getEntityManager() {
-		return EntityManagerThreads.ENTITY_MANAGERS.get();
-//		return entityManager;
+		EntityManager em = null;
+		em = EntityManagerThreads.ENTITY_MANAGERS.get();
+		if (em != null)
+			return EntityManagerThreads.ENTITY_MANAGERS.get();
+		//return EntityManagerThreads.ENTITY_MANAGERS.get();
+		return entityManager;
 	}
 
 		
