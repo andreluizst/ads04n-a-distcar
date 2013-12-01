@@ -6,8 +6,11 @@ import java.util.List;
 
 import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
+
 import classesBasicas.ItemSerieCarro;
 import classesBasicas.ModeloCarro;
+import classesBasicas.VersaoCarro;
+
 
 public class DAOItemSerieCarro extends DAOGenerico<ItemSerieCarro> implements IDAOItemSerieCarro{
 
@@ -69,6 +72,20 @@ public class DAOItemSerieCarro extends DAOGenerico<ItemSerieCarro> implements ID
 		//ex.printStackTrace();
 			return null;
 		}
+	}
+	
+	@Override
+	public VersaoCarro listarItens(Integer codigo) {
+		TypedQuery<VersaoCarro> query = entityManager.createQuery("select v from  VersaoCarro v where v.codigo = :codigo", VersaoCarro.class);
+		query.setParameter("codigo", codigo);
+		return query.getSingleResult();
+	}
+
+	@Override
+	public List<ItemSerieCarro> listarItensPorVersao(Integer codigo) {
+		TypedQuery<ItemSerieCarro> query = entityManager.createQuery("select v.itens from VersaoCarro v join fetch v.itens where v.codigo = :versao",ItemSerieCarro.class);
+		query.setParameter("versao", codigo);
+		return query.getResultList();
 	}
 	
 }

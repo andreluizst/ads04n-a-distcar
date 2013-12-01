@@ -72,4 +72,11 @@ public class DAOAcessorio extends DAOGenerico<AcessorioCarro> implements IDAOAce
 		return query.getResultList();
 	}
 
+	@Override
+	public List<AcessorioCarro> listarAcessorios(ModeloCarro modelo) {
+		TypedQuery<AcessorioCarro> query = entityManager.createQuery("from AessorioCarro a join fetch a.type where a.modelo.codigo = :codigo", AcessorioCarro.class);
+		query.setParameter("codigo", modelo.getCodigo());
+		return query.getResultList();
+	}
+
 }

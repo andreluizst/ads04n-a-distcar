@@ -11,4 +11,5 @@ public interface IDAOAcessorio extends IDAOGenerico<AcessorioCarro> {
 	public List<AcessorioCarro> listarAcessoriosPorModelo(ModeloCarro modelo);
 	public AcessorioCarro pesquisarAcessorioDescModelo(AcessorioCarro acessorioCarro);
 	public List<AcessorioCarro> consultar(AcessorioCarro acessorio) throws Exception;
+	public List<AcessorioCarro>listarAcessorios(ModeloCarro modelo);
  }
