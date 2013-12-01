@@ -93,6 +93,7 @@ public interface IFachada {
 	public List<Cliente> pesquisarCliente(Cliente exemplo) throws Exception;
 	public List<Cliente> consultarCliente(Cliente cliente) throws Exception;
 	public List<Cliente> listarClientes() throws Exception;
+	public Cliente pegarClientePorId(Integer codigo) throws Exception;
 	
 	//***********************  F A B R I C A N T E  ***************************************
 	public void salvarFabricante(Fabricante fabricante) throws Exception;

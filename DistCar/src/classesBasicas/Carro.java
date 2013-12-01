@@ -8,9 +8,18 @@ import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.ManyToOne;
+import javax.persistence.Transient;
 
 @Entity
 public class Carro extends ObjetoGeral {
+	
+	@Transient
+	public static final int TO_STRING_PADRAO = 0;
+	@Transient
+	public static final int TO_STRING_DESCRICAO_PARA_LISTA = 1;
+	
+	@Transient
+	private int comportamentoToString = TO_STRING_PADRAO;
 	
 	@Column(unique=true)
 	private String chassi;
@@ -73,6 +82,14 @@ public class Carro extends ObjetoGeral {
 		this.valorCarro = valorCarro;
 	}
 	
+	public int getComportamentoToString() {
+		return comportamentoToString;
+	}
+	public void setComportamentoToString(int comportamentoToString) {
+		this.comportamentoToString = comportamentoToString;
+	}
+	
+	
 	public Carro(String chassi, String cor, Integer anoFabricacao,
 			VersaoCarro versao, double valorCarro, Centro centro, Status status) {
 		super();
@@ -97,10 +114,20 @@ public class Carro extends ObjetoGeral {
 	}
 	@Override
 	public String toString() {
-		return "Carro [chassi=" + chassi + ", cor=" + cor + ", anoFabricacao="
+		String str = "Carro [chassi=" + chassi + ", cor=" + cor + ", anoFabricacao="
 				+ anoFabricacao + ", versao=" + versao + ", valorCarro="
 				+ valorCarro + ", centro=" + centro + ", status=" + status
 				+ "]";
+		if (comportamentoToString == Carro.TO_STRING_DESCRICAO_PARA_LISTA){
+			//int aux = versao.getComportamentoToString();
+			//versao.setComportamentoToString(VersaoCarro.TO_STRING_DESCRICAO_PARA_LISTA);
+			//str = versao + ", " + cor + ", fabricação " + anoFabricacao + ", chassi " + chassi;
+			str = versao.getModeloCarro().getDescricao() + " " + versao.getDescricao() + " "
+					+ versao.getModeloCarro().getAno() + "/" + anoFabricacao + ", "
+					+ cor + ", chassi " + chassi;
+			//versao.setComportamentoToString(aux);
+		}
+		return str;
 	}
 	
 }

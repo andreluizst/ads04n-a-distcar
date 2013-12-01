@@ -9,7 +9,7 @@ public class Cidade extends ObjetoGeral {
 	@Column(length=80, nullable=false)
 	private String nome;
 	
-	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name="coduf", insertable=true, updatable=true)
 	private UnidadeFederativa unidadeFederativa;
 	

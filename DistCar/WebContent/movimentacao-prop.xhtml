@@ -83,23 +83,34 @@
   				</h:panelGrid>
   			</p:panel>
   			
-  			<h:panelGrid columns="2" styleClass="GridSemBorda">
+  			<h:panelGrid id="grdItem" columns="3" styleClass="GridSemBorda">
   					<h:panelGrid id="grdCarroSelecionado" columns="3">
   						<h:panelGrid columns="3">
   							<h:outputLabel for="txtChassi" value="Chassi: "/>
   							<p:inputText id="txtChassi" size="15" widgetVar="wgvChassi"  
-  								readonly="#{movimentacaoBean.somenteLeitura}"
-  								value="#{movimentacaoBean.itemMovimentacao.movimentoCarroPK.carro.chassi}"
-  								required="false" lable="Chassi" />
+  									readonly="#{movimentacaoBean.somenteLeitura}" 
+  									value="#{movimentacaoBean.carro.chassi}"
+  									required="false" lable="Chassi">
+  								<f:ajax event="blur" immediate="true" listener="#{movimentacaoBean.verificarChassi}"
+  										execute="txtChassi" render="grditem" />
+  							</p:inputText>
   							<p:message for="txtChassi" display="tooltip" />
   						</h:panelGrid>
   						<h:panelGrid columns="3">
   							<h:outputLabel for="txtAno" value="Ano: "/>
   							<p:inputText id="txtAno" size="15" widgetVar="wgvAno"  
   								readonly="#{movimentacaoBean.somenteLeitura}"
-  								value="#{movimentacaoBean.itemMovimentacao.movimentoCarroPK.carro.anoFabricacao}"
+  								value="#{movimentacaoBean.carro.anoFabricacao}"
   								required="false" lable="Ano" />
   							<p:message for="txtAno" display="tooltip" />
+  						</h:panelGrid>
+  						<h:panelGrid columns="3">
+  							<h:outputLabel for="txtCor" value="Cor: "/>
+  							<p:inputText id="txtCor" size="15" widgetVar="wgvCor"  
+  								readonly="#{movimentacaoBean.somenteLeitura}"
+  								value="#{movimentacaoBean.carro.cor}"
+  								required="false" lable="Ano" />
+  							<p:message for="txtCor" display="tooltip" />
   						</h:panelGrid>
 
   					</h:panelGrid>
@@ -128,7 +139,7 @@
   			<h:panelGrid columns="3">
   			  				<h:outputLabel for="versao" value="Versão: " />
 							<p:selectOneMenu id="versao" converter="VersaoConverter"  
-						 			value="#{movimentacaoBean.itemMovimentacao.movimentoCarroPK.carro.versao}"
+						 			value="#{movimentacaoBean.carro.versao}"
 						 			readonly="#{movimentacaoBean.somenteLeitura}"
 						 			disabled="#{movimentacaoBean.somenteLeitura || !movimentacaoBean.temVersoesDeCarros}">
 								<f:selectItem noSelectionOption="true"

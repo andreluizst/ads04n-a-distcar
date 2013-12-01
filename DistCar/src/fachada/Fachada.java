@@ -342,6 +342,11 @@ public class Fachada implements IFachada {
 		return ctrlOrg.listarClientes();
 	}
 	
+	@Override
+	public Cliente pegarClientePorId(Integer codigo) throws Exception{
+		return ctrlOrg.pegarClientePorId(codigo);
+	}
+	
 	//*************************  F A B R I C A N T E  ***********************************
 	@Override
 	public void salvarFabricante(Fabricante fabricante) throws Exception {
@@ -410,7 +415,10 @@ public class Fachada implements IFachada {
 	
 	@Override
 	public void salvarMarcaCarro(MarcaCarro marcaCarro) throws Exception {
-		this.controladorCarro.inserir(marcaCarro);
+		if (marcaCarro.getCodigo() == null)
+			this.controladorCarro.inserir(marcaCarro);
+		else /// VC tá esquecendo os métodos de alteração !!!!
+			this.controladorCarro.alterar(marcaCarro);
 	}
 
 	@Override

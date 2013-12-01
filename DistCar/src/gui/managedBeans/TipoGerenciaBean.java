@@ -75,7 +75,11 @@ public class TipoGerenciaBean {
 			return null;
 		if (tipoGerenciaSelecionada == null)
 			return null;
-		prepararParaExibirDados(tipoGerenciaSelecionada);
+		try{
+			prepararParaExibirDados(fachada.pegarTipoGerenciaPorId(tipoGerenciaSelecionada.getCodigo()));
+		}catch(Exception ex){
+			MsgPrimeFaces.exibirMensagemDeErro(ex.getMessage());
+		}
 		tituloOperacao = TipoGerenciaBean.OP_ALTERAR;
 		textoBotaoFecharOuCancelar = TipoGerenciaBean.TXT_BTN_CANCELAR;
 		somenteLeitura = false;

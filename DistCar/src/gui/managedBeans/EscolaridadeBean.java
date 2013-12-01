@@ -74,7 +74,11 @@ public class EscolaridadeBean {
 			return null;
 		if (escolaridadeSelecionada == null)
 			return null;
-		prepararParaExibirDados(escolaridadeSelecionada);
+		try{
+			prepararParaExibirDados(fachada.pegarEscolaridadePorId(escolaridadeSelecionada.getCodigo()));
+		}catch(Exception ex){
+			MsgPrimeFaces.exibirMensagemDeErro(ex.getMessage());
+		}
 		tituloOperacao = EscolaridadeBean.OP_ALTERAR;
 		textoBotaoFecharOuCancelar = EscolaridadeBean.TXT_BTN_CANCELAR;
 		somenteLeitura = false;

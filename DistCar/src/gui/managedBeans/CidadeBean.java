@@ -88,7 +88,11 @@ public class CidadeBean {
 			return null;
 		if (cidadeSelecionada == null)
 			return null;
-		prepararParaExibirDados(cidadeSelecionada);
+		try{
+			prepararParaExibirDados(fachada.pegarCidadePorId(cidadeSelecionada.getCodigo()));
+		}catch(Exception ex){
+			MsgPrimeFaces.exibirMensagemDeErro(ex.getMessage());
+		}
 		tituloOperacao = CidadeBean.OP_ALTERAR;
 		textoBotaoFecharOuCancelar = CidadeBean.TXT_BTN_CANCELAR;
 		somenteLeitura = false;

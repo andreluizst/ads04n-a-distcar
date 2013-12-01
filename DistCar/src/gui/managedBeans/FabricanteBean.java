@@ -124,7 +124,11 @@ public class FabricanteBean {
 			return null;
 		if (fabricanteSelecionado == null)
 			return null;
-		prepararParaExibirDados(fabricanteSelecionado);
+		try{
+			prepararParaExibirDados(fachada.consultarFabricantePorId(fabricanteSelecionado.getCodigo()));
+		}catch(Exception ex){
+			MsgPrimeFaces.exibirMensagemDeErro(ex.getMessage());
+		}
 		tituloOperacao = FabricanteBean.OP_ALTERAR;
 		textoBotaoFecharOuCancelar = FabricanteBean.TXT_BTN_CANCELAR;
 		somenteLeitura = false;

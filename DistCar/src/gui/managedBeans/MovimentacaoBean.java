@@ -61,6 +61,7 @@ public class MovimentacaoBean {
 	private boolean temVersoesDeCarros;
 	private Carro carro;
 	private Centro centroOrigemSelecionado;
+	//private Carro carros;
 	
 	
 	
@@ -259,10 +260,20 @@ public class MovimentacaoBean {
 		}
 	}
 	
+	public void verificarChassi(){
+		Carro c = null;
+		try{
+			c = fachada.pegarCarroPeloChassi(carro.getChassi());
+			carro = c;
+		}catch(Exception ex){
+			MsgPrimeFaces.exibirMensagemDeErro(ex.getMessage());
+		}
+	}
+	
 	public void adicionarItem(){
 		Carro c = null;
 		//boolean podeAdicionar = false;
-		List<Carro> lista;// = new ArrayList<Carro>();
+		//List<Carro> lista = new ArrayList<Carro>();
 		MovimentacaoItem item = new MovimentacaoItem();
 		if (carro.getAnoFabricacao() != null && carro.getChassi() != null
 				&& carro.getChassi().length() > 0 && carro.getVersao() != null
@@ -280,7 +291,7 @@ public class MovimentacaoBean {
 				}
 				for (MovimentacaoItem m : movimentacao.getItens()){
 					if (m.getMovimentoCarroPK().getCarro().getChassi().equals(c.getChassi()))
-						throw new Exception("O carro [" + carro.getChassi() + "] informado já existe na lista");
+						throw new Exception("O carro " + carro.getChassi() + " informado já existe na lista");
 				}
 				
 				item.getMovimentoCarroPK().setCarro(c);

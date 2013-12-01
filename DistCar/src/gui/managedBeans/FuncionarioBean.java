@@ -137,7 +137,11 @@ public class FuncionarioBean {
 			return null;
 		if (funcionarioSelecionado == null)
 			return null;
-		prepararParaExibirDados(funcionarioSelecionado);
+		try{
+			prepararParaExibirDados(fachada.pegarFuncionarioPorId(funcionarioSelecionado.getCodigo()));
+		}catch(Exception ex){
+			MsgPrimeFaces.exibirMensagemDeErro(ex.getMessage());
+		}
 		tituloOperacao = FuncionarioBean.OP_ALTERAR;
 		textoBotaoFecharOuCancelar = FuncionarioBean.TXT_BTN_CANCELAR;
 		somenteLeitura = false;

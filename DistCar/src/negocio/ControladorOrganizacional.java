@@ -135,7 +135,7 @@ public class ControladorOrganizacional {
 		usuario.setSituacaoSenha(SituacaoSenha.ATIVA);
 		if (usuario.getSituacao() == null)
 			usuario.setSituacao(Situacao.ATIVO);
-		daoUsuario.inserir(usuario);
+		daoUsuario.inserirSemTratamento(usuario);
 	}
 	
 	//*****************************  F U N Ç Ã O  *****************************************
@@ -163,7 +163,7 @@ public class ControladorOrganizacional {
 				{
 					throw new Exception("inserirFuncao: Campos inválidos");
 				}
-		daoFuncao.inserir(funcao);
+		daoFuncao.inserirSemTratamento(funcao);
 	}
 	
 	public void alterarFuncao(Funcao funcao) throws Exception {
@@ -183,7 +183,7 @@ public class ControladorOrganizacional {
 			throw new Exception("Funcao não cadastrada");
 		}
 		
-		daoFuncao.alterar(f);
+		daoFuncao.alterarSemTratamento(f);
 	}
 	
 	
@@ -193,7 +193,7 @@ public class ControladorOrganizacional {
 		if(f==null){
 			throw new NegocioExceptionFuncao("Departamento não encontrado!");
 		}
-		daoFuncao.remover(f);
+		daoFuncao.removerSemTratamento(f);
 	}
 
 	public List<Funcao> pesquisarFuncao(Funcao funcao) throws Exception{
@@ -225,18 +225,18 @@ public class ControladorOrganizacional {
 		escolaridade.setDataUltimaAtualizacao(Calendar.getInstance());
         if (escolaridade.getSituacao() == null)
         	escolaridade.setSituacao(Situacao.ATIVO);
-		daoEscolaridade.inserir(escolaridade);
+		daoEscolaridade.inserirSemTratamento(escolaridade);
 	}
 	
 	public void alterarEscolaridade(Escolaridade escolaridade) throws Exception{
 		escolaridade.setDataUltimaAtualizacao(Calendar.getInstance());
         if (escolaridade.getSituacao() == null)
         	escolaridade.setSituacao(Situacao.ATIVO);
-		daoEscolaridade.alterar(escolaridade);
+		daoEscolaridade.alterarSemTratamento(escolaridade);
 	}
 	
 	public void excluirEscolaridade(Escolaridade escolaridade) throws Exception{
-		daoEscolaridade.remover(escolaridade);
+		daoEscolaridade.removerSemTratamento(escolaridade);
 	}
 	
 	public List<Escolaridade> consultarEscolaridade(Escolaridade escolaridade) throws Exception{
@@ -271,7 +271,7 @@ public class ControladorOrganizacional {
         if(departamento.getNome()==null||departamento.getNome().equals("")){
         	throw new NegocioExceptionDepartamento("Inserir depto: Campos inválidos");
         }
-        daoDepto.inserir(departamento);
+        daoDepto.inserirSemTratamento(departamento);
 	}
 	
 	public void alterarDepartamento(Departamento departamento) throws Exception{
@@ -285,11 +285,11 @@ public class ControladorOrganizacional {
 				throw new NegocioExceptionDepartamento("Alterar depto: Campos inválidos");
 		}
 		
-		daoDepto.alterar(departamento);
+		daoDepto.alterarSemTratamento(departamento);
 	}
 	
 	public void removerDepartamento(Departamento departamento) throws Exception{
-		daoDepto.remover(departamento);
+		daoDepto.removerSemTratamento(departamento);
 	}
 
 	public List<Departamento> pesquisarDepartamento(Departamento departamento) throws Exception {
@@ -325,7 +325,7 @@ public class ControladorOrganizacional {
 		if(	funcionario.getNome()==null||funcionario.getNome().equals("")){
 					throw new NegocioExceptionFuncionario ("Campos inválidos");
 		}
-		daoFuncionario.inserir(funcionario);
+		daoFuncionario.inserirSemTratamento(funcionario);
 	}
 	
 	public void alterarFuncionario(Funcionario funcionario) throws Exception{
@@ -346,7 +346,7 @@ public class ControladorOrganizacional {
 			throw new NegocioExceptionFuncionario("Funcionário não cadastrado");
 		}
 		
-		daoFuncionario.alterar(funcionario);
+		daoFuncionario.alterarSemTratamento(funcionario);
 	}
 	
 	public void removerFuncionario(Funcionario funcionario) throws Exception{
@@ -355,7 +355,7 @@ public class ControladorOrganizacional {
 		if(func==null){
 			throw new NegocioExceptionFuncionario("Funcionario não encontrado!");
 		}
-		daoFuncionario.remover(func);
+		daoFuncionario.removerSemTratamento(func);
 	}
 
 	public List<Funcionario> pesquisarFuncionario(Funcionario funcionario) throws NegocioExceptionFuncionario {
@@ -391,14 +391,14 @@ public class ControladorOrganizacional {
 		centro.setDataUltimaAtualizacao(Calendar.getInstance());
 		if (centro.getSituacao() == null)
 			centro.setSituacao(Situacao.ATIVO);
-		daoCentro.inserir(centro);
+		daoCentro.inserirSemTratamento(centro);
 	}
 	
 	public void alterarCentro(Centro centro) throws Exception{
 		centro.setDataUltimaAtualizacao(Calendar.getInstance());
 		if (centro.getSituacao() == null)
 			centro.setSituacao(Situacao.ATIVO);
-		daoCentro.alterar(centro);
+		daoCentro.alterarSemTratamento(centro);
 	}
 	
 	public void removerCentro(Centro centro) throws Exception{
@@ -443,14 +443,14 @@ public class ControladorOrganizacional {
 		tipoLogradouro.setDataUltimaAtualizacao(Calendar.getInstance());
 		if (tipoLogradouro.getSituacao() == null)
 			tipoLogradouro.setSituacao(Situacao.ATIVO);
-		daoTipoLogradouro.inserir(tipoLogradouro);
+		daoTipoLogradouro.inserirSemTratamento(tipoLogradouro);
 	}
 	
 	public void alterarTipoLogradouro(TipoLogradouro tipoLogradouro) throws Exception{
 		tipoLogradouro.setDataUltimaAtualizacao(Calendar.getInstance());
 		if (tipoLogradouro.getSituacao() == null)
 			tipoLogradouro.setSituacao(Situacao.ATIVO);
-		daoTipoLogradouro.alterar(tipoLogradouro);
+		daoTipoLogradouro.alterarSemTratamento(tipoLogradouro);
 	}
 	
 	public List<TipoLogradouro> listarTiposLogradouros() throws Exception{
@@ -481,18 +481,18 @@ public class ControladorOrganizacional {
 		if (lista.size() > 0)
 			throw new Exception("A cidade " + cidade.getNome()
 					+ "/" +cidade.getUnidadeFederativa().getSigla() + ", já existe!");
-		daoCidade.inserir(cidade);
+		daoCidade.inserirSemTratamento(cidade);
 	}
 	
 	public void alterarCidade(Cidade cidade) throws Exception{
 		cidade.setDataUltimaAtualizacao(Calendar.getInstance());
 		if (cidade.getSituacao() == null)
 			cidade.setSituacao(Situacao.ATIVO);
-		daoCidade.alterar(cidade);
+		daoCidade.alterarSemTratamento(cidade);
 	}
 	
 	public void excluirCidade(Cidade cidade) throws Exception{
-		daoCidade.remover(cidade);
+		daoCidade.removerSemTratamento(cidade);
 	}
 	
 	public List<Cidade> listarCidades() throws Exception{
@@ -536,18 +536,18 @@ public class ControladorOrganizacional {
 		tipoGerencia.setDataUltimaAtualizacao(Calendar.getInstance());
 		if (tipoGerencia.getSituacao() == null)
 			tipoGerencia.setSituacao(Situacao.ATIVO);
-		daoTipoGerencia.inserir(tipoGerencia);
+		daoTipoGerencia.inserirSemTratamento(tipoGerencia);
 	}
 	
 	public void alterarTipoGerencia(TipoGerencia tipoGerencia) throws Exception{
 		tipoGerencia.setDataUltimaAtualizacao(Calendar.getInstance());
 		if (tipoGerencia.getSituacao() == null)
 			tipoGerencia.setSituacao(Situacao.ATIVO);
-		daoTipoGerencia.alterar(tipoGerencia);
+		daoTipoGerencia.alterarSemTratamento(tipoGerencia);
 	}
 	
 	public void removerTipoGerencia(TipoGerencia tipoGerencia) throws Exception{
-		daoTipoGerencia.remover(tipoGerencia);
+		daoTipoGerencia.removerSemTratamento(tipoGerencia);
 	}
 	
 	public List<TipoGerencia> consultarTipoGerencia(TipoGerencia tipoGerencia) throws Exception{
@@ -588,18 +588,18 @@ public class ControladorOrganizacional {
 		cliente.getDadosPessoa().setDataUltimaAtualizacao(Calendar.getInstance());
 		if (cliente.getDadosPessoa().getSituacao() == null)
 			cliente.getDadosPessoa().setSituacao(Situacao.ATIVO);
-		daoCliente.inserir(cliente);
+		daoCliente.inserirSemTratamento(cliente);
 	}
 	
 	public void alterarCliente(Cliente cliente) throws Exception{
 		cliente.getDadosPessoa().setDataUltimaAtualizacao(Calendar.getInstance());
 		if (cliente.getDadosPessoa().getSituacao() == null)
 			cliente.getDadosPessoa().setSituacao(Situacao.ATIVO);
-		daoCliente.alterar(cliente);
+		daoCliente.alterarSemTratamento(cliente);
 	}
 	
 	public void excluirCliente(Cliente cliente) throws Exception{
-		daoCliente.remover(cliente);
+		daoCliente.removerSemTratamento(cliente);
 	}
 	
 	public List<Cliente> listarClientes() throws Exception{
@@ -612,6 +612,10 @@ public class ControladorOrganizacional {
 	
 	public List<Cliente> consultarCliente(Cliente cliente) throws Exception{
 		return daoCliente.consultar(cliente);
+	}
+	
+	public Cliente pegarClientePorId(Integer codigo) throws Exception{
+		return daoCliente.consultarPorId(codigo);
 	}
 	
 
@@ -631,14 +635,14 @@ public class ControladorOrganizacional {
 		fabricante.getPj().setDataUltimaAtualizacao(Calendar.getInstance());
 		if (fabricante.getPj().getSituacao() == null)
 			fabricante.getPj().setSituacao(Situacao.ATIVO);
-		daoFabricante.inserir(fabricante);
+		daoFabricante.inserirSemTratamento(fabricante);
 	}
 	
 	public void alterarFabricante(Fabricante fabricante) throws Exception{
 		fabricante.getPj().setDataUltimaAtualizacao(Calendar.getInstance());
 		if (fabricante.getPj().getSituacao() == null)
 			fabricante.getPj().setSituacao(Situacao.ATIVO);
-		daoFabricante.alterar(fabricante);
+		daoFabricante.alterarSemTratamento(fabricante);
 	}
 	
 	public void excluirFabricante(Fabricante fabricante) throws Exception{

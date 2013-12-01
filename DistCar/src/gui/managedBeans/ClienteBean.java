@@ -168,7 +168,11 @@ public class ClienteBean {
 			return null;
 		if (clienteSelecionado == null)
 			return null;
-		prepararParaExibirDados(clienteSelecionado);
+		try{
+			prepararParaExibirDados(fachada.pegarClientePorId(clienteSelecionado.getCodigo()));
+		}catch(Exception ex){
+			MsgPrimeFaces.exibirMensagemDeErro(ex.getMessage());
+		}
 		tituloOperacao = ClienteBean.OP_ALTERAR;
 		textoBotaoFecharOuCancelar = ClienteBean.TXT_BTN_CANCELAR;
 		somenteLeitura = false;

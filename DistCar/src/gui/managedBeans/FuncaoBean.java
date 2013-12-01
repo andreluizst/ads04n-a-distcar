@@ -98,7 +98,11 @@ public class FuncaoBean {
 			return null;
 		if (funcaoSelecionada == null)
 			return null;
-		prepararParaExibirDados(funcaoSelecionada);
+		try{
+			prepararParaExibirDados(fachada.pegarFuncaoPorId(funcaoSelecionada.getCodigo()));
+		}catch(Exception ex){
+			MsgPrimeFaces.exibirMensagemDeErro(ex.getMessage());
+		}
 		tituloOperacao = FuncaoBean.OP_ALTERAR;
 		textoBotaoFecharOuCancelar = FuncaoBean.TXT_BTN_CANCELAR;
 		somenteLeitura = false;

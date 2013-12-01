@@ -148,6 +148,15 @@ public class ControladorCarro {
 		
 	}
 	
+	
+	/// POW!!! VC TÁ ESQUECENDO OS MÉTODOS PARA ALERAR!!!! 
+	
+	public void alterar(MarcaCarro marcaCarro) throws Exception {
+		marcaCarroDAO.alterar(marcaCarro);
+	}
+	
+	
+	
 	public void removerMarca(MarcaCarro marcaCarro) throws Exception {
 		if(marcaCarroDAO.pesquisarMarcaPorFab(marcaCarro.getCodigo())==null){
 			throw new Exception("Marca não cadastrada");

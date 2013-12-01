@@ -158,6 +158,7 @@ public class TesteAndre {
 			
 			et.commit();
 		}catch(Exception ex){
+			ex.printStackTrace();
 			et.rollback();
 			JOptionPane.showMessageDialog(null, ex.getMessage());
 		}finally{

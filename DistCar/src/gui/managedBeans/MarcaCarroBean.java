@@ -156,7 +156,7 @@ public class MarcaCarroBean {
 			return "marca";
 		} else {
 			marcaCarro = Fachada.obterInstancia().pesquisarMarcasCarroCodigo(marcaSelecionada.getCodigo());
-			marcaCarro.setFabricante(Fachada.obterInstancia().consultarFabricantePorId(marcaSelecionada.getFabricante().getCodigo()));
+			//marcaCarro.setFabricante(Fachada.obterInstancia().consultarFabricantePorId(marcaSelecionada.getFabricante().getCodigo()));
 			return "marca-prop";
 		}
 	}
@@ -171,7 +171,7 @@ public class MarcaCarroBean {
 		try {
 			listaMarcasCarros = Fachada.obterInstancia().consultarMarcasCarros(marcaCarro);
 			marcaCarro = new MarcaCarro();
-			return "marca";
+			//return "marca";
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

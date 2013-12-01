@@ -114,7 +114,11 @@ public class CentroBean {
 			return null;
 		if (centroSelecionado == null)
 			return null;
-		prepararParaExibirDados(centroSelecionado);
+		try{
+			prepararParaExibirDados(fachada.pegarCentroPorId(centroSelecionado.getCodigo()));
+		}catch(Exception ex){
+			MsgPrimeFaces.exibirMensagemDeErro(ex.getMessage());
+		}
 		tituloOperacao = CentroBean.OP_ALTERAR;
 		textoBotaoFecharOuCancelar = CentroBean.TXT_BTN_CANCELAR;
 		somenteLeitura = false;

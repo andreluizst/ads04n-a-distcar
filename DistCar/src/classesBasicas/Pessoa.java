@@ -19,7 +19,7 @@ public abstract class Pessoa  extends ObjetoGeral {
 	//A classe Endereco é "@Embeddable"
 	private Endereco endereco;
 	
-	@ElementCollection
+	@ElementCollection(fetch=FetchType.EAGER)
 	private List<String> telefones;
 	
 	private String email;

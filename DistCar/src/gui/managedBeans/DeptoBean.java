@@ -127,7 +127,11 @@ public class DeptoBean {
 			return null;
 		if (departamentoSelecionado == null)
 			return null;
-		prepararParaExibirDados(departamentoSelecionado);
+		try{
+			prepararParaExibirDados(fachada.pegarDepartamentoPorId(departamentoSelecionado.getCodigo()));
+		}catch(Exception ex){
+			MsgPrimeFaces.exibirMensagemDeErro(ex.getMessage());
+		}
 		tituloOperacao = DeptoBean.OP_ALTERAR;
 		textoBotaoFecharOuCancelar = DeptoBean.TXT_BTN_CANCELAR;
 		somenteLeitura = false;

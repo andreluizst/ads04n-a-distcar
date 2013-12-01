@@ -12,7 +12,7 @@ public class Fabricante /*extends ObjetoGeral*/ {
 	private Integer codigo;
 	
 	
-	@OneToOne(fetch=FetchType.EAGER, cascade = CascadeType.PERSIST)
+	@OneToOne(fetch=FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinColumn(name="codPJ", insertable=true, updatable=true)
 	private PessoaJuridica pj;
 	

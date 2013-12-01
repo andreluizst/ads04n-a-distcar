@@ -24,6 +24,7 @@
   					<h:outputLabel for="nome" value="Nome: *"/>
   					<p:inputText id="nome" value="#{deptoBean.departamento.nome}" lable="Nome"
   							required="true" readonly="#{deptoBean.somenteLeitura}"/>
+  					<p:message for="nome" display="default" />
   					
   					<h:outputLabel for="cbxCentro" value="Centro: *"/>
   					<p:selectOneMenu id="cbxCentro" value="#{deptoBean.codigoCentroSelecionado}"

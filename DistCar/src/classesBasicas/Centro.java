@@ -7,7 +7,7 @@ import javax.persistence.*;
 @Entity
 public class Centro extends ObjetoGeral {
 	
-	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinColumn(name="codPJ", insertable=true, updatable=true)
 	private PessoaJuridica dadosPJ;
 	
