@@ -1,3 +1,8 @@
+DAOGenerico: Após a alteração de chico na sexta-feira(30/11/2013), ao testar hoje, 01/12/2013 a aplicação
+				começou a apresentar problemas na persistência por isso alterei o DAO. É recomendável usar
+				os métodos inserirSemTratamento, alterarSemTratamento e removerSemTratamento devido ao
+				uso da IoC.
+
 29/11/2013
 - André:	Felipe, precisei alterar a classe versaoCarro, mas vc não precisa fazer nenhuma alteração
 			no sistema devido a isso, pois apenas adicionei atributos @Transient para personalizar
