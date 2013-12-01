@@ -478,7 +478,10 @@ public class Fachada implements IFachada {
 	
 	@Override
 	public void salvarVersao(VersaoCarro versaoCarro) throws Exception {
-		this.controladorCarro.inserir(versaoCarro);
+		if (controladorCarro.versaoExiste(versaoCarro))
+			controladorCarro.alterar(versaoCarro);
+		else
+			controladorCarro.inserir(versaoCarro);
 	}
 
 	@Override
@@ -497,8 +500,8 @@ public class Fachada implements IFachada {
 	}
 
 	@Override
-	public List<VersaoCarro> consultarVersoes(VersaoCarro versaoCarro) throws Exception {
-		return this.controladorCarro.pesquisarVersoes(versaoCarro);
+	public List<VersaoCarro> consultarVersoes(VersaoCarro versaoCarro, Fabricante f , MarcaCarro m) throws Exception {
+		return this.controladorCarro.pesquisarVersoes(versaoCarro,f,m);
 	}
 	
 	@Override
@@ -536,6 +539,9 @@ public class Fachada implements IFachada {
 	@Override
 	public List<ItemSerieCarro> listarItensPorModelo(ModeloCarro modelo) {
 		return this.controladorCarro.listarItensPorModelo(modelo);
+	}
+	public List<ItemSerieCarro> listarItensPorVersao(Integer codigo){
+		return this.controladorCarro.listarItensPorVersao(codigo);
 	}
 
 	//Acessorio

@@ -136,7 +136,7 @@ public interface IFachada {
 	public void removerVersao(VersaoCarro versaoCarro);
 	public List<VersaoCarro> listarVersoes();
 	public VersaoCarro pesquisarVersaoCodigo(Integer codigo);
-	public List<VersaoCarro> consultarVersoes(VersaoCarro versaoCarro) throws Exception;
+	public List<VersaoCarro> consultarVersoes(VersaoCarro versaoCarro,Fabricante f , MarcaCarro m) throws Exception;
 	public List<VersaoCarro> pesquisarVersaoPorModelo(Integer codigo);
 	
 	
@@ -149,6 +149,7 @@ public interface IFachada {
 	public ItemSerieCarro pesquisarItemCodigo(Integer codigo);
 	public List<ItemSerieCarro> consultarItens(ItemSerieCarro itemSerieCarro) throws Exception;
 	public List<ItemSerieCarro> listarItensPorModelo(ModeloCarro modelo);
+	public List<ItemSerieCarro> listarItensPorVersao(Integer codigo);
 		
 	//Acessório
 	
