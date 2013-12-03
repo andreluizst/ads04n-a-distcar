@@ -61,3 +61,7 @@ André 11/11/2013  23:45
  o erro.
  Ve esse site ai: http://blog.camilolopes.com.br/opensessionviewsolucao/
  
+ Felipe 03/12/2013
+ André o que vc mechou no DAO agora que minhas atualizaçãoes das tabelas não estão fazendo mais automáticas
+ tenho que clicar no consultar?
+ 
