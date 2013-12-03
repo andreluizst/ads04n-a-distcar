@@ -4,6 +4,7 @@ import java.util.List;
 
 import classesBasicas.AcessorioCarro;
 import classesBasicas.Carro;
+import classesBasicas.Fabricante;
 import classesBasicas.ItemSerieCarro;
 import classesBasicas.MarcaCarro;
 import classesBasicas.ModeloCarro;
@@ -41,6 +42,8 @@ public class ControladorCarro {
 		this.marcaCarroDAO = new DAOMarcaCarro();
 		
 	}
+	
+	
 	//Carro
 	
 	public void inserir(Carro carro) {
@@ -108,9 +111,22 @@ public class ControladorCarro {
 	
 	//Versao de carro
 	
+	public boolean versaoExiste(VersaoCarro versao) throws Exception{
+		VersaoCarro obj = null;
+		if (versao.getCodigo() == null){
+			obj=null;
+			return false;
+		}
+		obj = versaoCarroDAO.consultarPorId(versao.getCodigo());
+		if (obj != null)
+			if (obj.getCodigo() == versao.getCodigo())
+				return true;
+		return false;
+	}
+	
 	public void inserir(VersaoCarro versao) throws Exception {
-		if(versaoCarroDAO.pesquisarVersaoDesc(versao)!=null &&
-				versaoCarroDAO.pesquisarVersaoDesc(versao).getCodigo()!=versao.getCodigo()){
+		if(versaoCarroDAO.pesquisarVersaoDesc(versao.getDescricao())!=null &&
+				(versaoCarroDAO.pesquisarVersaoDesc(versao.getDescricao())).getCodigo()!=versao.getCodigo()){
 			throw new Exception("Versão já cadastrada");
 		}
 		versaoCarroDAO.inserir(versao);
@@ -129,8 +145,8 @@ public class ControladorCarro {
 		return versaoCarroDAO.consultarPorId(codigo);
 	}
 	
-	public List<VersaoCarro> pesquisarVersoes(VersaoCarro versao) throws Exception {
-		return versaoCarroDAO.consultar(versao);
+	public List<VersaoCarro> pesquisarVersoes(VersaoCarro versao, Fabricante f , MarcaCarro m) throws Exception {
+		return versaoCarroDAO.consultar(versao,f,m);
 	}
 	
 	public List<VersaoCarro> pesquisarVersaoPorModelo(Integer codigo){
@@ -224,6 +240,9 @@ public class ControladorCarro {
 		return itemSerieCarroDAO.listarItensPorModelo(modelo);
 	}
 	
+	public List<ItemSerieCarro> listarItensPorVersao(Integer codigo){
+		return itemSerieCarroDAO.listarItensPorVersao(codigo);
+	}
 	//Acessório Carro
 
 	public void inserir(AcessorioCarro acessorioCarro) throws Exception {
