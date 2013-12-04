@@ -382,8 +382,13 @@ public class Fachada implements IFachada {
 	
 	//Carro
 	@Override
-	public void salvarCarro(Carro carro) {
+	public void salvarCarro(Carro carro) throws Exception  {
+		if(controladorCarro.carroExiste(carro)){
+			controladorCarro.alterar(carro);
+		}
+		else{
 		this.controladorCarro.inserir(carro);
+		}
 	}
 
 	@Override
@@ -402,8 +407,8 @@ public class Fachada implements IFachada {
 	}
 
 	@Override
-	public List<Carro> consultarCarros(Carro carro) {
-		return this.controladorCarro.pesquisarCarros(carro);
+	public List<Carro> consultarCarros(Carro carro, Fabricante f, MarcaCarro m, ModeloCarro modelo) throws Exception {
+		return this.controladorCarro.pesquisarCarros(carro, f, m, modelo);
 	}
 	
 	@Override
@@ -415,12 +420,14 @@ public class Fachada implements IFachada {
 	
 	@Override
 	public void salvarMarcaCarro(MarcaCarro marcaCarro) throws Exception {
-		if (marcaCarro.getCodigo() == null)
-			this.controladorCarro.inserir(marcaCarro);
-		else /// VC tá esquecendo os métodos de alteração !!!!
+		if(controladorCarro.marcaExiste(marcaCarro)){
 			this.controladorCarro.alterar(marcaCarro);
+		}
+		else{
+			this.controladorCarro.inserir(marcaCarro);
+		}
+			
 	}
-
 	@Override
 	public void removerMarcaCarro(MarcaCarro marcaCarro) throws Exception {
 		this.controladorCarro.removerMarca(marcaCarro);
@@ -521,7 +528,12 @@ public class Fachada implements IFachada {
 	
 	@Override
 	public void salvarItemSerie(ItemSerieCarro itemSerieCarro) throws Exception {
+		if(controladorCarro.itemExiste(itemSerieCarro)){
+			this.controladorCarro.alterar(itemSerieCarro);
+		}
+		else{
 		this.controladorCarro.inserir(itemSerieCarro);
+		}
 	}
 
 	@Override
@@ -556,6 +568,9 @@ public class Fachada implements IFachada {
 	
 	@Override
 	public void salvarAcessorio(AcessorioCarro acessorioCarro)throws Exception {
+		if(controladorCarro.acessorioExiste(acessorioCarro)){
+			this.controladorCarro.alterarAcessorio(acessorioCarro);
+		}
 		this.controladorCarro.inserir(acessorioCarro);
 	}
 
