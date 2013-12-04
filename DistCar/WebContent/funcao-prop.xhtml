@@ -38,7 +38,7 @@
   					<h:outputLabel for="situacao" value="Situação: "/>
   					<p:selectOneMenu id="situacao" value="#{funcaoBean.funcao.situacao}"
   								readonly="#{funcaoBean.somenteLeitura}" >
-  						<f:selectItem itemLabel="Selecione uma opção" itemValue="" />
+  						<f:selectItem itemLabel="Selecione uma opção" itemValue="#{null}" />
   						<f:selectItems value="#{funcaoBean.situacoes}" />
   					</p:selectOneMenu>
   					
@@ -46,7 +46,7 @@
 
   				<p:commandButton value="Salvar" rendered="#{!funcaoBean.somenteLeitura}" 
   						disabled="#{funcaoBean.somenteLeitura}" 
-  						update="frmFuncao" action="#{funcaoBean.salvar}"/>
+  						update="panelFuncao" action="#{funcaoBean.salvar}"/>
   				
   				<p:commandButton value="#{funcaoBean.textoBotaoFecharOuCancelar}" 
   								immediate="true" action="#{funcaoBean.cancelar}" />

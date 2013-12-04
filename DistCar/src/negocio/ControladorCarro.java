@@ -218,7 +218,7 @@ public class ControladorCarro {
 		if(marcaCarroDAO.pesquisarMarcaPorFab(marcaCarro.getCodigo())==null){
 			throw new Exception("Marca não cadastrada");
 		}
-		marcaCarroDAO.remover(marcaCarro);
+		marcaCarroDAO.removerSemTratamento(marcaCarro);
 	}
 
 	public List<MarcaCarro> listarMarcas() {

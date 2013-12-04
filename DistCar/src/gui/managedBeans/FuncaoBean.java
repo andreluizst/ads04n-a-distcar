@@ -5,13 +5,6 @@ import java.util.List;
 //import gui.MessagesController;
 
 
-
-
-
-
-
-
-
 import java.util.ResourceBundle;
 
 import javax.faces.application.FacesMessage;
@@ -158,13 +151,17 @@ public class FuncaoBean {
 	
 	public String salvar(){
 		try{
-			Fachada.obterInstancia().salvarFuncao(funcao);
+			if (funcao.getCodigo() == null || funcao.getCodigo() == 0)
+				funcao.setCodigo(null);
+			fachada.salvarFuncao(funcao);
 			novaFuncao();
+			somenteLeitura = true;
 			//A próxima linha não surte efeito retornando funcao.xhtml?faces-redirect=true
 			//MsgPrimeFaces.exibirMensagemInfomativa("Função salva com sucesso!");
 			msgPendente = MsgPrimeFaces.criarMsgInfo("Função salva com sucesso!");
 			return resourceBundle.getString("linkFuncao");//"funcao";
 		}catch(Exception ex){
+			ex.printStackTrace();
 			MsgPrimeFaces.exibirMensagemDeErro(ex.getMessage());
 		}
 		return null;
@@ -220,7 +217,7 @@ public class FuncaoBean {
 	public List<Funcao> listar(){
 		try{
 			//lista = null;
-			atualizarLista(Fachada.obterInstancia().listarFuncoes());
+			atualizarLista(fachada.listarFuncoes());
 			return lista;
 		}catch(Exception ex){
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro ao listar: ", ex.getMessage()));

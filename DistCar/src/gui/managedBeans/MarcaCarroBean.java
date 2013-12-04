@@ -8,6 +8,7 @@ import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 
+import seguranca.EntityManagerThreads;
 import classesBasicas.Fabricante;
 import classesBasicas.MarcaCarro;
 import classesBasicas.Situacao;
@@ -127,9 +128,17 @@ public class MarcaCarroBean {
 					.exibirMensagemInfomativa("Selecione um acessório para exclusão!");
 		} else {
 			try {
-				Fachada.obterInstancia().removerMarcaCarro(marcaSelecionada);
+				/*Felipe, se não pegar a entidade do banco como na linha abaixo dá erro "Entity not managed".
+					Não verifiquei o restante do seu código para saber porque o seu managedBean dá esse problema.
+					O meu managedBean não precisa fazer isso. Está normal.
+				*/
+				MarcaCarro m = Fachada.obterInstancia().pesquisarMarcasCarroCodigo(marcaSelecionada.getCodigo());
+				Fachada.obterInstancia().removerMarcaCarro(m);
 				MsgPrimeFaces
 				.exibirMensagemInfomativa("Marca removida com sucesso!");
+				//A linha abaixo não alterou o comportamento da consulta. Só retorna lista atualizada
+				//se clicar no botão consultar.
+				//EntityManagerThreads.getEntityManager().flush();
 				consulta();
 			} catch (Exception ex) {
 				// TODO Auto-generated catch block
@@ -157,17 +166,21 @@ public class MarcaCarroBean {
 		} else {
 			marcaCarro = Fachada.obterInstancia().pesquisarMarcasCarroCodigo(marcaSelecionada.getCodigo());
 			//marcaCarro.setFabricante(Fachada.obterInstancia().consultarFabricantePorId(marcaSelecionada.getFabricante().getCodigo()));
-			return "marca-prop";
+			return "/marca-prop.xhtml?faces-redirect=true";
 		}
 	}
 
 	public String cancelar() {
 		marcaCarro = new MarcaCarro();
 		marcaSelecionada = null;
-		return "marca";
+		return "/marca.xhtml?faces-redirect=true";
 	}
-
-	public String consultar() {
+	
+	/*
+	////  Função alterada!!!! Sem return, pois o página XHTML está usando AJAX!
+	 *    No botão consultar no xhtml deve fazer update apenas da lista.
+	*/
+	public void consultar() {
 		try {
 			listaMarcasCarros = Fachada.obterInstancia().consultarMarcasCarros(marcaCarro);
 			marcaCarro = new MarcaCarro();
@@ -176,6 +189,6 @@ public class MarcaCarroBean {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return null;
+		//return null;
 	}
 }

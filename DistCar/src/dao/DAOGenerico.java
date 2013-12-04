@@ -164,6 +164,7 @@ public abstract class DAOGenerico<Entidade> implements IDAOGenerico<Entidade>{
 		EntityManager em = null;
 		em = EntityManagerThreads.ENTITY_MANAGERS.get();
 		if (em != null){
+			refresh(objeto);
 			em.remove(objeto);
 		}else{
 			EntityTransaction tx = getEntityManager().getTransaction();

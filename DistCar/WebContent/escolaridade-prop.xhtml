@@ -30,7 +30,7 @@
   					<h:outputLabel for="situacao" value="Situação: "/>
   					<p:selectOneMenu id="situacao" value="#{escolaridadeBean.escolaridade.situacao}"
   							readonly="#{escolaridadeBean.somenteLeitura}" >
-  						<f:selectItem itemLabel="Todas as situações" itemValue="#{null}" />
+  						<f:selectItem itemLabel="Selecione uma situação" itemValue="#{null}" />
   						<f:selectItems value="#{escolaridadeBean.situacoes}" />
   					</p:selectOneMenu>
   					<p:message for="situacao" display="default" />

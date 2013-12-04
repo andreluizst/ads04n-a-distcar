@@ -170,20 +170,7 @@ public class ControladorOrganizacional {
 		funcao.setDataUltimaAtualizacao(Calendar.getInstance());
 		if (funcao.getSituacao() == null)
 			funcao.setSituacao(Situacao.ATIVO);
-		if(	funcao.getCodigo()==null||funcao.getCodigo().equals("")||
-				funcao.getDescricao()==null||funcao.getDescricao().equals("")||
-						funcao.getSituacao()==null||funcao.getSituacao().equals("")||
-							funcao.getDataUltimaAtualizacao()==null||funcao.getDataUltimaAtualizacao().equals(""))
-				{
-					throw new NegocioExceptionFuncao("Campos inválidos");
-				}
-				
-		Funcao f = daoFuncao.consultarPorId(funcao.getCodigo());
-		if(f==null){
-			throw new Exception("Funcao não cadastrada");
-		}
-		
-		daoFuncao.alterarSemTratamento(f);
+		daoFuncao.alterarSemTratamento(funcao);
 	}
 	
 	
