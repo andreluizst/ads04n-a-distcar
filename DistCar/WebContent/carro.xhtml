@@ -57,7 +57,7 @@
 							itemLabel="Selecione o fabricante" itemValue="-1"/>
 						<f:selectItems value="#{carroBean.fabricantes}" var="f"
 							itemLabel="#{f.pj.nome}" itemValue="#{f}" />
-							<f:ajax render="marca modelo versao item acessorio valor" event="valueChange"/>
+							<f:ajax render="marca modelo versao item acessorio" event="valueChange"/>
   					</p:selectOneMenu>
   				
   					
@@ -69,7 +69,7 @@
 							itemLabel="Selecione a marca" itemValue="-1"/>
 						<f:selectItems value="#{carroBean.marcas}" var="m"
 							itemLabel="#{m.descricao}" itemValue="#{m}" />
-							<f:ajax render="modelo versao item acessorio valor" event="valueChange"/>
+							<f:ajax render="modelo versao item acessorio" event="valueChange"/>
   					</p:selectOneMenu>
   				
   					
@@ -81,14 +81,13 @@
 							itemLabel="Selecione o modelo" itemValue="-1"/>
 						<f:selectItems value="#{carroBean.modelos}" var="mo"
 							itemLabel="#{mo.descricao} #{mo.ano}" itemValue="#{mo}" />
-							<f:ajax render="versao item acessorio valor" event="valueChange"/>
+							<f:ajax render="versao item acessorio" event="valueChange"/>
   					</p:selectOneMenu>
   					
   					
   					<h:outputLabel for="versao" value="Versão: * " />
 					<p:selectOneMenu id="versao" converter="VersaoConverter"
-						 value="#{carroBean.carro.versao}" 
-						 >
+						 value="#{carroBean.carro.versao}">
 						<f:selectItem noSelectionOption="true"
 							itemLabel="Selecione a versão" itemValue="-1"/>
 						<f:selectItems value="#{carroBean.versoes}" var="v"
@@ -96,10 +95,7 @@
 							<f:ajax render="item acessorio" event="valueChange"/>
   					</p:selectOneMenu>
   				
-  						<h:outputLabel for="valor" value="Valor Carro: *" />
-					<p:inputText id="valor" disabled="false"
-						value="#{carroBean.carro.valorCarro}"
-						requerid="false" label="valor" />
+  					
   					
   					 <h:panelGrid columns="2" style="margin-bottom:5px" cellpadding="5">  
 					<h:outputText value="Itens: *"/>  
@@ -160,7 +156,7 @@
 				paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
 				rowsPerPageTemplate="5,10,15"
 				selection="#{carroBean.carroSelecionado}" selectionMode="single"
-				rowKey="#{carro.codigo}">
+				rowKey="#{carro}">
 				<f:facet name="header">
            	 		Carros
         		</f:facet>
