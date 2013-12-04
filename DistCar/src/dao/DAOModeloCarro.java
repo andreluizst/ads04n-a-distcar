@@ -2,15 +2,28 @@ package dao;
 
 import java.util.List;
 
+import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
+
 import classesBasicas.ModeloCarro;
 
 public class DAOModeloCarro extends DAOGenerico<ModeloCarro> implements IDAOModeloCarro {
 
+	
+	public DAOModeloCarro() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	public DAOModeloCarro(EntityManager entityManager) {
+		super(entityManager);
+		// TODO Auto-generated constructor stub
+	}
+
 	@Override
 	public List<ModeloCarro> pesquisarModeloPorMarca(Integer codigo) {
-		TypedQuery<ModeloCarro> query = entityManager.createQuery("from ModeloCarro m where m.marcaCarro.codigo = :codigo", ModeloCarro.class);
+		TypedQuery<ModeloCarro> query = getEntityManager().createQuery("from ModeloCarro m where m.marcaCarro.codigo = :codigo", ModeloCarro.class);
 		query.setParameter("codigo", codigo);
 		return query.getResultList();
 	}
@@ -18,7 +31,7 @@ public class DAOModeloCarro extends DAOGenerico<ModeloCarro> implements IDAOMode
 	@Override
 	public ModeloCarro pesquisarModeloDescAno(ModeloCarro modelo) {
 		try {
-			TypedQuery<ModeloCarro> query = entityManager.createQuery("from ModeloCarro m where m.descricao = :descricao and m.ano =:ano",ModeloCarro.class);
+			TypedQuery<ModeloCarro> query = getEntityManager().createQuery("from ModeloCarro m where m.descricao = :descricao and m.ano =:ano",ModeloCarro.class);
 			query.setParameter("descricao", modelo.getDescricao());
 			query.setParameter("ano", modelo.getAno());
 			return query.getSingleResult();
@@ -54,7 +67,7 @@ public class DAOModeloCarro extends DAOGenerico<ModeloCarro> implements IDAOMode
 			jpql+= " and m.valor = :valor";
 			temValor = true;
 		}
-		TypedQuery<ModeloCarro> tqry = entityManager.createQuery(jpql, ModeloCarro.class);
+		TypedQuery<ModeloCarro> tqry = getEntityManager().createQuery(jpql, ModeloCarro.class);
 		tqry.setParameter("descricao", descricao);
 		if(temAno)
 			tqry.setParameter("ano", modelo.getAno());

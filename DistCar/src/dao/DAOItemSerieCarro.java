@@ -4,6 +4,7 @@ package dao;
 
 import java.util.List;
 
+import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
 
@@ -14,9 +15,20 @@ import classesBasicas.VersaoCarro;
 
 public class DAOItemSerieCarro extends DAOGenerico<ItemSerieCarro> implements IDAOItemSerieCarro{
 
+	
+	public DAOItemSerieCarro() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	public DAOItemSerieCarro(EntityManager entityManager) {
+		super(entityManager);
+		// TODO Auto-generated constructor stub
+	}
+
 	@Override
 	public List<ItemSerieCarro> pesquisarPorModelo(Integer codigo) {
-		TypedQuery<ItemSerieCarro> query = entityManager.createQuery("from ItemSerieCarro i where i.modeloCarro.codigo = :codigo", ItemSerieCarro.class);
+		TypedQuery<ItemSerieCarro> query = getEntityManager().createQuery("from ItemSerieCarro i where i.modeloCarro.codigo = :codigo", ItemSerieCarro.class);
 		query.setParameter("codigo", codigo);
 		return query.getResultList();
 		
@@ -24,7 +36,7 @@ public class DAOItemSerieCarro extends DAOGenerico<ItemSerieCarro> implements ID
 
 	@Override
 	public List<ItemSerieCarro> listarItensPorModelo(ModeloCarro modelo) {
-		TypedQuery<ItemSerieCarro> query = entityManager.createQuery("from ItemSerieCarro i where i.modelo.codigo = :modeloCarro",ItemSerieCarro.class);
+		TypedQuery<ItemSerieCarro> query = getEntityManager().createQuery("from ItemSerieCarro i where i.modelo.codigo = :modeloCarro",ItemSerieCarro.class);
 		query.setParameter("modeloCarro", modelo.getCodigo());
 		return query.getResultList();
 	}
@@ -50,7 +62,7 @@ public class DAOItemSerieCarro extends DAOGenerico<ItemSerieCarro> implements ID
 			jpql+= " and i.valor = :valor";
 			temValor = true;
 		}
-		TypedQuery<ItemSerieCarro> tqry = entityManager.createQuery(jpql, ItemSerieCarro.class);
+		TypedQuery<ItemSerieCarro> tqry = getEntityManager().createQuery(jpql, ItemSerieCarro.class);
 		tqry.setParameter("descricao", descricao);
 		if(temValor)
 			tqry.setParameter("valor", item.getValorItemSerie());
@@ -64,7 +76,7 @@ public class DAOItemSerieCarro extends DAOGenerico<ItemSerieCarro> implements ID
 	@Override
 	public ItemSerieCarro pesquisarItemDescModelo(ItemSerieCarro item) {
 		try {
-			TypedQuery<ItemSerieCarro> query = entityManager.createQuery("from ItemSerieCarro i where i.descricao = :descricao and i.modelo.codigo =:modelo",ItemSerieCarro.class);
+			TypedQuery<ItemSerieCarro> query = getEntityManager().createQuery("from ItemSerieCarro i where i.descricao = :descricao and i.modelo.codigo =:modelo",ItemSerieCarro.class);
 			query.setParameter("descricao", item.getDescricao());
 			query.setParameter("modelo", item.getModelo().getCodigo());
 			return query.getSingleResult();
@@ -76,14 +88,14 @@ public class DAOItemSerieCarro extends DAOGenerico<ItemSerieCarro> implements ID
 	
 	@Override
 	public VersaoCarro listarItens(Integer codigo) {
-		TypedQuery<VersaoCarro> query = entityManager.createQuery("select v from  VersaoCarro v where v.codigo = :codigo", VersaoCarro.class);
+		TypedQuery<VersaoCarro> query = getEntityManager().createQuery("select v from  VersaoCarro v where v.codigo = :codigo", VersaoCarro.class);
 		query.setParameter("codigo", codigo);
 		return query.getSingleResult();
 	}
 
 	@Override
 	public List<ItemSerieCarro> listarItensPorVersao(Integer codigo) {
-		TypedQuery<ItemSerieCarro> query = entityManager.createQuery("select v.itens from VersaoCarro v join fetch v.itens where v.codigo = :versao",ItemSerieCarro.class);
+		TypedQuery<ItemSerieCarro> query = getEntityManager().createQuery("select v.itens from VersaoCarro v join fetch v.itens where v.codigo = :versao",ItemSerieCarro.class);
 		query.setParameter("versao", codigo);
 		return query.getResultList();
 	}

@@ -3,6 +3,7 @@ package dao;
 
 import java.util.List;
 
+import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
 
@@ -11,6 +12,16 @@ import classesBasicas.ModeloCarro;
 
 public class DAOAcessorio extends DAOGenerico<AcessorioCarro> implements IDAOAcessorio {
 
+	public DAOAcessorio() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	public DAOAcessorio(EntityManager entityManager) {
+		super(entityManager);
+		// TODO Auto-generated constructor stub
+	}
+	
 	@Override
 	public List<AcessorioCarro> listarAcessoriosPorModelo(ModeloCarro modelo) {
 		TypedQuery<AcessorioCarro> query = entityManager.createQuery("from AcessorioCarro a where a.modelo.codigo = :modeloCarro",AcessorioCarro.class);
@@ -22,7 +33,7 @@ public class DAOAcessorio extends DAOGenerico<AcessorioCarro> implements IDAOAce
 	public AcessorioCarro pesquisarAcessorioDescModelo(
 			AcessorioCarro acessorioCarro) {
 	try {
-			TypedQuery<AcessorioCarro> query = entityManager.createQuery("from AcessorioCarro a where a.descricao = :descricao and a.modelo.codigo =:modelo",AcessorioCarro.class);
+			TypedQuery<AcessorioCarro> query = getEntityManager().createQuery("from AcessorioCarro a where a.descricao = :descricao and a.modelo.codigo =:modelo",AcessorioCarro.class);
 			query.setParameter("descricao", acessorioCarro.getDescricao());
 			query.setParameter("modelo", acessorioCarro.getModelo().getCodigo());
 			return query.getSingleResult();
@@ -54,7 +65,7 @@ public class DAOAcessorio extends DAOGenerico<AcessorioCarro> implements IDAOAce
 			jpql+= " and a.valor = :valor";
 			temValor = true;
 		}
-		TypedQuery<AcessorioCarro> tqry = entityManager.createQuery(jpql, AcessorioCarro.class);
+		TypedQuery<AcessorioCarro> tqry = getEntityManager().createQuery(jpql, AcessorioCarro.class);
 		tqry.setParameter("descricao", descricao);
 		if(temValor)
 			tqry.setParameter("valor", acessorio.getValor());
@@ -67,16 +78,17 @@ public class DAOAcessorio extends DAOGenerico<AcessorioCarro> implements IDAOAce
 
 	@Override
 	public List<AcessorioCarro> pesquisarPorModelo(Integer codigo) {
-		TypedQuery<AcessorioCarro> query = entityManager.createQuery("from AessorioCarro a where a.modelo.codigo = :codigo", AcessorioCarro.class);
+		TypedQuery<AcessorioCarro> query = getEntityManager().createQuery("from AessorioCarro a where a.modelo.codigo = :codigo", AcessorioCarro.class);
 		query.setParameter("codigo", codigo);
 		return query.getResultList();
 	}
 
 	@Override
 	public List<AcessorioCarro> listarAcessorios(ModeloCarro modelo) {
-		TypedQuery<AcessorioCarro> query = entityManager.createQuery("from AessorioCarro a join fetch a.type where a.modelo.codigo = :codigo", AcessorioCarro.class);
+		TypedQuery<AcessorioCarro> query = getEntityManager().createQuery("from AessorioCarro a join fetch a.type where a.modelo.codigo = :codigo", AcessorioCarro.class);
 		query.setParameter("codigo", modelo.getCodigo());
 		return query.getResultList();
 	}
 
+	
 }

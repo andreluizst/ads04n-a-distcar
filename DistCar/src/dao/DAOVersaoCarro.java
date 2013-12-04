@@ -2,6 +2,7 @@ package dao;
 
 import java.util.List;
 
+import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
 
@@ -11,9 +12,19 @@ import classesBasicas.VersaoCarro;
 
 public class DAOVersaoCarro extends DAOGenerico<VersaoCarro> implements IDAOVersaoCarro{
 
+	public DAOVersaoCarro() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	public DAOVersaoCarro(EntityManager entityManager) {
+		super(entityManager);
+		// TODO Auto-generated constructor stub
+	}
+
 	@Override
 	public List<VersaoCarro> pesquisarVersaoPorModelo(Integer codigo) {
-		TypedQuery<VersaoCarro> query = entityManager.createQuery("from VersaoCarro v where v.modeloCarro.codigo = :codigo", VersaoCarro.class);
+		TypedQuery<VersaoCarro> query = getEntityManager().createQuery("from VersaoCarro v where v.modeloCarro.codigo = :codigo", VersaoCarro.class);
 		query.setParameter("codigo", codigo);
 		return query.getResultList();
 	}
@@ -67,7 +78,7 @@ public class DAOVersaoCarro extends DAOGenerico<VersaoCarro> implements IDAOVers
 			jpql+= " and v.valor = :valor";
 			temValor = true;
 		}
-		TypedQuery<VersaoCarro> tqry = entityManager.createQuery(jpql, VersaoCarro.class);
+		TypedQuery<VersaoCarro> tqry = getEntityManager().createQuery(jpql, VersaoCarro.class);
 		tqry.setParameter("descricao", descricao);
 		if(temValor)
 			tqry.setParameter("valor", versao.getValor());
@@ -91,7 +102,7 @@ public class DAOVersaoCarro extends DAOGenerico<VersaoCarro> implements IDAOVers
 	@Override
 	public VersaoCarro pesquisarVersaoDesc(String descricao) {
 		try {
-			TypedQuery<VersaoCarro> query = entityManager.createQuery("from VersaoCarro v where v.descricao = :descricao",VersaoCarro.class);
+			TypedQuery<VersaoCarro> query = getEntityManager().createQuery("from VersaoCarro v where v.descricao = :descricao",VersaoCarro.class);
 			query.setParameter("descricao", descricao);
 			return query.getSingleResult();
 	} catch (NoResultException e) {
