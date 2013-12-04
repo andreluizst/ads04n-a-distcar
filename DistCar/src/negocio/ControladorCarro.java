@@ -1,5 +1,6 @@
 package negocio;
 
+import java.util.Calendar;
 import java.util.List;
 
 import classesBasicas.AcessorioCarro;
@@ -21,6 +22,7 @@ import dao.IDAOItemSerieCarro;
 import dao.IDAOMarcaCarro;
 import dao.IDAOModeloCarro;
 import dao.IDAOVersaoCarro;
+import erro.NegocioExceptionAcessorio;
 
 
 public class ControladorCarro {
@@ -31,26 +33,39 @@ public class ControladorCarro {
 	private IDAOModeloCarro modeloCarroDAO;
 	private IDAOAcessorio acessorioDAO;
 	private IDAOMarcaCarro marcaCarroDAO;
-	
-	public ControladorCarro(){
-		super();
-		this.itemSerieCarroDAO = new DAOItemSerieCarro();
-		this.carroDAO = new DAOCarro();
-		this.versaoCarroDAO = new DAOVersaoCarro();
-		this.modeloCarroDAO = new DAOModeloCarro();
-		this.acessorioDAO = new DAOAcessorio();
-		this.marcaCarroDAO = new DAOMarcaCarro();
+
+		public ControladorCarro(){
+			super();
+			this.carroDAO = new DAOCarro();
+			this.marcaCarroDAO = new DAOMarcaCarro();
+			this.modeloCarroDAO = new DAOModeloCarro();
+			this.versaoCarroDAO = new DAOVersaoCarro();
+			this.acessorioDAO = new DAOAcessorio();
+			this.itemSerieCarroDAO= new DAOItemSerieCarro();
 		
 	}
-	
-	
 	//Carro
 	
+	public boolean carroExiste(Carro carro) throws Exception{
+		Carro obj = null;
+		if (carro.getCodigo() == null){
+			obj=null;
+			return false;
+		}
+		obj = carroDAO.consultarPorId(carro.getCodigo());
+		if (obj != null)
+			if (obj.getCodigo() == carro.getCodigo())
+				return true;
+		return false;
+	}
+	
+	
 	public void inserir(Carro carro) {
+		carro.setDataUltimaAtualizacao(Calendar.getInstance());
 		carroDAO.inserir(carro);
 	}
-	public void alterar(Carro carro) {
-		carroDAO.alterar(carro);
+	public void alterar(Carro carro) throws Exception {
+		carroDAO.alterarSemTratamento(carro);
 	}
 	public void remover(Carro carro) {
 		carroDAO.remover(carro);
@@ -66,22 +81,37 @@ public class ControladorCarro {
 		return carroDAO.consultarPorId(codigo);
 	}
 	
-	public List<Carro> pesquisarCarros(Carro carro) {
-		return carroDAO.pesquisar(carro);
+	public List<Carro> pesquisarCarros(Carro carro, Fabricante f, MarcaCarro m, ModeloCarro modelo) throws Exception {
+		return carroDAO.consultar(carro, f, m, modelo);
 	}
 
 	
 	//Modelo Carro
+	
+	public boolean carroExiste(ModeloCarro modelo) throws Exception{
+		ModeloCarro obj = null;
+		if (modelo.getCodigo() == null){
+			obj=null;
+			return false;
+		}
+		obj = modeloCarroDAO.consultarPorId(modelo.getCodigo());
+		if (obj != null)
+			if (obj.getCodigo() == modelo.getCodigo())
+				return true;
+		return false;
+	}
+	
 	public void inserir(ModeloCarro modelo) throws Exception {
 		if(modeloCarroDAO.pesquisarModeloDescAno(modelo)!=null &&
 				modeloCarroDAO.pesquisarModeloDescAno(modelo).getCodigo()!=modelo.getCodigo()){
 			throw new Exception("Modelo já cadastrado");
 		}
+		modelo.setDataUltimaAtualizacao(Calendar.getInstance());
 		modeloCarroDAO.inserir(modelo);
 	}
 
-	public void alterar(ModeloCarro modelo) {
-		modeloCarroDAO.alterar(modelo);
+	public void alterar(ModeloCarro modelo) throws Exception {
+		modeloCarroDAO.alterarSemTratamento(modelo);
 	}
 
 	public void remover(ModeloCarro modelo) throws Exception {
@@ -129,6 +159,7 @@ public class ControladorCarro {
 				(versaoCarroDAO.pesquisarVersaoDesc(versao.getDescricao())).getCodigo()!=versao.getCodigo()){
 			throw new Exception("Versão já cadastrada");
 		}
+		versao.setDataUltimaAtualizacao(Calendar.getInstance());
 		versaoCarroDAO.inserir(versao);
 	}
 	public void alterar(VersaoCarro versaoCarro) {
@@ -155,23 +186,33 @@ public class ControladorCarro {
 	
 	// Marca
 	
+	public boolean marcaExiste(MarcaCarro marca) throws Exception{
+		MarcaCarro obj = null;
+		if (marca.getCodigo() == null){
+			obj=null;
+			return false;
+		}
+		obj = marcaCarroDAO.consultarPorId(marca.getCodigo());
+		if (obj != null)
+			if (obj.getCodigo() == marca.getCodigo())
+				return true;
+		return false;
+	}
+	
 	public void inserir(MarcaCarro marcaCarro) throws Exception {
 		if(marcaCarroDAO.pesquisarMarcaDesc(marcaCarro)!=null &&
 				marcaCarroDAO.pesquisarMarcaDesc(marcaCarro).getCodigo()!= marcaCarro.getCodigo()){
 			throw new Exception("Marca já cadastrada");
 		}
+		else{
+		marcaCarro.setDataUltimaAtualizacao(Calendar.getInstance());
 		marcaCarroDAO.inserir(marcaCarro);
-		
+		}
 	}
-	
-	
-	/// POW!!! VC TÁ ESQUECENDO OS MÉTODOS PARA ALERAR!!!! 
 	
 	public void alterar(MarcaCarro marcaCarro) throws Exception {
-		marcaCarroDAO.alterar(marcaCarro);
+		marcaCarroDAO.alterarSemTratamento(marcaCarro);
 	}
-	
-	
 	
 	public void removerMarca(MarcaCarro marcaCarro) throws Exception {
 		if(marcaCarroDAO.pesquisarMarcaPorFab(marcaCarro.getCodigo())==null){
@@ -199,18 +240,32 @@ public class ControladorCarro {
 	
 	//Item de Serie
 	
+	public boolean itemExiste(ItemSerieCarro item) throws Exception{
+		ItemSerieCarro obj = null;
+		if (item.getCodigo() == null){
+			obj=null;
+			return false;
+		}
+		obj = itemSerieCarroDAO.consultarPorId(item.getCodigo());
+		if (obj != null)
+			if (obj.getCodigo() == item.getCodigo())
+				return true;
+		return false;
+	}
+	
 	public void inserir(ItemSerieCarro itemSerieCarro) throws Exception {
 		if(itemSerieCarroDAO.pesquisarItemDescModelo(itemSerieCarro)!=null &&
 				itemSerieCarroDAO.pesquisarItemDescModelo(itemSerieCarro).getCodigo()!=itemSerieCarro.getCodigo()){
 			throw new Exception("Item série cadastrado!");
 		}
 		else{
+			itemSerieCarro.setDataUltimaAtualizacao(Calendar.getInstance());
 			itemSerieCarroDAO.inserir(itemSerieCarro);
 		}	
 	}
 	
-	public void alterar(ItemSerieCarro itemSerieCarro) {
-		itemSerieCarroDAO.alterar(itemSerieCarro);
+	public void alterar(ItemSerieCarro itemSerieCarro) throws Exception {
+		itemSerieCarroDAO.alterarSemTratamento(itemSerieCarro);
 	}
 	public void remover(ItemSerieCarro itemSerieCarro) throws Exception {
 		if(itemSerieCarroDAO.consultarPorId(itemSerieCarro.getCodigo())==null){
@@ -245,24 +300,47 @@ public class ControladorCarro {
 	}
 	//Acessório Carro
 
-	public void inserir(AcessorioCarro acessorioCarro) throws Exception {
-		
-		if(acessorioDAO.pesquisarAcessorioDescModelo(acessorioCarro)!=null && 
-				acessorioDAO.pesquisarAcessorioDescModelo(acessorioCarro).getCodigo()!=acessorioCarro.getCodigo()){
-			 throw new Exception("Acessório já cadastrado");
+	public boolean acessorioExiste(AcessorioCarro acessorioCarro) throws Exception{
+		AcessorioCarro obj = null;
+		if (acessorioCarro.getCodigo() == null){
+			obj=null;
+			return false;
 		}
-		else{
-			acessorioDAO.inserir(acessorioCarro);
-		}
+		obj = acessorioDAO.consultarPorId(acessorioCarro.getCodigo());
+		if (obj != null)
+			if (obj.getCodigo() == acessorioCarro.getCodigo())
+				return true;
+		return false;
 	}
 	
+	public void inserir(AcessorioCarro acessorioCarro) throws Exception {
+		if(acessorioDAO.pesquisarAcessorioDescModelo(acessorioCarro)!=null &&
+				acessorioDAO.pesquisarAcessorioDescModelo(acessorioCarro).getCodigo()!=acessorioCarro.getCodigo()){
+			throw new Exception("Acessório já cadastrado!");
+		}
+		else{
+				acessorioCarro.setDataUltimaAtualizacao(Calendar.getInstance());
+				acessorioDAO.inserir(acessorioCarro);
+		}
+	}
 	public void removerAcessorio(AcessorioCarro acessorio) throws Exception {
 		if(acessorioDAO.consultarPorId(acessorio.getCodigo())==null){
-			throw new Exception("Acessório não cadastrado.");
+			throw new NegocioExceptionAcessorio("Acessório não cadastrado.");
 		}
+		else{
 		acessorioDAO.remover(acessorio);
+		}
 	}
 
+	public void alterarAcessorio(AcessorioCarro acessorio) throws Exception{
+		if(acessorioDAO.pesquisarAcessorioDescModelo(acessorio)!=null &&
+				acessorioDAO.pesquisarAcessorioDescModelo(acessorio).getCodigo()!=acessorio.getCodigo())
+			throw new Exception("Acessório já cadastrado.");
+		else{
+		
+		acessorioDAO.alterarSemTratamento(acessorio);
+		}
+	}
 	public List<AcessorioCarro> listarAcessorios() {
 		return acessorioDAO.consultarTodos();
 	}
