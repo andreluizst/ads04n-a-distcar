@@ -194,6 +194,9 @@ public class CarroBean {
 		modelos=null;
 		marcas=null;
 		versoes=null;
+		fab=null;
+		modelo=null;
+		marca=null;
 		
 	}
 
@@ -319,6 +322,7 @@ public class CarroBean {
 			marcas = Fachada.obterInstancia().pesquisarMarcaPorFabr(fab.getCodigo());
     		}
 			else{
+			carro= new Carro();
 			marcas=null;
     		modelos=null;
     		marcas=null;
@@ -336,7 +340,10 @@ public class CarroBean {
     		}
     		else{
     			MsgPrimeFaces.exibirMensagemDeAviso("erro3");
+    		carro = new Carro();
+    		modelo=null;
     		modelos=null;
+    		versoes=null;
 			itens=null;
 			acessorios=null;
 		}
@@ -351,6 +358,7 @@ public class CarroBean {
 				versoes = Fachada.obterInstancia().pesquisarVersaoPorModelo(mc.getCodigo());
 	    		else{
 				MsgPrimeFaces.exibirMensagemDeAviso("erro2");
+				carro = new Carro();
 				versoes=null;
 				itens=null;
 				acessorios=null;
@@ -366,7 +374,7 @@ public class CarroBean {
 				carro.setValorCarro(vc.getValor());
 	    		}
 	    		else{
-				MsgPrimeFaces.exibirMensagemDeAviso("erro1");
+			
 				
 			}
 	    }
