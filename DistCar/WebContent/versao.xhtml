@@ -3,10 +3,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:p="http://primefaces.org/ui">
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
 <h:head>
 	<title>Versão_Carro</title>
 </h:head>
+<ui:composition template="templates/template-geral.xhtml">
+<ui:define name="principal">
 <h:body>
 	<f:view id="View">
 	<h:form id="frmMensagens">
@@ -107,7 +110,7 @@
 						icon="ui-icon-alert" />
 				</p:commandButton>
 				<p:commandButton value="Fechar" update="panel"
-					action="#{versaoBean.excluir}" />
+					action="home.xhtml" />
 			</p:panel>
 			<p:dataTable  id="TBversao" var="versao" 
 				value="#{versaoBean.listarVersoes}"  paginator="true" rows="5"
@@ -203,4 +206,6 @@
 		</h:form>
 	</f:view>
 </h:body>
+</ui:define>
+</ui:composition>
 </html>

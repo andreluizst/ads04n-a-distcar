@@ -3,15 +3,17 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:p="http://primefaces.org/ui">
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
 <h:head>
 	<title>Carros</title>
 </h:head>
+<ui:composition template="templates/template-geral.xhtml">
+<ui:define name="principal">
 <h:body>
 	<f:view id="View">
 	<h:form id="frmMensagens">
 			<p:messages id="messages" showDetail="true" autoUpdate="true" closable="true"></p:messages>
-			<p:growl id="growl" showDetail="true" sticky="false" globalOnly="true" />
 		</h:form>
 		<h:form id="form">
 
@@ -30,10 +32,6 @@
 
 				<f:facet name="header">
 					<h:panelGrid columns="2">
-						<p:commandLink action="index.xhtml">
-							<p:graphicImage value="/resources/images/home-02.jpg"
-								height="35px" width="35px" />
-						</p:commandLink>
 						<h:outputText value="DisctCar 1.0 - Carro" />
 					</h:panelGrid>
 				</f:facet>
@@ -57,85 +55,91 @@
 					
 
 					<h:outputLabel for="fabricante" value="Fabricante: * " />
-					<h:selectOneMenu id="fabricante" converter="FabricanteConverter"
-						 valueChangeListener="#{carroBean.filtrarMarca}">
+					<p:selectOneMenu id="fabricante" converter="FabricanteConverter"
+						 valueChangeListener="#{carroBean.filtrarMarca}" 
+						 value="#{carroBean.fab}">
 						<f:selectItem noSelectionOption="true"
 							itemLabel="Selecione o fabricante" itemValue="-1"/>
 						<f:selectItems value="#{carroBean.fabricantes}" var="f"
 							itemLabel="#{f.pj.nome}" itemValue="#{f}" />
 							<f:ajax render="marca modelo versao item acessorio valor" event="valueChange"/>
-  					</h:selectOneMenu>
+  					</p:selectOneMenu>
   				
   					
   					<h:outputLabel for="marca" value="Marca: * " />
-					<h:selectOneMenu id="marca" converter="MarcaConverter"
-						 valueChangeListener="#{carroBean.filtrarModelo}">
+					<p:selectOneMenu id="marca" converter="MarcaConverter"
+						 valueChangeListener="#{carroBean.filtrarModelo}"
+						 value="#{carroBean.marca}">
 						<f:selectItem noSelectionOption="true"
 							itemLabel="Selecione a marca" itemValue="-1"/>
 						<f:selectItems value="#{carroBean.marcas}" var="m"
 							itemLabel="#{m.descricao}" itemValue="#{m}" />
 							<f:ajax render="modelo versao item acessorio valor" event="valueChange"/>
-  					</h:selectOneMenu>
+  					</p:selectOneMenu>
   				
   					
   					<h:outputLabel for="modelo" value="Modelo: * " />
-					<h:selectOneMenu id="modelo" converter="ModeloCarroConverter"
-						 valueChangeListener="#{carroBean.filtrarVersao}">
+					<p:selectOneMenu id="modelo" converter="ModeloCarroConverter"
+						 valueChangeListener="#{carroBean.filtrarVersao}"
+						 value="#{carroBean.modelo}">
 						<f:selectItem noSelectionOption="true"
 							itemLabel="Selecione o modelo" itemValue="-1"/>
 						<f:selectItems value="#{carroBean.modelos}" var="mo"
 							itemLabel="#{mo.descricao} #{mo.ano}" itemValue="#{mo}" />
 							<f:ajax render="versao item acessorio valor" event="valueChange"/>
-  					</h:selectOneMenu>
+  					</p:selectOneMenu>
   					
   					
   					<h:outputLabel for="versao" value="Versão: * " />
-					<h:selectOneMenu id="versao" converter="VersaoConverter"
+					<p:selectOneMenu id="versao" converter="VersaoConverter"
 						 value="#{carroBean.carro.versao}" 
-						  valueChangeListener="#{carroBean.filtrarItensAces}">
+						 >
 						<f:selectItem noSelectionOption="true"
 							itemLabel="Selecione a versão" itemValue="-1"/>
 						<f:selectItems value="#{carroBean.versoes}" var="v"
 							itemLabel="#{v.descricao}" itemValue="#{v}" />
-							<f:ajax render="item acessorio valor" event="valueChange"/>
-  					</h:selectOneMenu>
+							<f:ajax render="item acessorio" event="valueChange"/>
+  					</p:selectOneMenu>
   				
   						<h:outputLabel for="valor" value="Valor Carro: *" />
-					<p:inputText id="valor" disabled="true"
+					<p:inputText id="valor" disabled="false"
 						value="#{carroBean.carro.valorCarro}"
 						requerid="false" label="valor" />
   					
   					 <h:panelGrid columns="2" style="margin-bottom:5px" cellpadding="5">  
 					<h:outputText value="Itens: *"/>  
-        				<h:selectManyCheckbox id="item" converter="ItensConverter" value="#{carroBean.itens}"
+        				<p:selectManyCheckbox id="item" converter="ItensConverter" value="#{carroBean.itens}"
         				  layout="pageDirection" columns="2" disabled="true" selectedClass="">  
            				    <f:selectItems value="#{carroBean.itens}" var="i" 
            				      itemLabel="#{i.descricao}" itemValue="#{i}"  />  
-       					</h:selectManyCheckbox>
+       					</p:selectManyCheckbox>
        					</h:panelGrid> 
        				<h:panelGrid columns="2" style="margin-bottom:5px" cellpadding="5">  	
 					<h:outputText value="Acessórios: *"  />  
-        				<h:selectManyCheckbox id="acessorio" converter="AcessoriosConverter" value="#{carroBean.acessorios}"
+        				<p:selectManyCheckbox id="acessorio" converter="AcessoriosConverter" value="#{carroBean.acessorios}"
         				 layout="pageDirection" columns="2" disabled="true">  
            				    <f:selectItems value="#{carroBean.acessorios}" var="a"
            				    itemLabel="#{a.descricao}" itemValue="#{a}"/>
-       					</h:selectManyCheckbox>
+       					</p:selectManyCheckbox>
 				</h:panelGrid> 
   
 					<h:outputLabel for="centro" value="Centros: *" />
-  					<h:selectOneMenu id="centro" value="#{carroBean.carro.centro}" converter="CentroConverter" >
+  					<p:selectOneMenu id="centro" value="#{carroBean.carro.centro}" converter="CentroConverter" >
   						<f:selectItem noSelectionOption="true"
 							itemLabel="Selecione a Centro" itemValue="-1"/>
 						<f:selectItems value="#{carroBean.centros}" var="c"
 							itemLabel="#{c.alias}" itemValue="#{c}" />
-  					</h:selectOneMenu>
+  					</p:selectOneMenu>
 					
 					
 					<h:outputLabel for="status" value="Status: *" />
-  					<h:selectOneMenu id="status" value="#{carroBean.carro.status}" >
+  					<p:selectOneMenu id="status" value="#{carroBean.carro.status}" >
   						<f:selectItem itemLabel="Selecione uma opção" itemValue="" />
   						<f:selectItems value="#{carroBean.status}" />
-  					</h:selectOneMenu>
+  					</p:selectOneMenu>
+					
+					
+					
 					
 					</h:panelGrid> 
 				<p:commandButton value="Consultar" update="form"
@@ -145,7 +149,6 @@
 					action="#{carroBean.novo}" />
 				<p:commandButton value="Alterar" update="panel"
 					 action="#{carroBean.alterar}" >
-					
 					</p:commandButton>
 				<p:commandButton value="Excluir" update="form"
 					action="#{carroBean.excluir}" > 
@@ -154,7 +157,7 @@
 						icon="ui-icon-alert" />
 				</p:commandButton>
 				<p:commandButton value="Fechar" update="panel"
-					action="#{carroBean.excluir}" />
+					action="home.xhtml" />
 			</p:panel>
 			
 			<p:dataTable  id="TBcarro" var="carro" 
@@ -189,9 +192,9 @@
 				
 				<p:column width="5" style="text-align: center;">
 					<f:facet name="header">
-						<h:outputText value="Ano Fabricação" />
+						<h:outputText value="Ano Fabricação/Modelo" />
 					</f:facet>
-					<h:outputText value="#{carro.anoFabricacao}" />
+					<h:outputText value="#{carro.anoFabricacao} - #{carro.versao.modeloCarro.ano}" />
 				</p:column>
 				
 				<p:column width="8" style="text-align: center;">
@@ -251,7 +254,7 @@
 					<f:facet name="header">
 						<h:outputText value="Data da Atualização" />
 					</f:facet>
-					<h:outputText value="#{versao.dataUltimaAtualizacao.time}">
+					<h:outputText value="#{carro.dataUltimaAtualizacao.time}">
 						<f:convertDateTime pattern="dd/MM/yyyy HH:MM"></f:convertDateTime>
 					</h:outputText>
 				</p:column> 
@@ -260,4 +263,6 @@
 		</h:form>
 	</f:view>
 </h:body>
+</ui:define>
+</ui:composition>
 </html>

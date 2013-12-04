@@ -3,10 +3,13 @@
 <html	 xmlns="http://www.w3.org/1999/xhtml"
 	 	 xmlns:h="http://java.sun.com/jsf/html"
 		xmlns:f="http://java.sun.com/jsf/core"
-		xmlns:p="http://primefaces.org/ui">
+		xmlns:p="http://primefaces.org/ui"
+		xmlns:ui="http://java.sun.com/jsf/facelets">
 <h:head>
 	<title>Versão_Carro</title>
 </h:head>
+<ui:composition template="templates/template-geral.xhtml">
+<ui:define name="principal">
 <h:body>
 	<f:view id="View">
 	<h:form id="frmMensagens" >
@@ -29,10 +32,6 @@
 
 				<f:facet name="header">
 					<h:panelGrid columns="2">
-						<p:commandLink action="index.xhtml">
-							<p:graphicImage value="/resources/images/home-02.jpg"
-								height="35px" width="35px" />
-						</p:commandLink>
 						<h:outputText value="DisctCar 1.0 -  Versão Carro" />
 					</h:panelGrid>
 				</f:facet>
@@ -49,36 +48,38 @@
 
 					<h:outputLabel for="fabricante" value="Fabricante: * " />
 					<p:selectOneMenu id="fabricante" converter="FabricanteConverter"
-						 valueChangeListener="#{versaoBean.filtrarMarca}" 
+						 valueChangeListener="#{versaoBean.filtrarMarca}" required="true"
+						 requiredMessage="Fabricante: obrigatório: *" 
 						 value="#{versaoBean.versaoCarro.modeloCarro.marcaCarro.fabricante}"> 
 						<f:selectItem noSelectionOption="true"
 							itemLabel="Selecione o fabricante" itemValue="-1"/>
 						<f:selectItems value="#{versaoBean.fabricantes}" var="f"
 							itemLabel="#{f.pj.nome}" itemValue="#{f}" />
-							<f:ajax render="marca modelo itens acessorio situacao valor" event="valueChange"/>
+							<f:ajax render="marca modelo itens acessorio valor" event="valueChange"/>
   					</p:selectOneMenu>
   	
   					
   					<h:outputLabel for="marca" value="Marca: * " />
-					<p:selectOneMenu id="marca" converter="MarcaConverter"
-						 valueChangeListener="#{versaoBean.filtrarModelo}"
+					<p:selectOneMenu id="marca" converter="MarcaConverter" required="true"
+						 valueChangeListener="#{versaoBean.filtrarModelo}" requiredMessage="Marca: obrigatório: *" 
 						 value="#{versaoBean.versaoCarro.modeloCarro.marcaCarro}" >
 						<f:selectItem noSelectionOption="true"
 							itemLabel="Selecione a marca" itemValue="-1"/>
 						<f:selectItems value="#{versaoBean.marcas}" var="m"
 							itemLabel="#{m.descricao}" itemValue="#{m}" />
-							<f:ajax render="modelo itens acessorio situacao valor" event="valueChange"/>
+							<f:ajax render="modelo itens acessorio valor" event="valueChange"/>
   					</p:selectOneMenu>
   	
 
 					<h:outputLabel for="modelo" value="Modelo: * " />
-					<p:selectOneMenu id="modelo" converter="ModeloCarroConverter"
+					<p:selectOneMenu id="modelo" converter="ModeloCarroConverter" 
+					required="true" requiredMessage="Modelo obrigatório: *" 
 						value="#{versaoBean.versaoCarro.modeloCarro}"  valueChangeListener="#{versaoBean.filtrarItens}">
 						<f:selectItem noSelectionOption="true"
 							itemLabel="Selecione o Modelo" itemValue="-1"/>
 						<f:selectItems value="#{versaoBean.modelos}" var="m"
 							itemLabel="#{m.descricao} #{m.ano}" itemValue="#{m}" />
-							<f:ajax render="itens acessorio situacao valor" event="valueChange"/>
+							<f:ajax render="itens acessorio valor" event="valueChange"/>
 					</p:selectOneMenu>
 					
 							
@@ -89,18 +90,19 @@
 						label="Valor"/>
 
 					<h:outputLabel for="situacao" value="Situação: *" />
-  					<p:selectOneMenu id="situacao" value="#{versaoBean.versaoCarro.situacao}" >
+  					<p:selectOneMenu id="situacao" value="#{versaoBean.versaoCarro.situacao}" 
+  					required="true" requiredMessage="Situação obrigatório: *" >
   						<f:selectItem itemLabel="Selecione uma opção" itemValue="" />
   						<f:selectItems value="#{versaoBean.situacoes}" />
   					</p:selectOneMenu>
 				</h:panelGrid> 
 				 <h:panelGrid columns="4" style="margin-bottom:10px" cellpadding="5">  
 				<h:outputText value="Itens: *"/>  
-        				<p:selectManyCheckbox id="itens" converter="ItensConverter" valueChangeListener="#{versaoBean.somar}"
+        				<p:selectManyCheckbox id="itens" converter="ItensConverter"
         				 value="#{versaoBean.versaoCarro.itens}" layout="pageDirection" columns="1">  
            				    <f:selectItems value="#{versaoBean.itens}" var="i" 
            				      itemLabel="#{i.descricao}" itemValue="#{i}"/> 
-           				      <f:ajax render="valorItens form"  event="valueChange"/> 
+           				      <f:ajax render="valorItens"  event="valueChange"/> 
        					</p:selectManyCheckbox>
        					
 						<h:outputText value="Acessório: *"  />  
@@ -108,7 +110,7 @@
         				value="#{versaoBean.versaoCarro.acessorios}" layout="pageDirection" columns="2">  
            				    <f:selectItems value="#{versaoBean.acessorios}" var="a"
            				    itemLabel="#{a.descricao}" itemValue="#{a}"/>
-           				     <f:ajax render="valorAcessorios form"  event="valueChange"/>
+           				     <f:ajax render="valorAcessorios"  event="valueChange"/>
        					</p:selectManyCheckbox>
 
        				<h:inputHidden id="valorItens" value="#{versaoBean.valorItens}" />
@@ -120,4 +122,6 @@
  			</h:form>
  			</f:view>
 </h:body>
+</ui:define>
+</ui:composition>
 </html>
