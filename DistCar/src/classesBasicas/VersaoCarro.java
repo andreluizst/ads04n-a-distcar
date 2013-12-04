@@ -25,9 +25,6 @@ public class VersaoCarro extends ObjetoGeral {
 	@ManyToMany
 	private List<AcessorioCarro> acessorios;
 	@ManyToMany(fetch=FetchType.EAGER)
-	@JoinTable(name="versaocarro_itemseriecarro",     
-    joinColumns = @JoinColumn(name="VersaoCarro_codigo", referencedColumnName="codigo"),     
-    inverseJoinColumns = @JoinColumn(name="itens_codigo",referencedColumnName="codigo"))
 	private List<ItemSerieCarro> itens;
 	public double getValor() {
 		return valor;
