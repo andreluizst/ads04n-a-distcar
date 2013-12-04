@@ -64,4 +64,5 @@ André 11/11/2013  23:45
  Felipe 03/12/2013
  André o que vc mechou no DAO agora que minhas atualizaçãoes das tabelas não estão fazendo mais automáticas
  tenho que clicar no consultar? O que tu muldasse que agora nenhuma classe minha está funcionando o alterar?
+ liga pra min 88447024
  
