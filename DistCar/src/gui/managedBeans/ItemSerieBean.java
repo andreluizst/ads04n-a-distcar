@@ -161,7 +161,8 @@ public class ItemSerieBean {
 		}
 		else{
 		try {
-			Fachada.obterInstancia().removerItem(itemSelecionado);
+			Fachada.obterInstancia().removerItem(
+					Fachada.obterInstancia().pesquisarItemCodigo(itemSelecionado.getCodigo()));
 			MsgPrimeFaces.exibirMensagemInfomativa("Item Excluído com sucesso!");
 			consulta();
 		} catch (Exception e) {

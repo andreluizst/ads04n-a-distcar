@@ -121,8 +121,10 @@ public class FuncaoBean {
 		if (funcaoSelecionada == null)
 			return;
 		try{
-			funcao = funcaoSelecionada;
+			funcao = fachada.pegarFuncaoPorId(funcaoSelecionada.getCodigo());
 			fachada.excluirFuncao(funcao);
+			if (lista != null)
+				consultar();
 			MsgPrimeFaces.exibirMensagemInfomativa("Função " + funcaoSelecionada.getDescricao() + " excluida com sucesso!");
 			//msgPendente = MsgPrimeFaces.criarMsgInfo("Função " + funcaoSelecionada.getDescricao() + " excluida com sucesso!");
 			novaFuncao();
@@ -158,7 +160,8 @@ public class FuncaoBean {
 			somenteLeitura = true;
 			//A próxima linha não surte efeito retornando funcao.xhtml?faces-redirect=true
 			//MsgPrimeFaces.exibirMensagemInfomativa("Função salva com sucesso!");
-			msgPendente = MsgPrimeFaces.criarMsgInfo("Função salva com sucesso!");
+			msgPendente = MsgPrimeFaces.criarMsgInfo("Função " + funcao.getDescricao() 
+					+ " salva com sucesso!");
 			return resourceBundle.getString("linkFuncao");//"funcao";
 		}catch(Exception ex){
 			ex.printStackTrace();

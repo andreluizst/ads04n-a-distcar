@@ -104,8 +104,10 @@ public class EscolaridadeBean {
 		if (escolaridadeSelecionada == null)
 			return;
 		try{
-			escolaridade = escolaridadeSelecionada;
+			escolaridade = fachada.pegarEscolaridadePorId(escolaridadeSelecionada.getCodigo());
 			fachada.excluirEscolaridade(escolaridade);
+			if (lista!= null && lista.size() > 0)
+				consultar();
 			MsgPrimeFaces.exibirMensagemInfomativa("Escolaridade " + escolaridadeSelecionada.getDescricao() + " excluida com sucesso!");
 			novaEscolaridade();
 		}catch(Exception ex){
@@ -126,9 +128,11 @@ public class EscolaridadeBean {
 				escolaridade.setCodigo(null);
 			fachada.salvarEscolaridade(escolaridade);
 			//MsgPrimeFaces.exibirMensagemInfomativa("Escolaridade salva com sucesso!");
+			consultar();
 			novaEscolaridade();
 			somenteLeitura = true;
-			msgPendente = MsgPrimeFaces.criarMsgInfo("Escolaridade salva com sucesso!");
+			msgPendente = MsgPrimeFaces.criarMsgInfo("Escolaridade " + escolaridade.getDescricao() 
+					+ " salva com sucesso!");
 			return rb.getString("linkEscolaridade");//"escolaridade";
 		}catch(Exception ex){
 			MsgPrimeFaces.exibirMensagemDeErro(ex.getMessage());

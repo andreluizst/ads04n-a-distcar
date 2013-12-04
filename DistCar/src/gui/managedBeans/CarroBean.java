@@ -248,7 +248,7 @@ public class CarroBean {
 			MsgPrimeFaces.exibirMensagemInfomativa("Selecione um carro para exclusão!");
 		}
 		else{
-		Fachada.obterInstancia().removerCarro(carroSelecionado);
+		Fachada.obterInstancia().removerCarro(Fachada.obterInstancia().pesquisarCarroCodigo(carroSelecionado.getCodigo()));
 		MsgPrimeFaces.exibirMensagemInfomativa("Acessório Excluído com sucesso!");
 		consulta();
 		}

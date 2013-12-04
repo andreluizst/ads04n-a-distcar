@@ -29,6 +29,7 @@
   					<h:outputLabel for="unidadeFederativa" value="UF: *"/>
   					<p:selectOneMenu id="unidadeFederativa" value="#{cidadeBean.codigoUfSelecionada}"
   								readonly="#{cidadeBean.somenteLeitura}" size="40"
+  								disabled="#{cidadeBean.somenteLeitura}"
   								required="true" requiredMessage="Informe uma unidade federativa!">
   						<f:selectItem noSelectionOption="true" itemLabel="Selecione uma UF" itemValue="#{null}" />
   						<f:selectItems value="#{cidadeBean.ufs}" var="uf" 
@@ -37,7 +38,8 @@
   					
   					<h:outputLabel for="situacao" value="Situação: "/>
   					<p:selectOneMenu id="situacao" value="#{cidadeBean.cidade.situacao}" 
-  								readonly="#{cidadeBean.somenteLeitura}" >
+  								readonly="#{cidadeBean.somenteLeitura}"
+  								disabled="#{cidadeBean.somenteLeitura}" >
   						<f:selectItem itemLabel="Selecione uma situação" itemValue="" />
   						<f:selectItems value="#{cidadeBean.situacoes}" />
   					</p:selectOneMenu>

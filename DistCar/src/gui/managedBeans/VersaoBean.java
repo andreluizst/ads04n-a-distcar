@@ -262,7 +262,8 @@ public class VersaoBean {
 			MsgPrimeFaces.exibirMensagemInfomativa("Selecione uma versão do carro para exclusão!");
 		}
 		else{
-		Fachada.obterInstancia().removerVersao(versaoSelecionada);
+		Fachada.obterInstancia().removerVersao(
+				Fachada.obterInstancia().pesquisarVersaoCodigo(versaoSelecionada.getCodigo()));
 		MsgPrimeFaces.exibirMensagemInfomativa("Versão excluída com sucesso!");
 		consulta();
 		}

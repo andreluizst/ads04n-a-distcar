@@ -105,8 +105,10 @@ public class TipoGerenciaBean {
 		if (tipoGerenciaSelecionada == null)
 			return;
 		try{
-			tipoGerencia = tipoGerenciaSelecionada;
+			tipoGerencia = fachada.pegarTipoGerenciaPorId(tipoGerenciaSelecionada.getCodigo());
 			fachada.excluirTipoGerencia(tipoGerencia);
+			if (lista != null)
+				consultar();
 			MsgPrimeFaces.exibirMensagemInfomativa("Tipo de gerência " + tipoGerenciaSelecionada.getDescricao() + " excluida com sucesso!");
 			novoTipoGerencia();
 		}catch(Exception ex){
@@ -126,8 +128,9 @@ public class TipoGerenciaBean {
 			if (tipoGerencia.getCodigo() == null || tipoGerencia.getCodigo() == 0)
 				tipoGerencia.setCodigo(null);
 			fachada.salvarTipoGerencia(tipoGerencia);
-			//MsgPrimeFaces.exibirMensagemInfomativa("Tipo de gerência salva com sucesso!");
-			msgPendente = MsgPrimeFaces.criarMsgInfo("Tipo de gerência salva com sucesso!");
+			consultar();
+			msgPendente = MsgPrimeFaces.criarMsgInfo("Tipo de gerência " + tipoGerencia.getDescricao()
+					+ " salva com sucesso!");
 			novoTipoGerencia();
 			somenteLeitura = true;
 			return resourceBundle.getString("linkTipoGerencia");//"tipogerencia";

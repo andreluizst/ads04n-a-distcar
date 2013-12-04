@@ -5,8 +5,6 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
-import javax.persistence.EntityTransaction;
-
 import seguranca.LoginInvalidoException;
 import seguranca.SituacaoSenha;
 import seguranca.Usuario;
@@ -53,7 +51,6 @@ import dao.IDAOUsuario;
 import erro.NegocioExceptionDepartamento;
 import erro.NegocioExceptionFuncao;
 import erro.NegocioExceptionFuncionario;
-import gui.MsgPrimeFaces;
 
 public class ControladorOrganizacional {
 	private EntityManagerFactory emf;
@@ -223,7 +220,9 @@ public class ControladorOrganizacional {
 	}
 	
 	public void excluirEscolaridade(Escolaridade escolaridade) throws Exception{
-		daoEscolaridade.removerSemTratamento(escolaridade);
+		//Escolaridade es = daoEscolaridade.consultarPorId(escolaridade.getCodigo());
+		//if (es != null)
+			daoEscolaridade.removerSemTratamento(escolaridade);
 	}
 	
 	public List<Escolaridade> consultarEscolaridade(Escolaridade escolaridade) throws Exception{
@@ -389,7 +388,10 @@ public class ControladorOrganizacional {
 	}
 	
 	public void removerCentro(Centro centro) throws Exception{
-		EntityTransaction et = entityManager.getTransaction();
+		Centro c = daoCentro.consultarPorId(centro.getCodigo());
+		if (c != null)
+			daoCentro.removerSemTratamento(c);
+		/*EntityTransaction et = entityManager.getTransaction();
 		try{
 			et.begin();
 			daoCentro.removerSemTratamento(centro);
@@ -399,7 +401,7 @@ public class ControladorOrganizacional {
 		}catch(Exception ex){
 			et.rollback();
 			MsgPrimeFaces.exibirMensagemDeErro(ex.getMessage());
-		}
+		}*/
 	}
 	
 	public List<Centro> consultarCentro(Centro centro) throws Exception{
@@ -633,7 +635,10 @@ public class ControladorOrganizacional {
 	}
 	
 	public void excluirFabricante(Fabricante fabricante) throws Exception{
-		EntityTransaction et = entityManager.getTransaction();
+		Fabricante f = daoFabricante.consultarPorId(fabricante.getCodigo());
+		if (f != null)
+			daoFabricante.removerSemTratamento(f);
+		/*EntityTransaction et = entityManager.getTransaction();
 		try{
 			et.begin();
 			daoFabricante.removerSemTratamento(fabricante);
@@ -642,7 +647,7 @@ public class ControladorOrganizacional {
 		}catch(Exception ex){
 			et.rollback();
 			MsgPrimeFaces.exibirMensagemDeErro(ex.getMessage());
-		}
+		}*/
 	}
 	
 	public List<Fabricante> listarFabricantes() throws Exception{

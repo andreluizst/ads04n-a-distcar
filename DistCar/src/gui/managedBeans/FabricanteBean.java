@@ -159,8 +159,10 @@ public class FabricanteBean {
 		if (fabricanteSelecionado == null)
 			return;
 		try{
-			fabricante = fabricanteSelecionado;
+			fabricante = fachada.consultarFabricantePorId(fabricanteSelecionado.getCodigo());
 			fachada.excluirFabricante(fabricante);
+			if (lista != null)
+				consultar();
 			MsgPrimeFaces.exibirMensagemInfomativa("Fabricante " + fabricanteSelecionado.getPj().getNome() + " excluido com sucesso!");
 			novoFabricante();
 		}catch(Exception ex){
@@ -185,8 +187,9 @@ public class FabricanteBean {
 			if (fabricante.getCodigo() == null || fabricante.getCodigo() == 0)
 				fabricante.setCodigo(null);
 			fachada.salvarFabricante(fabricante);
-			//MsgPrimeFaces.exibirMensagemInfomativa("Fabricante salvo com sucesso!");
-			msgPendente = MsgPrimeFaces.criarMsgInfo("Fabricante salvo com sucesso!");
+			consultar();
+			msgPendente = MsgPrimeFaces.criarMsgInfo("Fabricante " + fabricante.getPj().getNome() 
+					+ " salvo com sucesso!");
 			novoFabricante();
 			somenteLeitura = true;
 			return resourceBundle.getString("linkFabricante");//"fabricante";

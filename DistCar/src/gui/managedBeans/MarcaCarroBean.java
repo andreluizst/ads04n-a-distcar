@@ -155,7 +155,7 @@ public class MarcaCarroBean {
 
 	public String novo() {
 		marcaCarro = new MarcaCarro();
-		return "marca-prop";
+		return "/marca-prop.xhtml?faces-redirect=true";
 	}
 
 	public String alterar() throws Exception {

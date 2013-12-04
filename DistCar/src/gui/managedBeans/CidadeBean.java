@@ -120,8 +120,10 @@ public class CidadeBean {
 		if (cidadeSelecionada == null)
 			return;
 		try{
-			cidade = cidadeSelecionada;
+			cidade = fachada.pegarCidadePorId(cidadeSelecionada.getCodigo());
 			fachada.excluirCidade(cidade);
+			if (lista != null)
+				consultar();
 			MsgPrimeFaces.exibirMensagemInfomativa("Cidade " + cidadeSelecionada.getNome() + " excluida com sucesso!");
 			novaCidade();
 		}catch(Exception ex){
@@ -142,8 +144,8 @@ public class CidadeBean {
 			if (cidade.getCodigo() == null || cidade.getCodigo() == 0)
 				cidade.setCodigo(null);
 			fachada.salvarCidade(cidade);
-			//MsgPrimeFaces.exibirMensagemInfomativa("Cidade salva com sucesso!");
-			msgPendente = MsgPrimeFaces.criarMsgInfo("Cidade salva com sucesso!");
+			consultar();
+			msgPendente = MsgPrimeFaces.criarMsgInfo("Cidade " + cidade.getNome() + " salva com sucesso!");
 			novaCidade();
 			somenteLeitura = true;
 			return rb.getString("linkCidade");//"cidade";

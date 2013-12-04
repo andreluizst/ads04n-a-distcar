@@ -47,7 +47,7 @@
 				<p:commandButton value="Novo"    update="panelPesquisa" action="#{escolaridadeBean.novo}"/>
    				<p:commandButton disabled="#{escolaridadeBean.listaEstaVazia}" value="Alterar"
    						 	update="panelPesquisa" action="#{escolaridadeBean.alterar}" />
-   				<p:commandButton disabled="#{escolaridadeBean.listaEstaVazia}" value="Excluir"
+   				<p:commandButton id="btnExcluir" disabled="#{escolaridadeBean.listaEstaVazia}" value="Excluir"
    							 update="tbLista" actionListener="#{escolaridadeBean.excluir}">
    					<p:confirm header="Confirmação" 
    							message="Confirma a exclusão da escolaridade selecionada?"

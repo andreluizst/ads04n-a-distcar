@@ -75,7 +75,7 @@ public class Carro extends ObjetoGeral {
 	public void setVersao(VersaoCarro versao) {
 		this.versao = versao;
 	}
-	public Double getValorCarro() {
+	public double getValorCarro() {
 		return valorCarro;
 	}
 	

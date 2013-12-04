@@ -152,8 +152,10 @@ public class CentroBean {
 		if (centroSelecionado == null)
 			return;
 		try{
-			centro = centroSelecionado;
+			centro = fachada.pegarCentroPorId(centroSelecionado.getCodigo());
 			fachada.excluirCentro(centro);
+			if (lista != null)
+				consultar();
 			MsgPrimeFaces.exibirMensagemInfomativa("Centro " + centroSelecionado.getAlias() + " excluido com sucesso!");
 			novoCentro();
 		}catch(Exception ex){
@@ -177,8 +179,9 @@ public class CentroBean {
 			if (centro.getCodigo() == null || centro.getCodigo() == 0)
 				centro.setCodigo(null);
 			fachada.salvarCentro(centro);
-			//MsgPrimeFaces.exibirMensagemInfomativa("Centro salvo com sucesso!");
-			msgPendente = MsgPrimeFaces.criarMsgInfo("Centro salvo com sucesso!");
+			consultar();
+			msgPendente = MsgPrimeFaces.criarMsgInfo("Centro " + centro.getAlias() 
+					+ " salvo com sucesso!");
 			novoCentro();
 			somenteLeitura = true;
 			return resourceBundle.getString("linkCentro");//"centro";

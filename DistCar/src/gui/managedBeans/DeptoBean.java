@@ -162,8 +162,10 @@ public class DeptoBean {
 		if (departamentoSelecionado == null)
 			return;
 		try{
-			departamento = departamentoSelecionado;
+			departamento = fachada.pegarDepartamentoPorId(departamentoSelecionado.getCodigo());
 			fachada.excluirDepartamento(departamento);
+			if (lista != null)
+				consultar();
 			MsgPrimeFaces.exibirMensagemInfomativa("Departamento " + departamentoSelecionado.getNome() + " excluido com sucesso!");
 			novoDepartamento();
 		}catch(Exception ex){
@@ -200,8 +202,9 @@ public class DeptoBean {
 			if (departamento.getCodigo() == null || departamento.getCodigo() == 0)
 				departamento.setCodigo(null);
 			fachada.salvarDepartamento(departamento);
-			//MsgPrimeFaces.exibirMensagemInfomativa("Departamento salvo com sucesso!");
-			msgPendente = MsgPrimeFaces.criarMsgInfo("Departamento salvo com sucesso!");
+			consultar();
+			msgPendente = MsgPrimeFaces.criarMsgInfo("Departamento " + departamento.getNome() 
+					+ " salvo com sucesso!");
 			novoDepartamento();
 			somenteLeitura = true;
 			return resourceBundle.getString("linkDepartamento");//"departamento";

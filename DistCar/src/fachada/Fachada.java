@@ -453,7 +453,10 @@ public class Fachada implements IFachada {
 	
 	@Override
 	public void salvarModeloCarro(ModeloCarro modelo) throws Exception {
-		this.controladorCarro.inserir(modelo);
+		if (modelo.getCodigo() == null)
+			this.controladorCarro.inserir(modelo);
+		else
+			this.controladorCarro.alterar(modelo);
 		
 	}
 
@@ -570,8 +573,9 @@ public class Fachada implements IFachada {
 	public void salvarAcessorio(AcessorioCarro acessorioCarro)throws Exception {
 		if(controladorCarro.acessorioExiste(acessorioCarro)){
 			this.controladorCarro.alterarAcessorio(acessorioCarro);
+		}else{
+			this.controladorCarro.inserir(acessorioCarro);
 		}
-		this.controladorCarro.inserir(acessorioCarro);
 	}
 
 	@Override

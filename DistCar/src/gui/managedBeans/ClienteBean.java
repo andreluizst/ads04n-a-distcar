@@ -209,8 +209,10 @@ public class ClienteBean {
 		if (clienteSelecionado == null)
 			return;
 		try{
-			cliente = clienteSelecionado;
+			cliente = fachada.pegarClientePorId(clienteSelecionado.getCodigo());
 			fachada.excluirCliente(cliente);
+			if (lista != null)
+				consultar();
 			MsgPrimeFaces.exibirMensagemInfomativa("Cliente " + clienteSelecionado.getDadosPessoa().getNome() + " excluido com sucesso!");
 			novoCliente();
 		}catch(Exception ex){
@@ -266,8 +268,9 @@ public class ClienteBean {
 			if (cliente.getCodigo() == null || cliente.getCodigo() == 0)
 				cliente.setCodigo(null);
 			fachada.salvarCliente(cliente);
-			//MsgPrimeFaces.exibirMensagemInfomativa("Cliente salvo com sucesso!");
-			msgPendente = MsgPrimeFaces.criarMsgInfo("Cliente salvo com sucesso!");
+			consultar();
+			msgPendente = MsgPrimeFaces.criarMsgInfo("Cliente " + cliente.getDadosPessoa().getNome()
+					+ " salvo com sucesso!");
 			modoDeInclusao = false;
 			novoCliente();
 			somenteLeitura = true;

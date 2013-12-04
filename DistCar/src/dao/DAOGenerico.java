@@ -86,18 +86,18 @@ public abstract class DAOGenerico<Entidade> implements IDAOGenerico<Entidade>{
 		if (em != null){
 			em.persist(objeto);
 		}else{
-		EntityTransaction tx = getEntityManager().getTransaction();		
-		try {
-			tx.begin();
-			getEntityManager().persist(objeto);
-			tx.commit();
-			System.out.println(classePersistente.getSimpleName() + " salvo com sucesso");
-		} catch (Exception e) {
-			e.printStackTrace();
-			if (tx != null && tx.isActive()){
-				tx.rollback();
+			EntityTransaction tx = getEntityManager().getTransaction();		
+			try {
+				tx.begin();
+				getEntityManager().persist(objeto);
+				tx.commit();
+				System.out.println(classePersistente.getSimpleName() + " salvo com sucesso");
+			} catch (Exception e) {
+				e.printStackTrace();
+				if (tx != null && tx.isActive()){
+					tx.rollback();
+				}
 			}
-		}
 		}
 	}
 	
@@ -206,7 +206,7 @@ public abstract class DAOGenerico<Entidade> implements IDAOGenerico<Entidade>{
 	public List<Entidade> consultarTodos() {
 		try {
 			String sql = "from " + classePersistente.getSimpleName();
-			TypedQuery<Entidade> query = entityManager.createQuery(sql, classePersistente);
+			TypedQuery<Entidade> query = getEntityManager().createQuery(sql, classePersistente);
 			return query.getResultList();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -331,6 +331,10 @@ public abstract class DAOGenerico<Entidade> implements IDAOGenerico<Entidade>{
 		getEntityManager().refresh(object);
 	}
 	
+	public final void refreshSemTratamento(Entidade object) {
+		getEntityManagerSemTratamento().refresh(object);
+	}
+	
 	/**
 	 * Utilizado para se injetar o Entity manager no DAO.
 	 * 
@@ -346,8 +350,11 @@ public abstract class DAOGenerico<Entidade> implements IDAOGenerico<Entidade>{
 		em = EntityManagerThreads.ENTITY_MANAGERS.get();
 		if (em != null)
 			return EntityManagerThreads.ENTITY_MANAGERS.get();
-		//return EntityManagerThreads.ENTITY_MANAGERS.get();
 		return entityManager;
+	}
+	
+	public EntityManager getEntityManagerSemTratamento(){
+		return EntityManagerThreads.ENTITY_MANAGERS.get();
 	}
 
 		

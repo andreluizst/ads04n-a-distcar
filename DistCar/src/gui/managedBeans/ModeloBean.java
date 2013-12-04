@@ -92,6 +92,8 @@ public class ModeloBean {
 		modelo.setDataUltimaAtualizacao(Calendar.getInstance());
 		System.out.println(modelo);
 		try {
+			if (modelo.getCodigo() == null || modelo.getCodigo() == 0)
+				modelo.setCodigo(null);
 			Fachada.obterInstancia().salvarModeloCarro(modelo);
 			MsgPrimeFaces.exibirMensagemInfomativa("Versão de carro salvo com sucesso!");
 			init();
@@ -125,7 +127,8 @@ public class ModeloBean {
 					.exibirMensagemInfomativa("Selecione um modelo de carro para exclusão!");
 		} else {
 			try {
-				Fachada.obterInstancia().removerModeloCarro(modeloSelecionado);
+				Fachada.obterInstancia().removerModeloCarro(
+						Fachada.obterInstancia().pesquisarModelosCarroCodigo(modeloSelecionado.getCodigo()));
 				MsgPrimeFaces
 						.exibirMensagemInfomativa("Modelo excluído com sucesso!");
 				consulta();

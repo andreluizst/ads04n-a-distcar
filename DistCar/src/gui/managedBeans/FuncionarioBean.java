@@ -170,8 +170,10 @@ public class FuncionarioBean {
 		if (funcionarioSelecionado == null)
 			return;
 		try{
-			funcionario = funcionarioSelecionado;
+			funcionario = fachada.pegarFuncionarioPorId(funcionarioSelecionado.getCodigo());
 			fachada.excluirFuncionario(funcionario);
+			if (lista != null)
+				consultar();
 			MsgPrimeFaces.exibirMensagemInfomativa("Funcionário " + funcionarioSelecionado.getNome() + " excluido com sucesso!");
 			novoFuncionario();
 		}catch(Exception ex){
@@ -194,8 +196,9 @@ public class FuncionarioBean {
 			funcionario.setCpf(funcionario.getCpf().replace(".", "").replace("-", ""));
 			funcionario.getEndereco().setCep(funcionario.getEndereco().getCep().replace("-", "").replace(".", ""));
 			fachada.salvarFuncionario(funcionario);
-			//MsgPrimeFaces.exibirMensagemInfomativa("Funcionário salvo com sucesso!");
-			msgPendente = MsgPrimeFaces.criarMsgInfo("Funcionário salvo com sucesso!");
+			consultar();
+			msgPendente = MsgPrimeFaces.criarMsgInfo("Funcionário " + funcionario.getNome()
+					+ " salvo com sucesso!");
 			novoFuncionario();
 			somenteLeitura = true;
 			return resourceBundle.getString("linkFuncionario");

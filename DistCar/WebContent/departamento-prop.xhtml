@@ -28,7 +28,7 @@
   					
   					<h:outputLabel for="cbxCentro" value="Centro: *"/>
   					<p:selectOneMenu id="cbxCentro" value="#{deptoBean.codigoCentroSelecionado}"
-  								disabled="#{!deptoBean.temCentros}" 
+  								disabled="#{!deptoBean.temCentros || deptoBean.somenteLeitura}" 
   								readonly="#{deptoBean.somenteLeitura}"
   								required="true" requiredMessage="Informe um centro!">
   						<f:selectItem noSelectionOption="true" itemLabel="Selecione um centro" itemValue="#{null}" />
@@ -40,7 +40,7 @@
 					<h:outputLabel for="cbxGestor" value="Gestor: "/>
   					<p:selectOneMenu id="cbxGestor" value="#{deptoBean.codigoGestorSelecionado}"
   								readonly="#{deptoBean.somenteLeitura}"
-  								disabled="#{!deptoBean.temGestores}">
+  								disabled="#{!deptoBean.temGestores || deptoBean.somenteLeitura}">
   						<f:selectItem itemLabel="Selecione um gestor" itemValue="#{null}" />
   						<f:selectItems value="#{deptoBean.gestores}" var="gestor" 
   									itemLabel="#{gestor.nome}" itemValue="#{gestor.codigo}"/>
@@ -50,7 +50,7 @@
   					<h:outputLabel for="cbxDeptoSup" value="Depto/centro (superior): "/>
   					<p:selectOneMenu id="cbxDeptoSup" value="#{deptoBean.codigoDeptoSuperiorSelecionado}"
   									readonly="#{deptoBean.somenteLeitura}"
-  									disabled="#{!deptoBean.temDeptosSuperiores}">
+  									disabled="#{!deptoBean.temDeptosSuperiores || deptoBean.somenteLeitura}">
   						<f:selectItem itemLabel="Selecione um departamento superior" itemValue="#{null}" />
   						<f:selectItems value="#{deptoBean.deptosSuperiores}" var="deptoSup" 
   									itemLabel="#{deptoSup}" itemValue="#{deptoSup.codigo}"/>
@@ -59,7 +59,8 @@
   					
   					<h:outputLabel for="situacao" value="Situação: "/>
   					<p:selectOneMenu id="situacao" value="#{deptoBean.departamento.situacao}"
-  							readonly="#{deptoBean.somenteLeitura}" >
+  							readonly="#{deptoBean.somenteLeitura}"
+  							disabled="#{deptoBean.somenteLeitura}" >
   						<f:selectItem noSelectionOption="true" itemLabel="Selecione uma situação" itemValue="" />
   						<f:selectItems value="#{deptoBean.situacoes}" />
   					</p:selectOneMenu>
