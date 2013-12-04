@@ -1,6 +1,6 @@
 package gui.managedBeans;
 
-import java.util.Calendar;
+
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -40,8 +40,35 @@ public class CarroBean {
 	private Carro statusSelecionada;
 	private Status[] status = Status.values();
 	private List<Centro> centros;
+	private Fabricante fab;
+	private MarcaCarro marca;
+	private ModeloCarro modelo;
 	
 	
+	public Fabricante getFab() {
+		return fab;
+	}
+
+	public void setFab(Fabricante fab) {
+		this.fab = fab;
+	}
+
+	public MarcaCarro getMarca() {
+		return marca;
+	}
+
+	public void setMarca(MarcaCarro marca) {
+		this.marca = marca;
+	}
+
+	public ModeloCarro getModelo() {
+		return modelo;
+	}
+
+	public void setModelo(ModeloCarro modelo) {
+		this.modelo = modelo;
+	}
+
 	public List<Centro> getCentros() {
 		return centros;
 	}
@@ -197,7 +224,6 @@ public class CarroBean {
 	
 	public String salvar() throws Exception {
 		
-		carro.setDataUltimaAtualizacao(Calendar.getInstance());
 		Fachada.obterInstancia().salvarCarro(carro);
 		MsgPrimeFaces.exibirMensagemInfomativa("Carro salvo com sucesso!");
 		init();
@@ -238,90 +264,110 @@ public class CarroBean {
 		}           
 	    
 	    public String alterar(){
-	    	if (carroSelecionado==null){
-	    		MsgPrimeFaces.exibirMensagemInfomativa("Selecione um acessório para alterar!");
-	    		return "acessorio";
-	    	}
-	    	else{
-	    	carro = Fachada.obterInstancia().pesquisarCarroCodigo(carroSelecionado.getCodigo());
-	    	//acessorioCarro.setModelo(Fachada.obterInstancia().pesquisarModelosCarroCodigo(acessorioSelecionado.getModelo().getCodigo()));
-	    	return "carro-prop";
-	    	}
+	    	try {
+	    		if (carroSelecionado==null){
+		    		MsgPrimeFaces.exibirMensagemInfomativa("Selecione um acessório para alterar!");
+		    		return "acessorio";
+		    	}
+		    	else{
+		    	fabricantes=Fachada.obterInstancia().listarFabricantes();
+		    	marcas=Fachada.obterInstancia().pesquisarMarcaPorFabr(carroSelecionado.getVersao().getModeloCarro().getMarcaCarro().getFabricante().getCodigo());
+		    	modelos=Fachada.obterInstancia().pesquisarModeloPorMarca(carroSelecionado.getVersao().getModeloCarro().getMarcaCarro().getCodigo());
+		    	versoes=Fachada.obterInstancia().pesquisarVersaoPorModelo(carroSelecionado.getVersao().getModeloCarro().getCodigo());
+		    	carro = carroSelecionado;
+		    	
+		    	
+		    	return "carro-prop";
+		    	}
+			} catch (Exception e) {
+				// TODO: handle exception
+				e.getStackTrace();
+				init();
+				listarCarros();
+			}
+			return null;
+	    	
 	    }
 	    
 	    public String cancelar(){
 	    	init();
 	    	carroSelecionado = null;
-	    	 itens=null;
-			 acessorios=null;
 	    	return "carro";
 	    }  
 	    
 	    public String consultar(){
 	    	
-		 	 carros = Fachada.obterInstancia().consultarCarros(carro); 
-			 init();
-			 itens=null;
-			 acessorios=null;
+		 	 try {
+				carros = Fachada.obterInstancia().consultarCarros(carro,fab,marca,modelo);
+				 init();
+				 itens=null;
+				 acessorios=null;
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} 
+			
 			 return  "carro";
 	    }
 	    
 
 	    public void filtrarMarca(ValueChangeEvent evento){
-	    	
-	    	try{
-	    		Fabricante fab = new Fabricante();
-	    		fab = (Fabricante) evento.getNewValue();
-				marcas = Fachada.obterInstancia().pesquisarMarcaPorFabr(fab.getCodigo());
-	    	}catch(Exception ex){
-				MsgPrimeFaces.exibirMensagemDeAviso("Não foi possível filtar itens por modelo, selecione um modelo válido");
-				init();
-			}
-	    }
+			  
+    		Fabricante fab = new Fabricante();
+    		fab = (Fabricante) evento.getNewValue();
+    		if(fab!=null && fab.getCodigo()!=-1 ){
+			marcas = Fachada.obterInstancia().pesquisarMarcaPorFabr(fab.getCodigo());
+    		}
+			else{
+			marcas=null;
+    		modelos=null;
+    		marcas=null;
+    		acessorios=null;
+    		itens=null;
+		}
+    }
 	    
 	    public void filtrarModelo(ValueChangeEvent evento){
 	    	
-	    	try{
-	    		MarcaCarro ma = new MarcaCarro();
-	    		ma = (MarcaCarro) evento.getNewValue();
-				modelos = Fachada.obterInstancia().pesquisarModeloPorMarca(ma.getCodigo());		
-	    	}catch(Exception ex){
-				MsgPrimeFaces.exibirMensagemDeAviso("Não foi possível filtar itens por modelo, selecione um modelo válido");
-				modelos=null;
-				versoes=null;
-				itens=null;
-				acessorios=null;
-				carro = new Carro();
-			}
-	    }
+    		MarcaCarro ma = new MarcaCarro();
+    		ma = (MarcaCarro) evento.getNewValue();
+    		if(ma!=null){
+			modelos = Fachada.obterInstancia().pesquisarModeloPorMarca(ma.getCodigo());		
+    		}
+    		else{
+    			MsgPrimeFaces.exibirMensagemDeAviso("erro3");
+    		modelos=null;
+			itens=null;
+			acessorios=null;
+		}
+    }
 	    
 	    public void filtrarVersao(ValueChangeEvent evento){
 	    	
-	    	try{
+	    	
 	    		ModeloCarro mc = new ModeloCarro();
 	    		mc = (ModeloCarro) evento.getNewValue();
+	    		if(mc!=null)
 				versoes = Fachada.obterInstancia().pesquisarVersaoPorModelo(mc.getCodigo());
-	    	}catch(Exception ex){
-				MsgPrimeFaces.exibirMensagemDeAviso("Não foi possível filtar itens por modelo, selecione um modelo válido");
+	    		else{
+				MsgPrimeFaces.exibirMensagemDeAviso("erro2");
 				versoes=null;
 				itens=null;
 				acessorios=null;
-				carro = new Carro();
 			}
 	    }
 	    	public void filtrarItensAces(ValueChangeEvent evento){
-	    	
-	    	try{
+
 	    		VersaoCarro vc = new VersaoCarro();
 	    		vc = (VersaoCarro) evento.getNewValue();
+	    		if(vc!=null){
 				itens=Fachada.obterInstancia().pesquisarVersaoCodigo(vc.getCodigo()).getItens();
 				acessorios =Fachada.obterInstancia().pesquisarVersaoCodigo(vc.getCodigo()).getAcessorios();
 				carro.setValorCarro(vc.getValor());
-	    	}catch(Exception ex){
-				MsgPrimeFaces.exibirMensagemDeAviso("Não foi possível filtar itens por modelo, selecione um modelo válido");
-				itens=null;
-				acessorios=null;
-				carro = new Carro();
+	    		}
+	    		else{
+				MsgPrimeFaces.exibirMensagemDeAviso("erro1");
+				
 			}
 	    }
 }

@@ -187,10 +187,12 @@ public class VersaoBean {
 		marcas =null;
 		situacaoSelecionada=null;
 		modelos=null;
-		valorAcessorios=0;
 		auxItens=null;
 		itens=null;
 		acessorios=null;
+		valorAcessorios=0;
+		valorItens=0;
+		
 	}
 
 	private List<VersaoCarro> listarVersoes() {  
@@ -203,8 +205,16 @@ public class VersaoBean {
 		versaoCarro.setDataUltimaAtualizacao(Calendar.getInstance());
 		
 		try {	
-
-			versaoCarro.setValor(versaoCarro.getValor()+valorAcessorios+valorItens-subItens-subtAcessorios);
+			auxItens = versaoCarro.getItens();
+			auxAcessorios= versaoCarro.getAcessorios();
+			for(ItemSerieCarro i : auxItens){
+				valorItens= valorItens+i.getValorItemSerie();
+			}
+			for(AcessorioCarro a : auxAcessorios){
+				valorAcessorios = valorAcessorios +a.getValor();
+			}
+			
+			versaoCarro.setValor(versaoCarro.getModeloCarro().getValor()+valorAcessorios+valorItens);
 			Fachada.obterInstancia().salvarVersao(versaoCarro);
 			MsgPrimeFaces.exibirMensagemInfomativa("Versão de carro salvo com sucesso!");
 			init();
@@ -283,7 +293,7 @@ public class VersaoBean {
 	    	versaoCarro = versaoSelecionada;
 	    	versaoCarro.getModeloCarro().getMarcaCarro().setFabricante(versaoSelecionada.getModeloCarro().getMarcaCarro().getFabricante());
 	    	versaoCarro.getModeloCarro().setMarcaCarro(versaoSelecionada.getModeloCarro().getMarcaCarro());
-	    	versaoCarro.getModeloCarro().setMarcaCarro(versaoSelecionada.getModeloCarro().getMarcaCarro());
+	    	versaoCarro.setModeloCarro(versaoSelecionada.getModeloCarro());
 	    	itens = clonarLista(Fachada.obterInstancia().listarItensPorModelo(versaoSelecionada.getModeloCarro()));
 	    	versaoCarro.setItens(clonarLista(versaoSelecionada.getItens()));
 	    	versaoCarro.setAcessorios(clonarListaAces(versaoSelecionada.getAcessorios()));
@@ -300,35 +310,29 @@ public class VersaoBean {
 	    
 	    private List<ItemSerieCarro> clonarLista(List<ItemSerieCarro> colecao){
 	    	List<ItemSerieCarro> colNova = new ArrayList<>();
-	    	double subI=0;
 	    	try {
 				
 				for(ItemSerieCarro it : colecao){
 					colNova.add(it.clone());
-					subI = subI+it.getValorItemSerie();
 				}
 			} catch (CloneNotSupportedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-	    	subItens=subI;
 	    	return colNova;
 	    }
 	    
 	    private List<AcessorioCarro> clonarListaAces(List<AcessorioCarro> colecao){
 	    	List<AcessorioCarro> colNova = new ArrayList<>();
-	    	double subA=0;
 	    	try {
 				
 				for(AcessorioCarro ac : colecao){
 					colNova.add(ac.clone());
-					subA = subA+ac.getValor();
 				}
 			} catch (CloneNotSupportedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-	    	subtAcessorios=subA;
 	    	return colNova;
 	    }
 	    public String cancelar(){
@@ -371,22 +375,6 @@ public class VersaoBean {
 				}
 	    }
 	    
-		@SuppressWarnings("unchecked")
-		public void somar(ValueChangeEvent evento){
-	    	double somaI = 0;
-	    	double somaA=0;
-	    	try {
-	    			for(ItemSerieCarro is :(List<ItemSerieCarro>) evento.getNewValue())
-		    		somaI= somaI + is.getValorItemSerie();
-			} catch (Exception e) {
-				// TODO: handle exception
-		    	for(AcessorioCarro as : (List<AcessorioCarro>) evento.getNewValue()){
-		    		somaA= somaA + as.getValor();
-		    	}
-	    	}
-	    	valorItens = somaI;
-	    	valorAcessorios = somaA;
-	    }   
 		
 		  public void filtrarMarca(ValueChangeEvent evento){
 		  
