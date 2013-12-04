@@ -645,7 +645,10 @@ public class Fachada implements IFachada {
 		return ctrlMovimentacao.consultarMovimentacao(movimentacao, dataFinal);
 	}
 	
-	
+	@Override
+	public Movimentacao pegarMovimentacaoPeloNumero(Integer numero) throws Exception{
+		return ctrlMovimentacao.pegarMovimentacaoPeloNumero(numero);
+	}
 
 	
 }

@@ -90,13 +90,14 @@ public class CidadeBean {
 			return null;
 		try{
 			prepararParaExibirDados(fachada.pegarCidadePorId(cidadeSelecionada.getCodigo()));
+			tituloOperacao = CidadeBean.OP_ALTERAR;
+			textoBotaoFecharOuCancelar = CidadeBean.TXT_BTN_CANCELAR;
+			somenteLeitura = false;
+			return rb.getString("linkCidadeProp");//"cidade-prop";
 		}catch(Exception ex){
 			MsgPrimeFaces.exibirMensagemDeErro(ex.getMessage());
 		}
-		tituloOperacao = CidadeBean.OP_ALTERAR;
-		textoBotaoFecharOuCancelar = CidadeBean.TXT_BTN_CANCELAR;
-		somenteLeitura = false;
-		return rb.getString("linkCidadeProp");//"cidade-prop";
+		return null;
 	}
 	
 	public String novo(){

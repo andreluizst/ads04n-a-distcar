@@ -126,13 +126,14 @@ public class FabricanteBean {
 			return null;
 		try{
 			prepararParaExibirDados(fachada.consultarFabricantePorId(fabricanteSelecionado.getCodigo()));
+			tituloOperacao = FabricanteBean.OP_ALTERAR;
+			textoBotaoFecharOuCancelar = FabricanteBean.TXT_BTN_CANCELAR;
+			somenteLeitura = false;
+			return resourceBundle.getString("linkFabricanteProp");//"fabricante-prop";
 		}catch(Exception ex){
 			MsgPrimeFaces.exibirMensagemDeErro(ex.getMessage());
 		}
-		tituloOperacao = FabricanteBean.OP_ALTERAR;
-		textoBotaoFecharOuCancelar = FabricanteBean.TXT_BTN_CANCELAR;
-		somenteLeitura = false;
-		return resourceBundle.getString("linkFabricanteProp");//"fabricante-prop";
+		return null;
 	}
 	
 	public String novo(){

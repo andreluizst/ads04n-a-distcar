@@ -77,13 +77,14 @@ public class TipoGerenciaBean {
 			return null;
 		try{
 			prepararParaExibirDados(fachada.pegarTipoGerenciaPorId(tipoGerenciaSelecionada.getCodigo()));
+			tituloOperacao = TipoGerenciaBean.OP_ALTERAR;
+			textoBotaoFecharOuCancelar = TipoGerenciaBean.TXT_BTN_CANCELAR;
+			somenteLeitura = false;
+			return resourceBundle.getString("linkTipoGerenciaProp");//"tipoGerencia-prop";
 		}catch(Exception ex){
 			MsgPrimeFaces.exibirMensagemDeErro(ex.getMessage());
 		}
-		tituloOperacao = TipoGerenciaBean.OP_ALTERAR;
-		textoBotaoFecharOuCancelar = TipoGerenciaBean.TXT_BTN_CANCELAR;
-		somenteLeitura = false;
-		return resourceBundle.getString("linkTipoGerenciaProp");//"tipoGerencia-prop";
+		return null;
 	}
 	
 	public String novo(){

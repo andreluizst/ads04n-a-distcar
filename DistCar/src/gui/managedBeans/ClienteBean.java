@@ -170,14 +170,15 @@ public class ClienteBean {
 			return null;
 		try{
 			prepararParaExibirDados(fachada.pegarClientePorId(clienteSelecionado.getCodigo()));
+			tituloOperacao = ClienteBean.OP_ALTERAR;
+			textoBotaoFecharOuCancelar = ClienteBean.TXT_BTN_CANCELAR;
+			somenteLeitura = false;
+			modoDeInclusao = false;
+			return resourceBundle.getString("linkClienteProp");//"cliente-prop";
 		}catch(Exception ex){
 			MsgPrimeFaces.exibirMensagemDeErro(ex.getMessage());
 		}
-		tituloOperacao = ClienteBean.OP_ALTERAR;
-		textoBotaoFecharOuCancelar = ClienteBean.TXT_BTN_CANCELAR;
-		somenteLeitura = false;
-		modoDeInclusao = false;
-		return resourceBundle.getString("linkClienteProp");//"cliente-prop";
+		return null;
 	}
 	
 	public String novo(){

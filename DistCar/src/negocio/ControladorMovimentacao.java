@@ -79,5 +79,9 @@ public class ControladorMovimentacao {
 			Date dataFinal) throws Exception{
 		return daoMovimentacao.consultar(movimentacao, dataFinal);
 	}
+	
+	public Movimentacao pegarMovimentacaoPeloNumero(Integer numero) throws Exception{
+		return daoMovimentacao.consultarPorId(numero);
+	}
 
 }

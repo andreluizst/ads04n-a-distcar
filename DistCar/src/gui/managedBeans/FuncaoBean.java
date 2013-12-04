@@ -93,13 +93,14 @@ public class FuncaoBean {
 			return null;
 		try{
 			prepararParaExibirDados(fachada.pegarFuncaoPorId(funcaoSelecionada.getCodigo()));
+			tituloOperacao = FuncaoBean.OP_ALTERAR;
+			textoBotaoFecharOuCancelar = FuncaoBean.TXT_BTN_CANCELAR;
+			somenteLeitura = false;
+			return resourceBundle.getString("linkFuncaoProp");//"funcao-prop";
 		}catch(Exception ex){
 			MsgPrimeFaces.exibirMensagemDeErro(ex.getMessage());
 		}
-		tituloOperacao = FuncaoBean.OP_ALTERAR;
-		textoBotaoFecharOuCancelar = FuncaoBean.TXT_BTN_CANCELAR;
-		somenteLeitura = false;
-		return resourceBundle.getString("linkFuncaoProp");//"funcao-prop";
+		return null;
 	}
 	
 	public String novo(){

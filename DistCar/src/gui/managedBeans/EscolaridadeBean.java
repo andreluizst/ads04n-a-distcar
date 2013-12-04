@@ -76,13 +76,14 @@ public class EscolaridadeBean {
 			return null;
 		try{
 			prepararParaExibirDados(fachada.pegarEscolaridadePorId(escolaridadeSelecionada.getCodigo()));
+			tituloOperacao = EscolaridadeBean.OP_ALTERAR;
+			textoBotaoFecharOuCancelar = EscolaridadeBean.TXT_BTN_CANCELAR;
+			somenteLeitura = false;
+			return rb.getString("linkEscolaridadeProp");//"escolaridade-prop";
 		}catch(Exception ex){
 			MsgPrimeFaces.exibirMensagemDeErro(ex.getMessage());
 		}
-		tituloOperacao = EscolaridadeBean.OP_ALTERAR;
-		textoBotaoFecharOuCancelar = EscolaridadeBean.TXT_BTN_CANCELAR;
-		somenteLeitura = false;
-		return rb.getString("linkEscolaridadeProp");//"escolaridade-prop";
+		return null;
 	}
 	
 	public String novo(){

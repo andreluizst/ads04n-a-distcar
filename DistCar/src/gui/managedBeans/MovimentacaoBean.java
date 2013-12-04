@@ -99,8 +99,12 @@ public class MovimentacaoBean {
 
 	private void iniciarObjParaPesquisa(){
 		movimentacaoParaPesquisa = new Movimentacao();
-		movimentacaoParaPesquisa.setDataMovimentacao(Calendar.getInstance().getTime());
-		dataFinalPesquisa = Calendar.getInstance().getTime();
+		Calendar calendarInicial = Calendar.getInstance();
+		calendarInicial.set(Calendar.getInstance().get(Calendar.YEAR), 0, 1);
+		movimentacaoParaPesquisa.setDataMovimentacao(calendarInicial.getTime());
+		Calendar calendarFinal = Calendar.getInstance();
+		calendarFinal.set(Calendar.getInstance().get(Calendar.YEAR), 11, 31);
+		dataFinalPesquisa = calendarFinal.getTime();
 	}
 
 	private void prepararParaExibirDados(Movimentacao obj){
@@ -135,11 +139,17 @@ public class MovimentacaoBean {
 			return null;
 		if (movimentacaoSelecionada == null)
 			return null;
-		prepararParaExibirDados(movimentacaoSelecionada);
-		tituloOperacao = MovimentacaoBean.OP_ALTERAR;
-		textoBotaoFecharOuCancelar = MovimentacaoBean.TXT_BTN_CANCELAR;
-		somenteLeitura = false;
-		return resourceBundle.getString("linkMovimentacaoProp");
+		try{
+			prepararParaExibirDados(fachada.pegarMovimentacaoPeloNumero(movimentacaoSelecionada.getNumero()));
+			tituloOperacao = MovimentacaoBean.OP_ALTERAR;
+			textoBotaoFecharOuCancelar = MovimentacaoBean.TXT_BTN_CANCELAR;
+			somenteLeitura = false;
+			return resourceBundle.getString("linkMovimentacaoProp");
+		}catch(Exception ex){
+			ex.printStackTrace();
+			MsgPrimeFaces.exibirMensagemDeErro("Não é possível alterar a movimentação selecionada!");
+		}
+		return null;
 	}
 	
 	public String novo(){
@@ -425,6 +435,15 @@ public class MovimentacaoBean {
 	public void setCentroOrigemSelecionado(Centro centroOrigemSelecionado) {
 		this.centroOrigemSelecionado = centroOrigemSelecionado;
 	}
+
+	public Carro getCarro() {
+		return carro;
+	}
+
+	public void setCarro(Carro carro) {
+		this.carro = carro;
+	}
+	
 	
 	
 }

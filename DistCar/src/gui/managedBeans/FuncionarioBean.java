@@ -139,13 +139,14 @@ public class FuncionarioBean {
 			return null;
 		try{
 			prepararParaExibirDados(fachada.pegarFuncionarioPorId(funcionarioSelecionado.getCodigo()));
+			tituloOperacao = FuncionarioBean.OP_ALTERAR;
+			textoBotaoFecharOuCancelar = FuncionarioBean.TXT_BTN_CANCELAR;
+			somenteLeitura = false;
+			return resourceBundle.getString("linkFuncionarioProp");
 		}catch(Exception ex){
 			MsgPrimeFaces.exibirMensagemDeErro(ex.getMessage());
 		}
-		tituloOperacao = FuncionarioBean.OP_ALTERAR;
-		textoBotaoFecharOuCancelar = FuncionarioBean.TXT_BTN_CANCELAR;
-		somenteLeitura = false;
-		return resourceBundle.getString("linkFuncionarioProp");
+		return null;
 	}
 	
 	public String novo(){

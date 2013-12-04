@@ -116,13 +116,14 @@ public class CentroBean {
 			return null;
 		try{
 			prepararParaExibirDados(fachada.pegarCentroPorId(centroSelecionado.getCodigo()));
+			tituloOperacao = CentroBean.OP_ALTERAR;
+			textoBotaoFecharOuCancelar = CentroBean.TXT_BTN_CANCELAR;
+			somenteLeitura = false;
+			return resourceBundle.getString("linkCentroProp");//"centro-prop";
 		}catch(Exception ex){
 			MsgPrimeFaces.exibirMensagemDeErro(ex.getMessage());
 		}
-		tituloOperacao = CentroBean.OP_ALTERAR;
-		textoBotaoFecharOuCancelar = CentroBean.TXT_BTN_CANCELAR;
-		somenteLeitura = false;
-		return resourceBundle.getString("linkCentroProp");//"centro-prop";
+		return null;
 	}
 	
 	public String novo(){

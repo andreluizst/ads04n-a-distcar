@@ -129,13 +129,14 @@ public class DeptoBean {
 			return null;
 		try{
 			prepararParaExibirDados(fachada.pegarDepartamentoPorId(departamentoSelecionado.getCodigo()));
+			tituloOperacao = DeptoBean.OP_ALTERAR;
+			textoBotaoFecharOuCancelar = DeptoBean.TXT_BTN_CANCELAR;
+			somenteLeitura = false;
+			return resourceBundle.getString("linkDepartamentoProp");//"departamento-prop";
 		}catch(Exception ex){
 			MsgPrimeFaces.exibirMensagemDeErro(ex.getMessage());
 		}
-		tituloOperacao = DeptoBean.OP_ALTERAR;
-		textoBotaoFecharOuCancelar = DeptoBean.TXT_BTN_CANCELAR;
-		somenteLeitura = false;
-		return resourceBundle.getString("linkDepartamentoProp");//"departamento-prop";
+		return null;
 	}
 	
 	public String novo(){
