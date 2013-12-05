@@ -1,6 +1,4 @@
 package gui.managedBeans;
-
-
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -208,6 +206,7 @@ public class CarroBean {
 		listarCentros();
 		listarItensDistintos();
 		listarAceDistintos();
+		itensSelecionado=null;
 		carroSelecionado=null;
 		situacaoSelecionada=null;
 		statusSelecionada=null;
@@ -307,8 +306,8 @@ public class CarroBean {
 		    	modelos=Fachada.obterInstancia().pesquisarModeloPorMarca(carroSelecionado.getVersao().getModeloCarro().getMarcaCarro().getCodigo());
 		    	versoes=Fachada.obterInstancia().pesquisarVersaoPorModelo(carroSelecionado.getVersao().getModeloCarro().getCodigo());
 		    	carro = carroSelecionado;
-		    	carro.getVersao().setItens(carroSelecionado.getVersao().getItens());
-		    	carro.getVersao().setAcessorios(carroSelecionado.getVersao().getAcessorios());
+		    	itens=carroSelecionado.getVersao().getItens();
+		    	acessorios=carroSelecionado.getVersao().getAcessorios();
 		    	
 		    	
 		    	return "carro-prop";
@@ -332,13 +331,15 @@ public class CarroBean {
 	    	
 		 	 try {
 		 		
-				carros = Fachada.obterInstancia().consultarCarros(carro,fab,marca,modelo,itensSelecionado);
+				carros = Fachada.obterInstancia().consultarCarros(carro, fab, marca, modelo, itensSelecionado, acessoriosSelecionado);
 				
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} 
 		 	 carro = new Carro();
+		 	 itensSelecionado=null;
+		 	 acessoriosSelecionado=null;
 		 	 fab=null;
 		 	 modelo=null;
 		 	 marca=null;
@@ -357,12 +358,7 @@ public class CarroBean {
 			marcas = Fachada.obterInstancia().pesquisarMarcaPorFabr(fab.getCodigo());
     		}
 			else{
-			carro= new Carro();
-			marcas=null;
-    		modelos=null;
-    		marcas=null;
-    		acessorios=null;
-    		itens=null;
+			init();
 		}
     }
 	    
@@ -391,7 +387,6 @@ public class CarroBean {
 	    		if(mc!=null)
 				versoes = Fachada.obterInstancia().pesquisarVersaoPorModelo(mc.getCodigo());
 	    		else{
-				MsgPrimeFaces.exibirMensagemDeAviso("erro2");
 				carro = new Carro();
 				versoes=null;
 				itens=null;
@@ -409,7 +404,7 @@ public class CarroBean {
 	    		}
 	    		else{
 			
-				
+				carro= new Carro();
 			}
 	    }
 }

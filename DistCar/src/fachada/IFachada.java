@@ -111,7 +111,7 @@ public interface IFachada {
 	public List<Carro> listarCarros();
 	public Carro pesquisarCarroCodigo(Integer codigo);
 	public List<Carro> consultarCarros(Carro carro, Fabricante f, MarcaCarro m, ModeloCarro modelo,
-			List<ItemSerieCarro> itensSelecionado) throws Exception;
+			List<ItemSerieCarro> itensSelecionado, List<AcessorioCarro> acessoriosSelecionado) throws Exception;
 	public Carro pegarCarroPeloChassi(String chassi) throws Exception;
 		
 	//Marca

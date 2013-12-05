@@ -96,7 +96,7 @@
 							itemLabel="Selecione o modelo" itemValue="-1"/>
 						<f:selectItems value="#{carroBean.modelos}" var="mo"
 							itemLabel="#{mo.descricao} #{mo.ano}" itemValue="#{mo}" />
-							<f:ajax render="versao valor" event="valueChange"/>
+							<f:ajax render="versao item acessorio valor" event="valueChange"/>
   					</p:selectOneMenu>
   					
   					
@@ -120,7 +120,7 @@
   					 <h:panelGrid columns="2" style="margin-bottom:5px" cellpadding="5">  
 					<h:outputText value="Itens: *"/>  
         				<p:selectManyCheckbox id="item" converter="ItensConverter" 
-        				value="#{carroBean.itens}"
+        				value="#{carroBean.carro.versao.itens}"
         				  layout="pageDirection" columns="2" disabled="true">  
            				    <f:selectItems value="#{carroBean.itens}" var="i" 
            				      itemLabel="#{i.descricao}" itemValue="#{i}"  />  

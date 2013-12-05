@@ -82,8 +82,8 @@ public class ControladorCarro {
 	}
 	
 	public List<Carro> pesquisarCarros(Carro carro, Fabricante f, MarcaCarro m, ModeloCarro modelo,
-			List<ItemSerieCarro> itensSelecionado) throws Exception {
-		return carroDAO.consultar(carro, f, m, modelo,itensSelecionado);
+			List<ItemSerieCarro> itensSelecionado, List<AcessorioCarro> acessoriosSelecionado) throws Exception {
+		return carroDAO.consultar(carro, f, m, modelo,itensSelecionado,acessoriosSelecionado);
 	}
 	public Carro pegarCarroPeloChassi(String chassi) throws Exception{
 		return carroDAO.pegarCarroPeloChassi(chassi);
