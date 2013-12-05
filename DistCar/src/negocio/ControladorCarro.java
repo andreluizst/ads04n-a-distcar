@@ -81,8 +81,9 @@ public class ControladorCarro {
 		return carroDAO.consultarPorId(codigo);
 	}
 	
-	public List<Carro> pesquisarCarros(Carro carro, Fabricante f, MarcaCarro m, ModeloCarro modelo) throws Exception {
-		return carroDAO.consultar(carro, f, m, modelo);
+	public List<Carro> pesquisarCarros(Carro carro, Fabricante f, MarcaCarro m, ModeloCarro modelo,
+			List<ItemSerieCarro> itensSelecionado) throws Exception {
+		return carroDAO.consultar(carro, f, m, modelo,itensSelecionado);
 	}
 
 	
@@ -297,6 +298,9 @@ public class ControladorCarro {
 	
 	public List<ItemSerieCarro> listarItensPorVersao(Integer codigo){
 		return itemSerieCarroDAO.listarItensPorVersao(codigo);
+	}
+	public List<ItemSerieCarro> listarItensDistintos(){
+		return itemSerieCarroDAO.listarItensDistintos();
 	}
 	//Acessório Carro
 
