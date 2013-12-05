@@ -95,12 +95,15 @@
 							<f:ajax render="item acessorio" event="valueChange"/>
   					</p:selectOneMenu>
   				
-  					
+  					<h:outputLabel for="valor" value="Valor Carro: *" />
+					<p:inputText id="valor" disabled="false"
+						value="#{carroBean.carro.valorCarro}"
+						requerid="false" label="valor" />
   					
   					 <h:panelGrid columns="2" style="margin-bottom:5px" cellpadding="5">  
 					<h:outputText value="Itens: *"/>  
-        				<p:selectManyCheckbox id="item" converter="ItensConverter" value="#{carroBean.itens}"
-        				  layout="pageDirection" columns="2" disabled="true" selectedClass="">  
+        				<p:selectManyCheckbox id="item" converter="ItensConverter" value="#{carroBean.itensSelecionado}"
+        				  layout="pageDirection" columns="2" disabled="false" selectedClass="">  
            				    <f:selectItems value="#{carroBean.itens}" var="i" 
            				      itemLabel="#{i.descricao}" itemValue="#{i}"  />  
        					</p:selectManyCheckbox>
