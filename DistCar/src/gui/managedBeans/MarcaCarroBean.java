@@ -7,8 +7,6 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
-
-import seguranca.EntityManagerThreads;
 import classesBasicas.Fabricante;
 import classesBasicas.MarcaCarro;
 import classesBasicas.Situacao;
@@ -128,10 +126,7 @@ public class MarcaCarroBean {
 					.exibirMensagemInfomativa("Selecione um acessório para exclusão!");
 		} else {
 			try {
-				/*Felipe, se não pegar a entidade do banco como na linha abaixo dá erro "Entity not managed".
-					Não verifiquei o restante do seu código para saber porque o seu managedBean dá esse problema.
-					O meu managedBean não precisa fazer isso. Está normal.
-				*/
+				
 				MarcaCarro m = Fachada.obterInstancia().pesquisarMarcasCarroCodigo(marcaSelecionada.getCodigo());
 				Fachada.obterInstancia().removerMarcaCarro(m);
 				MsgPrimeFaces
