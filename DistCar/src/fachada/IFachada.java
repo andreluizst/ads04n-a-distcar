@@ -110,7 +110,8 @@ public interface IFachada {
 	public void removerCarro(Carro carro);
 	public List<Carro> listarCarros();
 	public Carro pesquisarCarroCodigo(Integer codigo);
-	public List<Carro> consultarCarros(Carro carro, Fabricante f, MarcaCarro m, ModeloCarro modelo) throws Exception;
+	public List<Carro> consultarCarros(Carro carro, Fabricante f, MarcaCarro m, ModeloCarro modelo,
+			List<ItemSerieCarro> itensSelecionado) throws Exception;
 	public Carro pegarCarroPeloChassi(String chassi) throws Exception;
 		
 	//Marca
@@ -151,6 +152,7 @@ public interface IFachada {
 	public List<ItemSerieCarro> consultarItens(ItemSerieCarro itemSerieCarro) throws Exception;
 	public List<ItemSerieCarro> listarItensPorModelo(ModeloCarro modelo);
 	public List<ItemSerieCarro> listarItensPorVersao(Integer codigo);
+	public List<ItemSerieCarro> listarItensdistintos();
 		
 	//Acessório
 	

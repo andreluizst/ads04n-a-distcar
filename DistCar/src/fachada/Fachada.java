@@ -407,8 +407,9 @@ public class Fachada implements IFachada {
 	}
 
 	@Override
-	public List<Carro> consultarCarros(Carro carro, Fabricante f, MarcaCarro m, ModeloCarro modelo) throws Exception {
-		return this.controladorCarro.pesquisarCarros(carro, f, m, modelo);
+	public List<Carro> consultarCarros(Carro carro, Fabricante f, MarcaCarro m, 
+			ModeloCarro modelo, List<ItemSerieCarro> itensSelecionado) throws Exception {
+		return this.controladorCarro.pesquisarCarros(carro, f, m, modelo,itensSelecionado);
 	}
 	
 	@Override
@@ -549,6 +550,9 @@ public class Fachada implements IFachada {
 		return this.controladorCarro.listarItens();
 	}
 
+	public List<ItemSerieCarro> listarItensdistintos() {
+		return this.controladorCarro.listarItensDistintos();
+	}
 	@Override
 	public ItemSerieCarro pesquisarItemCodigo(Integer codigo) {
 		return this.controladorCarro.pesquisarItemCodigo(codigo);
