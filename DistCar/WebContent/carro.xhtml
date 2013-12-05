@@ -33,7 +33,7 @@
 
 				<h:panelGrid columns="2" cellpadding="5">
 						<h:outputLabel for="chassi" value="Chassi *" />
-					<p:inputText id="chassi"
+					<p:inputText id="chassi" maxlength="17"
 						value="#{carroBean.carro.chassi}"  required="false"
 						label="Chassi" requiredMessage="Nome obrigatório: *" />
 						
@@ -44,7 +44,7 @@
 				
 						
 					<h:outputLabel for="ano" value="Ano de Fabricação: *" />
-					<p:inputText id="ano" required="false"
+					<p:inputText id="ano" required="false" maxlength="4"
 						value="#{carroBean.carro.anoFabricacao}"
 						requerid="false" label="Ano" />
 					
@@ -131,10 +131,6 @@
   						<f:selectItem itemLabel="Selecione uma opção" itemValue="" />
   						<f:selectItems value="#{carroBean.status}" />
   					</p:selectOneMenu>
-					
-					
-					
-					
 					</h:panelGrid> 
 				<p:commandButton value="Consultar" update="form"
 					action="#{carroBean.consultar}" />	
@@ -177,6 +173,23 @@
 					<h:outputText value="#{carro.chassi}" />
 				</p:column>
 	
+				<p:column width="8" style="text-align: center;">
+					<f:facet name="header">
+						<h:outputText value="Fabricante/Marca" />
+					</f:facet>
+					<h:outputText 
+						value="#{carro.versao.modeloCarro.marcaCarro.fabricante.pj.nome} 
+						#{carro.versao.modeloCarro.marcaCarro.descricao}"/>
+				</p:column>
+
+				<p:column width="5" style="text-align: center;">
+					<f:facet name="header">
+						<h:outputText value="Modelo/ano/Versão" />
+					</f:facet>
+					<h:outputText value="#{carro.versao.modeloCarro.descricao} #{carro.versao.modeloCarro.ano}
+					#{carro.versao.descricao}" />
+				</p:column>
+				
 				<p:column width="5" style="text-align: center;">
 					<f:facet name="header">
 						<h:outputText value="Cor" />
@@ -191,28 +204,6 @@
 					<h:outputText value="#{carro.anoFabricacao} - #{carro.versao.modeloCarro.ano}" />
 				</p:column>
 				
-				<p:column width="8" style="text-align: center;">
-					<f:facet name="header">
-						<h:outputText value="Fabricante/Marca" />
-					</f:facet>
-					<h:outputText 
-						value="#{carro.versao.modeloCarro.marcaCarro.fabricante.pj.nome} 
-						#{carro.versao.modeloCarro.marcaCarro.descricao}"/>
-				</p:column>
-
-				<p:column width="5" style="text-align: center;">
-					<f:facet name="header">
-						<h:outputText value="Modelo/ano" />
-					</f:facet>
-					<h:outputText value="#{carro.versao.modeloCarro.descricao} #{carro.versao.modeloCarro.ano}" />
-				</p:column>
-				
-				<p:column width="5" style="text-align: center;">
-					<f:facet name="header">
-						<h:outputText value="Versão" />
-					</f:facet>
-					<h:outputText value="#{carro.versao.descricao}" />
-				</p:column>
 				
 				<p:column width="5" style="text-align: center;">
 					<f:facet name="header">
@@ -236,6 +227,12 @@
 					<h:outputText value="#{carro.valorCarro}" />
 				</p:column>
 				
+				<p:column width="5" style="text-align: center;">
+					<f:facet name="header">
+						<h:outputText value="Centro" />
+					</f:facet>
+					<h:outputText value="#{carro.centro.alias}" />
+				</p:column>
 				<p:column width="5" style="text-align: center;">
 					<f:facet name="header">
 						<h:outputText value="Status" />

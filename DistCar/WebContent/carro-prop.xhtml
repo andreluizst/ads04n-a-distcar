@@ -15,7 +15,6 @@
 	<f:view id="View">
 	<h:form id="frmMensagens">
 			<p:messages id="messages" showDetail="true" autoUpdate="true" closable="true"></p:messages>
-			<p:growl id="growl" showDetail="true" sticky="false" globalOnly="true" />
 		</h:form>
 		<h:form id="form">
 
@@ -45,7 +44,7 @@
 				<h:panelGrid columns="2" cellpadding="5">
 
 				<h:outputLabel for="chassi" value="Chassi *" />
-					<p:inputText id="chassi"
+					<p:inputText id="chassi" maxlength="17"
 						value="#{carroBean.carro.chassi}"  required="true"
 						label="Chassi" requiredMessage="Nome obrigatório: *" />
 						
@@ -57,9 +56,9 @@
 				
 						
 					<h:outputLabel for="ano" value="Ano de Fabricação: *" />
-					<p:inputText id="ano" 
-						value="#{carroBean.carro.anoFabricacao}"
-						requerid="true" requiredMessage="Ano obrigatório: *" label="Ano" />
+					<p:inputText id="ano" requerid="true" requiredMessage="Ano obrigatório: *"
+					maxlength="4" value="#{carroBean.carro.anoFabricacao}"
+						label="Ano" />
 					
 
 					<h:outputLabel for="fabricante" value="Fabricante: * " />
@@ -139,20 +138,22 @@
 				</h:panelGrid> 
   
 					<h:outputLabel for="centro" value="Centros: *" />
-  					<h:selectOneMenu id="centro" value="#{carroBean.carro.centro}" converter="CentroConverter" >
+  					<p:selectOneMenu id="centro" value="#{carroBean.carro.centro}" converter="CentroConverter"
+  					required="true" requiredMessage="Centro obrigatório: *" >
   						<f:selectItem noSelectionOption="true"
 							itemLabel="Selecione a Centro" itemValue="-1"/>
 						<f:selectItems value="#{carroBean.centros}" var="c"
 							itemLabel="#{c.alias}" itemValue="#{c}" />
-  					</h:selectOneMenu>
+  					</p:selectOneMenu>
 
 					<h:outputLabel for="status" value="Status: *" />
-  					<h:selectOneMenu id="status" value="#{carroBean.carro.status}" >
+  					<p:selectOneMenu id="status" value="#{carroBean.carro.status}" 
+  					required="true" requiredMessage="Status obrigatório: *">
   						<f:selectItem itemLabel="Selecione uma opção" itemValue="" />
   						<f:selectItems value="#{carroBean.status}" />
-  					</h:selectOneMenu>	
+  					</p:selectOneMenu>	
 				</h:panelGrid> 
-				<p:commandButton value="Salvar"  update=":frmMensagens:growl" action="#{carroBean.salvar}" />
+				<p:commandButton value="Salvar"  update="form" action="#{carroBean.salvar}" />
    				<p:commandButton value="Cancelar" update="form" immediate="true" action="#{carroBean.cancelar}" />
 			</p:panel>
 		</h:form>
