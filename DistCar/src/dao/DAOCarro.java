@@ -5,8 +5,6 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
-
-import classesBasicas.AcessorioCarro;
 import classesBasicas.Carro;
 import classesBasicas.Fabricante;
 import classesBasicas.ItemSerieCarro;
@@ -47,27 +45,7 @@ public class DAOCarro extends DAOGenerico<Carro> implements IDAOCarro {
 		query.setParameter("versaoModeloCarro", versaoCarro.getDescricao());
 		return query.getResultList();
 	}
-
-	@Override
-	public List<Carro> pesquisarCarroPorItemSerie(String descricao) {
-		TypedQuery<Carro> query = entityManager.createQuery("from carro c, ItemSerieCarro i where c.versaoModeloCarro.itemSeriecarros.descricaoItemSerie  = i.descricaoItemSerie", Carro.class);
-		query.setParameter("i.descricaoItemSerie", descricao);
-		return query.getResultList();
-	}
-
-	@Override
-	public List<Carro> pesquisarCarroPorAcessorioCarro(
-			AcessorioCarro acessorioCarro) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<Carro> emitirRelatorio() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
+	
 	@Override
 	public Carro pegarCarroPeloChassi(String chassi) throws Exception {
 		TypedQuery<Carro> tqry = entityManager.createQuery("from Carro c where c.chassi = :chassi", Carro.class);
@@ -83,7 +61,7 @@ public class DAOCarro extends DAOGenerico<Carro> implements IDAOCarro {
 	
 	public List<Carro> consultar(Carro carro, Fabricante f, MarcaCarro m, ModeloCarro mod,
 			List<ItemSerieCarro> itensSelecionado) throws Exception {
-		String jpql = "Select c from Carro c, IN (c.versao.itens) as i where c.chassi like :descricao";
+		String jpql = "Select c from Carro c where c.chassi like :descricao";
 		String descricao = "%";
 		boolean temValor = false;
 		boolean temModelo = false;
@@ -125,14 +103,14 @@ public class DAOCarro extends DAOGenerico<Carro> implements IDAOCarro {
 			temF=false;
 		}
 		
-		if(itensSelecionado!=null){
+	/*	if(itensSelecionado!=null){
 			String item="";
 			for(ItemSerieCarro i : itensSelecionado){
 				 item+= " and i.descricao= :item"+i.getCodigo();
 			}
 			jpql+= item;
 			temItem=true;
-		}
+		}*/
 		if (carro.getCentro()!=null && carro.getCentro().getCodigo()!= null && 
 				carro.getCentro().getCodigo()>0){
 			jpql+= " and c.centro.codigo = :centro";
@@ -192,11 +170,11 @@ public class DAOCarro extends DAOGenerico<Carro> implements IDAOCarro {
 		}
 		if(temCor)
 			tqry.setParameter("cor","%"+carro.getCor()+"%");
-		if(temItem){
+		/*if(temItem){
 		for(ItemSerieCarro i : itensSelecionado){
 				tqry.setParameter("item"+i.getCodigo(), i.getDescricao());
 			}
-		}
+		}*/
 		return tqry.getResultList();
 	}
 
