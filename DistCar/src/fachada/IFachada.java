@@ -175,6 +175,7 @@ public interface IFachada {
 	public List<Movimentacao> consultarMovimentacao(Movimentacao movimentacao,
 			Date dataFinal) throws Exception;
 	public Movimentacao pegarMovimentacaoPeloNumero(Integer numero) throws Exception;
+	public List<MovimentacaoItem> listarItensDaMovimentacaoNumero(Integer numero) throws Exception;
 	
 		
 }

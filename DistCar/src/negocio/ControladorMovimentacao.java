@@ -10,9 +10,14 @@ import javax.persistence.EntityManagerFactory;
 
 import util.Parametros;
 import classesBasicas.Movimentacao;
+import classesBasicas.MovimentacaoItem;
 import classesBasicas.SituacaoMovimentacao;
+import classesBasicas.Status;
+import classesBasicas.TipoMovimentacao;
 import dao.DAOMovimentacao;
+import dao.DAOMovimentacaoItem;
 import dao.IDAOMovimentacao;
+import dao.IDAOMovimentacaoItem;
 
 
 public class ControladorMovimentacao {
@@ -52,22 +57,58 @@ public class ControladorMovimentacao {
 		return false;
 	}
 	
+	private void atualizaStatusDoItemDaMovimentacao(Movimentacao movimentacao){
+		for (MovimentacaoItem item : movimentacao.getItens()){
+			if (movimentacao.getSituacao() == SituacaoMovimentacao.PENDENTE){
+				if (movimentacao.getTipoMovimentacao() == TipoMovimentacao.COMPRA){
+					item.getMovimentoCarroPK().getCarro().setStatus(Status.ESTOQUE);
+					item.getMovimentoCarroPK().getCarro().setCentro(movimentacao.getCtoOrigem());
+				}else{
+					if (movimentacao.getTipoMovimentacao() == TipoMovimentacao.VENDA){
+						item.getMovimentoCarroPK().getCarro().setStatus(Status.VENDIDO);
+						item.getMovimentoCarroPK().getCarro().setCentro(movimentacao.getCtoOrigem());
+					}else{
+						if (movimentacao.getTipoMovimentacao() == TipoMovimentacao.ENTRE_CENTROS){
+							item.getMovimentoCarroPK().getCarro().setStatus(Status.TRANSFERENCIA);
+							item.getMovimentoCarroPK().getCarro().setCentro(movimentacao.getCtoDestino());
+						}
+					}
+				}
+			}else{
+				if (movimentacao.getSituacao() == SituacaoMovimentacao.CONCLUIDA){
+					if (movimentacao.getTipoMovimentacao() == TipoMovimentacao.ENTRE_CENTROS){
+						item.getMovimentoCarroPK().getCarro().setStatus(Status.ESTOQUE);
+						item.getMovimentoCarroPK().getCarro().setCentro(movimentacao.getCtoDestino());
+					}
+				}
+			}
+		}
+	}
+	
 	public void inserirMovimentacao(Movimentacao movimentacao) throws Exception{
 		movimentacao.setDataMovimentacao(Calendar.getInstance().getTime());
 		movimentacao.setDataUltimaAtualizacao(Calendar.getInstance().getTime());
 		if (movimentacao.getSituacao() == null)
 			movimentacao.setSituacao(SituacaoMovimentacao.PENDENTE);
+		atualizaStatusDoItemDaMovimentacao(movimentacao);
 		daoMovimentacao.inserirSemTratamento(movimentacao);
+		IDAOMovimentacaoItem daoItem = new DAOMovimentacaoItem();
+		daoItem.atualizarItensDaMovimentacao(movimentacao);
 	}
 	
 	public void alterarMovimentacao(Movimentacao movimentacao) throws Exception{
 		movimentacao.setDataUltimaAtualizacao(Calendar.getInstance().getTime());
 		if (movimentacao.getSituacao() == null)
 			movimentacao.setSituacao(SituacaoMovimentacao.PENDENTE);
+		atualizaStatusDoItemDaMovimentacao(movimentacao);
 		daoMovimentacao.alterarSemTratamento(movimentacao);
+		IDAOMovimentacaoItem daoItem = new DAOMovimentacaoItem();
+		daoItem.atualizarItensDaMovimentacao(movimentacao);
 	}
 	
 	public void excluirMovimentacao(Movimentacao movimentacao) throws Exception{
+		IDAOMovimentacaoItem daoItem = new DAOMovimentacaoItem();
+		daoItem.removerItensDaMovimentacaoNumero(movimentacao.getNumero());
 		daoMovimentacao.removerSemTratamento(movimentacao);
 	}
 	
@@ -82,6 +123,11 @@ public class ControladorMovimentacao {
 	
 	public Movimentacao pegarMovimentacaoPeloNumero(Integer numero) throws Exception{
 		return daoMovimentacao.consultarPorId(numero);
+	}
+	
+	public List<MovimentacaoItem> listarItensDaMovimentacaoNumero(Integer numero) throws Exception{
+		IDAOMovimentacaoItem daoItem = new DAOMovimentacaoItem();
+		return daoItem.listarItensDaMovimentacaoNumero(numero);
 	}
 
 }

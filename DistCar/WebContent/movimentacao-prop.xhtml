@@ -91,15 +91,15 @@
   									readonly="#{movimentacaoBean.somenteLeitura}" 
   									value="#{movimentacaoBean.carro.chassi}"
   									required="false" lable="Chassi">
-  								<f:ajax event="blur" immediate="true" listener="#{movimentacaoBean.verificarChassi}"
-  										execute="txtChassi" render="grdItem" />
+  								<f:ajax event="blur"  listener="#{movimentacaoBean.verificarChassi}"
+  										execute="txtChassi" render="grdItem versao" />
   							</p:inputText>
   							<p:message for="txtChassi" display="tooltip" />
   						</h:panelGrid>
   						<h:panelGrid columns="3">
   							<h:outputLabel for="txtAno" value="Ano: "/>
   							<p:inputText id="txtAno" size="15" widgetVar="wgvAno"  
-  								readonly="#{movimentacaoBean.somenteLeitura}"
+  								readonly="#{movimentacaoBean.somenteLeitura || !movimentacaoBean.podeCriarNovoCarro}"
   								value="#{movimentacaoBean.carro.anoFabricacao}"
   								required="false" lable="Ano" />
   							<p:message for="txtAno" display="tooltip" />
@@ -107,7 +107,7 @@
   						<h:panelGrid columns="3">
   							<h:outputLabel for="txtCor" value="Cor: "/>
   							<p:inputText id="txtCor" size="15" widgetVar="wgvCor"  
-  								readonly="#{movimentacaoBean.somenteLeitura}"
+  								readonly="#{movimentacaoBean.somenteLeitura || !movimentacaoBean.podeCriarNovoCarro}"
   								value="#{movimentacaoBean.carro.cor}"
   								required="false" lable="Ano" />
   							<p:message for="txtCor" display="tooltip" />
@@ -119,20 +119,20 @@
   								<p:commandButton actionListener="#{movimentacaoBean.adicionarItem}"
   										id="btnNovoItem" icon="ui-icon-plus" 
   										title="Adicionar item" immediate="true" ajax="true"
-  										disabled="#{movimentacaoBean.somenteLeitura}">
-  									<f:ajax render="tbLista" execute="txtChassi"/>
+  										disabled="#{movimentacaoBean.somenteLeitura}" update="frmPrincipal,txtChassi">
+  									
   								</p:commandButton>
   								<p:commandButton actionListener="#{movimentacaoBean.alterarItem}" 
   										id="btnAlterarItem" icon="ui-icon-pencil"
   										title="alterar item selecionado" immediate="true" ajax="true"
   										disabled="#{movimentacaoBean.somenteLeitura}">
-  									<f:ajax render="tbLista" execute="txtChassi"/>
+
   								</p:commandButton> 
   								<p:commandButton actionListener="#{movimentacaoBean.excluirItem}" 
   										id="btnExcluirItem" icon="ui-icon-trash" 
   										title="excluir item selecionado" immediate="true" ajax="true"
-  										disabled="#{movimentacaoBean.somenteLeitura}">
-  									<f:ajax render="tbLista" execute="txtChassi"/>
+  										disabled="#{movimentacaoBean.somenteLeitura}" update="frmPrincipal" >
+  									
   								</p:commandButton>
   					</h:panelGrid>	 
   			</h:panelGrid>
@@ -141,7 +141,9 @@
 							<p:selectOneMenu id="versao" converter="VersaoConverter"  
 						 			value="#{movimentacaoBean.carro.versao}"
 						 			readonly="#{movimentacaoBean.somenteLeitura}"
-						 			disabled="#{movimentacaoBean.somenteLeitura || !movimentacaoBean.temVersoesDeCarros}">
+						 			disabled="#{movimentacaoBean.somenteLeitura 
+						 							|| !movimentacaoBean.temVersoesDeCarros 
+						 							|| !movimentacaoBean.podeCriarNovoCarro}">
 								<f:selectItem noSelectionOption="true"
 										itemLabel="Selecione a versão" itemValue="-1"/>
 								<f:selectItems value="#{movimentacaoBean.versoesDeCarros}" var="versaoCarro"
@@ -149,7 +151,7 @@
 								<p:message for="versao" display="tooltip" />
   							</p:selectOneMenu>
   			</h:panelGrid>
-  			<p:dataTable id="tbLista" var="item" value="#{movimentacaoBean.movimentacao.itens}"
+  			<p:dataTable id="tbLista" var="item" value="#{movimentacaoBean.itensDaMovimentacao}"
   						paginator="true" rows="5"
   						paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks}
   						{NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rowsPerPageTemplate="3,6"
@@ -164,22 +166,22 @@
   				
   				<p:column>
   					<f:facet name="header"><h:outputText value="Número"/> </f:facet>
-  					<h:outputText value="#{item.movimentacao.numero}"/>
+  					<h:outputText value="#{item.movimentoCarroPK.movimentacao.numero}"/>
   				</p:column>
   				
   				<p:column>
   					<f:facet name="header"><h:outputText value="Código carro"/> </f:facet>
-  					<h:outputText value="#{item.carro.codigo}"/>
+  					<h:outputText value="#{item.movimentoCarroPK.carro.codigo}"/>
   				</p:column>
   				
   				<p:column>
   					<f:facet name="header"><h:outputText value="Chassi carro"/> </f:facet>
-  					<h:outputText value="#{item.carro.chassi}"/>
+  					<h:outputText value="#{item.movimentoCarroPK.carro.chassi}"/>
   				</p:column>
   				
   				<p:column>
   					<f:facet name="header"><h:outputText value="Descrição"/> </f:facet>
-  					<h:outputText value="#{item.carro}"/>
+  					<h:outputText value="#{item.movimentoCarroPK.carro}" size="70"/>
   				</p:column>
   				<f:facet name="footer">  
   					

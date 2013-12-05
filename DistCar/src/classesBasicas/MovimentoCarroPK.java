@@ -21,7 +21,7 @@ public class MovimentoCarroPK implements Serializable {
 	private Carro carro;
 	
 	@ManyToOne(fetch=FetchType.EAGER)
-	@JoinColumn(name="numeroMovementacao")
+	@JoinColumn(name="numeroMovimentacao")
 	private Movimentacao movimentacao;
 
 	public MovimentoCarroPK() {

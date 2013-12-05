@@ -61,6 +61,7 @@ public class MovimentacaoBean {
 	private boolean temVersoesDeCarros;
 	private Carro carro;
 	private Centro centroOrigemSelecionado;
+	private boolean podeCriarNovoCarro;
 	//private Carro carros;
 	
 	
@@ -76,13 +77,14 @@ public class MovimentacaoBean {
 		itemMovimentacaoSelecionada = null;
 		itemMovimentacao = new MovimentacaoItem();
 		carro = new Carro();
-		carro.setChassi("");
+		carro.setComportamentoToString(Carro.TO_STRING_DESCRICAO_PARA_LISTA);
 		novaMovimentacao();
 		iniciarObjParaPesquisa();
 		if (lista==null)
 			lista = new ArrayList<Movimentacao>();
 		else
 			lista.clear();
+		podeCriarNovoCarro = false;
 		centroDestinoRequerido = false;
 		temVersoesDeCarros = false;
 		temCentros = false;
@@ -109,17 +111,30 @@ public class MovimentacaoBean {
 	}
 
 	private void prepararParaExibirDados(Movimentacao obj){
+		carro = new Carro();
+		carro.setComportamentoToString(Carro.TO_STRING_DESCRICAO_PARA_LISTA);
+		podeCriarNovoCarro = false;
+		//carro.setChassi("");
 		this.movimentacao = obj;
+		centroDestinoRequerido = movimentacao.getTipoMovimentacao() != null ? movimentacao.getTipoMovimentacao() == TipoMovimentacao.ENTRE_CENTROS : false;
 		//itensOriginais = obj.getItens();
 		if (itensDaMovimentacao == null)
 			itensDaMovimentacao = new ArrayList<MovimentacaoItem>();
-		if (obj.getItens() != null && obj.getItens().size() > 0){
+		try{
+			if (movimentacao.getNumero() != null && movimentacao.getNumero() > 0)
+				itensDaMovimentacao = fachada.listarItensDaMovimentacaoNumero(movimentacao.getNumero());
+			listaEstaVazia = itensDaMovimentacao != null ? itensDaMovimentacao.size() > 0 : false;
+			System.out.println(itensDaMovimentacao);
+		}catch(Exception ex){
+			MsgPrimeFaces.exibirMensagemDeErro("Não foi possível filtrar as cidades pelo estado selecionado!");
+		}
+		/*if (obj.getItens() != null && obj.getItens().size() > 0){
 			listaItemEstaVazia = false;
 			itensDaMovimentacao.addAll(obj.getItens());
 		}else{
 			listaItemEstaVazia = true;
 			itensDaMovimentacao.clear();
-		}
+		}*/
 		try{
 			centros = fachada.listarCentros();
 			versoesDeCarros = fachada.listarVersoes();
@@ -196,6 +211,7 @@ public class MovimentacaoBean {
 				movimentacao.setCtoDestino(null);
 			if (movimentacao.getNumero() == null || movimentacao.getNumero() == 0)
 				movimentacao.setNumero(null);
+			movimentacao.setItens(itensDaMovimentacao);
 			fachada.salvarMovimentacao(movimentacao);
 			consultar();
 			msgPendente = MsgPrimeFaces.criarMsgInfo("Movimentação salva com sucesso!");
@@ -278,7 +294,12 @@ public class MovimentacaoBean {
 		Carro c = null;
 		try{
 			c = fachada.pegarCarroPeloChassi(carro.getChassi());
-			carro = c;
+			if (c != null){
+				carro = c;
+				podeCriarNovoCarro = false;
+			}else{
+				podeCriarNovoCarro = true;
+			}
 		}catch(Exception ex){
 			MsgPrimeFaces.exibirMensagemDeErro(ex.getMessage());
 		}
@@ -289,6 +310,7 @@ public class MovimentacaoBean {
 		//boolean podeAdicionar = false;
 		//List<Carro> lista = new ArrayList<Carro>();
 		MovimentacaoItem item = new MovimentacaoItem();
+//		item.getMovimentoCarroPK().getMovimentacao()
 		if (carro.getAnoFabricacao() != null && carro.getChassi() != null
 				&& carro.getChassi().length() > 0 && carro.getVersao() != null
 				&& carro.getVersao().getCodigo() != null && carro.getVersao().getCodigo() > 0){
@@ -303,17 +325,34 @@ public class MovimentacaoBean {
 								+ " dados já existentes no banco de dados!");
 					}
 				}
-				for (MovimentacaoItem m : movimentacao.getItens()){
-					if (m.getMovimentoCarroPK().getCarro().getChassi().equals(c.getChassi()))
-						throw new Exception("O carro " + carro.getChassi() + " informado já existe na lista");
+				if (movimentacao.getItens() != null && movimentacao.getItens().size() > 0){
+					for (MovimentacaoItem m : movimentacao.getItens()){
+						if (m.getMovimentoCarroPK().getCarro().getChassi().equals(c.getChassi()))
+							throw new Exception("O carro " + carro.getChassi() + " informado já existe na lista");
+					}
 				}
-				
+				c.setComportamentoToString(Carro.TO_STRING_DESCRICAO_PARA_LISTA);
 				item.getMovimentoCarroPK().setCarro(c);
-				movimentacaoSelecionada.getItens().add(item);
+				if (movimentacao.getNumero() == null || movimentacao.getNumero() <= 0)
+					item.getMovimentoCarroPK().setMovimentacao(null);
+				else
+					item.getMovimentoCarroPK().setMovimentacao(fachada.pegarMovimentacaoPeloNumero(movimentacao.getNumero()));
+				itensDaMovimentacao.add(item);
+				//movimentacao.getItens().add(item);
+				carro = new Carro();
+				carro.setChassi("");
+				carro.setComportamentoToString(Carro.TO_STRING_DESCRICAO_PARA_LISTA);
+				podeCriarNovoCarro = false;
 			}catch(Exception ex){
+				ex.printStackTrace();
 				MsgPrimeFaces.exibirMensagemDeErro(ex.getMessage());
 			}
 		}
+	}
+	
+	public void excluirItem(){
+		if (itensDaMovimentacao.size() > 0)
+			itensDaMovimentacao.remove(itemMovimentacaoSelecionada);
 	}
 	
 	
@@ -446,6 +485,14 @@ public class MovimentacaoBean {
 
 	public void setCarro(Carro carro) {
 		this.carro = carro;
+	}
+
+	public boolean isPodeCriarNovoCarro() {
+		return podeCriarNovoCarro;
+	}
+
+	public List<MovimentacaoItem> getItensDaMovimentacao() {
+		return itensDaMovimentacao;
 	}
 	
 	

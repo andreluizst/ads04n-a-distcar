@@ -83,7 +83,7 @@ public class VersaoCarro extends ObjetoGeral {
 				+ ", itens=" + itens + "]";
 		if (comportamentoToString == VersaoCarro.TO_STRING_DESCRICAO_PARA_LISTA)
 			str = modeloCarro.getDescricao() + " " + modeloCarro.getAno() 
-				+ " " + getDescricao() + "[" + strAcessorios + " + " + itens + "]";
+				+ " " + getDescricao() + strAcessorios + " + " + itens;
 		return str;
 	}
 	

@@ -125,7 +125,7 @@ public class Carro extends ObjetoGeral {
 			//str = versao + ", " + cor + ", fabricação " + anoFabricacao + ", chassi " + chassi;
 			str = versao.getModeloCarro().getDescricao() + " " + versao.getDescricao() + " "
 					+ versao.getModeloCarro().getAno() + "/" + anoFabricacao + ", "
-					+ cor + ", chassi " + chassi;
+					+ cor + ", chassi " + chassi + " - " + status;
 			//versao.setComportamentoToString(aux);
 		}
 		return str;

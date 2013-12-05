@@ -22,6 +22,7 @@ import classesBasicas.ItemSerieCarro;
 import classesBasicas.MarcaCarro;
 import classesBasicas.ModeloCarro;
 import classesBasicas.Movimentacao;
+import classesBasicas.MovimentacaoItem;
 import classesBasicas.PessoaJuridica;
 import classesBasicas.TipoGerencia;
 import classesBasicas.TipoLogradouro;
@@ -657,6 +658,11 @@ public class Fachada implements IFachada {
 	@Override
 	public Movimentacao pegarMovimentacaoPeloNumero(Integer numero) throws Exception{
 		return ctrlMovimentacao.pegarMovimentacaoPeloNumero(numero);
+	}
+	
+	@Override
+	public List<MovimentacaoItem> listarItensDaMovimentacaoNumero(Integer numero) throws Exception{
+		return ctrlMovimentacao.listarItensDaMovimentacaoNumero(numero);
 	}
 
 	

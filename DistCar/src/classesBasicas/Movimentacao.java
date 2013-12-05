@@ -1,5 +1,6 @@
 package classesBasicas;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -17,6 +18,10 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
+
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 @Entity
 public class Movimentacao {
@@ -53,12 +58,15 @@ public class Movimentacao {
 	@Column(nullable=false, length=10)
 	private SituacaoMovimentacao situacao;
 	
-	@OneToMany(mappedBy="movimentoCarroPK.movimentacao", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	//@OneToMany(mappedBy="movimentoCarroPK.movimentacao", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	///@Fetch(FetchMode.SUBSELECT)
+	@Transient
 	private List<MovimentacaoItem> itens;
 	
 	
 	public Movimentacao() {
 		super();
+		itens = new ArrayList<MovimentacaoItem>();
 		// TODO Auto-generated constructor stub
 	}
 
@@ -66,7 +74,7 @@ public class Movimentacao {
 			Centro ctoDestino, TipoMovimentacao tipoMovimentacao,
 			Date dataMovimentacao, Date dataUltimaAtualizacao,
 			SituacaoMovimentacao situacao) {
-		super();
+		this();
 		this.numero = numero;
 		this.notaFiscal = notaFiscal;
 		this.ctoOrigem = ctoOrigem;
@@ -81,14 +89,8 @@ public class Movimentacao {
 			Centro ctoDestino, TipoMovimentacao tipoMovimentacao,
 			Date dataMovimentacao, Date dataUltimaAtualizacao,
 			SituacaoMovimentacao situacao) {
-		super();
-		this.notaFiscal = notaFiscal;
-		this.ctoOrigem = ctoOrigem;
-		this.ctoDestino = ctoDestino;
-		this.tipoMovimentacao = tipoMovimentacao;
-		this.dataMovimentacao = dataMovimentacao;
-		this.dataUltimaAtualizacao = dataUltimaAtualizacao;
-		this.situacao = situacao;
+		this(null, notaFiscal, ctoOrigem, ctoDestino, tipoMovimentacao, dataMovimentacao,
+				dataUltimaAtualizacao, situacao);
 	}
 
 	public Integer getNumero() {
