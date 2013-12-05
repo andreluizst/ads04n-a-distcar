@@ -103,15 +103,16 @@
   					 <h:panelGrid columns="2" style="margin-bottom:5px" cellpadding="5">  
 					<h:outputText value="Itens: *"/>  
         				<p:selectManyCheckbox id="item" converter="ItensConverter" value="#{carroBean.itensSelecionado}"
-        				  layout="pageDirection" columns="2" disabled="false" selectedClass="">  
+        				  layout="pageDirection" columns="2" disabled="false">  
            				    <f:selectItems value="#{carroBean.itens}" var="i" 
            				      itemLabel="#{i.descricao}" itemValue="#{i}"  />  
        					</p:selectManyCheckbox>
        					</h:panelGrid> 
        				<h:panelGrid columns="2" style="margin-bottom:5px" cellpadding="5">  	
 					<h:outputText value="Acessórios: *"  />  
-        				<p:selectManyCheckbox id="acessorio" converter="AcessoriosConverter" value="#{carroBean.acessorios}"
-        				 layout="pageDirection" columns="2" disabled="true">  
+        				<p:selectManyCheckbox id="acessorio" converter="AcessoriosConverter"
+        				 value="#{carroBean.acessoriosSelecionado}"
+        				 layout="pageDirection" columns="2" disabled="false">  
            				    <f:selectItems value="#{carroBean.acessorios}" var="a"
            				    itemLabel="#{a.descricao}" itemValue="#{a}"/>
        					</p:selectManyCheckbox>

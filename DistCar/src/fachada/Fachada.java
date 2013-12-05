@@ -607,6 +607,10 @@ public class Fachada implements IFachada {
 		return this.controladorCarro.listarAcessoriosPorModelo(modelo);
 	}
 	
+	public List<AcessorioCarro> listarAceDiestintos(){
+	 return this.controladorCarro.listarAceDiestintos();
+	}
+	
 	// ***************************  U S U Á R I O  *******************************
 
 	@Override

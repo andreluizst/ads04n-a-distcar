@@ -6,7 +6,6 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
-
 import classesBasicas.AcessorioCarro;
 import classesBasicas.ModeloCarro;
 
@@ -90,5 +89,8 @@ public class DAOAcessorio extends DAOGenerico<AcessorioCarro> implements IDAOAce
 		return query.getResultList();
 	}
 
-	
+	public List<AcessorioCarro> listarAceDistintos() {
+		TypedQuery<AcessorioCarro> query = getEntityManager().createQuery("select DISTINCT a from AcessorioCarro a ",AcessorioCarro.class);
+		return query.getResultList();
+	}
 }

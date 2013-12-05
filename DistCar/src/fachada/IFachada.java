@@ -162,6 +162,8 @@ public interface IFachada {
 	public AcessorioCarro pesquisarAcessorioCodigo(Integer codigo);
 	public List<AcessorioCarro> consultarAcessorios(AcessorioCarro acessorioCarro) throws Exception;
 	public List<AcessorioCarro> listarAcessoriosPorModelo(ModeloCarro modelo);
+	public List<AcessorioCarro> listarAceDiestintos();
+	
 	
 	
 	//***********************************************************************************

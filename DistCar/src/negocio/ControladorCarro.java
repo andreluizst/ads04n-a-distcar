@@ -85,7 +85,9 @@ public class ControladorCarro {
 			List<ItemSerieCarro> itensSelecionado) throws Exception {
 		return carroDAO.consultar(carro, f, m, modelo,itensSelecionado);
 	}
-
+	public Carro pegarCarroPeloChassi(String chassi) throws Exception{
+		return carroDAO.pegarCarroPeloChassi(chassi);
+	}
 	
 	//Modelo Carro
 	
@@ -360,8 +362,7 @@ public class ControladorCarro {
 		return acessorioDAO.listarAcessoriosPorModelo(modelo);
 	}
 	
-	public Carro pegarCarroPeloChassi(String chassi) throws Exception{
-		return carroDAO.pegarCarroPeloChassi(chassi);
+	public List<AcessorioCarro> listarAceDiestintos(){
+		return acessorioDAO.listarAceDistintos();
 	}
-
 }

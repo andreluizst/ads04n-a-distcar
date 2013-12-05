@@ -44,9 +44,18 @@ public class CarroBean {
 	private MarcaCarro marca;
 	private ModeloCarro modelo;
 	private List<ItemSerieCarro> itensSelecionado;
+	private List<AcessorioCarro> acessoriosSelecionado;
 	
 	
 	
+	public List<AcessorioCarro> getAcessoriosSelecionado() {
+		return acessoriosSelecionado;
+	}
+
+	public void setAcessoriosSelecionado(List<AcessorioCarro> acessoriosSelecionado) {
+		this.acessoriosSelecionado = acessoriosSelecionado;
+	}
+
 	public List<ItemSerieCarro> getItensSelecionado() {
 		return itensSelecionado;
 	}
@@ -198,7 +207,8 @@ public class CarroBean {
 		listarFabricantes();
 		listarCentros();
 		listarItensDistintos();
-		acessorios=null;
+		listarAceDistintos();
+		carroSelecionado=null;
 		situacaoSelecionada=null;
 		statusSelecionada=null;
 		modelos=null;
@@ -237,7 +247,9 @@ public class CarroBean {
 	public List<ItemSerieCarro> listarItensDistintos(){
 		return itens = Fachada.obterInstancia().listarItensdistintos();
 	}
-	
+	public List<AcessorioCarro> listarAceDistintos(){
+		return acessorios = Fachada.obterInstancia().listarAceDiestintos();
+	}
 	
 	public String salvar() throws Exception {
 		
@@ -289,11 +301,14 @@ public class CarroBean {
 		    		return "acessorio";
 		    	}
 		    	else{
+		    	
 		    	fabricantes=Fachada.obterInstancia().listarFabricantes();
 		    	marcas=Fachada.obterInstancia().pesquisarMarcaPorFabr(carroSelecionado.getVersao().getModeloCarro().getMarcaCarro().getFabricante().getCodigo());
 		    	modelos=Fachada.obterInstancia().pesquisarModeloPorMarca(carroSelecionado.getVersao().getModeloCarro().getMarcaCarro().getCodigo());
 		    	versoes=Fachada.obterInstancia().pesquisarVersaoPorModelo(carroSelecionado.getVersao().getModeloCarro().getCodigo());
 		    	carro = carroSelecionado;
+		    	carro.getVersao().setItens(carroSelecionado.getVersao().getItens());
+		    	carro.getVersao().setAcessorios(carroSelecionado.getVersao().getAcessorios());
 		    	
 		    	
 		    	return "carro-prop";
@@ -310,7 +325,6 @@ public class CarroBean {
 	    
 	    public String cancelar(){
 	    	init();
-	    	carroSelecionado = null;
 	    	return "carro";
 	    }  
 	    
