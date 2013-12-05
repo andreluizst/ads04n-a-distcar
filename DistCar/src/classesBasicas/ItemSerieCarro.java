@@ -40,9 +40,9 @@ public class ItemSerieCarro extends ObjetoGeral implements Cloneable{
 		this.valorItemSerie = valorItemSerie;
 	}
 	public ModeloCarro getModelo() {
-		if(modelo == null){
-	        modelo = new ModeloCarro();
-	    }
+		//if(modelo == null){
+	      //  modelo = new ModeloCarro();
+	    //}
 		return modelo;
 	}
 	public void setModelo(ModeloCarro modelo) {
@@ -62,7 +62,7 @@ public class ItemSerieCarro extends ObjetoGeral implements Cloneable{
 	}
 	public ItemSerieCarro() {
 		super();
-		this.modelo = new ModeloCarro();
+		//this.modelo = new ModeloCarro();
 	}
 	
 }

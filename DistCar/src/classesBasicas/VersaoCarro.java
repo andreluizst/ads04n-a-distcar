@@ -5,6 +5,9 @@ import java.util.List;
 
 import javax.persistence.*;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
 
 @Entity
 public class VersaoCarro extends ObjetoGeral {
@@ -22,7 +25,8 @@ public class VersaoCarro extends ObjetoGeral {
 	private String descricao;
 	@ManyToOne(fetch = FetchType.EAGER)
 	private ModeloCarro modeloCarro;
-	@ManyToMany
+	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.REFRESH)
+	@Fetch(FetchMode.SUBSELECT)
 	private List<AcessorioCarro> acessorios;
 	@ManyToMany(fetch=FetchType.EAGER)
 	private List<ItemSerieCarro> itens;
@@ -71,12 +75,15 @@ public class VersaoCarro extends ObjetoGeral {
 	
 	@Override
 	public String toString() {
+		String strAcessorios = "";
+		if (getAcessorios() != null && getAcessorios().size() > 0)
+			strAcessorios = getAcessorios().toString();
 		String str = "VersaoCarro [valor=" + valor + ", descricao=" + descricao
-				+ ", modeloCarro=" + modeloCarro + ", acessorios=" + acessorios
+				+ ", modeloCarro=" + modeloCarro + ", acessorios=" + strAcessorios
 				+ ", itens=" + itens + "]";
 		if (comportamentoToString == VersaoCarro.TO_STRING_DESCRICAO_PARA_LISTA)
 			str = modeloCarro.getDescricao() + " " + modeloCarro.getAno() 
-				+ " " + getDescricao() + "[" + acessorios + " + " + itens + "]";
+				+ " " + getDescricao() + "[" + strAcessorios + " + " + itens + "]";
 		return str;
 	}
 	

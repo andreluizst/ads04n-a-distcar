@@ -192,7 +192,6 @@ public class VersaoBean {
 		acessorios=null;
 		valorAcessorios=0;
 		valorItens=0;
-		
 	}
 
 	private List<VersaoCarro> listarVersoes() {  
@@ -376,6 +375,26 @@ public class VersaoBean {
 				}
 	    }
 	    
+	    public void somar(){
+	    	//AcessorioCarro a = (AcessorioCarro)evento.getNewValue();
+	    	try{
+	    		double soma = 0;
+	    		if (versaoCarro.getAcessorios() != null){
+	    			for(AcessorioCarro ac : versaoCarro.getAcessorios()){//acessoriosSelecionados){
+	    				soma+= ac.getValor();
+	    			}
+	    		}
+	    		if (versaoCarro.getItens() != null){
+	    			for(ItemSerieCarro ic : versaoCarro.getItens()){//itensDeSerieSelecionados){
+	    				soma+= ic.getValorItemSerie();
+	    			}
+	    		}
+	    		soma+= versaoCarro.getModeloCarro().getValor();// + a.getValor();
+	    		versaoCarro.setValor(soma);//+valorAcessorios+valorItens);
+	    	}catch(Exception ex){
+	    		MsgPrimeFaces.exibirMensagemDeErro("Não é possível atualizar o valor da versão do carro!");
+	    	}
+	    }
 		
 		  public void filtrarMarca(ValueChangeEvent evento){
 		  
@@ -406,4 +425,5 @@ public class VersaoBean {
 					acessorios=null;
 				}
 		    }
+		
 }

@@ -123,7 +123,8 @@ public class AcessorioBean {
 					.exibirMensagemInfomativa("Selecione um acessório para exclusão!");
 		} else {
 			try {
-				Fachada.obterInstancia().removerAcessorio(acessorioSelecionado);
+				Fachada.obterInstancia().removerAcessorio(
+						Fachada.obterInstancia().pesquisarAcessorioCodigo(acessorioSelecionado.getCodigo()));
 				MsgPrimeFaces
 						.exibirMensagemInfomativa("Acessório Excluído com sucesso!");
 				consulta();
@@ -151,7 +152,7 @@ public class AcessorioBean {
 	    	}
 	    	else{
 	    	acessorioCarro = Fachada.obterInstancia().pesquisarAcessorioCodigo(acessorioSelecionado.getCodigo());
-	    	acessorioCarro.setModelo(Fachada.obterInstancia().pesquisarModelosCarroCodigo(acessorioSelecionado.getModelo().getCodigo()));
+	    	//acessorioCarro.setModelo(Fachada.obterInstancia().pesquisarModelosCarroCodigo(acessorioSelecionado.getModelo().getCodigo()));
 	    	return "acessorio-prop";
 	    	}
 	    }

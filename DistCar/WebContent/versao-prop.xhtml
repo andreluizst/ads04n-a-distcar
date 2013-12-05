@@ -31,12 +31,6 @@
 			<p:panel id="panel" header="DistCar - Versão Carro"
 				style="margin-bottom:10px;">
 
-				<f:facet name="header">
-					<h:panelGrid columns="2">
-						<h:outputText value="DisctCar 1.0 -  Versão Carro" />
-					</h:panelGrid>
-				</f:facet>
-				
 				<h:panelGrid columns="2" cellpadding="5">
 
 				
@@ -103,15 +97,18 @@
         				 value="#{versaoBean.versaoCarro.itens}" layout="pageDirection" columns="1">  
            				    <f:selectItems value="#{versaoBean.itens}" var="i" 
            				      itemLabel="#{i.descricao}" itemValue="#{i}"/> 
-           				      <f:ajax render="valorItens"  event="valueChange"/> 
+           				     <f:ajax render="valorItens valorAcessorios valor"  event="click" 
+           				     		listener="#{versaoBean.somar}"/> 
        					</p:selectManyCheckbox>
        					
 						<h:outputText value="Acessório: *"  />  
-        				<p:selectManyCheckbox id="acessorio" converter="AcessoriosConverter" valueChangeListener="#{versaoBean.somar}"
-        				value="#{versaoBean.versaoCarro.acessorios}" layout="pageDirection" columns="2">  
+        				<p:selectManyCheckbox id="acessorio" converter="AcessoriosConverter" 
+        						value="#{versaoBean.versaoCarro.acessorios}" layout="pageDirection" 
+        						columns="2">  
            				    <f:selectItems value="#{versaoBean.acessorios}" var="a"
-           				    itemLabel="#{a.descricao}" itemValue="#{a}"/>
-           				     <f:ajax render="valorAcessorios"  event="valueChange"/>
+           				    		itemLabel="#{a.descricao}" itemValue="#{a}"/>
+           				     <f:ajax render="valorAcessorios valor"  event="click" 
+           				     		listener="#{versaoBean.somar}"/>
        					</p:selectManyCheckbox>
 
        				<h:inputHidden id="valorItens" value="#{versaoBean.valorItens}" />

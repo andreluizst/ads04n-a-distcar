@@ -76,6 +76,7 @@ public class MovimentacaoBean {
 		itemMovimentacaoSelecionada = null;
 		itemMovimentacao = new MovimentacaoItem();
 		carro = new Carro();
+		carro.setChassi("");
 		novaMovimentacao();
 		iniciarObjParaPesquisa();
 		if (lista==null)
@@ -171,8 +172,10 @@ public class MovimentacaoBean {
 		if (movimentacaoSelecionada == null)
 			return;
 		try{
-			movimentacao = movimentacaoSelecionada;
+			movimentacao = fachada.pegarMovimentacaoPeloNumero(movimentacaoSelecionada.getNumero());
 			fachada.excluirMovimentacao(movimentacao);
+			if (lista != null)
+				consultar();
 			MsgPrimeFaces.exibirMensagemInfomativa("Movimentação " + movimentacaoSelecionada.getNumero() + " excluida com sucesso!");
 			novaMovimentacao();
 		}catch(Exception ex){
@@ -194,6 +197,7 @@ public class MovimentacaoBean {
 			if (movimentacao.getNumero() == null || movimentacao.getNumero() == 0)
 				movimentacao.setNumero(null);
 			fachada.salvarMovimentacao(movimentacao);
+			consultar();
 			msgPendente = MsgPrimeFaces.criarMsgInfo("Movimentação salva com sucesso!");
 			novaMovimentacao();
 			somenteLeitura = true;

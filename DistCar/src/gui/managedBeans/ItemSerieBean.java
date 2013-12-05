@@ -203,7 +203,7 @@ public class ItemSerieBean {
 	    	}
 	    	else{
 	    	itemSerieCarro = Fachada.obterInstancia().pesquisarItemCodigo(itemSelecionado.getCodigo());
-	    	itemSerieCarro.setModelo(Fachada.obterInstancia().pesquisarModelosCarroCodigo(itemSelecionado.getModelo().getCodigo()));
+	    	//itemSerieCarro.setModelo(Fachada.obterInstancia().pesquisarModelosCarroCodigo(itemSelecionado.getModelo().getCodigo()));
 	    	return "item-prop";
 	    	}
 	    }
