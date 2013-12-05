@@ -100,4 +100,8 @@ public class DAOItemSerieCarro extends DAOGenerico<ItemSerieCarro> implements ID
 		return query.getResultList();
 	}
 	
+	public List<ItemSerieCarro> listarItensDistintos() {
+		TypedQuery<ItemSerieCarro> query = getEntityManager().createQuery("select DISTINCT i from ItemSerieCarro i ",ItemSerieCarro.class);
+		return query.getResultList();
+	}
 }

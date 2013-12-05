@@ -17,4 +17,5 @@ public interface IDAOItemSerieCarro extends IDAOGenerico<ItemSerieCarro> {
 	public ItemSerieCarro pesquisarItemDescModelo(ItemSerieCarro item);
 	public List<ItemSerieCarro> consultar(ItemSerieCarro item) throws Exception;
 	public VersaoCarro listarItens(Integer codigo);
+	public List<ItemSerieCarro> listarItensDistintos();
 }
