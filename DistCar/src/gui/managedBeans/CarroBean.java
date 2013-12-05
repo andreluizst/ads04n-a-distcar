@@ -43,8 +43,18 @@ public class CarroBean {
 	private Fabricante fab;
 	private MarcaCarro marca;
 	private ModeloCarro modelo;
+	private List<ItemSerieCarro> itensSelecionado;
 	
 	
+	
+	public List<ItemSerieCarro> getItensSelecionado() {
+		return itensSelecionado;
+	}
+
+	public void setItensSelecionado(List<ItemSerieCarro> itensSelecionado) {
+		this.itensSelecionado = itensSelecionado;
+	}
+
 	public Fabricante getFab() {
 		return fab;
 	}
@@ -187,7 +197,7 @@ public class CarroBean {
 		listarCarros();
 		listarFabricantes();
 		listarCentros();
-		itens=null;
+		listarItensDistintos();
 		acessorios=null;
 		situacaoSelecionada=null;
 		statusSelecionada=null;
@@ -223,6 +233,10 @@ public class CarroBean {
 		}
 	      return fabricantes;
 	} 
+	
+	public List<ItemSerieCarro> listarItensDistintos(){
+		return itens = Fachada.obterInstancia().listarItensdistintos();
+	}
 	
 	
 	public String salvar() throws Exception {
@@ -263,6 +277,8 @@ public class CarroBean {
 	
 	    public String novo(){
 	    	carro = new Carro();
+	    	itens=null;
+	    	acessorios=null;
 			return "carro-prop";
 		}           
 	    
@@ -301,15 +317,20 @@ public class CarroBean {
 	    public String consultar(){
 	    	
 		 	 try {
-				carros = Fachada.obterInstancia().consultarCarros(carro,fab,marca,modelo);
-				 init();
-				 itens=null;
-				 acessorios=null;
+		 		
+				carros = Fachada.obterInstancia().consultarCarros(carro,fab,marca,modelo,itensSelecionado);
+				
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} 
-			
+		 	 carro = new Carro();
+		 	 fab=null;
+		 	 modelo=null;
+		 	 marca=null;
+		 	 modelos=null;
+		 	 versoes=null;
+		 	 marcas=null;
 			 return  "carro";
 	    }
 	    
@@ -339,7 +360,6 @@ public class CarroBean {
 			modelos = Fachada.obterInstancia().pesquisarModeloPorMarca(ma.getCodigo());		
     		}
     		else{
-    			MsgPrimeFaces.exibirMensagemDeAviso("erro3");
     		carro = new Carro();
     		modelo=null;
     		modelos=null;
