@@ -37,16 +37,24 @@ public class DAOMovimentacaoItem extends DAOGenerico<MovimentacaoItem> implement
 
 	@Override
 	public void atualizarItensDaMovimentacao(Movimentacao movimentacao) throws Exception {
-		removerItensDaMovimentacaoNumero(movimentacao.getNumero());
-		if (movimentacao.getItens() != null && movimentacao.getItens().size() > 0){
-			for (MovimentacaoItem item : movimentacao.getItens()){
-				item.getMovimentoCarroPK().getMovimentacao().setNumero(movimentacao.getNumero());
-				if (item.getMovimentoCarroPK().getCarro().getCodigo() == null){
-					getEntityManager().persist(item.getMovimentoCarroPK().getCarro());
-					getEntityManager().refresh(item.getMovimentoCarroPK().getCarro());
+		try{
+			removerItensDaMovimentacaoNumero(movimentacao.getNumero());
+			if (movimentacao.getItens() != null && movimentacao.getItens().size() > 0){
+				for (MovimentacaoItem item : movimentacao.getItens()){
+					if (item.getMovimentoCarroPK().getMovimentacao() == null)
+						item.getMovimentoCarroPK().setMovimentacao(movimentacao);
+					else
+						item.getMovimentoCarroPK().getMovimentacao().setNumero(movimentacao.getNumero());
+					/*if (item.getMovimentoCarroPK().getCarro().getCodigo() == null){
+						getEntityManager().persist(item.getMovimentoCarroPK().getCarro());
+						getEntityManager().refresh(item.getMovimentoCarroPK().getCarro());
+					}*/
+					getEntityManager().persist(item);
 				}
-				getEntityManager().persist(item);
-			}
+			}	
+		}catch(Exception ex){
+			ex.printStackTrace();
+			throw ex;
 		}
 	}
 

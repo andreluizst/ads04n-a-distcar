@@ -91,7 +91,7 @@
   				<p:commandButton value="Consultar"  update="tbLista,btnAlterar,btnExcluir,btnDetalhe" 
   						actionListener="#{movimentacaoBean.consultar}"/>
   				<p:commandButton id="btnDetalhe" disabled="#{movimentacaoBean.listaEstaVazia}" 
-  						value="Detalhes" update="panel" action="#{movimentacaoBean.visualizar}" />
+  						value="Detalhes" action="#{movimentacaoBean.visualizar}" />
   				<p:commandButton value="Limpar"  update="frmPrincipal" actionListener="#{movimentacaoBean.limpar}"/>
   				
  			</p:panel>

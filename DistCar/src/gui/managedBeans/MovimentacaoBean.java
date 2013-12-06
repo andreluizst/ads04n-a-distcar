@@ -114,27 +114,22 @@ public class MovimentacaoBean {
 		carro = new Carro();
 		carro.setComportamentoToString(Carro.TO_STRING_DESCRICAO_PARA_LISTA);
 		podeCriarNovoCarro = false;
-		//carro.setChassi("");
 		this.movimentacao = obj;
 		centroDestinoRequerido = movimentacao.getTipoMovimentacao() != null ? movimentacao.getTipoMovimentacao() == TipoMovimentacao.ENTRE_CENTROS : false;
-		//itensOriginais = obj.getItens();
 		if (itensDaMovimentacao == null)
 			itensDaMovimentacao = new ArrayList<MovimentacaoItem>();
 		try{
-			if (movimentacao.getNumero() != null && movimentacao.getNumero() > 0)
+			if (movimentacao.getNumero() != null && movimentacao.getNumero() > 0){
 				itensDaMovimentacao = fachada.listarItensDaMovimentacaoNumero(movimentacao.getNumero());
-			listaEstaVazia = itensDaMovimentacao != null ? itensDaMovimentacao.size() > 0 : false;
+				for (MovimentacaoItem item : itensDaMovimentacao){
+					item.getMovimentoCarroPK().getCarro().setComportamentoToString(Carro.TO_STRING_DESCRICAO_PARA_LISTA);
+				}
+			}
+			//listaEstaVazia = itensDaMovimentacao != null ? itensDaMovimentacao.size() > 0 : false;
 			System.out.println(itensDaMovimentacao);
 		}catch(Exception ex){
 			MsgPrimeFaces.exibirMensagemDeErro("Não foi possível filtrar as cidades pelo estado selecionado!");
 		}
-		/*if (obj.getItens() != null && obj.getItens().size() > 0){
-			listaItemEstaVazia = false;
-			itensDaMovimentacao.addAll(obj.getItens());
-		}else{
-			listaItemEstaVazia = true;
-			itensDaMovimentacao.clear();
-		}*/
 		try{
 			centros = fachada.listarCentros();
 			versoesDeCarros = fachada.listarVersoes();
@@ -179,6 +174,8 @@ public class MovimentacaoBean {
 	
 	private void novaMovimentacao(){
 		movimentacao = new Movimentacao();
+		if (itensDaMovimentacao != null)
+			itensDaMovimentacao.clear();
 	}
 	
 	public void excluir(){
@@ -199,11 +196,7 @@ public class MovimentacaoBean {
 	}
 	
 	public String salvar(){
-		//Centro co = null;
 		try{
-			//if (centroOrigemSelecionado.getCodigo() != null && centroOrigemSelecionado.getCodigo() > 0)
-				//co = fachada.pegarCentroPorId(centroOrigemSelecionado.getCodigo());
-			//movimentacao.setCtoOrigem(co);
 			if (movimentacao.getCtoOrigem().getCodigo() == null
 					|| movimentacao.getCtoOrigem().getCodigo() <= 0)
 				movimentacao.setCtoOrigem(null);
@@ -213,6 +206,7 @@ public class MovimentacaoBean {
 				movimentacao.setNumero(null);
 			movimentacao.setItens(itensDaMovimentacao);
 			fachada.salvarMovimentacao(movimentacao);
+			itensDaMovimentacao.clear();
 			consultar();
 			msgPendente = MsgPrimeFaces.criarMsgInfo("Movimentação salva com sucesso!");
 			novaMovimentacao();
@@ -266,6 +260,8 @@ public class MovimentacaoBean {
 		somenteLeitura = true;
 		centros.clear();
 		versoesDeCarros.clear();
+		//if (lista != null)
+			//consultar();
 		return resourceBundle.getString("linkMovimentacao");
 	}
 	

@@ -24,14 +24,12 @@ public class ControladorMovimentacao {
 	private EntityManagerFactory emf;
 	private EntityManager entityManager;
 	private IDAOMovimentacao daoMovimentacao;
-	//private ControladorCarro ctrlCarro;
 
 	
 	public ControladorMovimentacao() {
 		emf = Parametros.EMF_Default;
 		entityManager = emf.createEntityManager();
 		inicializarDAO();
-		//ctrlCarro = new ControladorCarro();
 	}
 	
 	public ControladorMovimentacao(EntityManagerFactory emf){
@@ -57,9 +55,11 @@ public class ControladorMovimentacao {
 		return false;
 	}
 	
-	private void atualizaStatusDoItemDaMovimentacao(Movimentacao movimentacao){
+	private void atualizaStatusDoItemDaMovimentacao(Movimentacao movimentacao) throws Exception{
+		ControladorCarro ctrlCarro = new ControladorCarro();
 		for (MovimentacaoItem item : movimentacao.getItens()){
-			if (movimentacao.getSituacao() == SituacaoMovimentacao.PENDENTE){
+			if (movimentacao.getSituacao() == SituacaoMovimentacao.PENDENTE
+					|| movimentacao.getSituacao() == SituacaoMovimentacao.CONCLUIDA){
 				if (movimentacao.getTipoMovimentacao() == TipoMovimentacao.COMPRA){
 					item.getMovimentoCarroPK().getCarro().setStatus(Status.ESTOQUE);
 					item.getMovimentoCarroPK().getCarro().setCentro(movimentacao.getCtoOrigem());
@@ -69,18 +69,34 @@ public class ControladorMovimentacao {
 						item.getMovimentoCarroPK().getCarro().setCentro(movimentacao.getCtoOrigem());
 					}else{
 						if (movimentacao.getTipoMovimentacao() == TipoMovimentacao.ENTRE_CENTROS){
-							item.getMovimentoCarroPK().getCarro().setStatus(Status.TRANSFERENCIA);
-							item.getMovimentoCarroPK().getCarro().setCentro(movimentacao.getCtoDestino());
+							if (movimentacao.getSituacao() == SituacaoMovimentacao.PENDENTE){
+								item.getMovimentoCarroPK().getCarro().setStatus(Status.TRANSFERENCIA);
+								item.getMovimentoCarroPK().getCarro().setCentro(movimentacao.getCtoDestino());
+							}
+							if (movimentacao.getSituacao() == SituacaoMovimentacao.CONCLUIDA){
+								if (movimentacao.getTipoMovimentacao() == TipoMovimentacao.ENTRE_CENTROS){
+									item.getMovimentoCarroPK().getCarro().setStatus(Status.ESTOQUE);
+									item.getMovimentoCarroPK().getCarro().setCentro(movimentacao.getCtoDestino());
+								}
+							}
 						}
 					}
 				}
 			}else{
-				if (movimentacao.getSituacao() == SituacaoMovimentacao.CONCLUIDA){
-					if (movimentacao.getTipoMovimentacao() == TipoMovimentacao.ENTRE_CENTROS){
-						item.getMovimentoCarroPK().getCarro().setStatus(Status.ESTOQUE);
-						item.getMovimentoCarroPK().getCarro().setCentro(movimentacao.getCtoDestino());
-					}
+				if (movimentacao.getSituacao() == SituacaoMovimentacao.CANCELADA){
+					
 				}
+			}
+			try{
+				if (item.getMovimentoCarroPK().getCarro().getCodigo() == null){
+					ctrlCarro.inserir(item.getMovimentoCarroPK().getCarro());
+					item.getMovimentoCarroPK().setCarro(ctrlCarro.pegarCarroPeloChassi(item.getMovimentoCarroPK().getCarro().getChassi()));
+				}else{
+					ctrlCarro.alterar(item.getMovimentoCarroPK().getCarro());
+				}
+			}catch(Exception ex){
+				ex.printStackTrace();
+				throw new Exception("Não foi possível atualizar o status de um ou mais carros");
 			}
 		}
 	}
